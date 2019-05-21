@@ -1,0 +1,11 @@
+/local/node_modules
+/hot
+/storage
+/local/storage/*.key
+/local/vendor
+/local/.env
+/local/.phpunit.result.cache
+/local/Homestead.json
+/local/Homestead.yaml
+/local/npm-debug.log
+/local/yarn-error.log

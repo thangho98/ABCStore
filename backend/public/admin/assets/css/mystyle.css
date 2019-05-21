@@ -1,0 +1,221 @@
+.tile-footer {
+    border-top: 1px solid #ddd;
+    padding: 20px 0 0 0;
+    margin-top: 10px;
+    position: absolute;
+    bottom: 0px;
+    background: white;
+    left: 0px;
+    z-index: 999;
+    width: 100%;
+}
+
+.tile-footer-2 {
+    border-top: 1px solid #ddd;
+    padding: 12px 12px 12px 12px;
+    margin-top: 10px;
+    position: absolute;
+    bottom: -50px;
+    background: white;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    left: 0px;
+    z-index: 999;
+    width: 100%;
+}
+
+.content-popup {
+    position: relative;
+}
+
+.your-order {
+    background: #f2f2f2 none repeat scroll 0 0;
+    padding: 30px 40px 45px;
+}
+
+.your-order h3 {
+    border-bottom: 1px solid #ebebeb;
+    font-size: 25px;
+    margin: 0 0 20px;
+    padding-bottom: 10px;
+    text-transform: uppercase;
+    width: 100%;
+    font-weight: 500;
+}
+
+.your-order-table table {
+    background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+    border: medium none;
+    width: 100%;
+}
+
+.your-order-table table th, .your-order-table table td {
+    border-bottom: 1px solid #d8d8d8;
+    border-right: medium none;
+    font-size: 14px;
+    padding: 15px 0;
+    text-align: center;
+}
+
+.popup-form {
+    width: 50%;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -45%);
+    background-color: white;
+    padding: 15px;
+    border-radius: 5px;
+    transition: all 0.4s cubic-bezier(1, .01, 1, 1.13);
+    visibility: visible;
+    z-index: 199;
+    opacity: 1;
+}
+
+.popup-form.hidden {
+    opacity: 0;
+    visibility: hidden;
+    transform: translate(-50%, -100%);
+    transform-origin: 50% 50%;
+}
+
+.darktheme {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 99;
+    visibility: hidden;
+    transition: all 0.6s;
+}
+
+.darktheme.active {
+    visibility: visible;
+    background: black;
+    opacity: 0.6;
+}
+
+/*upload img*/
+
+.preview-images-zone {
+    width: 100%;
+    border: 1px solid #ddd;
+    min-height: 95px;
+    padding: 5px 5px 0px 5px;
+    position: relative;
+    overflow: auto;
+}
+
+.preview-images-zone>.preview-image {
+    height: 90px;
+    width: 90px;
+    position: relative;
+    margin-right: 5px;
+    float: left;
+    margin-bottom: 5px;
+}
+
+.preview-images-zone>.preview-image>.image-zone {
+    width: 100%;
+    height: 100%;
+}
+
+.preview-images-zone>.preview-image>.image-zone>img {
+    width: 100%;
+    height: 100%;
+}
+
+/**
+ * FilePond Custom Styles
+ */
+
+.filepond--drop-label {
+    color: #4c4e53;
+}
+
+.filepond--label-action {
+    text-decoration-color: #babdc0;
+}
+
+.filepond--panel-root {
+    border-radius: 2em;
+    background-color: #edf0f4;
+    height: 1em;
+}
+
+.filepond--item-panel {
+    background-color: #595e68;
+}
+
+.filepond--item {
+    float: left;
+    display: inline-block;
+    width: 200px;
+}
+
+.filepond--drip-blob {
+    background-color: #7f8a9a;
+}
+
+.thumbnail {
+    padding: .3rem;
+    background-color: #f5f5f5;
+    border: 1px solid #dee2e6;
+    border-radius: .25rem;
+    max-width: 100%;
+}
+
+/* Customize website's scrollbar like Mac OS
+Not supports in Firefox and IE */
+
+/* total width */
+
+.scrollbar::-webkit-scrollbar {
+    background-color: #fff;
+    width: 16px
+}
+
+/* background of the scrollbar except button or resizer */
+
+.scrollbar::-webkit-scrollbar-track {
+    background-color: #fff
+}
+
+.scrollbar::-webkit-scrollbar-track:hover {
+    background-color: #f4f4f4
+}
+
+/* scrollbar itself */
+
+.scrollbar::-webkit-scrollbar-thumb {
+    background-color: #babac0;
+    border-radius: 16px;
+    border: 5px solid #fff
+}
+
+.scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: #a0a0a5;
+    border: 4px solid #f4f4f4
+}
+
+/* set button(top and bottom of the scrollbar) */
+
+.scrollbar::-webkit-scrollbar-button {
+    display: none
+}
+
+/* div box */
+
+.scrollbar {
+    height: 80%;
+    overflow-x: hidden;
+    /* Hide horizontal scrollbar */
+    overflow-y: scroll;
+    /* Add vertical scrollbar */
+}
+
+.content-form {
+    height: 550px;
+    padding-bottom: 50px;
+}

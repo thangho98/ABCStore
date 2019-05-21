@@ -1,0 +1,67 @@
+.your-order {
+    background: #f2f2f2 none repeat scroll 0 0;
+    padding: 30px 40px 45px;
+}
+
+.your-order h3 {
+    border-bottom: 1px solid #ebebeb;
+    font-size: 25px;
+    margin: 0 0 20px;
+    padding-bottom: 10px;
+    text-transform: uppercase;
+    width: 100%;
+    font-weight: 500;
+}
+
+.your-order-table table {
+    background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+    border: medium none;
+    width: 100%;
+}
+
+.your-order-table table th, .your-order-table table td {
+    border-bottom: 1px solid #d8d8d8;
+    border-right: medium none;
+    font-size: 14px;
+    padding: 15px 0;
+    text-align: center;
+}
+
+.popup-form {
+    width: 50%;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 30px;
+    border-radius: 5px;
+    transition: all 0.4s cubic-bezier(1, .01, 1, 1.13);
+    visibility: visible;
+    z-index: 199;
+    opacity: 1;
+}
+
+.popup-form.hidden {
+    opacity: 0;
+    visibility: hidden;
+    transform: translate(-50%, -100%);
+    transform-origin: 50% 50%;
+}
+
+.darktheme {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 99;
+    visibility: hidden;
+    transition: all 0.6s;
+}
+
+.darktheme.active {
+    visibility: visible;
+    background: black;
+    opacity: 0.6;
+}
