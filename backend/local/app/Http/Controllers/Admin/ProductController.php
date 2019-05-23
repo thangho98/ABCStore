@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Models\Category;
 use App\Models\Brand;
 use App\Models\ProductImage;
+use App\Models\ProductOptions;
 use DB;
 
 use App\Http\Requests\AddProductRequest;
@@ -40,32 +41,38 @@ class ProductController extends Controller
 
         $data['prod_imgs'] = ProductImage::where('pimg_prod',$id)
                             ->get();
+        
+        $data['list_options'] = ProductOptions::where('propt_prod',$id)
+                            ->get();
 
         return view('admin.popup_view_product',$data);
     }
 
     public function postAddProd(Request $req)
     {
-
-        $dataImg = $req->file('product_image');
-
+        $dataPoster = $req->file('poster');
         $product = new Product;
         $product->prod_name = $req->name;
         $product->prod_slug = str_slug($req->name);
         $product->prod_cate = $req->cate;
         $product->prod_brand = $req->brand;
-        $product->prod_unit_price = $req->price;
         $product->prod_detail = $req->detail;
-        $product->prod_color = $req->color;
-        $product->prod_memory = $req->memory.' '.$req->memory_type;
+        $product->prod_poster = '';
+        if(!empty($dataPoster)){
+            $posterName = $dataPoster->getClientOriginalName();
+            $product->prod_poster = $posterName;
+            $dataPoster->storeAs('images/product/',$posterName);
+        }
         $product->prod_status = 0;
         $product->save();
 
         $product = Product::where('prod_name',$req->name)
-                            ->where('prod_color',$req->color)
-                            ->where('prod_memory',$req->memory.' '.$req->memory_type)
+                            ->where('prod_brand',$req->brand)
+                            ->where('prod_cate',$req->cate)
                             ->first();
 
+
+        $dataImg = $req->file('product_image');
         if(!empty($dataImg)){
             foreach ($dataImg as $key => $value) {
                 $filename = $value['image']->getClientOriginalName();
@@ -74,6 +81,20 @@ class ProductController extends Controller
                 $img->pimg_name = $filename;
                 $img->save();
                 $value['image']->storeAs('images/product/',$filename);
+            }
+        }
+
+        $dataOptions = $req->option;
+        
+        if(!empty($dataOptions)){
+            foreach ($dataOptions as $key => $value) {
+                $options = new ProductOptions;
+                $options->propt_prod =  $product->prod_id;
+                $options->propt_color = mb_convert_case($value['color'], MB_CASE_TITLE, 'UTF-8');
+                $options->propt_ram = $value['ram'];
+                $options->propt_rom = mb_strtolower($value['rom'], 'UTF-8');
+                $options->propt_price = $value['price'];
+                $options->save();
             }
         }
     }
@@ -89,6 +110,9 @@ class ProductController extends Controller
         $data['prod_imgs'] = ProductImage::where('pimg_prod',$id)
                             ->get();
 
+        $data['prod_options'] = ProductOptions::where('propt_prod',$id)
+                            ->get();
+
         $data['list_cate'] = Category::all();
         $data['list_brand'] = Brand::all();
         
@@ -97,15 +121,20 @@ class ProductController extends Controller
 
     public function postEditProd($id, Request $req)
     {
+        $dataPoster = $req->file('poster');
+
         $product = Product::find($id);
+
         $product->prod_name = $req->name;
         $product->prod_slug = str_slug($req->name);
         $product->prod_cate = $req->cate;
         $product->prod_brand = $req->brand;
-        $product->prod_unit_price = $req->price;
         $product->prod_detail = $req->detail;
-        $product->prod_color = $req->color;
-        $product->prod_memory = $req->memory.' '.$req->memory_type;
+        if(!empty($dataPoster)){
+            $posterName = $dataPoster->getClientOriginalName();
+            $product->prod_poster = $posterName;
+            $dataPoster->storeAs('images/product/',$posterName);
+        }
         $product->prod_status = $req->status;
         $product->save();
 
@@ -116,8 +145,15 @@ class ProductController extends Controller
             }
         }
 
-        $imgEdit = $req->file('product_add_image');
-        if(!empty($ImageEdit)){
+        $optionRemove = $req->OptionRemove;
+        if(!empty($optionRemove)){
+            foreach ($optionRemove as $key => $value) {
+                ProductOptions::destroy($value);
+            }
+        }
+
+        $imgEdit = $req->file('product_image_edit');
+        if(!empty($imgEdit)){
             foreach ($imgEdit as $key => $value) {
                 $filename = $value['image']->getClientOriginalName();
                 $img = ProductImage::find($key);
@@ -139,6 +175,30 @@ class ProductController extends Controller
             }
         }
 
+        $dataOptionsEdit= $req->option_edit;
+        if(!empty($dataOptionsEdit)){
+            foreach ($dataOptionsEdit as $key => $value) {
+                $options = ProductOptions::find($key);
+                $options->propt_color = mb_convert_case($value['color'], MB_CASE_TITLE, 'UTF-8');
+                $options->propt_ram = $value['ram'];
+                $options->propt_rom = mb_strtolower($value['rom'], 'UTF-8');
+                $options->propt_price = $value['price'];
+                $options->save();
+            }
+        }
+
+        $dataOptionsAdd = $req->option_add;
+        if(!empty($dataOptionsAdd)){
+            foreach ($dataOptionsAdd as $key => $value) {
+                $options = new ProductOptions;
+                $options->propt_prod =  $id;
+                $options->propt_color = mb_convert_case($value['color'], MB_CASE_TITLE, 'UTF-8');
+                $options->propt_ram = $value['ram'];
+                $options->propt_rom = mb_strtolower($value['rom'], 'UTF-8');
+                $options->propt_price = $value['price'];
+                $options->save();
+            }
+        }
 
     }
 

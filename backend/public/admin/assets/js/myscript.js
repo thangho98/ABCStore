@@ -25,32 +25,32 @@ $(document).ready(function () {
 	$('#submitAdd').on('click', function () {
 		$form = $('#add-form');
 
+		//$form.submit();
+
 		if ($form.valid()) {
-			$form.submit();
 
-			// var datas = new FormData($form[0]);
+			var datas = new FormData($form[0]);
 
-
-			// $.ajax({
-			// 	url: $form.attr('action'),
-			// 	enctype: 'multipart/form-data',
-			// 	processData: false,
-			// 	contentType: false,
-			// 	cache: false,
-			// 	type: $form.attr('method'),
-			// 	data: datas,
-			// 	success: function (data) {
-			// 		swal("Đã thêm!", "Đối tượng đã được thêm.", "success")
-			// 			.then((value) => {
-			// 				console.log('Submission was successful.');
-			// 				location.reload();
-			// 			});
-			// 	},
-			// 	error: function (data) {
-			// 		swal("Bị lỗi", "Đối tượng này đã bị lỗi :)", "error");
-			// 		console.log('An error occurred.');
-			// 	}
-			// });
+			$.ajax({
+				url: $form.attr('action'),
+				enctype: 'multipart/form-data',
+				processData: false,
+				contentType: false,
+				cache: false,
+				type: $form.attr('method'),
+				data: datas,
+				success: function (data) {
+					swal("Đã thêm!", "Đối tượng đã được thêm.", "success")
+						.then((value) => {
+							console.log('Submission was successful.');
+							location.reload();
+						});
+				},
+				error: function (data) {
+					swal("Bị lỗi", "Đối tượng này đã bị lỗi :)", "error");
+					console.log('An error occurred.');
+				}
+			});
 		}
 		else {
 			swal("Lỗi", "Bạn điền Form chưa đầy đủ :(", "error");

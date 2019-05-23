@@ -47,7 +47,7 @@ NOTE: main.js, All custom script and plugin activation script in this file.
         $('.popup_off').on('click', function () {
             $(".popup_wrapper").fadeOut(500);
         })
-    },700000);
+    }, 700000);
 
     /*----------------------------
     2. Mobile Menu Activation
@@ -236,7 +236,7 @@ NOTE: main.js, All custom script and plugin activation script in this file.
             }
         }
     })
-    
+
     /*----------------------------------------------------
     8. Electronics Product Activation
     -----------------------------------------------------*/
@@ -299,7 +299,7 @@ NOTE: main.js, All custom script and plugin activation script in this file.
                 }
             }
         })
-    
+
     /*----------------------------------------------------
     9. Best Seller Product Activation
     -----------------------------------------------------*/
@@ -357,7 +357,7 @@ NOTE: main.js, All custom script and plugin activation script in this file.
             }
         }
     })
-    
+
     /*----------------------------------------------------
     10. Like Product Activation
     -----------------------------------------------------*/
@@ -448,7 +448,7 @@ NOTE: main.js, All custom script and plugin activation script in this file.
             }
         }
     })
-        
+
     /*----------------------------------------------------
     12. New Product Tow For Home-2 Activation
     -----------------------------------------------------*/
@@ -507,7 +507,7 @@ NOTE: main.js, All custom script and plugin activation script in this file.
     $('.thumb-menu a').on('click', function () {
         $('.thumb-menu a').removeClass('active');
     })
-    
+
     /*----------------------------
     14. Countdown Js Activation
     -----------------------------*/
@@ -544,12 +544,12 @@ NOTE: main.js, All custom script and plugin activation script in this file.
             $('.header-sticky').removeClass("sticky");
         }
     });
-    
+
     /*----------------------------
     17. Nice Select Activation
     ------------------------------ */
     $('select').niceSelect();
-    
+
     /*----------------------------
     18. Price Slider Activation
     -----------------------------*/
@@ -558,20 +558,46 @@ NOTE: main.js, All custom script and plugin activation script in this file.
         min: 0,
         max: 100,
         values: [0, 85],
-    slide: function( event, ui ) {
-        $( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
-      }
+        slide: function (event, ui) {
+            $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
+        }
     });
-    $( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) +
-      " - $" + $( "#slider-range" ).slider( "values", 1 ) );
+    $("#amount").val("$" + $("#slider-range").slider("values", 0) +
+        " - $" + $("#slider-range").slider("values", 1));
 
 
 
     /*--------------------------
          banner colse Popup
     ---------------------------*/
-        $('.popup_off_banner').on('click', function () {
-            $(".popup_banner").fadeOut(500);
-        })
+    $('.popup_off_banner').on('click', function () {
+        $(".popup_banner").fadeOut(500);
+    })
 
 })(jQuery);
+
+var mycheckbox = document.querySelectorAll('.mycheckbox .item-checkbox');
+var myradiobutton = document.getElementsByName('color-select');
+for (let i = 0; i < mycheckbox.length; i++) {
+    mycheckbox[i].addEventListener('click', function () {
+        for (let j = 0; j < mycheckbox.length; j++) {
+            if (mycheckbox[j].classList.contains('active')) {
+                mycheckbox[j].classList.remove('active');
+                document.getElementById("tri").outerHTML = "";
+            }
+        }
+        myradiobutton[i].checked = true;
+        this.classList.add('active');
+        var triangle = document.createElement('div');
+        triangle.classList.add('triangle-check');
+        triangle.id = 'tri';
+        var check = document.createElement('i');
+        check.classList.add('fa', 'fa-check', 'mini-check');
+        if (!triangle.contains(check)) {
+            triangle.appendChild(check);
+        }
+        if (!this.contains(triangle)) {
+            this.appendChild(triangle);
+        }
+    });
+}

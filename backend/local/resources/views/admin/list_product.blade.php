@@ -179,53 +179,6 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="form-group col-md-6">
-                                    <label for="inputMemory">Bộ nhớ <span class="text-danger">*</span></label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" id="inputMemory" name="memory"
-                                            placeholder="Nhập bộ nhớ" aria-label="Text input with dropdown button">
-                                        <div class="input-group-append">
-                                            <select
-                                                class="form-control btn btn-primary dropdown-toggle dropdown-toggle-split"
-                                                id="selectMemoryTB" name="memory_type" required>
-                                                <option value="GB">GB</option>
-                                                <option value="TB">TB</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="inputColor">Màu sắc <span class="text-danger">*</span></label>
-                                    <input type="email" class="form-control" id="inputEmail"
-                                        placeholder="Nhập tên màu sắc" name="color" required>
-                                </div>
-                                {{-- <div class="form-group col-md-6">
-                                <label for="inputColorCode">Mã màu <span class="text-danger">*</span></label>
-                                <div class="js-colorpicker input-group" data-format="hex">
-                                    <input type="text" class="form-control" id="inputColorCode" name="color_code"
-                                        value="#5C80D1" required>
-                                    <div class="input-group-append">
-                                        <span class="input-group-text colorpicker-input-addon">
-                                            <i></i>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div> --}}
-                                <div class="form-group col-md-6">
-                                    <label for="inputPrice">Giá <span class="text-danger">*</span></label>
-                                    <div class="input-group">
-                                        <input type="number" class="form-control text-center" id="inputPrice"
-                                            name="price" min="0" placeholder="..">
-                                        <div class="input-group-append">
-                                            <span class="input-group-text">VNĐ</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-row">
-
                                 {{-- <div class="form-group col-md-6">
                                 <label for="selectStatus">Trạng thái <span class="text-danger">*</span></label>
                                         <select class="form-control" id="selectStatus" name="status" required>
@@ -233,7 +186,87 @@
                                             <option value="2">Đang kinh doanh</option>
                                             <option value="3">Ngừng kinh doanh</option>
                                         </select>
-                            </div> --}}
+                                </div> --}}
+                            </div>
+                            <div class="col-12">
+                                <h4>Thêm các phiên bản của điện thoại</h4>
+                                <div id="list-options">
+                                    <datalist id="list-color">
+                                        <option value="Vàng">
+                                        <option value="Đen">
+                                        <option value="Trắng">
+                                        <option value="Bạc">
+                                        <option value="Xanh dương">
+                                        <option value="Xám">
+                                        <option value="Gold">
+                                    </datalist>
+                                    <datalist id="list-ram">
+                                        <option value="0.5">
+                                        <option value="1">
+                                        <option value="2">
+                                        <option value="3">
+                                        <option value="4">
+                                        <option value="6">
+                                        <option value="8">
+                                        <option value="10">
+                                        <option value="12">
+                                        <option value="16">
+                                        <option value="32">
+                                    </datalist>
+                                    <datalist id="list-rom">
+                                        <option value="4 gb">
+                                        <option value="8 gb">
+                                        <option value="16 gb">
+                                        <option value="32 gb">
+                                        <option value="64 gb">
+                                        <option value="128 gb">
+                                        <option value="256 gb">
+                                        <option value="512 gb">
+                                        <option value="1 TB">
+                                        <option value="2 TB">
+                                    </datalist>
+                                    <div id="options-1" class="options mb-3">
+                                        <div class="form-row">
+                                            <div class="form-group col-md-4">
+                                                <label for="inputColor1">Màu sắc<span class="text-danger">*</span></label>
+                                                <input list="list-color" type="text" class="form-control" id="inputColor1" name="option[1][color]"
+                                                    placeholder="Nhập màu sắc" required>
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label for="inputRam1">Bộ nhớ ram (gb) <span class="text-danger">*</span></label>
+                                                <input list="list-ram" type="text" class="form-control" id="inputRam1" name="option[1][ram]"
+                                                    placeholder="Nhập bộ nhớ ram" required>
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label for="inputRom1">Bộ nhớ rom <span class="text-danger">*</span></label>
+                                                <input list="list-rom" type="text" class="form-control" id="inputRom1" name="option[1][rom]"
+                                                    placeholder="Nhập bộ nhớ rom" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label for="inputPrice1">Giá <span class="text-danger">*</span></label>
+                                                <div class="input-group">
+                                                    <input type="number" class="form-control text-center" id="inputPrice1" name="option[1][price]"
+                                                        min="0" placeholder="..">
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text">VNĐ</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-6 d-flex align-items-end justify-content-center">
+                                                <button class="btn btn-danger" onclick="$('#options-1').remove();" type="button">Xóa phiên bản</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12 text-right">
+                                        <button class="btn btn-info" type="button"
+                                            onclick=addOptions();>Thêm phiên bản</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <!-- END Step 1 -->
@@ -357,7 +390,7 @@
         var table = $('#table-brand').DataTable({
             'columnDefs': [{
 
-                'targets': [0, 7], /* column index */
+                'targets': [0,3,7], /* column index */
 
                 'orderable': false, /* true or false */
 
@@ -456,6 +489,48 @@
     });
 </script>
 <script>
+    var temp = 1;
+    function addOptions() {
+        temp++;
+        let option =`
+        <div id="options-${temp}" class="options mb-3">
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="inputColor${temp}">Màu sắc<span class="text-danger">*</span></label>
+                    <input list="list-color" type="text" class="form-control" id="inputColor${temp}" name="option[${temp}][color]"
+                        placeholder="Nhập màu sắc" required>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="inputRam${temp}">Bộ nhớ ram (gb) <span class="text-danger">*</span></label>
+                    <input list="list-ram" type="text" class="form-control" id="inputRam${temp}" name="option[${temp}][ram]"
+                        placeholder="Nhập bộ nhớ ram" required>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="inputRom${temp}">Bộ nhớ rom <span class="text-danger">*</span></label>
+                    <input list="list-rom" type="text" class="form-control" id="inputRom${temp}" name="option[${temp}][rom]"
+                        placeholder="Nhập bộ nhớ rom" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="inputPrice${temp}">Giá <span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <input type="number" class="form-control text-center" id="inputPrice${temp}" name="option[${temp}][price]"
+                            min="0" placeholder="..">
+                        <div class="input-group-append">
+                            <span class="input-group-text">VNĐ</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-md-6 d-flex align-items-end justify-content-center">
+                    <button class="btn btn-danger" onclick="$('#options-${temp}').remove();" type="button">Xóa phiên bản</button>
+                </div>
+            </div>
+        </div>
+        `
+        $('#list-options').append(option);
+    }
+
     function chooseImg(temp) {
         $('#input-image-' + temp).click();
         console.log('hello');
@@ -473,6 +548,7 @@
             reader.readAsDataURL(input.files[0]);
         }
     }
+
     var index = 1;
     function addImage() {
         index++;

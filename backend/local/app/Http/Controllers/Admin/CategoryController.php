@@ -19,9 +19,16 @@ class CategoryController extends Controller
 
     public function postAddCate(AddCateRequest $req)
     {
+        $dataIcon = $req->file('icon');
         $category = new Category;
         $category->cate_name = $req->name;
         $category->cate_slug = str_slug($req->name);
+        $category->cate_icon = '';
+        if(!empty($dataIcon)){
+            $iconName = $dataIcon->getClientOriginalName();
+            $category->cate_icon = $iconName;
+            $dataIcon->storeAs('images/category/',$iconName);
+        }
         $category->save();
     }
 
@@ -33,9 +40,15 @@ class CategoryController extends Controller
 
     public function postEditCate(EditCateRequest $req, $id)
     {
+        $dataIcon = $req->file('icon');
         $category = Category::find($id);
         $category->cate_name = $req->name;
         $category->cate_slug = str_slug($req->name);
+        if(!empty($dataIcon)){
+            $iconName = $dataIcon->getClientOriginalName();
+            $category->cate_icon = $iconName;
+            $dataIcon->storeAs('images/category/',$iconName);
+        }
         $category->save();
     }
 

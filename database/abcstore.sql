@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th5 21, 2019 lúc 08:07 PM
+-- Thời gian đã tạo: Th5 22, 2019 lúc 06:19 AM
 -- Phiên bản máy phục vụ: 10.1.38-MariaDB
 -- Phiên bản PHP: 7.3.2
 
@@ -451,6 +451,33 @@ INSERT INTO `product_image` (`pimg_id`, `pimg_prod`, `pimg_name`, `created_at`, 
 -- --------------------------------------------------------
 
 --
+-- Cấu trúc bảng cho bảng `product_options`
+--
+
+CREATE TABLE `product_options` (
+  `propt_id` int(11) NOT NULL,
+  `propt_prod` int(11) NOT NULL,
+  `propt_color` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `propt_ram` float NOT NULL,
+  `propt_rom` varchar(11) COLLATE utf8_unicode_ci NOT NULL,
+  `propt_price` float NOT NULL,
+  `propt_quantity` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `product_options`
+--
+
+INSERT INTO `product_options` (`propt_id`, `propt_prod`, `propt_color`, `propt_ram`, `propt_rom`, `propt_price`, `propt_quantity`, `created_at`, `updated_at`) VALUES
+(1, 23, 'Xám', 4, '64', 29990000, 5, '2019-05-21 11:33:18', '2019-05-21 11:33:18'),
+(2, 23, 'Bạc', 4, '128', 29990000, 5, '2019-05-21 11:33:18', '2019-05-21 13:25:05'),
+(3, 23, 'Vàng Đồng', 4, '64', 29990000, 5, '2019-05-21 11:33:18', '2019-05-21 11:33:18');
+
+-- --------------------------------------------------------
+
+--
 -- Cấu trúc bảng cho bảng `promotion`
 --
 
@@ -491,6 +518,33 @@ CREATE TABLE `provider` (
 
 INSERT INTO `provider` (`prov_id`, `prov_name`, `prov_email`, `prov_phone`, `prov_fax`, `prov_address`, `prov_desc`, `created_at`, `updated_at`) VALUES
 (1, 'TRANG VÀNG VIỆT NAM', 'contact@trangvangvietnam.com', '1900 54 55 80', '+84 (024) 3636 9371', 'Tầng 6, Tòa Nhà Vinafood1, 94 Lương Yên, P. Bạch Đằng, Q. Hai Bà Trưng, Hà Nội', 'Trụ sở Hà Nội', '2019-05-17 12:39:59', '2019-05-17 12:39:59');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `slide`
+--
+
+CREATE TABLE `slide` (
+  `slide_id` int(11) NOT NULL,
+  `slide_caption` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `slide_img` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `slide_status` tinyint(1) NOT NULL DEFAULT '1',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `slide`
+--
+
+INSERT INTO `slide` (`slide_id`, `slide_caption`, `slide_img`, `slide_status`, `created_at`, `updated_at`) VALUES
+(1, 'Xin chào', '800-300-800x300-(1).png', 1, '2019-05-21 10:25:57', '2019-05-21 10:25:57'),
+(2, 'Quẩy lên', '800-300-800x300-(2).png', 1, '2019-05-21 10:25:57', '2019-05-21 10:25:57'),
+(3, 'Chào cả nhà', '800-300-800x300-(7).png', 1, '2019-05-21 10:25:57', '2019-05-21 10:25:57'),
+(4, 'Lên nóc nhà', 'big-Oppo-800-300-800x300-(2).png', 1, '2019-05-21 10:25:57', '2019-05-21 10:25:57'),
+(5, 'Chúc ngủ ngon', 'huawei-P30-800-300-800x300-(1).png', 1, '2019-05-21 10:25:57', '2019-05-21 10:25:57'),
+(6, 'Lễ lộc đi mua thôi', 'op-lung-samsung-800-300-800x300.png', 1, '2019-05-21 10:25:57', '2019-05-21 10:25:57');
 
 -- --------------------------------------------------------
 
@@ -672,6 +726,14 @@ ALTER TABLE `product_image`
   ADD KEY `pimg_prod` (`pimg_prod`);
 
 --
+-- Chỉ mục cho bảng `product_options`
+--
+ALTER TABLE `product_options`
+  ADD PRIMARY KEY (`propt_id`),
+  ADD UNIQUE KEY `propt_prod` (`propt_prod`,`propt_color`,`propt_ram`,`propt_rom`),
+  ADD KEY `prquan_prod` (`propt_prod`);
+
+--
 -- Chỉ mục cho bảng `promotion`
 --
 ALTER TABLE `promotion`
@@ -683,6 +745,12 @@ ALTER TABLE `promotion`
 --
 ALTER TABLE `provider`
   ADD PRIMARY KEY (`prov_id`);
+
+--
+-- Chỉ mục cho bảng `slide`
+--
+ALTER TABLE `slide`
+  ADD PRIMARY KEY (`slide_id`);
 
 --
 -- Chỉ mục cho bảng `stock`
@@ -804,13 +872,19 @@ ALTER TABLE `permission`
 -- AUTO_INCREMENT cho bảng `product`
 --
 ALTER TABLE `product`
-  MODIFY `prod_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `prod_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT cho bảng `product_image`
 --
 ALTER TABLE `product_image`
-  MODIFY `pimg_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `pimg_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT cho bảng `product_options`
+--
+ALTER TABLE `product_options`
+  MODIFY `propt_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT cho bảng `promotion`
@@ -823,6 +897,12 @@ ALTER TABLE `promotion`
 --
 ALTER TABLE `provider`
   MODIFY `prov_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT cho bảng `slide`
+--
+ALTER TABLE `slide`
+  MODIFY `slide_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Các ràng buộc cho các bảng đã đổ
@@ -871,7 +951,13 @@ ALTER TABLE `product`
 -- Các ràng buộc cho bảng `product_image`
 --
 ALTER TABLE `product_image`
-  ADD CONSTRAINT `product_image_ibfk_1` FOREIGN KEY (`pimg_prod`) REFERENCES `product` (`prod_id`);
+  ADD CONSTRAINT `product_image_ibfk_1` FOREIGN KEY (`pimg_prod`) REFERENCES `product` (`prod_id`) ON DELETE CASCADE;
+
+--
+-- Các ràng buộc cho bảng `product_options`
+--
+ALTER TABLE `product_options`
+  ADD CONSTRAINT `product_options_ibfk_1` FOREIGN KEY (`propt_prod`) REFERENCES `product` (`prod_id`) ON DELETE CASCADE;
 
 --
 -- Các ràng buộc cho bảng `promotion`

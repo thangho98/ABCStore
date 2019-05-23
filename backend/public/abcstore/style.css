@@ -4771,3 +4771,51 @@ a.shipping-calculator-button:hover {
 .gray-st {
     color: #b4b4b4 !important;
 }
+
+.memory {
+    z-index: 99;
+}
+
+.mycheckbox {
+    font-size: 20px;
+    padding: 5px 15px;
+}
+
+.mycheckbox .item-checkbox {
+    border: 1px solid gray;
+    display: inline-block;
+    padding: 5px 20px;
+    border-radius: 3px;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.1s ease-in-out;
+}
+
+.mycheckbox .item-checkbox.active {
+    border: 1px solid #ee4d2d;
+    color: #ee4d2d;
+}
+
+.mycheckbox .item-checkbox.active .triangle-check {
+    background: #ee4d2d;
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    bottom: 0;
+    right: 0;
+    -webkit-clip-path: polygon(100% 0, 0% 100%, 100% 100%);
+    clip-path: polygon(100% 0, 0% 100%, 100% 100%);
+}
+
+.mycheckbox .item-checkbox:hover {
+    color: #ee4d2d;
+    border: 1px solid #ee4d2d;
+}
+
+.mini-check {
+    color: white;
+    font-size: 10px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}

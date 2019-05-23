@@ -62,6 +62,7 @@
                                         onclick="$('input[name*=\'selected\']').prop('checked', this.checked);">
                                 </th>
                                 <th class="text-center orderby" style="width: 100px;">Mã DM</th>
+                                <th class="text-center orderby remove-sorting">icon</th>
                                 <th class="orderby">Tên danh mục</th>
                                 <th style="width: 140px;" class="text-right orderby remove-sorting">Thao tác</th>
                             </tr>
@@ -73,15 +74,15 @@
                                     <input type="checkbox" name="selected[]" value="{{$item->cate_id}}">
                                 </td>
                                 <td class="text-center font-size-sm">{{$item->cate_id}}</td>
+                                <td class="text-center font-size-sm">
+                                    <img class="thumbnail"
+                                        src="{{asset('local/storage/app/images/category/'.$item->cate_icon)}}">
+                                </td>
                                 <td class="font-w600 font-size-sm">
                                     {{$item->cate_name}}
-                                </td>
+                                </td> 
                                 <td class="text-right">
                                     <div class="py-2 mb-2">
-                                        <button type="button" class="btn btn-sm btn-info" title="Xem chi tiết"
-                                            data-toggle="tooltip" onclick="showDetail({{$item->cate_id}})">
-                                            <i class="fa fa-fw fa-eye"></i>
-                                        </button>
                                         <button type="button" class="btn btn-sm btn-warning" data-toggle="tooltip"
                                             onclick="showEdit({{$item->cate_id}})" title="Sửa">
                                             <i class="fa fa-fw fa-pencil-alt"></i>
@@ -105,11 +106,21 @@
 <div id="popupshow">
     <div class="popup-form hidden" id="popup-form-add">
         <form action="{{asset('admin/category/add')}}" id="add-form" method="POST" novalidate>
-            <div class="form-group">
-                <label for="inputName">Tên danh mục <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="inputName" name="name" placeholder="Nhập tên danh mục"
-                    required>
+            <div class="form-row">
+                <div class="form-group col-8">
+                    <label for="inputName">Tên danh mục <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="inputName" name="name" placeholder="Nhập tên danh mục"
+                        required>
+                </div>
+                <div class="form-group ml-3 col-1">
+                    <label for="input-image-icon">icon <span class="text-danger">*</span></label>
+                    <input type="file" hidden name="icon" value="" id="input-image-icon" onchange="changeImg(this, 'icon');" accept="image/*">
+                </div>
+                <div class="form-group mt-4 col-1">
+                    <img id="image-icon" class="thumbnail" src="assets/media/img/new_seo-10-75.png" onclick="chooseImg('icon');" height="50px;" width="50px;">
+                </div>
             </div>
+            
             <div class="tile-footer-2">
                 <button class="btn btn-primary" type="button" id="submitAdd">Thêm</button>
                 <button class="btn btn-danger" type="button" id="cancelAdd">Hủy</button>
@@ -151,7 +162,7 @@
         var table = $('#table-brand').DataTable({
             'columnDefs': [{
 
-                'targets': [0, 3], /* column index */
+                'targets': [0, 2, 4], /* column index */
 
                 'orderable': false, /* true or false */
 
@@ -173,7 +184,7 @@
                 {
                     extend: 'copy',
                     exportOptions: {
-                        columns: [1, 2]
+                        columns: [1, 3]
                     },
                     text: 'Copy',
                     className: 'btn btn-sm btn-primary'
@@ -181,7 +192,7 @@
                 {
                     extend: 'csv',
                     exportOptions: {
-                        columns: [1, 2]
+                        columns: [1, 3]
                     },
                     text: 'Export to CSV',
                     className: 'btn btn-sm btn-primary',
@@ -197,7 +208,7 @@
                 {
                     extend: 'excel',
                     exportOptions: {
-                        columns: [1, 2]
+                        columns: [1, 3]
                     },
                     text: 'Export to xlsx',
                     className: 'btn btn-sm btn-primary',
@@ -213,7 +224,7 @@
                 {
                     extend: 'pdf',
                     exportOptions: {
-                        columns: [1, 2]
+                        columns: [1, 3]
                     },
                     text: 'Export to pdf',
                     className: 'btn btn-sm btn-primary',
@@ -229,7 +240,7 @@
                 {
                     extend: 'print',
                     exportOptions: {
-                        columns: [1, 2]
+                        columns: [1, 3]
                     },
                     text: 'Print',
                     className: 'btn btn-sm btn-primary',
@@ -252,6 +263,23 @@
 </script>
 <script src="assets/js/myscript.js"></script>
 <script>
+    function chooseImg(temp) {
+        $('#input-image-' + temp).click();
+    }
+
+    function changeImg(input, temp) {
+        //Nếu như tồn thuộc tính file, đồng nghĩa người dùng đã chọn file mới
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            //Sự kiện file đã được load vào website
+            reader.onload = function (e) {
+                //Thay đổi đường dẫn ảnh
+                $('#image-' + temp).attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
     function showEdit(cate_id) {
         // URL có kèm tham số number
         var url = '{{asset('admin/category/edit')}}/' + cate_id;

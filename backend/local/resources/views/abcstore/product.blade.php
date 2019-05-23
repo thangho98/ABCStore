@@ -2,6 +2,7 @@
 @section('title','Sản phẩm')
 @section('main')
 <!-- Categorie Menu & Slider Area Start Here -->
+{{-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous"> --}}
 <div class="main-page-banner home-3">
     <div class="container">
         <div class="row">
@@ -113,15 +114,15 @@
                         </div>
                         <div class="product-size mb-20 clearfix">
                             <label>Bộ nhớ</label>
-                            <select class="" name="memory">
+                            <select class="memory" name="memory">
                                 @foreach ($list_memory as $item)
-                                    <option value="{{$item->propt_ram}}-{{$item->propt_rom}}">ram {{$item->propt_ram}}gb - rom {{$item->propt_rom}}gb</option>
+                                    <option value="{{$item->propt_ram}}-{{$item->propt_rom}}">ram {{$item->propt_ram}}gb - rom {{$item->propt_rom}}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="color clearfix mb-20">
                             <label>Màu sắc</label>
-                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                            {{-- <div class="btn-group btn-group-toggle" data-toggle="buttons">
                                 @for ($i = 0; $i < count($list_color); $i++)
                                 @if ($i==0)
                                     <label class="btn btn-light active">
@@ -133,6 +134,22 @@
                                     </label>
                                 @endif  
                                 @endfor
+                            </div> --}}
+                            <div class="mycheckbox">
+                                <form action="" hidden>
+                                    <input type="radio" name="color-select" value="gray"> Xám<br>
+                                    <input type="radio" name="color-select" value="silver"> Bạc<br>
+                                    <input type="radio" name="color-select" value="black"> Đen
+                                </form>
+                                <div class="item-checkbox">
+                                    Xám
+                                </div>
+                                <div class="item-checkbox">
+                                    Bạc
+                                </div>
+                                <div class="item-checkbox">
+                                    Đen
+                                </div>
                             </div>
                         </div>
                         <div class="box-quantity d-flex hot-product2">
@@ -156,7 +173,6 @@
                                 <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
                                 <li><a href="#"><i class="fa fa-google-plus-official"
                                             aria-hidden="true"></i></a></li>
-                                <li><a href="#"><i class="fa fa-pinterest-p" aria-hidden="true"></i></a></li>
                             </ul>
                         </div>
                     </div>

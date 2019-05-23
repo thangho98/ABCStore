@@ -79,15 +79,24 @@
     transform-origin: 50% 50%;
 }
 
+html {
+    min-height: 100%;
+    /* make sure it is at least as tall as the viewport */
+    position: relative;
+}
+
 .darktheme {
-    position: absolute;
+    position: fixed;
     top: 0;
+    bottom: 0;
     left: 0;
+    right: 0;
     width: 100%;
     height: 100%;
     z-index: 99;
     visibility: hidden;
     transition: all 0.6s;
+    overflow: hidden;
 }
 
 .darktheme.active {
@@ -217,5 +226,13 @@ Not supports in Firefox and IE */
 
 .content-form {
     height: 550px;
-    padding-bottom: 50px;
+    padding-bottom: 68px;
+}
+
+.options {
+    padding-top: 1rem;
+    padding-left: 5px;
+    padding-right: 5px;
+    border: 1px solid green;
+    border-radius: 5px;
 }
