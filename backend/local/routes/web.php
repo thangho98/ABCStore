@@ -113,6 +113,24 @@ Route::group(['namespace' => 'Admin'], function () {
             Route::get('/view/{id}','CartController@getViewDetailCartOnline');
             
         });
+
+        Route::group(['prefix' => 'orders'], function () {
+            Route::get('/','OrdersController@getOrders');
+            
+            Route::get('/view/{id}','OrdersController@getViewDetailOrders');
+            
+            Route::get('/add/','OrdersController@getAddOrders');
+
+            Route::post('/add/','OrdersController@postAddOrders');
+            
+            Route::get('/options/{id}','OrdersController@getOptions');
+
+            Route::get('/item/add','OrdersController@getAddItem');
+            Route::get('/item/delete','OrdersController@getDelItem');
+            Route::get('/item/update','OrdersController@getUpdateItem');
+
+            Route::get('/print/{id}','OrdersController@getPrintOrders');
+        });
         
     });
     Route::get('/logout','HomeController@getLogout');

@@ -29,6 +29,8 @@
     <link rel="apple-touch-icon" sizes="180x180" href="assets/media/favicons/apple-touch-icon-180x180.png">
     <!-- END Icons -->
 
+    @yield('add_css_and_script')
+
     <!-- Stylesheets -->
     <!-- Fonts and OneUI framework -->
     <link rel="stylesheet"
@@ -38,7 +40,8 @@
     <!-- You can include a specific file from css/themes/ folder to alter the default color theme of the template. eg: -->
     <!-- <link rel="stylesheet" id="css-theme" href="assets/css/themes/amethyst.min.css"> -->
     <!-- END Stylesheets -->
-    @yield('add_css_and_script')
+    <link rel="stylesheet" href="assets/css/print.css">
+    
 </head>
 
 <body>
@@ -721,7 +724,7 @@
                                 </a>
                             </li>
                             <li class="nav-main-item">
-                                <a class="nav-main-link" href="be_ui_typography.html">
+                                <a class="nav-main-link" href="{{asset('admin/orders')}}">
                                     <span class="nav-main-link-name">Đơn hàng</span>
                                 </a>
                             </li>

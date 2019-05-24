@@ -1,35 +1,36 @@
 <div class="popup-form hidden" id="popup-view-detail">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title" id="exampleModalLongTitle">Thông tin chi tiết đơn hàng online</h3>
-                <button type="button" class="close" id="closeDetail">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <b>Tên khách hàng: </b>{{$cart->cus_name}}<br>
-                <b>SĐT: </b>{{$cart->cus_phone}}<br>
-                <b>CMND: </b>{{$cart->cus_identity_card}}<br>
-                <b>Tổng số lượng: </b>{{$cart->cart_identity_card}}<br>
-                <b>Tổng tiền: </b>{{number_format($cart->cart_phone,0,',','.')}} VNĐ<br>
-                <b>Ngày đặt hàng: </b>{{$cart->cart_email}}<br>
-            </div>
-            <div class="col-xl-12">
-                <!-- Table Head Dark -->
-                <div class="block">
-                    <div class="block-header">
-                        <h3 class="block-title">Danh sách giỏ hàng</h3>
-                    </div>
-                    <div class="block-content">
-                        <table class="table table-vcenter">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title" id="exampleModalLongTitle">Thông tin chi tiết đơn hàng online</h3>
+            <button type="button" class="close" id="closeDetail">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <b>Tên khách hàng: </b>{{$cart->cus_name}}<br>
+            <b>SĐT: </b>{{$cart->cus_phone}}<br>
+            <b>Email: </b>{{$orders->cus_email}}<br>
+            <b>CMND: </b>{{$cart->cus_identity_card}}<br>
+            <b>Tổng số lượng: </b>{{$cart->cart_identity_card}}<br>
+            <b>Tổng tiền: </b>{{number_format($cart->cart_phone,0,',','.')}} VNĐ<br>
+            <b>Ngày đặt hàng: </b>{{$cart->cart_email}}<br>
+        </div>
+        <div class="col-xl-12">
+            <!-- Table Head Dark -->
+            <div class="block">
+                <div class="block-header">
+                    <h3 class="block-title">Danh sách giỏ hàng</h3>
+                </div>
+                <div class="block-content">
+                    <div class="table-responsive">
+                        <table class="table table-sm table-vcenter table-hover">
                             <thead class="thead-dark">
                                 <tr>
                                     <th class="text-center" style="width: 150px;">Mã sản
                                         phẩm
                                     </th>
                                     <th>Tên sản phẩm</th>
-                                    <th class="d-none d-sm-table-cell text-center"
-                                        style="width: 300px;">
+                                    <th class="d-none d-sm-table-cell text-center">
                                         Số lượng</th>
                                     <th>Giá gốc</th>
                                     <th>Giá khuyến mãi</th>
@@ -60,15 +61,15 @@
                         </table>
                     </div>
                 </div>
-                <!-- END Table Head Dark -->
             </div>
+            <!-- END Table Head Dark -->
         </div>
-        <script>
-            $('#closeDetail').on('click', function () {
-                $('#popup-view-detail').addClass('hidden');
-                $('.darktheme').removeClass('active');
-                $('#popup-view-detail').remove();
-            });
-        </script>
     </div>
-    
+    <script>
+        $('#closeDetail').on('click', function () {
+            $('#popup-view-detail').addClass('hidden');
+            $('.darktheme').removeClass('active');
+            $('#popup-view-detail').remove();
+        });
+    </script>
+</div>

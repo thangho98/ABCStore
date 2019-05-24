@@ -63,6 +63,7 @@
                                 <th class="orderby">Tên Khách hàng</th>
                                 <th class="d-none d-sm-table-cell orderby">SĐT</th>
                                 <th class="d-none d-sm-table-cell orderby">CMND</th>
+                                <th class="d-none d-sm-table-cell orderby">Email</th>
                                 <th style="width: 140px;" class="text-right orderby remove-sorting">Thao tác</th>
                             </tr>
                         </thead>
@@ -81,6 +82,9 @@
                                 </td>
                                 <td class="text-center d-sm-table-cell">
                                     {{$item->cus_identity_card}}
+                                </td>
+                                <td class="text-center d-sm-table-cell">
+                                    {{$item->email}}
                                 </td>
                                 <td class="text-right">
                                     <div class="py-2 mb-2">
@@ -138,7 +142,7 @@
         var table = $('#table-brand').DataTable({
             'columnDefs': [{
 
-                'targets': [0, 5], /* column index */
+                'targets': [0, 6], /* column index */
 
                 'orderable': false, /* true or false */
 
@@ -160,7 +164,7 @@
                 {
                     extend: 'copy',
                     exportOptions: {
-                        columns: [1, 2, 3, 4]
+                        columns: [1, 2, 3, 4, 5]
                     },
                     text: 'Copy',
                     className: 'btn btn-sm btn-primary'
@@ -168,7 +172,7 @@
                 {
                     extend: 'csv',
                     exportOptions: {
-                        columns: [1, 2, 3, 4]
+                        columns: [1, 2, 3, 4, 5]
                     },
                     text: 'Export to CSV',
                     className: 'btn btn-sm btn-primary',
@@ -184,7 +188,7 @@
                 {
                     extend: 'excel',
                     exportOptions: {
-                        columns: [1, 2, 3, 4]
+                        columns: [1, 2, 3, 4, 5]
                     },
                     text: 'Export to xlsx',
                     className: 'btn btn-sm btn-primary',
@@ -200,7 +204,7 @@
                 {
                     extend: 'pdf',
                     exportOptions: {
-                        columns: [1, 2, 3, 4]
+                        columns: [1, 2, 3, 4, 5]
                     },
                     text: 'Export to pdf',
                     className: 'btn btn-sm btn-primary',
@@ -216,7 +220,7 @@
                 {
                     extend: 'print',
                     exportOptions: {
-                        columns: [1, 2, 3, 4]
+                        columns: [1, 2, 3, 4, 5]
                     },
                     text: 'Print',
                     className: 'btn btn-sm btn-primary',

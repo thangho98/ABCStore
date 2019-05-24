@@ -1,5 +1,5 @@
 @extends('admin.layout.master')
-@section('title','Đơn đặt hàng online')
+@section('title','Hóa đơn bán hàng')
 @section('add_css_and_script')
 <link rel="stylesheet" href="assets/js/plugins/datatables/dataTables.bootstrap4.css">
 <link rel="stylesheet" href="assets/js/plugins/datatables/buttons-bs4/buttons.bootstrap4.min.css">
@@ -19,14 +19,14 @@
         <div class="content content-full">
             <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
                 <h1 class="flex-sm-fill h3 my-2">
-                    Danh sách Đơn đặt hàng online<small
+                    Danh sách Hóa đơn bán hàng<small
                         class="d-block d-sm-inline-block mt-2 mt-sm-0 font-size-base font-w400 text-muted"></small>
                 </h1>
                 <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
                     <ol class="breadcrumb breadcrumb-alt">
                         <li class="breadcrumb-item">Bán hàng</li>
                         <li class="breadcrumb-item" aria-current="page">
-                            <a class="link-fx" href="">Đơn đặt hàng online</a>
+                            <a class="link-fx" href="">Hóa đơn bán hàng</a>
                         </li>
                     </ol>
                 </nav>
@@ -41,85 +41,72 @@
         <div class="block">
             <div class="block-header row justify-content-end">
                 <aside class="py-2 mb-2">
-                    <button type="button" class="btn btn-success" data-toggle="tooltip" title="Làm mới">
+                    <a href="{{asset('admin/orders/add')}}" class="btn btn-primary" data-toggle="tooltip" title="Thêm">
+                        <i class="fa fa-fw fa-plus"></i>
+                    </a>
+                    <button type="button" class="btn btn-success" data-toggle="tooltip" title="Làm mới" onclick="location.reload();">
                         <i class="fa fa-fw fa-sync-alt"></i>
                     </button>
                 </aside>
             </div>
             <div class="block-content block-content-full">
-                <div class="table-responsive">
                 <!-- DataTables init on table by adding .js-dataTable-buttons class, functionality is initialized in js/pages/be_tables_datatables.min.js which was auto compiled from _es6/pages/be_tables_datatables.js -->
+                <div class="table-responsive">
                     <table class="table table-bordered table-striped table-vcenter" id="table-brand">
                         <thead>
                             <tr>
-                                <th class="text-center orderby" style="width: 80px;">Mã ĐH</th>
-                                <th style="width: 150px;" class="orderby">Tên Khách hàng</th>
-                                <th style="width: 130px;" class="orderby">SĐT</th>
-                                <th style="width: 130px;" class="orderby">Email</th>
-                                <th style="width: 130px;" class="d-none d-sm-table-cell orderby">Tổng số lượng</th>
-                                <th style="width: 130px;" class="d-none d-sm-table-cell orderby">Tổng tiền
+                                <th class="text-center orderby" >Mã HĐ</th>
+                                <th class="orderby">Tên Khách hàng</th>
+                                <th class="orderby">SĐT</th>
+                                <th class="orderby">Email</th>
+                                <th class="d-none d-sm-table-cell orderby">CMND
                                 </th>
-                                <th class="d-none d-sm-table-cell orderby">Trạng thái
+                                <th class="d-none d-sm-table-cell orderby">Tổng số lượng</th>
+                                <th class="d-none d-sm-table-cell orderby">Tổng tiền
                                 </th>
-                                <th style="width: 100px;" class="text-right orderby remove-sorting">Thao tác</th>
+                                
+                                <th class="text-right orderby remove-sorting">Thao tác</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($list_cart as $item)
+                            @foreach ($list_orders as $item)
                             <tr>
-                                <td class="text-center font-size-sm">{{$item->cart_id}}</td>
+                                <td class="text-center font-size-sm">{{$item->order_id}}</td>
                                 <td class="font-w600 font-size-sm">
                                     {{$item->cus_name}}
                                 </td>
                                 <td class="d-none d-sm-table-cell">
+                                    {{$item->cus_phone}}
+                                </td>
+                                <td class="text-center d-sm-table-cell">
                                     {{$item->cus_email}}
                                 </td>
                                 <td class="text-center d-sm-table-cell">
                                     {{$item->cus_identity_card}}
                                 </td>
                                 <td class="text-center d-sm-table-cell">
-                                    {{$item->cart_total_prod}}
+                                    {{$item->order_total_prod}}
                                 </td>
                                 <td class="text-center d-sm-table-cell">
-                                    {{number_format($item->cart_total_price,0,',','.')}} VNĐ
-                                </td>
-                                <td class="text-center d-sm-table-cell">
-                                    @if ($item->cart_state == 0)
-                                    <span class="badge badge-warning">Chờ gửi mail
-                                    @elseif ($item->cart_state == 1)
-                                    <span class="badge badge-secondary">Chờ xác nhận
-                                    @elseif($item->cart_state == 2)
-                                    <span class="badge badge-primary">Đã xác nhận
-                                    @elseif($item->cart_state == 3)
-                                    <span class="badge badge-success">Đã thanh toán
-                                    @else
-                                    <span class="badge badge-dark">Hết hạn
-                                    @endif </span>
+                                    {{number_format($item->order_total_price,0,',','.')}} VNĐ
                                 </td>
                                 <td class="text-right">
                                     <div class="py-2 mb-2">
                                         <button type="button" class="btn btn-sm btn-info" title="Xem chi tiết"
-                                            data-toggle="tooltip" onclick="showDetail({{$item->empl_id}})">
+                                            data-toggle="tooltip" onclick="showDetail({{$item->order_id}})">
                                             <i class="fa fa-fw fa-eye"></i>
                                         </button>
-                                        @if ($item->cart_state == 0)
-                                        <a type="button" class="btn btn-sm btn-info" title="Gửi mail xác nhận"
-                                            data-toggle="tooltip" href="">
-                                            <i class="fa fa-fw fa-eye"></i>
+                                        <a class="btn btn-sm btn-primary" title="Xem chi tiết"
+                                            data-toggle="tooltip" href="{{asset('admin/orders/print/'.$item->order_id)}}">
+                                            <i class="fa fa-fw fa-print"></i>
                                         </a>
-                                        @elseif($item->cart_state == 2)
-                                        <a type="button" class="btn btn-sm btn-info" title="Thanh toán"
-                                            data-toggle="tooltip" href="">
-                                            <i class="fa fa-fw fa-eye"></i>
-                                        </a>
-                                        @endif
                                     </div>
                                 </td>
                             </tr>
                             @endforeach
                         </tbody>
                     </table>
-                </div>
+                <div>
             </div>
         </div>
         <!-- END Dynamic Table with Export Buttons -->
@@ -163,7 +150,7 @@
         var table = $('#table-brand').DataTable({
             'columnDefs': [{
 
-                'targets': [0, 8], /* column index */
+                'targets': [0, 7], /* column index */
 
                 'orderable': false, /* true or false */
 
@@ -185,7 +172,7 @@
                 {
                     extend: 'copy',
                     exportOptions: {
-                        columns: [1, 2, 3, 4, 5, 6, 7]
+                        columns: [1, 2, 3, 4, 5, 6]
                     },
                     text: 'Copy',
                     className: 'btn btn-sm btn-primary'
@@ -193,7 +180,7 @@
                 {
                     extend: 'csv',
                     exportOptions: {
-                        columns: [1, 2, 3, 4, 5, 6, 7]
+                        columns: [1, 2, 3, 4, 5, 6]
                     },
                     text: 'Export to CSV',
                     className: 'btn btn-sm btn-primary',
@@ -209,7 +196,7 @@
                 {
                     extend: 'excel',
                     exportOptions: {
-                        columns: [1, 2, 3, 4, 5, 6, 7]
+                        columns: [1, 2, 3, 4, 5, 6]
                     },
                     text: 'Export to xlsx',
                     className: 'btn btn-sm btn-primary',
@@ -225,7 +212,7 @@
                 {
                     extend: 'pdf',
                     exportOptions: {
-                        columns: [1, 2, 3, 4, 5, 6, 7]
+                        columns: [1, 2, 3, 4, 5, 6]
                     },
                     text: 'Export to pdf',
                     className: 'btn btn-sm btn-primary',
@@ -241,7 +228,7 @@
                 {
                     extend: 'print',
                     exportOptions: {
-                        columns: [1, 2, 3, 4, 5, 6, 7]
+                        columns: [1, 2, 3, 4, 5, 6]
                     },
                     text: 'Print',
                     className: 'btn btn-sm btn-primary',
@@ -264,9 +251,9 @@
 </script>
 <script src="assets/js/myscript.js"></script>
 <script>
-    function showDetail(cart_id) {
+    function showDetail(order_id) {
         // URL có kèm tham số number
-        var url = '{{asset('admin/cart/view')}}/' + cart_id;
+        var url = '{{asset('admin/orders/view')}}/' + order_id;
 
         // Data lúc này cho bằng rỗng
         var data = {};
@@ -285,9 +272,9 @@
         $.get(url, data, success, dataType);
     };
 
-    function showEdit(cart_id) {
+    function showDetail(orders_id) {
         // URL có kèm tham số number
-        var url = '{{asset('admin/cart/edit')}}/' + cart_id;
+        var url = '{{asset('admin/orders/view')}}/' + orders_id;
 
         // Data lúc này cho bằng rỗng
         var data = {};
@@ -295,9 +282,8 @@
         // Success Function
         var success = function (result) {
             $('#popupshow').append(result);
-            $('#popup-form-edit').toggleClass('hidden');
+            $('#popup-view-detail').toggleClass('hidden');
             $('.darktheme').toggleClass('active');
-            $('#edit-form').removeAttr('novalidate');
         };
 
         // Result Type

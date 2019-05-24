@@ -382,9 +382,6 @@
 <script src="assets/js/plugins/jquery-validation/jquery.validate.min.js"></script>
 <!-- Page JS Helpers (BS Datepicker + BS Colorpicker + BS Maxlength + Select2 + Masked Inputs + Ion Range Slider plugins) -->
 <script>jQuery(function () { One.helpers(['datepicker', 'colorpicker', 'maxlength', 'select2', 'masked-inputs', 'rangeslider']); });</script>
-
-<!-- Page JS Code -->
-<script src="assets/js/myscript.js"></script>
 <script>
     $(document).ready(function () {
         var table = $('#table-brand').DataTable({
@@ -612,4 +609,6 @@
         $.get(url, data, success, dataType);
     };
 </script>
+<!-- Page JS Code -->
+<script src="assets/js/myscript.js"></script>
 @endsection
