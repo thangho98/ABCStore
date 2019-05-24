@@ -1,4 +1,4 @@
-<div class="popup-form hidden" id="popup-view-detail">
+<div class="popup-form hidden scrollbar" id="popup-view-detail">
     <div class="modal-content">
         <div class="modal-header">
             <h3 class="modal-title" id="exampleModalLongTitle">Thông tin chi tiết đơn hàng online</h3>
@@ -7,61 +7,64 @@
             </button>
         </div>
         <div class="modal-body">
-            <b>Tên khách hàng: </b>{{$cart->cus_name}}<br>
-            <b>SĐT: </b>{{$cart->cus_phone}}<br>
-            <b>Email: </b>{{$orders->cus_email}}<br>
-            <b>CMND: </b>{{$cart->cus_identity_card}}<br>
-            <b>Tổng số lượng: </b>{{$cart->cart_identity_card}}<br>
-            <b>Tổng tiền: </b>{{number_format($cart->cart_phone,0,',','.')}} VNĐ<br>
-            <b>Ngày đặt hàng: </b>{{$cart->cart_email}}<br>
-        </div>
-        <div class="col-xl-12">
-            <!-- Table Head Dark -->
-            <div class="block">
-                <div class="block-header">
-                    <h3 class="block-title">Danh sách giỏ hàng</h3>
+            <div class="row">
+                <div class="col-sm-6">
+                    <b>Mã khách hàng: </b>{{$carts->cus_id}}<br>
+                    <b>Tên khách hàng: </b>{{$carts->cus_name}}<br>
+                    <b>SĐT: </b>{{$carts->cus_phone}}<br>
+                    <b>Email: </b>{{$carts->cus_email}}<br>
+                    <b>CMND: </b>{{$carts->cus_identity_card}}<br>
                 </div>
-                <div class="block-content">
-                    <div class="table-responsive">
-                        <table class="table table-sm table-vcenter table-hover">
-                            <thead class="thead-dark">
-                                <tr>
-                                    <th class="text-center" style="width: 150px;">Mã sản
-                                        phẩm
-                                    </th>
-                                    <th>Tên sản phẩm</th>
-                                    <th class="d-none d-sm-table-cell text-center">
-                                        Số lượng</th>
-                                    <th>Giá gốc</th>
-                                    <th>Giá khuyến mãi</th>
-                                    <th>Tổng</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($list_cartdetail as $item)
-                                <tr>
-                                    <th class="text-center" scope="row">
-                                        {{$item->prod_id}}
-                                    </th>
-                                    <td class="font-w600 font-size-sm">
-                                        {{$item->prod_name}}
-                                    </td>
-                                    <td class="d-none d-table-cell">
-                                        {{$item->cartdt_prod_quantity}}
-                                    </td>
-                                    <td>{{number_format($item->cartdt_prod_unit_price,0,',','.')}} VNĐ</td>
-                                    <td>{{number_format($cart->cartdt_prod_promotion_price,0,',','.')}} VNĐ</td>
-                                    <td class="d-none d-table-cell">
-                                        {{$item->cartdt_total}}
-                                    </td>
-                                </tr>
-                                @endforeach
-                                
-                            </tbody>
-                        </table>
-                    </div>
+                <div class="col-sm-6">
+                    <b>Tổng số lượng: </b>{{$carts->cart_total_prod}}<br>
+                    <b>Tổng tiền: </b>{{number_format($carts->cart_total_price,0,',','.')}} VNĐ<br>
+                    <b>Ngày đặt hàng: </b>{{ date("d/m/Y",strtotime($carts->cart_date))}}<br>
+                    <b>Trạng thái : </b>@if ($item->cart_state == 0)
+                    <span class="badge badge-secondary">Chờ xác nhận
+                    @elseif($item->cart_state == 1)
+                    <span class="badge badge-primary">Đã xác nhận
+                    @elseif($item->cart_state == 2)
+                    <span class="badge badge-success">Đã thanh toán
+                    @else
+                    <span class="badge badge-dark">Hết hạn
+                    @endif </span><br>
                 </div>
             </div>
+        </div>
+        <div class="col-12">
+            <!-- Table Head Dark -->
+                <h3 class="block-title mb-3">Chi tiết đơn hàng</h3>
+                <div class="table-responsive">
+                    <table class="table table-sm table-vcenter table-hover">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Tên sản phẩm</th>
+                                <th class="d-none d-sm-table-cell text-center">
+                                    Số lượng</th>
+                                <th>Giá gốc</th>
+                                <th>Giá khuyến mãi</th>
+                                <th>Tổng</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($list_cartdetail as $item)
+                            <tr>
+                                <td class="font-w600 font-size-sm text-center">
+                                    {{$item->prod_name}} {{$item->propt_ram}} gb {{$item->propt_rom}} {{$item->propt_color}}
+                                </td>
+                                <td class="d-none d-table-cell text-center">
+                                    {{$item->cartdt_prod_quantity}}
+                                </td>
+                                <td class="text-right">{{number_format($item->cartdt_prod_unit_price,0,',','.')}} VNĐ</td>
+                                <td class="text-right">{{number_format($item->cartdt_prod_promotion_price,0,',','.')}} VNĐ</td>
+                                <td class="d-none d-table-cell text-right">
+                                    {{number_format($item->cartdt_total,0,',','.')}} VNĐ
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             <!-- END Table Head Dark -->
         </div>
     </div>

@@ -122,6 +122,10 @@ Route::group(['namespace' => 'Admin'], function () {
             Route::get('/add/','OrdersController@getAddOrders');
 
             Route::post('/add/','OrdersController@postAddOrders');
+
+            Route::get('/cart/{id}','OrdersController@getAddOrdersFromCart');
+
+            Route::post('/cart/{id}','OrdersController@postAddOrdersFromCart');
             
             Route::get('/options/{id}','OrdersController@getOptions');
 

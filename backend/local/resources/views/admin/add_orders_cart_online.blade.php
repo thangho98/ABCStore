@@ -1,32 +1,31 @@
 @extends('admin.layout.master')
 @section('title','Thanh toán đơn hàng')
 @section('add_css_and_script')
-<link rel="stylesheet" href="assets/js/plugins/datatables/dataTables.bootstrap4.css">
-<link rel="stylesheet" href="assets/js/plugins/datatables/buttons-bs4/buttons.bootstrap4.min.css">
-
 <!-- Page JS Plugins CSS -->
 <link rel="stylesheet" href="assets/js/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css">
-<link rel="stylesheet" href="assets/js/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css">
+<link rel="stylesheeta" href="assets/js/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css">
 <link rel="stylesheet" href="assets/js/plugins/select2/css/select2.min.css">
 <link rel="stylesheet" href="assets/js/plugins/ion-rangeslider/css/ion.rangeSlider.css">
+
 <link rel="stylesheet" href="assets/css/mystyle.css">
 @endsection
 
 @section('main')
 <main id="main-container">
+
     <!-- Hero -->
     <div class="bg-body-light">
         <div class="content content-full">
             <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
                 <h1 class="flex-sm-fill h3 my-2">
-                    Thanh toán đơn hàng<small
+                    Thêm hóa đơn mới <small
                         class="d-block d-sm-inline-block mt-2 mt-sm-0 font-size-base font-w400 text-muted"></small>
                 </h1>
                 <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
                     <ol class="breadcrumb breadcrumb-alt">
                         <li class="breadcrumb-item">Bán hàng</li>
                         <li class="breadcrumb-item" aria-current="page">
-                            <a class="link-fx" href="">Thanh toán đơn hàng</a>
+                            <a class="link-fx" href="">Đơn hàng</a>
                         </li>
                     </ol>
                 </nav>
@@ -64,7 +63,7 @@
                     <!-- END Step Tabs -->
 
                     <!-- Form -->
-                    <form class="js-wizard-validation-form" action="be_forms_wizard.html" method="POST">
+                    <form class="js-wizard-validation-form" method="POST">
                         <!-- Steps Content -->
                         <div class="block-content block-content-full tab-content px-md-5" style="min-height: 300px;">
                             <!-- Step 1 -->
@@ -75,33 +74,31 @@
                                         </div>
                                         <div class="block-content">
                                             <div class="row">
-                                                <div class="col-lg-6 col-xl-5">
+                                                <div class="col-4">
                                                     <div class="form-group">
-                                                        <select class="js-select2 form-control" id="example-select2"
-                                                            name="example-select2" style="width: 100%;"
-                                                            data-placeholder="Chọn một..">
+                                                        <select class="js-select2 form-control" id="select-product" style="width: 100%;"
+                                                            data-placeholder="Chọn một sản phẩm..">
                                                             <option></option>
                                                             <!-- Required for data-placeholder attribute to work with Select2 plugin -->
-                                                            <option selected="selected" data-price="1000" value="1">
-                                                                Iphone 4
+                                                            @foreach ($list_prod as $item)
+                                                            <option value="{{$item->prod_id}}">{{$item->prod_name}}
                                                             </option>
-                                                            <option data-price="1000" value="2">Iphone 5
-                                                            </option>
-                                                            <option data-price="2000" value="3">Iphone 6
-                                                            </option>
-                                                            <option data-price="3000" value="4">Iphone 7
-                                                            </option>
-                                                            <option data-price="4000" value="5">Iphone 8
-                                                            </option>
-                                                            <option data-price="5000" value="6">Iphone 9
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-4">
+                                                    <div class="form-group">
+                                                        <select id="select-options" class="form-control" name="propt_id"
+                                                            style="width: 100%;">
+                                                            <option value="" disabled selected hidden>Chọn một phiên bản
                                                             </option>
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-3 col-xl-5">
+                                                <div class="col-lg-3">
                                                     <button class="btn btn-primary" type="button" id="add-product">Thêm
-                                                        sản
-                                                        phẩm</button>
+                                                        sản phẩm</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -117,46 +114,48 @@
                                             <table class="table table-vcenter">
                                                 <thead class="thead-dark">
                                                     <tr>
-                                                        <th class="text-center" style="width: 150px;">Mã sản
-                                                            phẩm
-                                                        </th>
+                                                        <th class="text-center" style="width: 100px;">Mã SP</th>
                                                         <th>Tên sản phẩm</th>
+                                                        <th style="width: 250px;">Phiên bản</th>
                                                         <th class="d-none d-sm-table-cell text-center"
-                                                            style="width: 300px;">
-                                                            Số lượng</th>
-                                                        <th>Giá gốc</th>
-                                                        <th>Giá khuyến mãi</th>
+                                                            style="width: 150px;">Số lượng</th>
+                                                        <th style="width: 150px;">Giá gốc</th>
+                                                        <th style="width: 160px;">Giá khuyến mãi</th>
                                                         <th class="text-center" style="width: 120px;">Thao tác
                                                         </th>
                                                     </tr>
                                                 </thead>
-                                                <tbody id="products">
+                                                <tbody>
+                                                    @foreach ($content as $item)
                                                     <tr>
                                                         <th class="text-center" scope="row">
-                                                            1
+                                                            {{$item->id}}
                                                         </th>
-                                                        <td class="font-w600 font-size-sm">
-                                                            <a href="be_pages_generic_profile.html">Iphone 4</a>
-                                                        </td>
+                                                        <td class="font-w600 font-size-sm">{{$item->name}}</td>
+                                                        <td class="font-w600 font-size-sm">Màu:
+                                                            {{$item->attributes['propt_color']}}, Ram:
+                                                            {{$item->attributes['propt_ram']}} gb, Rom:
+                                                            {{$item->attributes['propt_rom']}}</td>
                                                         <td class="d-none d-table-cell">
                                                             <div class="form-group">
                                                                 <input id="input${product.id}"
-                                                                    class="form-control text-center" type="number"
-                                                                    required min="1" value="1">
+                                                                    class="form-control text-center" type="number" onchange="updateCart(this.value,'{{$item->id}}')"
+                                                                    required min="1" value="{{$item->quantity}}">
                                                             </div>
                                                         </td>
-                                                        <td>1.000.000 VNĐ</td>
-                                                        <td>800.000 VNĐ</td>
+                                                        <td>{{number_format($item->price,0,',','.')}} VNĐ</td>
+                                                        <td>{{number_format($item->price,0,',','.')}} VNĐ</td>
                                                         <td class="text-center">
                                                             <div class="btn-group">
                                                                 <button type="button"
-                                                                    class="btn btn-sm btn-danger deleteproduct"
+                                                                    class="btn btn-sm btn-danger deleteproduct" onclick="deleteCart({{$item->id}})"
                                                                     data-toggle="tooltip" title="Xóa sản phẩm">
                                                                     <i class="fa fa-fw fa-times"></i>
                                                                 </button>
                                                             </div>
                                                         </td>
                                                     </tr>
+                                                    @endforeach
                                                 </tbody>
                                             </table>
                                         </div>
@@ -168,19 +167,29 @@
 
                             <!-- Step 2 -->
                             <div class="tab-pane" id="wizard-validation-step2" role="tabpanel">
-                                <div class="form-group">
-                                    <label for="wizard-validation-name">Họ tên</label>
-                                    <input class="form-control" type="text" id="wizard-validation-name" name="cus_name">
+                                <div class="form-row">
+                                    <div class="form-group col-6">
+                                        <label for="wizard-validation-name">Họ tên</label>
+                                        <input class="form-control" type="text" id="wizard-validation-name"
+                                            name="cus_name" value="{{$cus->cus_name}}" required>
+                                    </div>
+                                    <div class="form-group col-6">
+                                        <label for="wizard-validation-phone">SĐT</label>
+                                        <input class="form-control" type="text" id="wizard-validation-phone"
+                                            name="cus_phone" value="{{$cus->cus_phone}}" required>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="wizard-validation-phone">SĐT</label>
-                                    <input class="form-control" type="text" id="wizard-validation-phone"
-                                        name="cus_phone">
-                                </div>
-                                <div class="form-group">
-                                    <label for="wizard-validation-address">Địa chỉ</label>
-                                    <input class="form-control" type="address" id="wizard-validation-address"
-                                        name="cus_address">
+                                <div class="form-row">
+                                    <div class="form-group col-6">
+                                        <label for="wizard-validation-email">Email</label>
+                                        <input class="form-control" type="email" id="wizard-validation-email"
+                                            name="cus_email" value="{{$cus->cus_email}}" required>
+                                    </div>
+                                    <div class="form-group col-6">
+                                        <label for="wizard-validation-identity-card">CMND</label>
+                                        <input class="form-control" type="text" id="wizard-validation-identity-card"
+                                            name="cus_identity_card" value="{{$cus->cus_identity_card}}" required>
+                                    </div>
                                 </div>
                             </div>
                             <!-- END Step 2 -->
@@ -200,35 +209,27 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr class="cart_item">
-                                                            <td class="product-name">
-                                                                Vestibulum suscipit <span class="product-quantity"> ×
-                                                                    1</span>
-                                                            </td>
-                                                            <td class="product-total">
-                                                                <span class="amount">£165.00</span>
-                                                            </td>
-                                                        </tr>
-                                                        <tr class="cart_item">
-                                                            <td class="product-name">
-                                                                Vestibulum dictum magna <span class="product-quantity">
-                                                                    ×
-                                                                    1</span>
-                                                            </td>
-                                                            <td class="product-total">
-                                                                <span class="amount">£50.00</span>
-                                                            </td>
-                                                        </tr>
+                                                        @foreach ($content as $item)
+                                                            <tr class="cart_item">
+                                                                <td class="product-name">
+                                                                        {{$item->name}} {{$item->attributes['propt_ram']}} gb {{$item->attributes['propt_rom']}} {{$item->attributes['propt_color']}} 
+                                                                    <span class="product-quantity"> × {{$item->quantity}}</span>
+                                                                </td>
+                                                                <td class="product-total">
+                                                                    <span class="amount">{{number_format($item->price*$item->quantity,0,',','.')}} VNĐ</span>
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
                                                     </tbody>
                                                     <tfoot>
                                                         <tr class="cart-subtotal">
-                                                            <th>Cart Subtotal</th>
-                                                            <td><span class="amount">£215.00</span>
+                                                            <th>Phụ phí </th>
+                                                            <td><span class="amount">0 VNĐ</span>
                                                             </td>
                                                         </tr>
                                                         <tr class="order-total">
-                                                            <th>Order Total</th>
-                                                            <td><span class=" total amount">£215.00</span>
+                                                            <th>Tổng tiền thanh toán</th>
+                                                            <td><span class=" total amount">{{number_format($total_orders,0,',','.')}} VNĐ</span>
                                                             </td>
                                                         </tr>
                                                     </tfoot>
@@ -239,8 +240,7 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="custom-control custom-checkbox custom-control-primary">
-                                        <input type="checkbox" class="custom-control-input" id="wizard-validation-terms"
-                                            name="wizard-validation-terms">
+                                        <input type="checkbox" class="custom-control-input" id="wizard-validation-terms">
                                         <label class="custom-control-label" for="wizard-validation-terms">Đồng
                                             ý với các điều khoản</label>
                                     </div>
@@ -269,6 +269,7 @@
                             </div>
                         </div>
                         <!-- END Steps Navigation -->
+                        {{ csrf_field() }}
                     </form>
                     <!-- END Form -->
                 </div>
@@ -281,183 +282,113 @@
 
 </main>
 @endsection
-@section('popup')
-<div id="popupshow">
-</div>
-@endsection
 @section('scriptjs')
 <script src="assets/js/plugins/sweetalert.min.js"></script>
 
-<script src="assets/js/plugins/datatables/jquery.dataTables.min.js"></script>
-<script src="assets/js/plugins/datatables/dataTables.bootstrap4.min.js"></script>
-<script src="assets/js/plugins/datatables/buttons/dataTables.buttons.min.js"></script>
-<script src="assets/js/plugins/datatables/buttons/buttons.flash.min.js"></script>
-<script src="assets/js/plugins/datatables/buttons/buttons.print.min.js"></script>
-<script src="assets/js/plugins/datatables/buttons/buttons.html5.min.js"></script>
-<script src="assets/js/plugins/datatables/buttons/buttons.colVis.min.js"></script>
-<script src="assets/js/plugins/datatables/jszip/jszip.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-<script src="assets/js/plugins/datatables/pdfmake/vfs_fonts.js"></script>
+<script src="assets/js/plugins/jquery-bootstrap-wizard/bs4/jquery.bootstrap.wizard.min.js"></script>
+<script src="assets/js/plugins/jquery-validation/jquery.validate.min.js"></script>
+<script src="assets/js/plugins/jquery-validation/additional-methods.js"></script>
+
+<!-- Page JS Code -->
+<script src="assets/js/pages/be_forms_wizard.min.js"></script>
 
 <!-- Page JS Plugins -->
-<script src="assets/js/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
-<script src="assets/js/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js"></script>
 <script src="assets/js/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
 <script src="assets/js/plugins/select2/js/select2.full.min.js"></script>
 <script src="assets/js/plugins/jquery.maskedinput/jquery.maskedinput.min.js"></script>
 <script src="assets/js/plugins/ion-rangeslider/js/ion.rangeSlider.min.js"></script>
 
 <!-- Page JS Helpers (BS Datepicker + BS Colorpicker + BS Maxlength + Select2 + Masked Inputs + Ion Range Slider plugins) -->
-<script>jQuery(function () { One.helpers(['datepicker', 'colorpicker', 'maxlength', 'select2', 'masked-inputs', 'rangeslider']); });</script>
-
+<script>
+jQuery(function() {
+    One.helpers(['maxlength', 'select2', 'masked-inputs', 'rangeslider']);
+});
+</script>
 <!-- Page JS Code -->
 <script>
-    $(document).ready(function () {
-        var table = $('#table-brand').DataTable({
-            'columnDefs': [{
+$(document).ready(function() {
+    $('#select-product').change(function() {
+        var id = $('#select-product').val();
 
-                'targets': [0, 8], /* column index */
+        // URL
+        var url = "{{asset('admin/orders/options')}}/" + id;
 
-                'orderable': false, /* true or false */
+        // Data
+        var data = {};
 
-            }],
-            select: {
-                style: 'api'
-            },
-            "pagingType": "full_numbers"
-        });
+        // Success Function
+        var success = function(result) {
+            //console.log(result);
+            $('#select-options').empty();
+            var html = `<option value="" disabled selected hidden>Chọn một phiên bản</option> \n`;
+            $.each(result, function(key, item) {
+                html +=
+                    `<option value="${item['propt_id']}"> Màu: ${item['propt_color']}, Ram: ${item['propt_ram']} gb, Rom: ${item['propt_rom']}</option> \n`;
+            });
+            $('#select-options').append(html);
+        };
 
-        new $.fn.dataTable.Buttons(table, {
-            dom: {
-                container: {
-                    tag: 'aside',
-                    className: 'text-center bg-body-light py-2 mb-2'
-                }
-            },
-            buttons: [
-                {
-                    extend: 'copy',
-                    exportOptions: {
-                        columns: [1, 2, 3, 4, 5, 6, 7]
-                    },
-                    text: 'Copy',
-                    className: 'btn btn-sm btn-primary'
-                },
-                {
-                    extend: 'csv',
-                    exportOptions: {
-                        columns: [1, 2, 3, 4, 5, 6, 7]
-                    },
-                    text: 'Export to CSV',
-                    className: 'btn btn-sm btn-primary',
-                    filename: function () {
-                        var d = new Date();
-                        var n = d.getTime();
-                        return 'danhsachdondathangonline-' + n;
-                    },
-                    title: function () {
-                        return 'Danh sách Đơn đặt hàng online';
-                    }
-                },
-                {
-                    extend: 'excel',
-                    exportOptions: {
-                        columns: [1, 2, 3, 4, 5, 6, 7]
-                    },
-                    text: 'Export to xlsx',
-                    className: 'btn btn-sm btn-primary',
-                    filename: function () {
-                        var d = new Date();
-                        var n = d.getTime();
-                        return 'danhsachdondathangonline-' + n;
-                    },
-                    title: function () {
-                        return 'Danh sách Đơn đặt hàng online';
-                    }
-                },
-                {
-                    extend: 'pdf',
-                    exportOptions: {
-                        columns: [1, 2, 3, 4, 5, 6, 7]
-                    },
-                    text: 'Export to pdf',
-                    className: 'btn btn-sm btn-primary',
-                    filename: function () {
-                        var d = new Date();
-                        var n = d.getTime();
-                        return 'danhsachdondathangonline-' + n;
-                    },
-                    title: function () {
-                        return 'Danh sách Đơn đặt hàng online';
-                    }
-                },
-                {
-                    extend: 'print',
-                    exportOptions: {
-                        columns: [1, 2, 3, 4, 5, 6, 7]
-                    },
-                    text: 'Print',
-                    className: 'btn btn-sm btn-primary',
-                    filename: function () {
-                        var d = new Date();
-                        var n = d.getTime();
-                        return 'danhsachdondathangonline-' + n;
-                    },
-                    title: function () {
-                        return 'Danh sách Đơn đặt hàng online';
-                    }
-                }
-            ]
-        });
+        // Result Type
+        var dataType = 'json';
 
-        table.buttons(0, null).container().prependTo(
-            table.table().container()
-        );
+        // Send Ajax
+        $.get(url, data, success, dataType);
     });
-</script>
-<script src="assets/js/myscript.js"></script>
-<script>
-    function showDetail(cart_id) {
-        // URL có kèm tham số number
-        var url = '{{asset('admin/cart/view')}}/' + cart_id;
+    
+    $('#add-product').click(function(){
+        var id = $('#select-options').val();
+        // URL
+        console.log(id);
+        if(id == null) return;
 
-        // Data lúc này cho bằng rỗng
-        var data = {};
-
-        // Success Function
-        var success = function (result) {
-            $('#popupshow').append(result);
-            $('#popup-view-detail').toggleClass('hidden');
-            $('.darktheme').toggleClass('active');
+        // Data
+        var data = {
+            id: id
         };
 
-        // Result Type
-        var dataType = 'text';
+        $.ajax({
+            url: "{{asset('admin/orders/item/add')}}",
+            type: "get",
+            data: data,
+            success: function (result) {
+                location.reload();
+            },
+            error: function (result) {
+                swal("Bị lỗi", "Sản phẩm này đã có rồi", "error");
+            }
+        });
+    });
+});
 
-        // Send Ajax
-        $.get(url, data, success, dataType);
-    };
+    function deleteCart(id) {
+        if(id == null) return;
+        var url = "{{asset('admin/orders/item/delete')}}";
 
-    function showEdit(cart_id) {
-        // URL có kèm tham số number
-        var url = '{{asset('admin/cart/edit')}}/' + cart_id;
-
-        // Data lúc này cho bằng rỗng
-        var data = {};
-
-        // Success Function
-        var success = function (result) {
-            $('#popupshow').append(result);
-            $('#popup-form-edit').toggleClass('hidden');
-            $('.darktheme').toggleClass('active');
-            $('#edit-form').removeAttr('novalidate');
+        // Data
+        var data = {
+            id: id
         };
 
-        // Result Type
-        var dataType = 'text';
+        // Success Function
+        var success = function(result) {
+            //console.log(result);
+            location.reload();
+        };
 
         // Send Ajax
-        $.get(url, data, success, dataType);
-    };
+        $.get(url, data, success);
+    }
+
+    function updateCart(qty, id){
+        console.log(qty);
+        console.log(id);
+		$.get(
+			"{{asset('admin/orders/item/update')}}",
+			{qty:qty, id:id},
+			function(){
+				location.reload();
+			}
+		);
+	}
 </script>
 @endsection
