@@ -19,11 +19,11 @@
                     <b>Tổng số lượng: </b>{{$carts->cart_total_prod}}<br>
                     <b>Tổng tiền: </b>{{number_format($carts->cart_total_price,0,',','.')}} VNĐ<br>
                     <b>Ngày đặt hàng: </b>{{ date("d/m/Y",strtotime($carts->cart_date))}}<br>
-                    <b>Trạng thái : </b>@if ($item->cart_state == 0)
+                    <b>Trạng thái : </b>@if ($carts->cart_status == 0)
                     <span class="badge badge-secondary">Chờ xác nhận
-                    @elseif($item->cart_state == 1)
+                    @elseif($carts->cart_status == 1)
                     <span class="badge badge-primary">Đã xác nhận
-                    @elseif($item->cart_state == 2)
+                    @elseif($carts->cart_status == 2)
                     <span class="badge badge-success">Đã thanh toán
                     @else
                     <span class="badge badge-dark">Hết hạn
@@ -35,7 +35,7 @@
             <!-- Table Head Dark -->
                 <h3 class="block-title mb-3">Chi tiết đơn hàng</h3>
                 <div class="table-responsive">
-                    <table class="table table-sm table-vcenter table-hover">
+                    <table class="table table-vcenter table-hover">
                         <thead class="thead-dark">
                             <tr>
                                 <th>Tên sản phẩm</th>

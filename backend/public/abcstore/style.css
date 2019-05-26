@@ -4791,20 +4791,27 @@ a.shipping-calculator-button:hover {
     transition: all 0.1s ease-in-out;
 }
 
-.mycheckbox .item-checkbox.active {
+.mycheckbox .item-checkbox {
     border: 1px solid #ee4d2d;
     color: #ee4d2d;
 }
 
-.mycheckbox .item-checkbox.active .triangle-check {
+.mycheckbox .item-checkbox .triangle-check {
     background: #ee4d2d;
     position: absolute;
     width: 18px;
+    display: none;
+    visibility: hidden;
     height: 18px;
     bottom: 0;
     right: 0;
     -webkit-clip-path: polygon(100% 0, 0% 100%, 100% 100%);
     clip-path: polygon(100% 0, 0% 100%, 100% 100%);
+}
+
+.mycheckbox .item-checkbox .triangle-check.show {
+    display: block;
+    visibility: visible;
 }
 
 .mycheckbox .item-checkbox:hover {

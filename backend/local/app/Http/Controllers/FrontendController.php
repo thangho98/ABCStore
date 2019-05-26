@@ -11,6 +11,8 @@ use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Slide;
 use DB;
+use Session;
+use Illuminate\Support\Facades\Log;
 
 class FrontendController extends Controller
 {
@@ -96,7 +98,7 @@ class FrontendController extends Controller
         return view('abcstore.index', $data);
     }
 
-    public function getProduct($id)
+    public function getProduct($id, Request $req)
     {
         $data['product'] = Product::find($id);
             
@@ -104,15 +106,37 @@ class FrontendController extends Controller
         $data['list_options'] = ProductOptions::where('propt_prod',$id)->get();
 
         $data['list_memory'] = ProductOptions::where('propt_prod',$id)
-                                ->select(DB::raw(' DISTINCT propt_ram, propt_rom'))
-                                ->orderBy('propt_ram','asc')
-                                ->orderBy('propt_rom','asc')
+                                ->select(DB::raw('DISTINCT propt_ram, propt_rom'))
+                                ->orderBy('propt_ram','desc')
+                                ->orderBy('propt_rom','desc')
                                 ->get();
 
-        $data['list_color'] = ProductOptions::where('propt_prod',$id)
-                                ->select(DB::raw(' DISTINCT propt_color'))
+        // if(!(empty($req->ram) && empty($req->rom))){
+        //     $data['list_color'] = ProductOptions::where('propt_prod',$id)
+        //                 ->where('propt_ram',$req->ram)
+        //                 ->where('propt_rom',$req->rom)
+        //                 ->select(DB::raw('DISTINCT propt_color'))
+        //                 ->get();
+        //     $data['ram'] = $req->ram;
+        //     $data['rom'] = $req->rom;
+        // }
+        // else if(count($data['list_memory']) > 0){
+        //     $data['list_color'] = ProductOptions::where('propt_prod',$id)
+        //                     ->where('propt_ram',$data['list_memory'][0]->propt_ram)
+        //                     ->where('propt_rom',$data['list_memory'][0]->propt_rom)
+        //                     ->select(DB::raw('DISTINCT propt_color'))
+        //                     ->get();
+        //     $data['ram'] = $data['list_memory'][0]->propt_ram;
+        //     $data['rom'] = $data['list_memory'][0]->propt_rom;
+        // }
+        if(count($data['list_memory']) > 0){
+            $data['list_color'] = ProductOptions::where('propt_prod',$id)
+                                ->where('propt_ram',$data['list_memory'][0]->propt_ram)
+                                ->where('propt_rom',$data['list_memory'][0]->propt_rom)
+                                ->select(DB::raw('DISTINCT propt_color'))
                                 ->get();
-
+        }
+        
         $data['list_image'] = ProductImage::where('pimg_prod',$id)->get();
 
         $data['list_related'] = Product::where('prod_cate',$data['product']->prod_cate)
@@ -130,23 +154,6 @@ class FrontendController extends Controller
             $data['avg_voted'] = $sum/count($data['list_comment']);
         
         return view('abcstore.product',$data);
-    }
-
-    public function getQuickView($id)
-    {
-        $data['product'] = DB::table('product')
-            ->where('prod_id',$id)
-            ->where('cmt_prod',$id)
-            ->leftJoin('comment','product.prod_id','comment.cmt_prod')
-            ->select(DB::raw('prod_id, prod_name, prod_cate, prod_brand, prod_slug, prod_detail, prod_poster, prod_new, avg(cmt_voted) as cmt_avg_voted'))
-            ->groupBy('prod_id','prod_name')
-            ->first();
-            
-        $data['list_comment'] = Comment::where('cmt_prod',$id)->get();
-        $data['list_options'] = ProductOptions::where('propt_prod',$id)->get();
-        $data['list_image'] = ProductImage::where('pimg_prod',$id)->get();
-
-        return view('abcstore.popup_quickview',$data);
     }
 
     public function getProductByCategory($id)
@@ -175,6 +182,26 @@ class FrontendController extends Controller
         return back();
     }
     
+    public function getOptionsColorProduct($id, Request $req)
+    {
+        $list_color = ProductOptions::where('propt_prod',$id)
+                            ->where('propt_ram',$req->ram)
+                            ->where('propt_rom',$req->rom)
+                            ->select(DB::raw('DISTINCT propt_color'))
+                            ->get();
+        return json_encode($list_color);
+    }
+
+    public function getOptionsProduct($id, Request $req)
+    {
+        $options = ProductOptions::where('propt_prod',$id)
+                            ->where('propt_ram',$req->ram)
+                            ->where('propt_rom',$req->rom)
+                            ->where('propt_color',$req->color)
+                            ->first();
+        return json_encode($options);
+    }
+
     public function getSearch(Request $req)
     {
         $result = $req->result;

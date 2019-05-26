@@ -576,28 +576,3 @@ NOTE: main.js, All custom script and plugin activation script in this file.
 
 })(jQuery);
 
-var mycheckbox = document.querySelectorAll('.mycheckbox .item-checkbox');
-var myradiobutton = document.getElementsByName('color-select');
-for (let i = 0; i < mycheckbox.length; i++) {
-    mycheckbox[i].addEventListener('click', function () {
-        for (let j = 0; j < mycheckbox.length; j++) {
-            if (mycheckbox[j].classList.contains('active')) {
-                mycheckbox[j].classList.remove('active');
-                document.getElementById("tri").outerHTML = "";
-            }
-        }
-        myradiobutton[i].checked = true;
-        this.classList.add('active');
-        var triangle = document.createElement('div');
-        triangle.classList.add('triangle-check');
-        triangle.id = 'tri';
-        var check = document.createElement('i');
-        check.classList.add('fa', 'fa-check', 'mini-check');
-        if (!triangle.contains(check)) {
-            triangle.appendChild(check);
-        }
-        if (!this.contains(triangle)) {
-            this.appendChild(triangle);
-        }
-    });
-}

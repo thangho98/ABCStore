@@ -70,11 +70,6 @@
                         <p><span class="price">$84.45</span><del class="prev-price">$105.50</del></p>
                         <div class="label-product l_sale">20<span class="symbol-percent">%</span></div>
                     </div>
-                    <div class="pro-actions">
-                        <div class="actions-primary">
-                            <a href="cart.html" title="Add to Cart"> + Thêm vào giỏ hàng</a>
-                        </div>
-                    </div>
                 </div>
                 <!-- Product Content End -->
             </div>
@@ -97,11 +92,6 @@
                         <p><span class="price">$84.45</span><del class="prev-price">$105.50</del></p>
                         <div class="label-product l_sale">20<span class="symbol-percent">%</span></div>
                     </div>
-                    <div class="pro-actions">
-                        <div class="actions-primary">
-                            <a href="cart.html" title="Add to Cart">+ Thêm vào giỏ hàng</a>
-                        </div>
-                    </div>
                 </div>
                 <!-- Product Content End -->
             </div>
@@ -123,11 +113,6 @@
                         <h4><a href="product.html">Terra Xpress HE Cooking </a></h4>
                         <p><span class="price">$84.45</span><del class="prev-price">$105.50</del></p>
                         <div class="label-product l_sale">15<span class="symbol-percent">%</span></div>
-                    </div>
-                    <div class="pro-actions">
-                        <div class="actions-primary">
-                            <a href="cart.html" title="Add to Cart">+ Thêm vào giỏ hàng</a>
-                        </div>
                     </div>
                 </div>
                 <!-- Product Content End -->
@@ -152,11 +137,6 @@
                         <p><span class="price">$84.45</span><del class="prev-price">$105.50</del></p>
                         <div class="label-product l_sale">20<span class="symbol-percent">%</span></div>
                     </div>
-                    <div class="pro-actions">
-                        <div class="actions-primary">
-                            <a href="cart.html" title="Add to Cart">+ Thêm vào giỏ hàng</a>
-                        </div>
-                    </div>
                 </div>
                 <!-- Product Content End -->
             </div>
@@ -178,11 +158,6 @@
                         <h4><a href="product.html">Gpoly and Bark Eames Styl...</a></h4>
                         <p><span class="price">$84.45</span><del class="prev-price">$105.50</del></p>
                         <div class="label-product l_sale">10<span class="symbol-percent">%</span></div>
-                    </div>
-                    <div class="pro-actions">
-                        <div class="actions-primary">
-                            <a href="cart.html" title="Add to Cart">+ Thêm vào giỏ hàng</a>
-                        </div>
                     </div>
                 </div>
                 <!-- Product Content End -->
@@ -207,11 +182,6 @@
                         <p><span class="price">$84.45</span><del class="prev-price">$105.50</del></p>
                         <div class="label-product l_sale">37<span class="symbol-percent">%</span></div>
                     </div>
-                    <div class="pro-actions">
-                        <div class="actions-primary">
-                            <a href="cart.html" title="Add to Cart">+ Thêm vào giỏ hàng</a>
-                        </div>
-                    </div>
                 </div>
                 <!-- Product Content End -->
                 <span class="sticker-new">new</span>
@@ -234,10 +204,8 @@
                 </div>
                 <!-- Nav tabs -->
                 <ul class="nav tabs-area" role="tablist">
-                    @for ($i = 0; $i < count($list_cate_new); $i++) 
-                        @if ($i==0)
-                        <li class="nav-item">
-                            <a class="nav-link active" data-toggle="tab"
+                    @for ($i = 0; $i < count($list_cate_new); $i++) @if ($i==0) <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab"
                             href="#{{$list_cate_new[$i]->cate_slug}}">{{$list_cate_new[$i]->cate_name}}</a>
                         </li>
                         @else
@@ -246,17 +214,16 @@
                                 href="#{{$list_cate_new[$i]->cate_slug}}">{{$list_cate_new[$i]->cate_name}}</a>
                         </li>
                         @endif
-                    @endfor
+                        @endfor
                 </ul>
             </div>
 
             <!-- Tab Contetn Start -->
             <div class="tab-content">
-                @for ($i = 0; $i < count($list_cate_new); $i++) 
-                    @if ($i==0) 
-                    <div id="{{$list_cate_new[$i]->cate_slug}}" class="tab-pane fade show active">
+                @for ($i = 0; $i < count($list_cate_new); $i++) @if ($i==0) <div id="{{$list_cate_new[$i]->cate_slug}}"
+                    class="tab-pane fade show active">
                     <!-- Arrivals Product Activation Start Here -->
-                        <div class="electronics-pro-active owl-carousel">
+                    <div class="electronics-pro-active owl-carousel">
                         <!-- Double Product Start -->
                         @php
                         $nameArr = 'by_cate_'.$list_cate_new[$i]->cate_id;
@@ -283,11 +250,6 @@
                                         <p><span class="price">$320.45</span><del class="prev-price">$400.50</del></p>
                                         <div class="label-product l_sale">30<span class="symbol-percent">%</span></div>
                                     </div>
-                                    <div class="pro-actions">
-                                        <div class="actions-primary">
-                                            <a href="cart.html" title="Add to Cart"> + Thêm vào giỏ hàng</a>
-                                        </div>
-                                    </div>
                                 </div>
                                 <!-- Product Content End -->
                                 <span class="sticker-new">new</span>
@@ -296,9 +258,7 @@
                             @php
                             $index++;
                             @endphp
-
-                            @if ($index < count($list_prod_new[$nameArr]))
-                            <div class="single-product">
+                            @if ($index < count($list_prod_new[$nameArr])) <div class="single-product">
                                 <!-- Product Image Start -->
                                 <div class="pro-img">
                                     <a href="{{asset('/product/'.$list_prod_new[$nameArr][$index]->prod_id)}}">
@@ -316,11 +276,6 @@
                                         </h4>
                                         <p><span class="price">$320.45</span><del class="prev-price">$400.50</del></p>
                                         <div class="label-product l_sale">30<span class="symbol-percent">%</span></div>
-                                    </div>
-                                    <div class="pro-actions">
-                                        <div class="actions-primary">
-                                            <a href="cart.html" title="Add to Cart"> + Thêm vào giỏ hàng</a>
-                                        </div>
                                     </div>
                                 </div>
                                 <!-- Product Content End -->
@@ -365,11 +320,6 @@
                             <p><span class="price">$320.45</span><del class="prev-price">$400.50</del></p>
                             <div class="label-product l_sale">30<span class="symbol-percent">%</span></div>
                         </div>
-                        <div class="pro-actions">
-                            <div class="actions-primary">
-                                <a href="cart.html" title="Add to Cart"> + Thêm vào giỏ hàng</a>
-                            </div>
-                        </div>
                     </div>
                     <!-- Product Content End -->
                     <span class="sticker-new">new</span>
@@ -397,11 +347,6 @@
                             </h4>
                             <p><span class="price">$320.45</span><del class="prev-price">$400.50</del></p>
                             <div class="label-product l_sale">30<span class="symbol-percent">%</span></div>
-                        </div>
-                        <div class="pro-actions">
-                            <div class="actions-primary">
-                                <a href="cart.html" title="Add to Cart"> + Thêm vào giỏ hàng</a>
-                            </div>
                         </div>
                     </div>
                     <!-- Product Content End -->
@@ -487,11 +432,6 @@
                                     <h4><a href="{{asset('/product/'.$prod->prod_id)}}">{{$prod->prod_name}}</a></h4>
                                     <p><span class="price">$320.45</span></p>
                                 </div>
-                                <div class="pro-actions">
-                                    <div class="actions-primary">
-                                        <a href="cart.html" title="Add to Cart"> + Thêm vào giỏ hàng</a>
-                                    </div>
-                                </div>
                             </div>
                             <!-- Product Content End -->
                         </div>
@@ -525,11 +465,6 @@
                             <div class="pro-info">
                                 <h4><a href="{{asset('/product/'.$prod->prod_id)}}">{{$prod->prod_name}}</a></h4>
                                 <p><span class="price">$320.45</span></p>
-                            </div>
-                            <div class="pro-actions">
-                                <div class="actions-primary">
-                                    <a href="cart.html" title="Add to Cart"> + Thêm vào giỏ hàng</a>
-                                </div>
                             </div>
                         </div>
                         <!-- Product Content End -->

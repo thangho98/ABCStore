@@ -2,7 +2,6 @@
 @section('title','Sản phẩm')
 @section('main')
 <!-- Categorie Menu & Slider Area Start Here -->
-{{-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous"> --}}
 <div class="main-page-banner home-3">
     <div class="container">
         <div class="row">
@@ -109,12 +108,12 @@
                             </div>
                         </div>
                         <div class="pro-price mtb-30">
-                            <p class="d-flex align-items-center"><span class="prev-price">16.51</span><span
-                                    class="price">$15.19</span><span class="saving-price">save 8%</span></p>
+                            <p class="d-flex align-items-center"><span id="prev-price" class="prev-price"></span><span
+                                    id="price" class="price"></span><span  id="saving-price" class="saving-price">save 8%</span></p>
                         </div>
                         <div class="product-size mb-20 clearfix">
                             <label>Bộ nhớ</label>
-                            <select class="memory" name="memory">
+                            <select class="memory" name="memory" id="selectMemory">
                                 @foreach ($list_memory as $item)
                                     <option value="{{$item->propt_ram}}-{{$item->propt_rom}}">ram {{$item->propt_ram}}gb - rom {{$item->propt_rom}}</option>
                                 @endforeach
@@ -122,34 +121,33 @@
                         </div>
                         <div class="color clearfix mb-20">
                             <label>Màu sắc</label>
-                            {{-- <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                            <div class="mycheckbox" id="rdoColor">
                                 @for ($i = 0; $i < count($list_color); $i++)
-                                @if ($i==0)
-                                    <label class="btn btn-light active">
-                                        <input type="radio" name="color" id="option1" autocomplete="off" checked> {{$list_color[$i]->propt_color}}
-                                    </label>
-                                @else
-                                    <label class="btn btn-light">
-                                        <input type="radio" name="color" id="option1" autocomplete="off"> {{$list_color[$i]->propt_color}}
-                                    </label>
-                                @endif  
+                                    <div id="item-checkbox-{{$i}}" class="item-checkbox" onclick="chooseColor({{$i}})">
+                                        <input id="input-checkbox-{{$i}}" hidden type="radio" onchange="getColor()" name="color_select" value="{{$list_color[$i]->propt_color}}">{{$list_color[$i]->propt_color}}
+                                        <div id="triangle-check-{{$i}}"  class="triangle-check">
+                                            <i class="fa fa-check mini-check"></i>
+                                        </div>
+                                    </div>
                                 @endfor
-                            </div> --}}
-                            <div class="mycheckbox">
-                                <form action="" hidden>
-                                    <input type="radio" name="color-select" value="gray"> Xám<br>
-                                    <input type="radio" name="color-select" value="silver"> Bạc<br>
-                                    <input type="radio" name="color-select" value="black"> Đen
+                                
+                                {{-- <div id="item-checkbox-2" class="item-checkbox" onclick="chooseColor(2)">
+                                    <input id="input-checkbox-2" type="radio" data-id="2" onchange="getColor()" name="color_select" value="xanh">Xanh
+                                    <div id="triangle-check-2"  class="triangle-check">
+                                        <i class="fa fa-check mini-check"></i>
+                                    </div>
+                                </div> --}}
+
+                                {{-- <form action="" hidden>
+                                    @foreach ($list_color as $item)
+                                        <input type="radio" name="color_select" value="{{$item->propt_color}}">{{$item->propt_color}}<br>
+                                    @endforeach
                                 </form>
-                                <div class="item-checkbox">
-                                    Xám
-                                </div>
-                                <div class="item-checkbox">
-                                    Bạc
-                                </div>
-                                <div class="item-checkbox">
-                                    Đen
-                                </div>
+                                @foreach ($list_color as $item)
+                                    <div class="item-checkbox" onclick="chooseColor()">
+                                        {{$item->propt_color}}
+                                    </div>
+                                @endforeach --}}
                             </div>
                         </div>
                         <div class="box-quantity d-flex hot-product2">
@@ -158,7 +156,7 @@
                             </form>
                             <div class="pro-actions">
                                 <div class="actions-primary">
-                                    <a href="cart.html" title="" data-original-title="Add to Cart"> + Thêm vào
+                                    <a id="addCart" title="" data-original-title="Add to Cart"> + Thêm vào
                                         giỏ hàng</a>
                                 </div>
                             </div>
@@ -337,7 +335,78 @@
 @endsection
 @section('scriptjs')
 <script>
+
+    function chooseColor(id) {
+        $('#input-checkbox-'+id).prop("checked",true);
+        $('#input-checkbox-'+id).change();
+        $('.triangle-check').removeClass('show');
+        $('#triangle-check-'+id).addClass('show');
+    }
+
+    function formatNumber(num) {
+        return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+    }
+
+    function getColor() {
+        var color = $("input:radio[name ='color_select']:checked").val();
+        //alert(color);
+
+        // $("input:radio[name ='color_select']").not(':checked').each(function() {
+        //     var id = $(this).attr('data-id');
+        //     $('#triangle-check-'+id).toggleClass('show');
+        // });
+        
+        let memory = $('#selectMemory').val();
+        let res = memory.split("-");
+        var url = "{{asset('product/options/'.$product->prod_id)}}";
+
+        var data = {
+            ram: res[0],
+            rom: res[1],
+            color: color
+        };
+
+        // Success Function
+        var success = function(result) {
+            console.log(result);
+
+            let urlCart = "{{asset('cart/add/')}}/";
+            console.log(urlCart);
+
+            $('#prev-price').html(formatNumber(result['propt_price'])+' VNĐ');
+            $('#price').html(formatNumber(result['propt_price'])+' VNĐ');
+            $("#addCart").attr("href", urlCart + result['propt_id']);
+        };
+
+        // Result Type
+        var dataType = 'json';
+
+        // Send Ajax
+        $.get(url, data, success, dataType);
+    }
+
+
+    function url_redirect(options){
+        var $form = $("<form />");
+        
+        $form.attr("action",options.url);
+        $form.attr("method",options.method);
+        
+        for (var data in options.data)
+        $form.append('<input type="hidden" name="'+data+'" value="'+options.data[data]+'" />');
+        
+        $("body").append($form);
+        $form.submit();
+    }
+    
     $(document).ready(function () {
+
+        
+
+        var windowHeight = $(window).height();
+        var scrollTop = $(window).scrollTop();
+        var mid = scrollTop + Math.floor(windowHeight / 2);
+
         $(".votes").click(function () {
 
             $(this).prevAll().removeClass("gray-st");
@@ -351,10 +420,82 @@
 
             $("#counting-star").val(numItems);
         });
-        $(".votes").on('mouseover', function () {
+        
+        $('#selectMemory').change(function(){
+            let memory = $('#selectMemory').val();
+            let res = memory.split("-");
+            
+            // url_redirect({url: "{{asset('product/'.$product->prod_id)}}",
+            //     method: "get",
+            //     data: {
+            //         ram: res[0],
+            //         rom: res[1]
+            //     }
+            // });
+            
+            var url = "{{asset('product/options/color/'.$product->prod_id)}}";
 
+            // Data
+            var data = {
+                ram: res[0],
+                rom: res[1]
+            };
+
+            // Success Function
+            var success = function(result) {
+                console.log(result);
+                $('#rdoColor').empty();
+                var html = ``;
+                var index = 0;
+                $.each(result, function(key, item) {
+                    html +=
+                        `
+                        <div id="item-checkbox-${index}" class="item-checkbox" onclick="chooseColor(${index})">
+                            <input id="input-checkbox-${index}" hidden type="radio" onchange="getColor()" name="color_select" value="${item['propt_color']}">${item['propt_color']}
+                            <div id="triangle-check-${index}"  class="triangle-check">
+                                <i class="fa fa-check mini-check"></i>
+                            </div>
+                        </div>
+                        `;
+                });
+                
+                $('#rdoColor').append(html);
+            };
+
+            // Result Type
+            var dataType = 'json';
+
+            // Send Ajax
+            $.get(url, data, success, dataType);
         });
+
+
     });
 
+// var mycheckbox = document.querySelectorAll('.mycheckbox .item-checkbox');
+// var myradiobutton = document.getElementsByName('color_select');
+// for (let i = 0; i < mycheckbox.length; i++) {
+// mycheckbox[i].addEventListener('click', function () {
+//     for (let j = 0; j < mycheckbox.length; j++) {
+//         if (mycheckbox[j].classList.contains('active')) {
+//             mycheckbox[j].classList.remove('active');
+//             document.getElementById("tri").outerHTML = "";
+//         }
+//     }
+//     myradiobutton[i].checked = true;
+//     this.classList.add('active');
+//     var triangle = document.createElement('div');
+//     triangle.classList.add('triangle-check');
+//     triangle.id = 'tri';
+//     var check = document.createElement('i');
+//     check.classList.add('fa', 'fa-check', 'mini-check');
+//     if (!triangle.contains(check)) {
+//         triangle.appendChild(check);
+//     }
+//     if (!this.contains(triangle)) {
+//         this.appendChild(triangle);
+//     }
+// });
+// }
 </script>
 @endsection

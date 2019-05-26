@@ -57,12 +57,13 @@ $(document).ready(function () {
 		}
 
 	});
+
 	$('#btnDel').click(function () {
 		swal({
 			title: "Bạn có muốn xóa?",
 			text: "Sau khi xóa, bạn sẽ không thể khôi phục đối tượng này!",
 			icon: "warning",
-			buttons: ["Không, hủy nó đi!", "Vâng, tôi chấp nhận!"],
+			buttons: ["Không, xóa nó đi!", "Vâng, tôi chấp nhận!"],
 			dangerMode: true,
 		})
 			.then((willDelete) => {

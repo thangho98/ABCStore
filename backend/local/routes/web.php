@@ -3,7 +3,8 @@
 Route::get('/', 'FrontendController@getHome');
 
 Route::get('/product/{id}/', 'FrontendController@getProduct');
-Route::get('/product/quickview/{id}/', 'FrontendController@getQuickView');
+Route::get('/product/options/color/{id}/', 'FrontendController@getOptionsColorProduct');
+Route::get('/product/options/{id}/', 'FrontendController@getOptionsProduct');
 Route::post('/product/{id}/', 'FrontendController@postComment');
 
 
@@ -14,11 +15,20 @@ Route::get('/category/{id}/{slug}', 'FrontendController@getProductByCategory');
 Route::get('/search', 'FrontendController@getSearch');
 
 Route::group(['prefix' => 'cart'], function () {
-    Route::get('add/{id}', 'CartController@getAddCart');
-    Route::get('show', 'CartController@getShowCart');
-    Route::get('delete/{id}', 'CartController@getDeleteCart');
-    Route::get('update', 'CartController@getUpdateCart');
-    Route::post('show', 'CartController@postComplete');
+
+    Route::get('show', 'CartCusController@getShowCart');
+
+    Route::get('add/{id}', 'CartCusController@getAddCart');
+    
+    
+    Route::get('delete/{id}', 'CartCusController@getDeleteCart');
+    Route::get('update', 'CartCusController@getUpdateCart');
+
+    Route::get('checkout', 'CartCusController@getCheckout');
+    Route::post('checkout', 'CartCusController@postCheckout');
+
+    Route::get('complete', 'CartCusController@getComplete');
+    Route::get('confirm/{token}/{id}', 'CartCusController@getConfirm');
 });
 
 Route::group(['namespace' => 'Admin'], function () {
@@ -134,6 +144,8 @@ Route::group(['namespace' => 'Admin'], function () {
             Route::get('/item/update','OrdersController@getUpdateItem');
 
             Route::get('/print/{id}','OrdersController@getPrintOrders');
+
+            Route::get('/cancel/','OrdersController@getCancelOrders');
         });
         
     });

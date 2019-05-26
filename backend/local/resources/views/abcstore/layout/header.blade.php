@@ -53,7 +53,7 @@
             <div class="row align-items-center no-gutters">
                 <div class="col-lg-3 col-md-12">
                     <div class="logo mb-all-30">
-                        <a href="index.html"><img src="img/logo/logo.png" alt="logo-image"></a>
+                        <a href="{{asset('/')}}"><img src="img/logo/logo.png" alt="logo-image"></a>
                     </div>
                 </div>
                 <!-- Categorie Search Box Start Here -->
@@ -77,63 +77,46 @@
                 <!-- Cart Box Start Here -->
                 <div class="col-lg-4 col-md-12">
                     <div class="cart-box mt-all-30">
-                        <ul class="d-flex justify-content-lg-end justify-content-center align-items-center">
+                        <ul class="d-flex justify-content-lg-center justify-content-center align-items-center">
                             <li>
-                                <a href="#">
+                                <a href="{{asset('cart/show')}}">
                                     <i class="lnr lnr-cart"></i><span class="my-cart">
-                                        <span class="total-pro">2</span><span>Giỏ hàng</span></span>
+                                        <span class="total-pro">{{count(Cart::getContent())}}</span><span>Giỏ hàng</span></span>
                                 </a>
+                                @if (!Cart::isEmpty())
                                 <ul class="ht-dropdown cart-box-width">
                                     <li>
-                                        <!-- Cart Box Start -->
+                                        @foreach (Cart::getContent() as $item)
+                                            <!-- Cart Box Start -->
                                         <div class="single-cart-box">
                                             <div class="cart-img">
-                                                <a href="#"><img src="img/products/1.jpg" alt="cart-image"></a>
+                                                <a href="{{asset('product/'.$item['attributes']->propt_prod)}}"><img src="{{asset('local/storage/app/images/product/'.$item['attributes']->prod_img)}}" alt="cart-image"></a>
                                                 <span class="pro-quantity">1X</span>
                                             </div>
                                             <div class="cart-content">
-                                                <h6><a href="product.html">Printed Summer Red </a></h6>
-                                                <span class="cart-price">27.45</span>
-                                                <span>Size: S</span>
-                                                <span>Color: Yellow</span>
+                                                <h6><a href="product.html">{{$item->name}}</a></h6>
+                                                <span class="cart-price">{{number_format($item->price,0,',','.')}}</span>
+                                                <span>Ram: {{$item['attributes']->propt_ram}} gb, Rom: {{$item['attributes']->propt_rom}}</span>
+                                                <span>Màu: {{$item['attributes']->propt_color}}</span>
                                             </div>
-                                            <a class="del-icone" href="#"><i class="ion-close"></i></a>
+                                            <a class="del-icone" href="{{asset('cart/delete/'.$item->id)}}"><i class="ion-close"></i></a>
                                         </div>
                                         <!-- Cart Box End -->
-                                        <!-- Cart Box Start -->
-                                        <div class="single-cart-box">
-                                            <div class="cart-img">
-                                                <a href="#"><img src="img/products/2.jpg" alt="cart-image"></a>
-                                                <span class="pro-quantity">1X</span>
-                                            </div>
-                                            <div class="cart-content">
-                                                <h6><a href="product.html">Printed Round Neck</a></h6>
-                                                <span class="cart-price">45.00</span>
-                                                <span>Size: XL</span>
-                                                <span>Color: Green</span>
-                                            </div>
-                                            <a class="del-icone" href="#"><i class="ion-close"></i></a>
-                                        </div>
-                                        <!-- Cart Box End -->
+                                        @endforeach
                                         <!-- Cart Footer Inner Start -->
                                         <div class="cart-footer">
                                             <ul class="price-content">
-                                                <li>Subtotal <span>$57.95</span></li>
-                                                <li>Shipping <span>$7.00</span></li>
-                                                <li>Taxes <span>$0.00</span></li>
-                                                <li>Total <span>$64.95</span></li>
+                                                <li>Tổng sản phẩm: <span>{{Cart::getTotalQuantity()}}</span></li>
+                                                <li>Tổng tiền <span>{{number_format(Cart::getTotal(),0,',','.')}} VNĐ</span></li>
                                             </ul>
                                             <div class="cart-actions text-center">
-                                                <a class="cart-checkout" href="checkout.html">Thanh Toán</a>
+                                                <a class="cart-checkout" href="{{asset('cart/checkout')}}">Thanh Toán</a>
                                             </div>
                                         </div>
                                         <!-- Cart Footer Inner End -->
                                     </li>
                                 </ul>
-                            </li>
-                            <li>
-                            </li>
-                            <li>
+                                @endif
                             </li>
                         </ul>
                     </div>

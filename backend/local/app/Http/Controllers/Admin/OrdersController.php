@@ -16,7 +16,7 @@ use App\Models\CartDetail;
 use DB;
 use Cart;
 use Auth;
-
+use Session;
 class OrdersController extends Controller
 {
     public function getOrders()
@@ -32,7 +32,7 @@ class OrdersController extends Controller
         $data['orders'] = DB::table('orders')
                             ->where('order_id',$id)
                             ->join('customer','orders.order_cus','customer.cus_id')
-                            ->leftjoin('employees','orders.order_empl','employees.empl_id')
+                            ->join('employees','orders.order_empl','employees.empl_id')
                             ->first();
 
         $data['list_ordersdetail'] = DB::table('ordersdetail')
@@ -110,19 +110,39 @@ class OrdersController extends Controller
     }
     public function getAddOrdersFromCart($id)
     {
+        $carts = Carts::find($id);
+        $data['cus'] = Customer::find($carts->cart_cus);
         $empl_id = Auth::user()->empl_id;
-        //Cart::session($empl_id)->clear();
+
+        if(Session::get('userID') == null){
+            $list_option = CartDetail::where('cartdt_cart',$id)->get();
+            foreach ($list_option as $key => $value) {
+                $options = ProductOptions::find($value->cartdt_propt);
+                $product = Product::find($options->propt_prod);
+                Cart::session($empl_id)->add(array(
+                    'id' => $value->cartdt_propt,
+                    'name' => $product->prod_name,
+                    'price' => $options->propt_price,
+                    'quantity' => 1,
+                    'attributes' => $options
+                ));
+            }
+            Session::put('userID', $empl_id);
+        }
+        
         $data['total_orders'] = Cart::session($empl_id)->getTotal();
         $data['content'] = Cart::session($empl_id)->getContent();
         $data['list_prod'] = Product::where('prod_status',1)
                             ->get();
         
-        return view('admin.add_orders',$data);
+        return view('admin.add_orders_cart_online',$data);
     }
 
     public function postAddOrdersFromCart(Request $req, $id)
     {
-        $cus = new Customer;
+        $carts = Carts::find($id);
+        
+        $cus = Customer::find($carts->cart_cus);
         $cus->cus_name = $req->cus_name;
         $cus->cus_phone = $req->cus_phone;
         $cus->cus_email = $req->cus_email;
@@ -169,9 +189,14 @@ class OrdersController extends Controller
             $ordersdetail->save();
         }
         
+        $carts->cart_status = 2;
+        $carts->save();
+
         Cart::session($empl_id)->clear();
+        Session::forget('userID');
         return redirect('admin/orders/print/'.$orders->order_id);
     }
+    
     public function getOptions($id)
     {
         $list_options = ProductOptions::where('propt_prod',$id)
@@ -231,5 +256,12 @@ class OrdersController extends Controller
                             ->get();
                             
         return view('admin.print_orders', $data);
+    }
+
+    public function getCancelOrders()
+    {
+        $empl_id = Auth::user()->empl_id;
+        Cart::session($empl_id)->clear();
+        return redirect('admin/orders/');
     }
 }

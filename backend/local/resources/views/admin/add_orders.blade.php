@@ -255,12 +255,17 @@
                         <!-- Steps Navigation -->
                         <div class="block-content block-content-sm block-content-full bg-body-light rounded-bottom">
                             <div class="row">
-                                <div class="col-6">
+                                <div class="col-4">
                                     <button type="button" class="btn btn-secondary" data-wizard="prev">
                                         <i class="fa fa-angle-left mr-1"></i> Trước
                                     </button>
                                 </div>
-                                <div class="col-6 text-right">
+                                <div class="col-4 text-center">
+                                    <button type="button" id="cancelAddOrders" class="btn btn-danger">
+                                        <i class="fa fa-times-circle"></i></i> Hủy
+                                    </button>
+                                </div>
+                                <div class="col-4 text-right">
                                     <button type="button" class="btn btn-secondary" data-wizard="next">
                                         Sau <i class="fa fa-angle-right ml-1"></i>
                                     </button>
@@ -359,6 +364,27 @@ $(document).ready(function() {
             }
         });
     });
+
+    $('#cancelAddOrders').click(function(){
+        swal({
+			title: "Bạn có muốn hủy?",
+			text: "Sau khi hủy, bạn sẽ không thể khôi phục đối tượng này!",
+			icon: "warning",
+			buttons: ["Không, hủy nó đi!", "Vâng, tôi chấp nhận!"],
+			dangerMode: true,
+		})
+		.then((willDelete) => {
+			if (willDelete) {
+                swal("Đã thoát!", "Đối tượng đã được xóa.", "success")
+                .then((value) => {
+                    window.location.href = '{{asset('admin/orders/cancel')}}';
+                });
+                            }
+			else {
+				swal("Đã hủy", "Đối tượng vẫn được giữ lại :)", "error");
+			}
+		});
+    });
 });
 
     function deleteCart(id) {
@@ -381,8 +407,6 @@ $(document).ready(function() {
     }
 
     function updateCart(qty, id){
-        console.log(qty);
-        console.log(id);
 		$.get(
 			"{{asset('admin/orders/item/update')}}",
 			{qty:qty, id:id},

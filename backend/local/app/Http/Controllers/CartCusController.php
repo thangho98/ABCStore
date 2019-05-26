@@ -4,37 +4,53 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Models\Carts;
+use App\Models\CartDetail;
+use App\Models\Product;
+use App\Models\ProductOptions;
+use App\Models\Customer;
+use Cart;
+use DB;
+use Mail;
+
 class CartCusController extends Controller
 {
     public function getAddCart($id)
     {
-        $product = Product::find($id);
-        Cart::add(array(
-            'id' => $id,
-            'name' => $product->prod_name,
-            'price' => $product->prod_price,
-            'quantity' => 1,
-            'attributes' => array('img'=>$product->prod_img)
-        ));
+        $prod = Cart::get($id);
+        if(empty($prod)){
+            $options = ProductOptions::find($id);
+            $product = Product::find($options->propt_prod);
+            $options['prod_img'] = $product->prod_poster;
+
+            Cart::add(array(
+                'id' => $id,
+                'name' => $product->prod_name,
+                'price' => $options->propt_price,
+                'quantity' => 1,
+                'attributes' => $options
+            ));
+        }
         return redirect('cart/show');
     }
 
     public function getShowCart()
     {
-        $data['total'] = Cart::getTotal();
-        $data['items'] = Cart::getContent();
-        return view('frontend.cart', $data);
+        $data['totalprice'] = Cart::getTotal();
+        $data['content'] = Cart::getContent();
+        return view('abcstore.cart', $data);
     }
 
     public function getDeleteCart($id)
     {
         if($id=='all'){
             Cart::clear();
+            return redirect('/');
         }
         else{
             Cart::remove($id);
+            return back();
         }
-        return back();
     }
 
     public function getUpdateCart(Request $req)
@@ -45,31 +61,96 @@ class CartCusController extends Controller
                 'value' => $req->qty
             ),
           ));
-    }
-
-    public function postComplete(Request $req)
-    {
-        $data['info'] = $req->all();
-        $email = $req->email;
-        $data['cart'] = Cart::getContent();
-        $data['total'] = Cart::getTotal();
-        Mail::send('frontend.email', $data, function ($message) use($email) {
-            $message->from('thanglong2098@gmail.com', 'Vietpro');
-
-            $message->to($email, $email);
-
-            $message->cc('hiendaihuynh123@gmail.com', 'Thái Thăng');
-
-            $message->subject('Xác nhận hóa đơn mua hàng Vietproshop');
-        });
-
-        Cart::clear();
-
-        return redirect('complete');
-    }
+    }    
 
     public function getComplete()
     {
-        return view('frontend.complete');
+        return view('abcstore.complete');
+    }
+
+    public function getCheckout()
+    {
+        $data['totalquantity'] = Cart::getTotalQuantity();
+        $data['totalprice'] = Cart::getTotal();
+        $data['content'] = Cart::getContent();
+        return view('abcstore.checkout', $data);
+    }
+
+    public function postCheckout(Request $req)
+    {
+        $cus = new Customer;
+        $cus->cus_name = $req->cus_name;
+        $cus->cus_phone = $req->cus_phone;
+        $cus->cus_email = $req->cus_email;
+        $cus->cus_identity_card = $req->cus_identity_card;
+        $cus->save();
+
+        $cus = Customer::where('cus_name',$req->cus_name)
+                        ->where('cus_phone',$req->cus_phone)
+                        ->where('cus_email',$req->cus_email)
+                        ->where('cus_identity_card',$req->cus_identity_card)
+                        ->first();
+        
+        $carts = new Carts;
+        $carts->cart_date = date("Y-m-d");
+        $carts->cart_cus = $cus->cus_id;
+        $carts->cart_total_prod = Cart::getTotalQuantity();;
+        $carts->cart_total_price = Cart::getTotal();
+        $carts->cart_remember_token = $req->_token;
+        $carts->save();
+
+        
+        $data['content'] = Cart::getContent();
+        $data['total_carts'] = Cart::getTotal();
+        $data['total_qty_carts'] = Cart::getTotalQuantity();
+        
+
+        $carts = Carts::where('cart_date',date("Y-m-d"))
+                        ->where('cart_cus', $cus->cus_id)
+                        ->where('cart_total_prod', $data['total_qty_carts'])
+                        ->where('cart_total_price', $data['total_carts'])
+                        ->where('cart_remember_token', $req->_token)
+                        ->first();
+
+        foreach ($data['content'] as $key => $value) {
+            $cartdetail = new CartDetail;
+            $cartdetail->cartdt_cart = $carts->cart_id;
+            $cartdetail->cartdt_propt = $key;
+            $cartdetail->cartdt_prod_quantity = $value->quantity;
+            $cartdetail->cartdt_prod_unit_price = $value->attributes['propt_price'];
+            $cartdetail->cartdt_prod_promotion_price = $value->attributes['propt_price'];
+            $cartdetail->cartdt_total = $value->quantity*$value->price;
+            $cartdetail->save();
+        }
+
+        $email = $req->cus_email;
+        $data['carts'] = $carts;
+        $data['info'] = $req->all();
+        
+        Mail::send('abcstore.email', $data, function ($message) use($email) {
+            $message->from('thanglong2098@gmail.com', 'ABCStore');
+
+            $message->to($email, $email);
+
+            $message->cc('16521484@gm.uit.edu.vn', 'ABCStore');
+
+            $message->subject('Xác nhận hóa đơn mua hàng ABCStore');
+        });
+
+
+        Cart::clear();
+
+        return redirect('cart/complete');
+    }
+
+    public function getConfirm($token, $id)
+    {
+        $carts = Carts::where('cart_id',$id)
+                        ->where('cart_remember_token', $token)
+                        ->first();
+        
+        $carts->cart_status = 1;
+        $carts->save();
+        return redirect('/');
     }
 }
