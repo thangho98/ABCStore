@@ -14,6 +14,12 @@ Route::get('/category/{id}/{slug}', 'FrontendController@getProductByCategory');
 
 Route::get('/search', 'FrontendController@getSearch');
 
+Route::get('/shop', 'FrontendController@getShop');
+
+Route::get('/search', 'FrontendController@getSearch');
+
+Route::get('/shop/ajax', 'FrontendController@getListProduct');
+
 Route::group(['prefix' => 'cart'], function () {
 
     Route::get('show', 'CartCusController@getShowCart');

@@ -247,7 +247,7 @@
                                         <h4><a
                                                 href="{{asset('/product/'.$list_prod_new[$nameArr][$index]->prod_id)}}">{{$list_prod_new[$nameArr][$index]->prod_name}}</a>
                                         </h4>
-                                        <p><span class="price">$320.45</span><del class="prev-price">$400.50</del></p>
+                                        <p><span class="price">{{number_format($list_prod_new[$nameArr][$index]->prod_price,0,',','.')}} VNĐ</span><del class="prev-price">$400.50</del></p>
                                         <div class="label-product l_sale">30<span class="symbol-percent">%</span></div>
                                     </div>
                                 </div>
@@ -274,7 +274,7 @@
                                         <h4><a
                                                 href="{{asset('/product/'.$list_prod_new[$nameArr][$index]->prod_id)}}">{{$list_prod_new[$nameArr][$index]->prod_name}}</a>
                                         </h4>
-                                        <p><span class="price">$320.45</span><del class="prev-price">$400.50</del></p>
+                                        <p><span class="price">{{number_format($list_prod_new[$nameArr][$index]->prod_price,0,',','.')}}</span><del class="prev-price">$400.50</del></p>
                                         <div class="label-product l_sale">30<span class="symbol-percent">%</span></div>
                                     </div>
                                 </div>
@@ -317,7 +317,7 @@
                             <h4><a
                                     href="{{asset('/product/'.$list_prod_new[$nameArr][$index]->prod_id)}}">{{$list_prod_new[$nameArr][$index]->prod_name}}</a>
                             </h4>
-                            <p><span class="price">$320.45</span><del class="prev-price">$400.50</del></p>
+                            <p><span class="price">{{number_format($list_prod_new[$nameArr][$index]->prod_price,0,',','.')}}</span><del class="prev-price">$400.50</del></p>
                             <div class="label-product l_sale">30<span class="symbol-percent">%</span></div>
                         </div>
                     </div>
@@ -345,7 +345,7 @@
                             <h4><a
                                     href="{{asset('/product/'.$list_prod_new[$nameArr][$index]->prod_id)}}">{{$list_prod_new[$nameArr][$index]->prod_name}}</a>
                             </h4>
-                            <p><span class="price">$320.45</span><del class="prev-price">$400.50</del></p>
+                            <p><span class="price">{{number_format($list_prod_new[$nameArr][$index]->prod_price,0,',','.')}}</span><del class="prev-price">$400.50</del></p>
                             <div class="label-product l_sale">30<span class="symbol-percent">%</span></div>
                         </div>
                     </div>

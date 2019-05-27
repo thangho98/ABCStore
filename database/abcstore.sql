@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th5 24, 2019 lúc 07:23 AM
+-- Thời gian đã tạo: Th5 27, 2019 lúc 05:44 PM
 -- Phiên bản máy phục vụ: 10.1.38-MariaDB
 -- Phiên bản PHP: 7.3.2
 
@@ -67,6 +67,13 @@ CREATE TABLE `cart` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Đang đổ dữ liệu cho bảng `cart`
+--
+
+INSERT INTO `cart` (`cart_id`, `cart_cus`, `cart_total_prod`, `cart_total_price`, `cart_date`, `cart_remember_token`, `cart_status`, `created_at`, `updated_at`) VALUES
+(4, 8, 2, 59980000, '2019-05-26', 'LDKe4gkAStvPDOxypletS4wpWmvYRhgC7ifcVVGp', 2, '2019-05-26 03:14:40', '2019-05-26 04:02:53');
+
 -- --------------------------------------------------------
 
 --
@@ -84,6 +91,14 @@ CREATE TABLE `cartdetail` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `cartdetail`
+--
+
+INSERT INTO `cartdetail` (`cartdt_id`, `cartdt_cart`, `cartdt_propt`, `cartdt_prod_quantity`, `cartdt_prod_unit_price`, `cartdt_prod_promotion_price`, `cartdt_total`, `created_at`, `updated_at`) VALUES
+(5, 4, 1, 1, 29990000, 29990000, 29990000, '2019-05-26 03:14:40', '2019-05-26 03:14:40'),
+(6, 4, 2, 1, 29990000, 29990000, 29990000, '2019-05-26 03:14:40', '2019-05-26 03:14:40');
 
 -- --------------------------------------------------------
 
@@ -170,7 +185,10 @@ CREATE TABLE `customer` (
 --
 
 INSERT INTO `customer` (`cus_id`, `cus_name`, `cus_phone`, `cus_identity_card`, `cus_email`, `created_at`, `updated_at`) VALUES
-(3, 'thăng', '328119182', 123456789, 'thanglong2098@gmail.com', '2019-05-24 02:56:44', '2019-05-24 02:56:44');
+(3, 'thăng', '328119182', 123456789, 'thanglong2098@gmail.com', '2019-05-24 02:56:44', '2019-05-24 02:56:44'),
+(8, 'Nguyễn Phi Yến', '0929250409', 281161563, 'hiendaihuynh123@gmail.com', '2019-05-26 03:14:40', '2019-05-26 03:14:40'),
+(9, 'Nguyễn Phi Yến', '328119182', 123456789, 'thanglong2098@gmail.com', '2019-05-26 05:01:17', '2019-05-26 05:01:17'),
+(10, 'Nguyễn Phi Yến', '328119182', 123, 'thanglong2098@gmail.com', '2019-05-26 05:06:47', '2019-05-26 05:06:47');
 
 -- --------------------------------------------------------
 
@@ -279,6 +297,7 @@ CREATE TABLE `guarantee` (
   `gtd_date_receive` date NOT NULL,
   `gtd_emp_reimburse` int(11) NOT NULL,
   `gtd_date_reimburse` date NOT NULL,
+  `gtd_status` tinyint(5) NOT NULL DEFAULT '0',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -360,7 +379,10 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`order_id`, `order_date`, `order_empl`, `order_cus`, `order_total_prod`, `order_total_price`, `order_remember_token`, `created_at`, `updated_at`) VALUES
-(3, '2019-05-24', 8, 3, 3, 77970000, 'Ibtx0dkoqKjapvRlpLXk1T1eAzCa31I1qHvgRLsF', '2019-05-24 02:56:44', '2019-05-24 03:44:30');
+(3, '2019-05-24', 8, 3, 3, 77970000, 'Ibtx0dkoqKjapvRlpLXk1T1eAzCa31I1qHvgRLsF', '2019-05-24 02:56:44', '2019-05-24 03:44:30'),
+(4, '2019-05-26', 8, 8, 3, 77970000, 'PznHsmQInZTruo8Vrr0DfGCiqMgEotJcrgyMOFck', '2019-05-26 04:02:53', '2019-05-26 04:02:53'),
+(5, '2019-05-26', 8, 9, 0, 0, 'J3DC96YZ0hA8WJLhXnN2klBQ89O0N9dj3ebxbZGc', '2019-05-26 05:01:17', '2019-05-26 05:01:17'),
+(6, '2019-05-26', 8, 10, 0, 0, 'J3DC96YZ0hA8WJLhXnN2klBQ89O0N9dj3ebxbZGc', '2019-05-26 05:06:47', '2019-05-26 05:06:47');
 
 -- --------------------------------------------------------
 
@@ -386,7 +408,10 @@ CREATE TABLE `ordersdetail` (
 
 INSERT INTO `ordersdetail` (`orddt_id`, `orddt_order`, `orddt_propt`, `orddt_quantity`, `orddt_unit_price`, `orddt_promotion_price`, `orddt_total`, `created_at`, `updated_at`) VALUES
 (1, 3, 1, 2, 29990000, 29990000, 59980000, '2019-05-24 02:56:44', '2019-05-24 03:58:38'),
-(2, 3, 5, 1, 17990000, 17990000, 17990000, '2019-05-24 02:56:44', '2019-05-24 03:58:24');
+(2, 3, 5, 1, 17990000, 17990000, 17990000, '2019-05-24 02:56:44', '2019-05-24 03:58:24'),
+(3, 4, 1, 1, 29990000, 29990000, 29990000, '2019-05-26 04:02:53', '2019-05-26 04:02:53'),
+(4, 4, 2, 1, 29990000, 29990000, 29990000, '2019-05-26 04:02:53', '2019-05-26 04:02:53'),
+(5, 4, 4, 1, 17990000, 17990000, 17990000, '2019-05-26 04:02:53', '2019-05-26 04:02:53');
 
 -- --------------------------------------------------------
 
@@ -662,8 +687,7 @@ ALTER TABLE `commission`
 -- Chỉ mục cho bảng `customer`
 --
 ALTER TABLE `customer`
-  ADD PRIMARY KEY (`cus_id`),
-  ADD UNIQUE KEY `cus_identity_card` (`cus_identity_card`);
+  ADD PRIMARY KEY (`cus_id`);
 
 --
 -- Chỉ mục cho bảng `employees`
@@ -811,13 +835,13 @@ ALTER TABLE `brand`
 -- AUTO_INCREMENT cho bảng `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT cho bảng `cartdetail`
 --
 ALTER TABLE `cartdetail`
-  MODIFY `cartdt_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `cartdt_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT cho bảng `category`
@@ -841,7 +865,7 @@ ALTER TABLE `commission`
 -- AUTO_INCREMENT cho bảng `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `cus_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `cus_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT cho bảng `employees`
@@ -883,13 +907,13 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT cho bảng `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT cho bảng `ordersdetail`
 --
 ALTER TABLE `ordersdetail`
-  MODIFY `orddt_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `orddt_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT cho bảng `permission`

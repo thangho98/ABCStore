@@ -49,6 +49,7 @@
                         <strong>Chưa có phiên bản nào cho sản phẩm!!!</strong>
                     </div>  
                 @else
+                <div class="table-responsive">
                     <table class="table table-sm table-vcenter table-hover">
                         <thead>
                             <tr>
@@ -71,6 +72,8 @@
                             @endfor
                         </tbody>
                     </table>
+                </div>
+                    
                 @endif     
             </div>
             <div class="row mt-3">

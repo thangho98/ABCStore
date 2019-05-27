@@ -59,17 +59,17 @@
                 <!-- Categorie Search Box Start Here -->
                 <div class="col-lg-5 col-md-8 ml-auto mr-auto col-10">
                     <div class="categorie-search-box">
-                        <form action="#">
+                        <form action="{{asset('search/')}}">
                             <div class="form-group">
-                                <select class="bootstrap-select" name="poscats">
-                                    <option value="0">Tất cả</option>
+                                <select class="bootstrap-select" name="category">
+                                    <option value="all">Tất cả</option>
                                     @foreach ($list_cate as $item)
-                                        <option value="{{$item->cate_id}}">{{$item->cate_name}}</option> 
+                                    <option value="{{$item->cate_id}}">{{$item->cate_name}}</option> 
                                     @endforeach
                                 </select>
                             </div>
-                            <input type="text" name="search" placeholder="Bạn muốn tìm gì...">
-                            <button><i class="lnr lnr-magnifier"></i></button>
+                            <input type="text" name="search" placeholder="Bạn tìm gì...">
+                            <button type="submit"><i class="lnr lnr-magnifier"></i></button>
                         </form>
                     </div>
                 </div>
@@ -138,36 +138,19 @@
                 <div class="col-xl-9 col-lg-8 col-md-12 ">
                     <nav class="d-none d-lg-block">
                         <ul class="header-bottom-list d-flex">
-                            <li class="active"><a href="index.html">Trang Chủ</a></li>
-                            <li><a href="shop.html">Cửa hàng<i class="fa fa-angle-down"></i></a>
-                                <!-- Home Version Dropdown Start -->
-                                <ul class="ht-dropdown dropdown-style-two">
-                                    <li><a href="product.html">chi tiết sản phẩm</a></li>
-                                    <li><a href="compare.html">so sánh</a></li>
-                                    <li><a href="cart.html">giỏ hàng</a></li>
-                                    <li><a href="checkout.html">thanh toán</a></li>
-                                </ul>
-                                <!-- Home Version Dropdown End -->
-                            </li>
-                            <li><a href="about.html">Thông tin</a></li>
-                            <li><a href="contact.html">Liên hệ</a></li>
+                            <li class="active"><a href="{{asset('/')}}">Trang Chủ</a></li>
+                            <li><a href="{{asset('/shop')}}">Cửa hàng</a></li>
+                            <li><a href="{{asset('/about')}}">Thông tin</a></li>
+                            <li><a href="{{asset('/contact')}}">Liên hệ</a></li>
                         </ul>
                     </nav>
                     <div class="mobile-menu d-block d-lg-none">
                         <nav>
                             <ul>
-                                <li><a href="shop.html">Cửa hàng</a>
-                                    <!-- Mobile Menu Dropdown Start -->
-                                    <ul>
-                                        <li><a href="product.html">chi tiết sản phẩm</a></li>
-                                        <li><a href="compare.html">so sánh</a></li>
-                                        <li><a href="cart.html">giỏ hàng</a></li>
-                                        <li><a href="checkout.html">thanh toán</a></li>
-                                    </ul>
-                                    <!-- Mobile Menu Dropdown End -->
+                                <li><a href="{{asset('/shop')}}">Cửa hàng</a>
                                 </li>
-                                <li><a href="about.html">Thông tin</a></li>
-                                <li><a href="contact.html">Liên hệ</a></li>
+                                <li><a href="{{asset('/about')}}">Thông tin</a></li>
+                                <li><a href="{{asset('/contact')}}">Liên hệ</a></li>
                             </ul>
                         </nav>
                     </div>

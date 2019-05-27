@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Models\ProductImage;
 use App\Models\ProductOptions;
 use App\Models\Category;
+use App\Models\Brand;
 use App\Models\Comment;
 use App\Models\Slide;
 use DB;
@@ -40,7 +41,9 @@ class FrontendController extends Controller
                 ->where('prod_status','1')
                 ->where('cate_id',$value->cate_id)
                 ->join('category','product.prod_cate','category.cate_id')
-                ->select(DB::raw('prod_id, prod_name, prod_poster'))
+                ->join('product_options','product.prod_id','product_options.propt_prod')
+                ->select(DB::raw('prod_id, prod_name, prod_poster, min(propt_price) as prod_price'))
+                ->groupBy('prod_id','prod_name')
                 ->orderBy('prod_id','desc')
                 ->get();
         }
@@ -156,19 +159,6 @@ class FrontendController extends Controller
         return view('abcstore.product',$data);
     }
 
-    public function getProductByCategory($id)
-    {
-        $data['cate'] = Category::find($id);
-        $data['productlist'] = Product::where('prod_cate',$id)->orderBy('prod_id','desc')->paginate(8);
-        return view('abcstore.category',$data);
-    }
-
-    public function getProductBybrand($id)
-    {
-        $data['cate'] = Category::find($id);
-        $data['productlist'] = Product::where('prod_cate',$id)->orderBy('prod_id','desc')->paginate(8);
-        return view('abcstore.category',$data);
-    }
 
     public function postComment(Request $req, $id)
     {
@@ -202,12 +192,197 @@ class FrontendController extends Controller
         return json_encode($options);
     }
 
+
+    public function getShop()
+    {
+        $data['list_cate'] = Category::all();
+
+        $data['list_brand'] = Brand::all();
+
+        $data['list_new_product'] = DB::table('product')->where('prod_new','1')
+            ->where('prod_status','1')
+            ->join('product_options','product.prod_id','product_options.propt_prod')
+            ->select(DB::raw('prod_id, prod_name, prod_poster, min(propt_price) as prod_price'))
+            ->groupBy('prod_id')
+            ->orderBy('prod_id','desc')
+            ->take(4)
+            ->get();
+        
+        $data['list_product'] = DB::table('product')->where('prod_status','1')
+            ->join('product_options','product.prod_id','product_options.propt_prod')
+            ->select(DB::raw('prod_id, prod_name, prod_new, prod_detail, prod_poster, min(propt_price) as prod_price'))
+            ->groupBy('prod_id')
+            ->orderBy('prod_id','desc')
+            ->paginate(12,['prod_id']);
+        
+        $data['list_ram'] = DB::table('product_options')
+            ->where('prod_status','1')
+            ->join('product','product_options.propt_prod','product.prod_id')
+            ->join('category','product.prod_cate','category.cate_id')
+            ->select(DB::raw('DISTINCT propt_ram'))
+            ->orderBy('propt_ram','desc')
+            ->get();
+
+
+        $data['list_rom'] = DB::table('product_options')
+            ->where('prod_status','1')
+            ->join('product','product_options.propt_prod','product.prod_id')
+            ->join('category','product.prod_cate','category.cate_id')
+            ->select(DB::raw('DISTINCT propt_rom'))
+            ->orderBy('propt_rom','desc')
+            ->get();
+        
+        
+        //dd($data);
+
+        return view('abcstore.shop',$data);
+    }
+
     public function getSearch(Request $req)
     {
-        $result = $req->result;
+        $data['list_new_product'] = DB::table('product')->where('prod_new','1')
+            ->where('prod_status','1')
+            ->join('product_options','product.prod_id','product_options.propt_prod')
+            ->select(DB::raw('prod_id, prod_name, prod_poster, min(propt_price) as prod_price'))
+            ->groupBy('prod_id')
+            ->orderBy('prod_id','desc')
+            ->take(4)
+            ->get();
+        
+        $queryListProduct = DB::table('product')->where('prod_status','1')
+            ->join('product_options','product.prod_id','product_options.propt_prod')
+            ->select(DB::raw('prod_id, prod_name, prod_new, prod_detail, prod_poster, min(propt_price) as prod_price'))
+            ->groupBy('prod_id')
+            ->orderBy('prod_id','desc');
+        
+        
+        if($req->category == "all"){
+            $data['list_cate'] = Category::all();
+        }else{
+            $data['list_cate'] = Category::where('cate_id',$req->category)->get();
+            $queryListProduct->where('prod_cate',$req->category);
+        }
+
+        $result = $req->search;
         $result = str_replace(' ', '%', $result);
-        $data['productlist'] = Product::where('prod_name','like','%'.$result.'%')->orderBy('prod_id','desc')->paginate(8);
-        $data['search'] = $req->result;
+        $queryListProduct->where('prod_name','like','%'.$result.'%');
+        $data['search'] = $req->search;
+
+        $data['list_product'] = $queryListProduct->paginate(12,['prod_id']);
+        
+        $queryListBrand = DB::table('brand')
+            ->join('product','brand.brand_id','product.prod_brand');
+
+        $queryListRam = DB::table('product_options')
+            ->where('prod_status','1')
+            ->join('product','product_options.propt_prod','product.prod_id')
+            ->join('category','product.prod_cate','category.cate_id')
+            ->select(DB::raw('DISTINCT propt_ram'))
+            ->orderBy('propt_ram','desc');
+
+
+        $queryListRom = DB::table('product_options')
+            ->where('prod_status','1')
+            ->join('product','product_options.propt_prod','product.prod_id')
+            ->join('category','product.prod_cate','category.cate_id')
+            ->select(DB::raw('DISTINCT propt_rom'))
+            ->orderBy('propt_rom','desc');
+        
+        foreach ($queryListProduct->get() as $key => $value) {
+            $queryListBrand->where('prod_id', $value->prod_id);
+            $queryListRam->where('prod_id', $value->prod_id);
+            $queryListRom->where('prod_id', $value->prod_id);
+        }
+
+        $data['list_ram'] = $queryListRam->get();
+        $data['list_rom'] = $queryListRom->get();
+        $data['list_brand'] = $queryListBrand->get();
+
         return view('abcstore.search',$data);
+    }
+
+    public function getListProduct(Request $req)
+    {
+        //dd($req->all());
+
+        $queryListProduct = DB::table('product')->where('prod_status','1')
+                                        ->join('product_options','product.prod_id','product_options.propt_prod')
+                                        ->select(DB::raw('prod_id, prod_name, prod_new, prod_detail, prod_poster, min(propt_price) as prod_price'))
+                                        ->groupBy('prod_id');
+        
+        if($req->search){
+            $result = $req->search;
+            $result = str_replace(' ', '%', $result);
+            $queryListProduct->where('prod_name','like','%'.$result.'%');
+        }
+
+        if($req->orderby != "default"){
+            $arr = explode('-',$req->orderby);
+            $queryListProduct->orderBy($arr[0],$arr[1]);
+            
+        }else{
+            $queryListProduct->orderBy('prod_id','desc');
+        }
+        
+        $brand = $req->brand_id;
+        if($brand){
+            for ($i = 0; $i < count($brand); $i++) { 
+                if($i == 0){
+                    $queryListProduct->where('prod_brand',$brand[$i]);
+                }
+                else{
+                    $queryListProduct->orWhere('prod_brand',$brand[$i]);
+                }
+            }
+        }
+
+        $cate = $req->cate_id;
+        if($cate){
+            for ($i = 0; $i < count($cate); $i++) { 
+                if($i == 0){
+                    $queryListProduct->where('prod_cate',$cate[$i]);
+                }
+                else{
+                    $queryListProduct->orWhere('prod_cate',$cate[$i]);
+                }
+            }
+        }
+
+        $ram = $req->ram;
+        if($ram){
+            for ($i = 0; $i < count($ram); $i++) { 
+                if($i == 0){
+                    $queryListProduct->where('propt_ram',$ram[$i]);
+                }
+                else{
+                    $queryListProduct->orWhere('propt_ram',$ram[$i]);
+                }
+            }
+        }
+
+        $rom = $req->rom;
+        if($rom){
+            for ($i = 0; $i < count($rom); $i++) { 
+                if($i == 0){
+                    $queryListProduct->where('propt_rom',$rom[$i]);
+                }
+                else{
+                    $queryListProduct->orWhere('propt_rom',$rom[$i]);
+                }
+            }
+        }
+
+        
+
+        if($req->paginate){
+            $data['list_product'] = $queryListProduct->paginate($req->paginate,['prod_id']);
+        }
+        else{
+            $data['list_product'] = $queryListProduct->paginate(12,['prod_id']);
+        }
+
+        
+
+        return view('abcstore.list_product',$data);
     }
 }
