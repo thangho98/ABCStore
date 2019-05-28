@@ -140,6 +140,8 @@
 <script src="assets/js/plugins/select2/js/select2.full.min.js"></script>
 <script src="assets/js/plugins/jquery.maskedinput/jquery.maskedinput.min.js"></script>
 <script src="assets/js/plugins/ion-rangeslider/js/ion.rangeSlider.min.js"></script>
+<script src="assets/js/plugins/jquery-validation/jquery.validate.min.js"></script>
+<script src="assets/js/plugins/jquery-validation/jquery.validate.min.js"></script>
 
 <!-- Page JS Helpers (BS Datepicker + BS Colorpicker + BS Maxlength + Select2 + Masked Inputs + Ion Range Slider plugins) -->
 <script>jQuery(function () { One.helpers(['datepicker', 'colorpicker', 'maxlength', 'select2', 'masked-inputs', 'rangeslider']); });</script>

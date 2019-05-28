@@ -13,6 +13,7 @@
                     <b>Tên sản phẩm: </b>{{$prod->prod_name}}<br>
                     <b>Danh mục: </b>{{$prod->cate_name}}<br>
                     <b>Thương hiệu: </b>{{$prod->brand_name}}<br>
+                    <b>Thời gian bảo hành: </b>{{$prod->prod_warranty_period}} tháng<br>
                     <b>Tình trạng: </b>@if ($prod->prod_status==0)
                             Sắp ra mắt
                             @elseif($prod->prod_status==1)

@@ -23,6 +23,7 @@ class LoginController extends Controller
             $remember = false;
         }
         if(Auth::attempt($valid, $remember)){
+            
             return redirect()->intended('admin/home');
         }
         else{

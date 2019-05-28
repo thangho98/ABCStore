@@ -787,12 +787,12 @@
                                 </a>
                                 <ul class="nav-main-submenu">
                                     <li class="nav-main-item">
-                                        <a class="nav-main-link" href="#">
+                                        <a class="nav-main-link" href="{{asset('admin/user')}}">
                                             <span class="nav-main-link-name">Tài khoản</span>
                                         </a>
                                     </li>
                                     <li class="nav-main-item">
-                                        <a class="nav-main-link" href="#">
+                                        <a class="nav-main-link" href="{{asset('admin/permission')}}">
                                             <span class="nav-main-link-name">Phân quyền</span>
                                         </a>
                                     </li>

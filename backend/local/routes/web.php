@@ -154,6 +154,23 @@ Route::group(['namespace' => 'Admin'], function () {
             Route::get('/cancel/','OrdersController@getCancelOrders');
         });
         
+        Route::group(['prefix' => 'user'], function () {
+            Route::get('/','UsersController@getUsers');
+
+            Route::post('add/','UsersController@postAddUser');
+
+            Route::get('/edit/{id}','UsersController@getEditUser');
+            Route::post('/edit/{id}','UsersController@postEditUser');
+
+            Route::get('/delete','UsersController@getDeleteUser');
+
+            Route::get('/reset/','UsersController@getResetPassUser');
+        });
+
+        Route::group(['prefix' => 'permission'], function () {
+            Route::get('/','PermissionController@getPermission');
+        });
+
     });
     Route::get('/logout','HomeController@getLogout');
 });

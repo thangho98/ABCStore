@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th5 27, 2019 lúc 05:44 PM
+-- Thời gian đã tạo: Th5 28, 2019 lúc 02:15 PM
 -- Phiên bản máy phục vụ: 10.1.38-MariaDB
 -- Phiên bản PHP: 7.3.2
 
@@ -290,13 +290,13 @@ CREATE TABLE `goodsimportdetail` (
 CREATE TABLE `guarantee` (
   `gtd_id` int(11) NOT NULL,
   `gtd_orders` int(11) NOT NULL,
-  `gtd_prod` int(11) NOT NULL,
+  `gtd_propt` int(11) NOT NULL,
   `gtd_serial` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `gtd_content` text COLLATE utf8_unicode_ci NOT NULL,
   `gtd_empl_receive` int(11) NOT NULL,
   `gtd_date_receive` date NOT NULL,
-  `gtd_emp_reimburse` int(11) NOT NULL,
-  `gtd_date_reimburse` date NOT NULL,
+  `gtd_empl_reimburse` int(11) DEFAULT NULL,
+  `gtd_date_reimburse` date DEFAULT NULL,
   `gtd_status` tinyint(5) NOT NULL DEFAULT '0',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
@@ -443,7 +443,10 @@ CREATE TABLE `permission` (
 --
 
 INSERT INTO `permission` (`perm_id`, `perm_name`, `created_at`, `updated_at`) VALUES
-(1, 'admin', '2019-05-12 04:45:50', '0000-00-00 00:00:00');
+(1, 'admin', '2019-05-12 04:45:50', '0000-00-00 00:00:00'),
+(2, 'nhân viên bán hàng', '2019-05-28 08:21:27', '2019-05-28 08:21:27'),
+(3, 'nhân viên bảo hành', '2019-05-28 08:21:27', '2019-05-28 08:21:27'),
+(4, 'nhân viên kho', '2019-05-28 08:21:27', '2019-05-28 08:21:27');
 
 -- --------------------------------------------------------
 
@@ -457,6 +460,7 @@ CREATE TABLE `product` (
   `prod_slug` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `prod_cate` int(11) NOT NULL,
   `prod_brand` int(11) NOT NULL,
+  `prod_warranty_period` int(11) NOT NULL,
   `prod_detail` text COLLATE utf8_unicode_ci NOT NULL,
   `prod_status` tinyint(4) NOT NULL,
   `prod_new` tinyint(1) NOT NULL DEFAULT '1',
@@ -470,10 +474,10 @@ CREATE TABLE `product` (
 -- Đang đổ dữ liệu cho bảng `product`
 --
 
-INSERT INTO `product` (`prod_id`, `prod_name`, `prod_slug`, `prod_cate`, `prod_brand`, `prod_detail`, `prod_status`, `prod_new`, `prod_featured`, `prod_poster`, `created_at`, `updated_at`) VALUES
-(12, 'Samsung Galaxy A50', 'samsung-galaxy-a50', 2, 3, 'Kích thước	158.5 x 74.5 x 7.7mm\r\nBộ nhớ đệm / Ram	64 GB, 4 GB RAM\r\nBộ nhớ trong	64 GB\r\nLoại màn hình	sAMOLED FHD+\r\nKích thước màn hình	6.4 inches\r\nĐộ phân giải màn hình	1080 x 2220 pixels\r\nHệ điều hành	Android\r\nPhiên bản hệ điều hành	Android v9.0 (Pie)\r\nChipset	Samsung Exynos 9 Octa 9610\r\nCPU	Octa Core 2.3GHz', 1, 1, 1, 'samsung-galaxy-a10-do-1-180x125.jpg', '2019-05-16 14:56:45', '2019-05-20 15:48:05'),
-(23, 'iPhone Xs Max', 'iphone-xs-max', 3, 1, 'Màn hình:	OLED, 6.5\", Super Retina\r\nHệ điều hành:	iOS 12\r\nCamera sau:	Chính 12 MP & Phụ 12 MP\r\nCamera trước:	7 MP\r\nCPU:	Apple A12 Bionic 6 nhân\r\nRAM:	4 GB\r\nBộ nhớ trong:	64 GB\r\nThẻ SIM: Nano SIM & eSIM, Hỗ trợ 4G\r\nDung lượng pin:	3174 mAh, có sạc nhanh', 1, 1, 1, 'iphone-xs-max-bac-1-1-1-180x125.jpg', '2019-05-16 14:56:48', '2019-05-22 16:04:54'),
-(27, 'Samsung Galaxy S10', 'samsung-galaxy-s10', 1, 2, 'Màn hình:	Dynamic AMOLED, 6.1\", Quad HD+ (2K+)\r\nHệ điều hành:	Android 9.0 (Pie)\r\nCamera sau:	Chính 12 MP & Phụ 12 MP, 16 MP\r\nCamera trước:	10 MP\r\nCPU:	Exynos 9820 8 nhân 64-bit\r\nRAM:	8 GB\r\nBộ nhớ trong:	128 GB\r\nThẻ nhớ:	MicroSD, hỗ trợ tối đa 512 GB\r\nThẻ SIM:		2 SIM Nano (SIM 2 chung khe thẻ nhớ), Hỗ trợ 4G\r\nDung lượng pin:	3400 mAh, có sạc nhanh', 1, 1, 1, 'samsung-galaxy-s10-white-400x400.jpg', '2019-05-22 04:31:41', '2019-05-22 16:04:50');
+INSERT INTO `product` (`prod_id`, `prod_name`, `prod_slug`, `prod_cate`, `prod_brand`, `prod_warranty_period`, `prod_detail`, `prod_status`, `prod_new`, `prod_featured`, `prod_poster`, `created_at`, `updated_at`) VALUES
+(12, 'Samsung Galaxy A50', 'samsung-galaxy-a50', 2, 3, 12, 'Kích thước	158.5 x 74.5 x 7.7mm\r\nBộ nhớ đệm / Ram	64 GB, 4 GB RAM\r\nBộ nhớ trong	64 GB\r\nLoại màn hình	sAMOLED FHD+\r\nKích thước màn hình	6.4 inches\r\nĐộ phân giải màn hình	1080 x 2220 pixels\r\nHệ điều hành	Android\r\nPhiên bản hệ điều hành	Android v9.0 (Pie)\r\nChipset	Samsung Exynos 9 Octa 9610\r\nCPU	Octa Core 2.3GHz', 1, 1, 1, 'samsung-galaxy-a10-do-1-180x125.jpg', '2019-05-16 14:56:45', '2019-05-28 12:09:45'),
+(23, 'iPhone Xs Max', 'iphone-xs-max', 3, 1, 24, 'Màn hình:	OLED, 6.5\", Super Retina\r\nHệ điều hành:	iOS 12\r\nCamera sau:	Chính 12 MP & Phụ 12 MP\r\nCamera trước:	7 MP\r\nCPU:	Apple A12 Bionic 6 nhân\r\nRAM:	4 GB\r\nBộ nhớ trong:	64 GB\r\nThẻ SIM: Nano SIM & eSIM, Hỗ trợ 4G\r\nDung lượng pin:	3174 mAh, có sạc nhanh', 1, 1, 1, 'iphone-xs-max-bac-1-1-1-180x125.jpg', '2019-05-16 14:56:48', '2019-05-28 12:09:48'),
+(27, 'Samsung Galaxy S10', 'samsung-galaxy-s10', 1, 2, 12, 'Màn hình:	Dynamic AMOLED, 6.1\", Quad HD+ (2K+)\r\nHệ điều hành:	Android 9.0 (Pie)\r\nCamera sau:	Chính 12 MP & Phụ 12 MP, 16 MP\r\nCamera trước:	10 MP\r\nCPU:	Exynos 9820 8 nhân 64-bit\r\nRAM:	8 GB\r\nBộ nhớ trong:	128 GB\r\nThẻ nhớ:	MicroSD, hỗ trợ tối đa 512 GB\r\nThẻ SIM:		2 SIM Nano (SIM 2 chung khe thẻ nhớ), Hỗ trợ 4G\r\nDung lượng pin:	3400 mAh, có sạc nhanh', 1, 1, 1, 'samsung-galaxy-s10-white-400x400.jpg', '2019-05-22 04:31:41', '2019-05-28 12:09:37');
 
 -- --------------------------------------------------------
 
@@ -527,7 +531,8 @@ INSERT INTO `product_options` (`propt_id`, `propt_prod`, `propt_color`, `propt_r
 (2, 23, 'Bạc', 4, '128 gb', 29990000, 5, '2019-05-21 11:33:18', '2019-05-22 13:11:39'),
 (4, 27, 'Đen', 8, '128 gb', 17990000, 0, '2019-05-22 04:31:41', '2019-05-22 04:31:41'),
 (5, 27, 'Trắng', 8, '128 gb', 17990000, 0, '2019-05-22 04:31:41', '2019-05-22 04:31:41'),
-(6, 23, 'Gold', 4, '512 gb', 3000, 0, '2019-05-22 11:21:28', '2019-05-22 11:26:38');
+(6, 23, 'Gold', 4, '512 gb', 3000, 0, '2019-05-22 11:21:28', '2019-05-22 11:26:38'),
+(7, 12, 'Xanh Dương', 6, '64 gb', 6000000, 0, '2019-05-28 12:05:19', '2019-05-28 12:05:19');
 
 -- --------------------------------------------------------
 
@@ -538,7 +543,7 @@ INSERT INTO `product_options` (`propt_id`, `propt_prod`, `propt_color`, `propt_r
 CREATE TABLE `promotion` (
   `prom_id` int(11) NOT NULL,
   `prom_name` int(11) NOT NULL,
-  `prom_prod` int(11) NOT NULL,
+  `prom_propt` int(11) NOT NULL,
   `prom_start_date` datetime NOT NULL,
   `prom_end_date` datetime NOT NULL,
   `prom_percent` float NOT NULL,
@@ -627,6 +632,7 @@ CREATE TABLE `user` (
   `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `empl_id` int(11) NOT NULL,
   `perm_id` int(11) NOT NULL,
+  `status` tinyint(4) NOT NULL,
   `remember_token` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -636,8 +642,10 @@ CREATE TABLE `user` (
 -- Đang đổ dữ liệu cho bảng `user`
 --
 
-INSERT INTO `user` (`username`, `password`, `empl_id`, `perm_id`, `remember_token`, `created_at`, `updated_at`) VALUES
-('admin', '$2y$10$lT/JBapfQt0LdVNnjVax1exxL/QxE3etpABXvhQfE/IOSOb4jVdfC', 8, 1, 'QNrK2SsEBI6CmfiBPxWpFcUtSoYQDPpqeigkiIdt9iHxwqmpfce7OKJ5B5Vg', NULL, NULL);
+INSERT INTO `user` (`username`, `password`, `empl_id`, `perm_id`, `status`, `remember_token`, `created_at`, `updated_at`) VALUES
+('admin', '$2y$10$lT/JBapfQt0LdVNnjVax1exxL/QxE3etpABXvhQfE/IOSOb4jVdfC', 8, 1, 0, 'QNrK2SsEBI6CmfiBPxWpFcUtSoYQDPpqeigkiIdt9iHxwqmpfce7OKJ5B5Vg', NULL, NULL),
+('nv10', '$2y$10$fp6FM2ZFO/sd9ZCBISDwmODnta4ILoWKJC8izJZKUdpTjwWLtyIw2', 10, 2, 0, '6EvC0M046TGobcmm9ocxbuzrA30xp2mxKTsUx03H', '2019-05-28 09:24:45', '2019-05-28 11:05:14'),
+('nv11', '$2y$10$FTdJq5JRhwRJgWV4APBsQ.N/dUhnKaCOX3sed4tQ4AT3Y3ek/Y1DK', 11, 3, 0, '6EvC0M046TGobcmm9ocxbuzrA30xp2mxKTsUx03H', '2019-05-28 10:42:29', '2019-05-28 10:42:29');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -708,9 +716,9 @@ ALTER TABLE `goodsexport`
 ALTER TABLE `guarantee`
   ADD PRIMARY KEY (`gtd_id`),
   ADD KEY `gtd_orders` (`gtd_orders`),
-  ADD KEY `gtd_prod` (`gtd_prod`),
+  ADD KEY `gtd_prod` (`gtd_propt`),
   ADD KEY `gtd_empl_receive` (`gtd_empl_receive`),
-  ADD KEY `gtd_date_reimburse` (`gtd_date_reimburse`);
+  ADD KEY `gtd_empl_reimburse` (`gtd_empl_reimburse`);
 
 --
 -- Chỉ mục cho bảng `invoice`
@@ -791,7 +799,7 @@ ALTER TABLE `product_options`
 --
 ALTER TABLE `promotion`
   ADD PRIMARY KEY (`prom_id`),
-  ADD KEY `prom_prod` (`prom_prod`);
+  ADD KEY `prom_prod` (`prom_propt`);
 
 --
 -- Chỉ mục cho bảng `provider`
@@ -919,7 +927,7 @@ ALTER TABLE `ordersdetail`
 -- AUTO_INCREMENT cho bảng `permission`
 --
 ALTER TABLE `permission`
-  MODIFY `perm_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `perm_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT cho bảng `product`
@@ -937,7 +945,7 @@ ALTER TABLE `product_image`
 -- AUTO_INCREMENT cho bảng `product_options`
 --
 ALTER TABLE `product_options`
-  MODIFY `propt_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `propt_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT cho bảng `promotion`
@@ -967,6 +975,15 @@ ALTER TABLE `slide`
 ALTER TABLE `cartdetail`
   ADD CONSTRAINT `cartdetail_ibfk_1` FOREIGN KEY (`cartdt_cart`) REFERENCES `cart` (`cart_id`) ON DELETE CASCADE,
   ADD CONSTRAINT `cartdetail_ibfk_2` FOREIGN KEY (`cartdt_propt`) REFERENCES `product_options` (`propt_id`);
+
+--
+-- Các ràng buộc cho bảng `guarantee`
+--
+ALTER TABLE `guarantee`
+  ADD CONSTRAINT `guarantee_ibfk_1` FOREIGN KEY (`gtd_propt`) REFERENCES `product_options` (`propt_id`),
+  ADD CONSTRAINT `guarantee_ibfk_2` FOREIGN KEY (`gtd_orders`) REFERENCES `orders` (`order_id`),
+  ADD CONSTRAINT `guarantee_ibfk_3` FOREIGN KEY (`gtd_empl_receive`) REFERENCES `employees` (`empl_id`),
+  ADD CONSTRAINT `guarantee_ibfk_4` FOREIGN KEY (`gtd_empl_reimburse`) REFERENCES `employees` (`empl_id`);
 
 --
 -- Các ràng buộc cho bảng `invoice`
@@ -1018,7 +1035,7 @@ ALTER TABLE `product_options`
 -- Các ràng buộc cho bảng `promotion`
 --
 ALTER TABLE `promotion`
-  ADD CONSTRAINT `promotion_ibfk_1` FOREIGN KEY (`prom_prod`) REFERENCES `product` (`prod_id`);
+  ADD CONSTRAINT `promotion_ibfk_1` FOREIGN KEY (`prom_propt`) REFERENCES `product_options` (`propt_id`);
 
 --
 -- Các ràng buộc cho bảng `user`

@@ -258,8 +258,9 @@
                                             <h4><a href="{{asset('/product/'.$prod->prod_id)}}">{{$prod->prod_name}}</a>
                                             </h4>
                                             <p><span
-                                                    class="price">{{number_format($prod->prod_price,0,',','.')}}</span><del
+                                                    class="price">{{number_format($prod->prod_price,0,',','.')}} VNĐ</span><del
                                                     class="prev-price">$205.50</del>
+                                                <p>Thời gian bảo hành: {{$prod->prod_warranty_period}} tháng</p>
                                                 <p>{{$prod->prod_detail}}</p>
                                         </div>
                                     </div>

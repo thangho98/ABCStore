@@ -53,13 +53,26 @@
                                 </select>
                             </div>
                             <div class="form-group col-md-6">
+                                <label>Thời gian bảo hành <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control text-center"
+                                        id="inputWarrantyPeriodEdit" name="warranty_period" min="1"
+                                        placeholder="Nhập thời gian bảo hành" value="{{$prod->prod_warranty_period}}">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">tháng</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
                                 <label for="selectStatus">Trạng thái <span class="text-danger">*</span></label>
                                 <select class="form-control" id="selectStatus" name="status" required>
-                                    <option value="1" @if ($prod->prod_status==0) selected @else disable @endif>Sắp ra
+                                    <option value="0" @if ($prod->prod_status==0) selected @else disable @endif>Sắp ra
                                         mắt</option>
-                                    <option value="2" @if ($prod->prod_status==1) selected @endif>Đang kinh doanh
+                                    <option value="1" @if ($prod->prod_status==1) selected @endif>Đang kinh doanh
                                     </option>
-                                    <option value="3" @if ($prod->prod_status==2) selected @endif>Ngừng kinh doanh
+                                    <option value="2" @if ($prod->prod_status==2) selected @endif>Ngừng kinh doanh
                                     </option>
                                 </select>
                             </div>
