@@ -136,6 +136,10 @@ Route::group(['namespace' => 'Admin'], function () {
             Route::get('/print/{id}','OrdersController@getPrintOrders');
         });
         
+        Route::group(['prefix' => 'guarantee'], function() {
+            Route::get('/','GuaranteeController@getGuarantee');
+            Route::get('/view/{id}','GuaranteeController@');
+        });
     });
     Route::get('/logout','HomeController@getLogout');
 });
