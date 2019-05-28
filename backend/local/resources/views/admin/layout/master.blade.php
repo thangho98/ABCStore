@@ -731,42 +731,16 @@
                         </ul>
                     </li>
                     <li class="nav-main-item">
-                        <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
-                            aria-expanded="false" href="#">
+                        <a class="nav-main-link" href="{{asset('admin/guarantee')}}">
                             <i class="nav-main-link-icon si si-grid"></i>
                             <span class="nav-main-link-name">Bảo hành</span>
                         </a>
-                        <ul class="nav-main-submenu">
-                            <li class="nav-main-item">
-                                <a class="nav-main-link" href="be_tables_styles.html">
-                                    <span class="nav-main-link-name">Danh sách bảo hành</span>
-                                </a>
-                            </li>
-                            <li class="nav-main-item">
-                                <a class="nav-main-link" href="be_tables_responsive.html">
-                                    <span class="nav-main-link-name">Thêm bảo hành</span>
-                                </a>
-                            </li>
-                        </ul>
                     </li>
                     <li class="nav-main-item">
-                        <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
-                            aria-expanded="false" href="#">
+                        <a class="nav-main-link" href="{{asset('admin/invoice')}}">
                             <i class="nav-main-link-icon si si-note"></i>
                             <span class="nav-main-link-name">Nhập hàng</span>
                         </a>
-                        <ul class="nav-main-submenu">
-                            <li class="nav-main-item">
-                                <a class="nav-main-link" href="be_forms_elements.html">
-                                    <span class="nav-main-link-name">Danh sách bảo hành</span>
-                                </a>
-                            </li>
-                            <li class="nav-main-item">
-                                <a class="nav-main-link" href="be_forms_custom_controls.html">
-                                    <span class="nav-main-link-name">Thêm bảo hành</span>
-                                </a>
-                            </li>
-                        </ul>
                     </li>
                     <li class="nav-main-item">
                         <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"

@@ -212,8 +212,7 @@ class FrontendController extends Controller
             ->join('product_options','product.prod_id','product_options.propt_prod')
             ->select(DB::raw('prod_id, prod_name, prod_new, prod_detail, prod_poster, min(propt_price) as prod_price'))
             ->groupBy('prod_id')
-            ->orderBy('prod_id','desc')
-            ->paginate(12,['prod_id']);
+            ->orderBy('prod_id','desc')->get();
         
         $data['list_ram'] = DB::table('product_options')
             ->where('prod_status','1')
@@ -268,7 +267,7 @@ class FrontendController extends Controller
         $queryListProduct->where('prod_name','like','%'.$result.'%');
         $data['search'] = $req->search;
 
-        $data['list_product'] = $queryListProduct->paginate(12,['prod_id']);
+        $data['list_product'] = $queryListProduct->get();
         
         $queryListBrand = DB::table('brand')
             ->join('product','brand.brand_id','product.prod_brand');
@@ -288,10 +287,18 @@ class FrontendController extends Controller
             ->select(DB::raw('DISTINCT propt_rom'))
             ->orderBy('propt_rom','desc');
         
-        foreach ($queryListProduct->get() as $key => $value) {
-            $queryListBrand->where('prod_id', $value->prod_id);
-            $queryListRam->where('prod_id', $value->prod_id);
-            $queryListRom->where('prod_id', $value->prod_id);
+        $products = $queryListProduct->get();
+        for ($i = 0; $i < count($products); $i++) { 
+            if($i == 0){
+                $queryListBrand->where('prod_id', $products[$i]->prod_id);
+                $queryListRam->where('prod_id', $products[$i]->prod_id);
+                $queryListRom->where('prod_id', $products[$i]->prod_id);
+            }
+            else{
+                $queryListBrand->orWhere('prod_id', $products[$i]->prod_id);
+                $queryListRam->orWhere('prod_id', $products[$i]->prod_id);
+                $queryListRom->orWhere('prod_id', $products[$i]->prod_id);
+            }
         }
 
         $data['list_ram'] = $queryListRam->get();
@@ -303,7 +310,6 @@ class FrontendController extends Controller
 
     public function getListProduct(Request $req)
     {
-        //dd($req->all());
 
         $queryListProduct = DB::table('product')->where('prod_status','1')
                                         ->join('product_options','product.prod_id','product_options.propt_prod')
@@ -372,16 +378,7 @@ class FrontendController extends Controller
             }
         }
 
-        
-
-        if($req->paginate){
-            $data['list_product'] = $queryListProduct->paginate($req->paginate,['prod_id']);
-        }
-        else{
-            $data['list_product'] = $queryListProduct->paginate(12,['prod_id']);
-        }
-
-        
+        $data['list_product'] = $queryListProduct->get();
 
         return view('abcstore.list_product',$data);
     }

@@ -1,11 +1,10 @@
-<!-- Grid & List Main Area End -->
 <div class="tab-content fix">
     @if (count($list_product)>0)
     <div id="grid-view" class="tab-pane fade show active">
         <div class="row">
             @foreach ($list_product as $prod)
             <!-- Single Product Start -->
-            <div class="col-lg-4 col-md-4 col-sm-6 col-6">
+            <div class="list-item-1 col-lg-4 col-md-4 col-sm-6 col-6">
                 <div class="single-product">
                     <!-- Product Image Start -->
                     <div class="pro-img">
@@ -41,7 +40,7 @@
     <div id="list-view" class="tab-pane fade">
         @foreach ($list_product as $prod)
         <!-- Single Product Start -->
-        <div class="single-product">
+        <div class="list-item-2 single-product">
             <div class="row">
                 <!-- Product Image Start -->
                 <div class="col-lg-4 col-md-5 col-sm-12">
@@ -74,11 +73,6 @@
     </div>
     <!-- #list view End -->
     <div class="pro-pagination">
-        {{$list_product->links('pagination::bootstrap-4')}}
-        <div class="product-pagination">
-            <span class="grid-item-list">Showing 1 to {{$list_product->perPage()}} of
-                {{$list_product->currentPage()}} ({{$list_product->lastPage()}} Pages)</span>
-        </div>
     </div>
     <!-- Product Pagination Info -->
     @else
@@ -87,4 +81,3 @@
     </div>
     @endif
 </div>
-<!-- Grid & List Main Area End -->

@@ -1,38 +1,7 @@
 @extends('abcstore.layout.master')
 @section('title','Sản phẩm')
 @section('main')
-<!-- Categorie Menu & Slider Area Start Here -->
-<div class="main-page-banner home-3">
-    <div class="container">
-        <div class="row">
-            <!-- Vertical Menu Start Here -->
-            <div class="col-xl-3 col-lg-4 d-none d-lg-block">
-                <div class="vertical-menu mb-all-30">
-                    <nav>
-                        <ul class="vertical-menu-list">
-                            <li>
-                                <a href="shop.html"><span><img src="img/vertical-menu/4.png"
-                                            alt="menu-icon"></span>Điện thoại</a>
-                            </li>
-                            <li>
-                                <a href="shop.html"><span><img src="img/vertical-menu/8.png"
-                                            alt="menu-icon"></span>Máy tính bảng</a>
-                            </li>
-                            <li>
-                                <a href="shop.html"><span><img src="img/vertical-menu/9.png"
-                                            alt="menu-icon"></span>Laptop</a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-            </div>
-            <!-- Vertical Menu End Here -->
-        </div>
-        <!-- Row End -->
-    </div>
-    <!-- Container End -->
-</div>
-<!-- Categorie Menu & Slider Area End Here -->
+@include('abcstore.layout.main-page-banner')
 <!-- Breadcrumb Start -->
 <div class="breadcrumb-area mt-30">
     <div class="container">
@@ -103,8 +72,8 @@
                                 @endfor
                             </div>
                             <div class="rating-feedback">
-                                ({{count($list_comment)}} đánh giá)
-                                <a>thêm bình luận</a>
+                                <a href="#review">({{count($list_comment)}}  đánh giá)</a>
+                                <a href="#add-review">thêm bình luận</a>
                             </div>
                         </div>
                         <div class="pro-price mtb-30">
@@ -229,7 +198,7 @@
                         </div>
                         <!-- Reviews End -->
                         <!-- Reviews Start -->
-                        <div class="review border-default universal-padding mt-30">
+                        <div id="add-review" class="review border-default universal-padding mt-30">
                             <h2 class="review-title mb-30">Nhận xét của bạn về sản phẩm: <br>
                                 <span>{{$product->prod_name}}</span></h2>
                             <p class="review-mini-title">Đánh giá của bạn</p>

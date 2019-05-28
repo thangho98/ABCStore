@@ -1,38 +1,7 @@
 @extends('abcstore.layout.master')
 @section('title','Cửa hàng')
 @section('main')
-<!-- Categorie Menu & Slider Area Start Here -->
-<div class="main-page-banner home-3">
-    <div class="container">
-        <div class="row">
-            <!-- Vertical Menu Start Here -->
-            <div class="col-xl-3 col-lg-4 d-none d-lg-block">
-                <div class="vertical-menu mb-all-30">
-                    <nav>
-                        <ul class="vertical-menu-list">
-                            <li>
-                                <a href="shop.html"><span><img src="img/vertical-menu/4.png" alt="menu-icon"></span>Điện
-                                    thoại</a>
-                            </li>
-                            <li>
-                                <a href="shop.html"><span><img src="img/vertical-menu/8.png" alt="menu-icon"></span>Máy
-                                    tính bảng</a>
-                            </li>
-                            <li>
-                                <a href="shop.html"><span><img src="img/vertical-menu/9.png"
-                                            alt="menu-icon"></span>Laptop</a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-            </div>
-            <!-- Vertical Menu End Here -->
-        </div>
-        <!-- Row End -->
-    </div>
-    <!-- Container End -->
-</div>
-<!-- Categorie Menu & Slider Area End Here -->
+@include('abcstore.layout.main-page-banner')
 <!-- Breadcrumb Start -->
 <div class="breadcrumb-area mt-30">
     <div class="container">
@@ -161,7 +130,7 @@
                     <!-- Product Top End -->
                     <!-- Single Banner Start -->
                     <div class="col-img">
-                        <a href="shop.html"><img src="img/banner/banner-sidebar.jpg" alt="slider-banner"></a>
+                        <a href="shop.html"><img src="{{asset('public/abcstore')}}/img/banner/banner-sidebar.jpg" alt="slider-banner"></a>
                     </div>
                     <!-- Single Banner End -->
                 </div>
@@ -196,7 +165,7 @@
                     <div class="main-toolbar-sorter clearfix">
                         <div class="toolbar-sorter d-flex align-items-center">
                             <label>Hiện thị:</label>
-                            <select id="selectPaginate" onchange="onChangeHandler()" class="sorter wide">
+                            <select id="selectPaginate" onchange="onChangePaginate()" class="sorter wide">
                                 <option value="12">12</option>
                                 <option value="25">25</option>
                                 <option value="50">50</option>
@@ -216,7 +185,7 @@
                             <div class="row">
                                 @foreach ($list_product as $prod)
                                 <!-- Single Product Start -->
-                                <div class="col-lg-4 col-md-4 col-sm-6 col-6">
+                                <div class="list-item-1 col-lg-4 col-md-4 col-sm-6 col-6">
                                     <div class="single-product">
                                         <!-- Product Image Start -->
                                         <div class="pro-img">
@@ -254,7 +223,7 @@
                         <div id="list-view" class="tab-pane fade">
                             @foreach ($list_product as $prod)
                             <!-- Single Product Start -->
-                            <div class="single-product">
+                            <div class="list-item-2 single-product">
                                 <div class="row">
                                     <!-- Product Image Start -->
                                     <div class="col-lg-4 col-md-5 col-sm-12">
@@ -288,11 +257,6 @@
                         </div>
                         <!-- #list view End -->
                         <div class="pro-pagination">
-                            {{$list_product->links('pagination::bootstrap-4')}}
-                            <div class="product-pagination">
-                                <span class="grid-item-list">Showing 1 to {{$list_product->perPage()}} of
-                                    {{$list_product->currentPage()}} ({{$list_product->lastPage()}} Pages)</span>
-                            </div>
                         </div>
                         <!-- Product Pagination Info -->
                         @else
@@ -313,7 +277,37 @@
 <!-- Shop Page End -->
 @endsection
 @section('scriptjs')
+<script src="{{asset('public/abcstore')}}/js/jquery.simplePagination.js"></script>
 <script>
+$( document ).ready(paginated(12));
+
+function paginated(perPage) {
+    var items1 = $(".list-item-1");
+    var items2 = $(".list-item-2");
+    var numItems = items1.length;
+
+    items1.slice(perPage).hide();
+    items2.slice(perPage).hide();
+
+    $('.pro-pagination').pagination({
+        items: numItems,
+        itemsOnPage: perPage,
+        prevText: "&laquo;",
+        nextText: "&raquo;",
+        onPageClick: function (pageNumber) {
+            var showFrom = perPage * (pageNumber - 1);
+            var showTo = showFrom + perPage;
+            items1.hide().slice(showFrom, showTo).show();
+            items2.hide().slice(showFrom, showTo).show();
+        }
+    });
+}
+
+function onChangePaginate(){
+    var paginate = $('#selectPaginate').val();
+    paginated(paginate);
+}
+
 function onChangeHandler(){
     getListProduct();
 }
@@ -354,7 +348,6 @@ function getListProduct(){
         'cate_id[]': cate_id,
         'rom[]': rom,
         'ram[]': ram,
-        paginate: paginate,
         orderby: orderby
     };
 
@@ -362,6 +355,7 @@ function getListProduct(){
     var success = function(result) {
         $('#list-product').empty();
         $('#list-product').append(result);
+        paginated(paginate);
     };
 
     // Result Type

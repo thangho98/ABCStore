@@ -57,8 +57,8 @@
                 <!-- Product Image Start -->
                 <div class="pro-img">
                     <a href="product.html">
-                        <img class="primary-img" src="img/products/1.jpg" alt="single-product">
-                        <img class="secondary-img" src="img/products/7.jpg" alt="single-product">
+                        <img class="primary-img" src="{{asset('public/abcstore')}}/img/products/1.jpg" alt="single-product">
+                        <img class="secondary-img" src="{{asset('public/abcstore')}}/img/products/7.jpg" alt="single-product">
                     </a>
                     <div class="countdown" data-countdown="2020/03/01"></div>
                 </div>
@@ -79,8 +79,8 @@
                 <!-- Product Image Start -->
                 <div class="pro-img">
                     <a href="product.html">
-                        <img class="primary-img" src="img/products/24.jpg" alt="single-product">
-                        <img class="secondary-img" src="img/products/25.jpg" alt="single-product">
+                        <img class="primary-img" src="{{asset('public/abcstore')}}/img/products/24.jpg" alt="single-product">
+                        <img class="secondary-img" src="{{asset('public/abcstore')}}/img/products/25.jpg" alt="single-product">
                     </a>
                     <div class="countdown" data-countdown="2020/03/01"></div>
                 </div>
@@ -101,8 +101,8 @@
                 <!-- Product Image Start -->
                 <div class="pro-img">
                     <a href="product.html">
-                        <img class="primary-img" src="img/products/42.jpg" alt="single-product">
-                        <img class="secondary-img" src="img/products/43.jpg" alt="single-product">
+                        <img class="primary-img" src="{{asset('public/abcstore')}}/img/products/42.jpg" alt="single-product">
+                        <img class="secondary-img" src="{{asset('public/abcstore')}}/img/products/43.jpg" alt="single-product">
                     </a>
                     <div class="countdown" data-countdown="2020/03/01"></div>
                 </div>
@@ -124,8 +124,8 @@
                 <!-- Product Image Start -->
                 <div class="pro-img">
                     <a href="product.html">
-                        <img class="primary-img" src="img/products/30.jpg" alt="single-product">
-                        <img class="secondary-img" src="img/products/31.jpg" alt="single-product">
+                        <img class="primary-img" src="{{asset('public/abcstore')}}/img/products/30.jpg" alt="single-product">
+                        <img class="secondary-img" src="{{asset('public/abcstore')}}/img/products/31.jpg" alt="single-product">
                     </a>
                     <div class="countdown" data-countdown="2020/03/01"></div>
                 </div>
@@ -146,8 +146,8 @@
                 <!-- Product Image Start -->
                 <div class="pro-img">
                     <a href="product.html">
-                        <img class="primary-img" src="img/products/8.jpg" alt="single-product">
-                        <img class="secondary-img" src="img/products/9.jpg" alt="single-product">
+                        <img class="primary-img" src="{{asset('public/abcstore')}}/img/products/8.jpg" alt="single-product">
+                        <img class="secondary-img" src="{{asset('public/abcstore')}}/img/products/9.jpg" alt="single-product">
                     </a>
                     <div class="countdown" data-countdown="2020/03/01"></div>
                 </div>
@@ -169,8 +169,8 @@
                 <!-- Product Image Start -->
                 <div class="pro-img">
                     <a href="product.html">
-                        <img class="primary-img" src="img/products/10.jpg" alt="single-product">
-                        <img class="secondary-img" src="img/products/11.jpg" alt="single-product">
+                        <img class="primary-img" src="{{asset('public/abcstore')}}/img/products/10.jpg" alt="single-product">
+                        <img class="secondary-img" src="{{asset('public/abcstore')}}/img/products/11.jpg" alt="single-product">
                     </a>
                     <div class="countdown" data-countdown="2020/03/01"></div>
                 </div>
@@ -495,47 +495,47 @@
         <div class="row no-gutters">
             <div class="col-lg-3">
                 <div class="col-img">
-                    <img src="img/banner/h1-band1.jpg" alt="">
+                    <img src="{{asset('public/abcstore')}}/img/banner/h1-band1.jpg" alt="">
                 </div>
             </div>
             <div class="col-lg-6">
                 <!-- Brand Banner Start -->
                 <div class="brand-banner owl-carousel">
                     <div class="single-brand">
-                        <a href="#"><img class="img" src="img/brand/1.jpg" alt="brand-image"></a>
-                        <a href="#"><img src="img/brand/2.jpg" alt="brand-image"></a>
-                        <a href="#"><img src="img/brand/3.jpg" alt="brand-image"></a>
+                        <a href="#"><img class="img" src="{{asset('public/abcstore')}}/img/brand/1.jpg" alt="brand-image"></a>
+                        <a href="#"><img src="{{asset('public/abcstore')}}/img/brand/2.jpg" alt="brand-image"></a>
+                        <a href="#"><img src="{{asset('public/abcstore')}}/img/brand/3.jpg" alt="brand-image"></a>
                     </div>
                     <div class="single-brand">
-                        <a href="#"><img class="img" src="img/brand/1.jpg" alt="brand-image"></a>
-                        <a href="#"><img src="img/brand/2.jpg" alt="brand-image"></a>
-                        <a href="#"><img src="img/brand/3.jpg" alt="brand-image"></a>
+                        <a href="#"><img class="img" src="{{asset('public/abcstore')}}/img/brand/1.jpg" alt="brand-image"></a>
+                        <a href="#"><img src="{{asset('public/abcstore')}}/img/brand/2.jpg" alt="brand-image"></a>
+                        <a href="#"><img src="{{asset('public/abcstore')}}/img/brand/3.jpg" alt="brand-image"></a>
                     </div>
                     <div class="single-brand">
-                        <a href="#"><img src="img/brand/1.jpg" alt="brand-image"></a>
-                        <a href="#"><img src="img/brand/2.jpg" alt="brand-image"></a>
-                        <a href="#"><img src="img/brand/3.jpg" alt="brand-image"></a>
+                        <a href="#"><img src="{{asset('public/abcstore')}}/img/brand/1.jpg" alt="brand-image"></a>
+                        <a href="#"><img src="{{asset('public/abcstore')}}/img/brand/2.jpg" alt="brand-image"></a>
+                        <a href="#"><img src="{{asset('public/abcstore')}}/img/brand/3.jpg" alt="brand-image"></a>
 
                     </div>
                     <div class="single-brand">
-                        <a href="#"><img src="img/brand/2.jpg" alt="brand-image"></a>
-                        <a href="#"><img src="img/brand/3.jpg" alt="brand-image"></a>
-                        <a href="#"><img src="img/brand/4.jpg" alt="brand-image"></a>
+                        <a href="#"><img src="{{asset('public/abcstore')}}/img/brand/2.jpg" alt="brand-image"></a>
+                        <a href="#"><img src="{{asset('public/abcstore')}}/img/brand/3.jpg" alt="brand-image"></a>
+                        <a href="#"><img src="{{asset('public/abcstore')}}/img/brand/4.jpg" alt="brand-image"></a>
                     </div>
                     <div class="single-brand">
-                        <a href="#"><img src="img/brand/2.jpg" alt="brand-image"></a>
-                        <a href="#"><img src="img/brand/3.jpg" alt="brand-image"></a>
-                        <a href="#"><img src="img/brand/4.jpg" alt="brand-image"></a>
+                        <a href="#"><img src="{{asset('public/abcstore')}}/img/brand/2.jpg" alt="brand-image"></a>
+                        <a href="#"><img src="{{asset('public/abcstore')}}/img/brand/3.jpg" alt="brand-image"></a>
+                        <a href="#"><img src="{{asset('public/abcstore')}}/img/brand/4.jpg" alt="brand-image"></a>
                     </div>
                     <div class="single-brand">
-                        <a href="#"><img src="img/brand/2.jpg" alt="brand-image"></a>
-                        <a href="#"><img src="img/brand/3.jpg" alt="brand-image"></a>
-                        <a href="#"><img src="img/brand/4.jpg" alt="brand-image"></a>
+                        <a href="#"><img src="{{asset('public/abcstore')}}/img/brand/2.jpg" alt="brand-image"></a>
+                        <a href="#"><img src="{{asset('public/abcstore')}}/img/brand/3.jpg" alt="brand-image"></a>
+                        <a href="#"><img src="{{asset('public/abcstore')}}/img/brand/4.jpg" alt="brand-image"></a>
                     </div>
                     <div class="single-brand">
-                        <a href="#"><img src="img/brand/2.jpg" alt="brand-image"></a>
-                        <a href="#"><img src="img/brand/3.jpg" alt="brand-image"></a>
-                        <a href="#"><img src="img/brand/4.jpg" alt="brand-image"></a>
+                        <a href="#"><img src="{{asset('public/abcstore')}}/img/brand/2.jpg" alt="brand-image"></a>
+                        <a href="#"><img src="{{asset('public/abcstore')}}/img/brand/3.jpg" alt="brand-image"></a>
+                        <a href="#"><img src="{{asset('public/abcstore')}}/img/brand/4.jpg" alt="brand-image"></a>
                     </div>
                 </div>
                 <!-- Brand Banner End -->
@@ -543,7 +543,7 @@
             </div>
             <div class="col-lg-3">
                 <div class="col-img">
-                    <img src="img/banner/h1-band2.jpg" alt="">
+                    <img src="{{asset('public/abcstore')}}/img/banner/h1-band2.jpg" alt="">
                 </div>
             </div>
         </div>
