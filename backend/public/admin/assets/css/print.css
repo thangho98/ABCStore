@@ -140,3 +140,21 @@
         margin: 0px;
     }
 }
+
+/* Thông tin phụ trên hóa đơn */
+
+.abcstore-title {
+    display: inline;
+}
+
+.hoadon-title {
+    display: inline;
+}
+
+.abcstore-infor {
+    font-size: 13px;
+}
+
+.hoadon-date {
+    font-size: 18px;
+}
