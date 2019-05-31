@@ -2,30 +2,22 @@
 -- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
--- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th5 28, 2019 lúc 02:15 PM
--- Phiên bản máy phục vụ: 10.1.38-MariaDB
--- Phiên bản PHP: 7.3.2
+-- Host: localhost:3306
+-- Generation Time: May 31, 2019 at 03:31 PM
+-- Server version: 5.7.25
+-- PHP Version: 7.3.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
 --
--- Cơ sở dữ liệu: `abcstore`
+-- Database: `abcstore`
 --
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `brand`
+-- Table structure for table `brand`
 --
 
 CREATE TABLE `brand` (
@@ -39,7 +31,7 @@ CREATE TABLE `brand` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `brand`
+-- Dumping data for table `brand`
 --
 
 INSERT INTO `brand` (`brand_id`, `brand_name`, `brand_slug`, `brand_desc`, `brand_famous`, `created_at`, `updated_at`) VALUES
@@ -52,7 +44,7 @@ INSERT INTO `brand` (`brand_id`, `brand_name`, `brand_slug`, `brand_desc`, `bran
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `cart`
+-- Table structure for table `cart`
 --
 
 CREATE TABLE `cart` (
@@ -68,7 +60,7 @@ CREATE TABLE `cart` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `cart`
+-- Dumping data for table `cart`
 --
 
 INSERT INTO `cart` (`cart_id`, `cart_cus`, `cart_total_prod`, `cart_total_price`, `cart_date`, `cart_remember_token`, `cart_status`, `created_at`, `updated_at`) VALUES
@@ -77,7 +69,7 @@ INSERT INTO `cart` (`cart_id`, `cart_cus`, `cart_total_prod`, `cart_total_price`
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `cartdetail`
+-- Table structure for table `cartdetail`
 --
 
 CREATE TABLE `cartdetail` (
@@ -93,7 +85,7 @@ CREATE TABLE `cartdetail` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `cartdetail`
+-- Dumping data for table `cartdetail`
 --
 
 INSERT INTO `cartdetail` (`cartdt_id`, `cartdt_cart`, `cartdt_propt`, `cartdt_prod_quantity`, `cartdt_prod_unit_price`, `cartdt_prod_promotion_price`, `cartdt_total`, `created_at`, `updated_at`) VALUES
@@ -103,7 +95,7 @@ INSERT INTO `cartdetail` (`cartdt_id`, `cartdt_cart`, `cartdt_propt`, `cartdt_pr
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `category`
+-- Table structure for table `category`
 --
 
 CREATE TABLE `category` (
@@ -116,7 +108,7 @@ CREATE TABLE `category` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `category`
+-- Dumping data for table `category`
 --
 
 INSERT INTO `category` (`cate_id`, `cate_name`, `cate_slug`, `cate_icon`, `created_at`, `updated_at`) VALUES
@@ -127,7 +119,7 @@ INSERT INTO `category` (`cate_id`, `cate_name`, `cate_slug`, `cate_icon`, `creat
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `comment`
+-- Table structure for table `comment`
 --
 
 CREATE TABLE `comment` (
@@ -142,7 +134,7 @@ CREATE TABLE `comment` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `comment`
+-- Dumping data for table `comment`
 --
 
 INSERT INTO `comment` (`cmt_id`, `cmt_name`, `cmt_email`, `cmt_content`, `cmt_voted`, `cmt_prod`, `created_at`, `updated_at`) VALUES
@@ -151,7 +143,7 @@ INSERT INTO `comment` (`cmt_id`, `cmt_name`, `cmt_email`, `cmt_content`, `cmt_vo
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `commission`
+-- Table structure for table `commission`
 --
 
 CREATE TABLE `commission` (
@@ -167,7 +159,7 @@ CREATE TABLE `commission` (
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `customer`
+-- Table structure for table `customer`
 --
 
 CREATE TABLE `customer` (
@@ -181,7 +173,7 @@ CREATE TABLE `customer` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `customer`
+-- Dumping data for table `customer`
 --
 
 INSERT INTO `customer` (`cus_id`, `cus_name`, `cus_phone`, `cus_identity_card`, `cus_email`, `created_at`, `updated_at`) VALUES
@@ -193,7 +185,7 @@ INSERT INTO `customer` (`cus_id`, `cus_name`, `cus_phone`, `cus_identity_card`, 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `employees`
+-- Table structure for table `employees`
 --
 
 CREATE TABLE `employees` (
@@ -213,7 +205,7 @@ CREATE TABLE `employees` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `employees`
+-- Dumping data for table `employees`
 --
 
 INSERT INTO `employees` (`empl_id`, `empl_name`, `empl_sex`, `empl_email`, `empl_phone`, `empl_address`, `empl_birthday`, `empl_identity_card`, `empl_start_date`, `empl_basic_salary`, `empl_status`, `created_at`, `updated_at`) VALUES
@@ -224,7 +216,7 @@ INSERT INTO `employees` (`empl_id`, `empl_name`, `empl_sex`, `empl_email`, `empl
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `goodsexport`
+-- Table structure for table `goodsexport`
 --
 
 CREATE TABLE `goodsexport` (
@@ -236,7 +228,7 @@ CREATE TABLE `goodsexport` (
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `goodsexportdetail`
+-- Table structure for table `goodsexportdetail`
 --
 
 CREATE TABLE `goodsexportdetail` (
@@ -248,7 +240,7 @@ CREATE TABLE `goodsexportdetail` (
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `goodsimport`
+-- Table structure for table `goodsimport`
 --
 
 CREATE TABLE `goodsimport` (
@@ -265,7 +257,7 @@ CREATE TABLE `goodsimport` (
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `goodsimportdetail`
+-- Table structure for table `goodsimportdetail`
 --
 
 CREATE TABLE `goodsimportdetail` (
@@ -284,7 +276,7 @@ CREATE TABLE `goodsimportdetail` (
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `guarantee`
+-- Table structure for table `guarantee`
 --
 
 CREATE TABLE `guarantee` (
@@ -305,7 +297,7 @@ CREATE TABLE `guarantee` (
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `invoice`
+-- Table structure for table `invoice`
 --
 
 CREATE TABLE `invoice` (
@@ -322,7 +314,7 @@ CREATE TABLE `invoice` (
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `invoicedetail`
+-- Table structure for table `invoicedetail`
 --
 
 CREATE TABLE `invoicedetail` (
@@ -339,7 +331,7 @@ CREATE TABLE `invoicedetail` (
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `migrations`
+-- Table structure for table `migrations`
 --
 
 CREATE TABLE `migrations` (
@@ -349,7 +341,7 @@ CREATE TABLE `migrations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC;
 
 --
--- Đang đổ dữ liệu cho bảng `migrations`
+-- Dumping data for table `migrations`
 --
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
@@ -359,7 +351,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `orders`
+-- Table structure for table `orders`
 --
 
 CREATE TABLE `orders` (
@@ -375,7 +367,7 @@ CREATE TABLE `orders` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `orders`
+-- Dumping data for table `orders`
 --
 
 INSERT INTO `orders` (`order_id`, `order_date`, `order_empl`, `order_cus`, `order_total_prod`, `order_total_price`, `order_remember_token`, `created_at`, `updated_at`) VALUES
@@ -387,7 +379,7 @@ INSERT INTO `orders` (`order_id`, `order_date`, `order_empl`, `order_cus`, `orde
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `ordersdetail`
+-- Table structure for table `ordersdetail`
 --
 
 CREATE TABLE `ordersdetail` (
@@ -403,7 +395,7 @@ CREATE TABLE `ordersdetail` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `ordersdetail`
+-- Dumping data for table `ordersdetail`
 --
 
 INSERT INTO `ordersdetail` (`orddt_id`, `orddt_order`, `orddt_propt`, `orddt_quantity`, `orddt_unit_price`, `orddt_promotion_price`, `orddt_total`, `created_at`, `updated_at`) VALUES
@@ -416,7 +408,7 @@ INSERT INTO `ordersdetail` (`orddt_id`, `orddt_order`, `orddt_propt`, `orddt_qua
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `password_resets`
+-- Table structure for table `password_resets`
 --
 
 CREATE TABLE `password_resets` (
@@ -428,7 +420,7 @@ CREATE TABLE `password_resets` (
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `permission`
+-- Table structure for table `permission`
 --
 
 CREATE TABLE `permission` (
@@ -439,7 +431,7 @@ CREATE TABLE `permission` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `permission`
+-- Dumping data for table `permission`
 --
 
 INSERT INTO `permission` (`perm_id`, `perm_name`, `created_at`, `updated_at`) VALUES
@@ -451,7 +443,7 @@ INSERT INTO `permission` (`perm_id`, `perm_name`, `created_at`, `updated_at`) VA
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `product`
+-- Table structure for table `product`
 --
 
 CREATE TABLE `product` (
@@ -471,18 +463,31 @@ CREATE TABLE `product` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `product`
+-- Dumping data for table `product`
 --
 
 INSERT INTO `product` (`prod_id`, `prod_name`, `prod_slug`, `prod_cate`, `prod_brand`, `prod_warranty_period`, `prod_detail`, `prod_status`, `prod_new`, `prod_featured`, `prod_poster`, `created_at`, `updated_at`) VALUES
-(12, 'Samsung Galaxy A50', 'samsung-galaxy-a50', 2, 3, 12, 'Kích thước	158.5 x 74.5 x 7.7mm\r\nBộ nhớ đệm / Ram	64 GB, 4 GB RAM\r\nBộ nhớ trong	64 GB\r\nLoại màn hình	sAMOLED FHD+\r\nKích thước màn hình	6.4 inches\r\nĐộ phân giải màn hình	1080 x 2220 pixels\r\nHệ điều hành	Android\r\nPhiên bản hệ điều hành	Android v9.0 (Pie)\r\nChipset	Samsung Exynos 9 Octa 9610\r\nCPU	Octa Core 2.3GHz', 1, 1, 1, 'samsung-galaxy-a10-do-1-180x125.jpg', '2019-05-16 14:56:45', '2019-05-28 12:09:45'),
-(23, 'iPhone Xs Max', 'iphone-xs-max', 3, 1, 24, 'Màn hình:	OLED, 6.5\", Super Retina\r\nHệ điều hành:	iOS 12\r\nCamera sau:	Chính 12 MP & Phụ 12 MP\r\nCamera trước:	7 MP\r\nCPU:	Apple A12 Bionic 6 nhân\r\nRAM:	4 GB\r\nBộ nhớ trong:	64 GB\r\nThẻ SIM: Nano SIM & eSIM, Hỗ trợ 4G\r\nDung lượng pin:	3174 mAh, có sạc nhanh', 1, 1, 1, 'iphone-xs-max-bac-1-1-1-180x125.jpg', '2019-05-16 14:56:48', '2019-05-28 12:09:48'),
-(27, 'Samsung Galaxy S10', 'samsung-galaxy-s10', 1, 2, 12, 'Màn hình:	Dynamic AMOLED, 6.1\", Quad HD+ (2K+)\r\nHệ điều hành:	Android 9.0 (Pie)\r\nCamera sau:	Chính 12 MP & Phụ 12 MP, 16 MP\r\nCamera trước:	10 MP\r\nCPU:	Exynos 9820 8 nhân 64-bit\r\nRAM:	8 GB\r\nBộ nhớ trong:	128 GB\r\nThẻ nhớ:	MicroSD, hỗ trợ tối đa 512 GB\r\nThẻ SIM:		2 SIM Nano (SIM 2 chung khe thẻ nhớ), Hỗ trợ 4G\r\nDung lượng pin:	3400 mAh, có sạc nhanh', 1, 1, 1, 'samsung-galaxy-s10-white-400x400.jpg', '2019-05-22 04:31:41', '2019-05-28 12:09:37');
+(23, 'iPhone Xs Max', 'iphone-xs-max', 1, 1, 24, 'Màn hình:	OLED, 6.5\", Super Retina\r\nHệ điều hành:	iOS 12\r\nCamera sau:	Chính 12 MP & Phụ 12 MP\r\nCamera trước:	7 MP\r\nCPU:	Apple A12 Bionic 6 nhân\r\nRAM:	4 GB\r\nBộ nhớ trong:	64 GB\r\nThẻ SIM: Nano SIM & eSIM, Hỗ trợ 4G\r\nDung lượng pin:	3174 mAh, có sạc nhanh', 1, 1, 1, 'iphone-xs-max-bac-1-1-1-180x125.jpg', '2019-05-16 14:56:48', '2019-05-29 17:13:58'),
+(27, 'Samsung Galaxy S10', 'samsung-galaxy-s10', 1, 2, 12, 'Màn hình:	Dynamic AMOLED, 6.1\", Quad HD+ (2K+)\r\nHệ điều hành:	Android 9.0 (Pie)\r\nCamera sau:	Chính 12 MP & Phụ 12 MP, 16 MP\r\nCamera trước:	10 MP\r\nCPU:	Exynos 9820 8 nhân 64-bit\r\nRAM:	8 GB\r\nBộ nhớ trong:	128 GB\r\nThẻ nhớ:	MicroSD, hỗ trợ tối đa 512 GB\r\nThẻ SIM:		2 SIM Nano (SIM 2 chung khe thẻ nhớ), Hỗ trợ 4G\r\nDung lượng pin:	3400 mAh, có sạc nhanh', 1, 1, 1, 'samsung-galaxy-s10-white-400x400.jpg', '2019-05-22 04:31:41', '2019-05-28 12:09:37'),
+(28, 'Iphone 7 32GB', 'iphone-7-32gb', 1, 1, 12, 'Màn hình:	LED-backlit IPS LCD, 4.7\", Retina HD\r\nHệ điều hành:	iOS 12\r\nCamera sau:	12 MP\r\nCamera trước: 7 MP\r\nCPU:	Apple A10 Fusion 4 nhân 64-bit\r\nRAM:	2 GB\r\nBộ nhớ trong:	32 GB\r\nThẻ SIM: 1 Nano SIM, Hỗ trợ 4G\r\nDung lượng pin:	1960 mAh', 1, 1, 1, 'iphone-7-32gb-den-400x460.png', '2019-05-29 17:13:39', '2019-05-29 17:27:11'),
+(29, 'iPhone 6s Plus 32GB', 'iphone-6s-plus-32gb', 1, 1, 12, 'Màn hình:	LED-backlit IPS LCD, 5.5\", Retina HD\r\nHệ điều hành:	iOS 12\r\nCamera sau:	12 MP\r\nCamera trước:	5 MP\r\nCPU:	Apple A9 2 nhân 64-bit\r\nRAM:	2 GB\r\nBộ nhớ trong:	32 GB\r\nThẻ SIM: 1 Nano SIM, Hỗ trợ 4G\r\nDung lượng pin:	2750 mAh', 1, 1, 1, 'iphone-6s-plus-32gb-400x460.png', '2019-05-29 17:26:30', '2019-05-29 17:26:56'),
+(34, 'iPhone Xs Max Full Option', 'iphone-xs-max-full-option', 1, 1, 12, 'Màn hình :	6.5 inchs, 1242 x 2688 Pixels\r\nCamera trước :	7.0 MP\r\nCamera sau :	Dual Camera 12.0 MP\r\nRAM :	4 GB\r\nBộ nhớ trong :	512 GB\r\nCPU :	Apple A12 Bionic, 6, Đang cập nhật\r\nGPU :	Apple GPU 4 nhân\r\nHệ điều hành :	iOS 12\r\nThẻ SIM :	eSIM và NanoSIM, 1 Sim', 0, 1, 1, 'iPhone-Xs-Max-gold.jpeg', '2019-05-29 17:37:11', '2019-05-29 17:37:11'),
+(35, 'Xiaomi Mi 9 64GB (No.00574553)', 'xiaomi-mi-9-64gb-no00574553', 1, 3, 18, 'Màn hình :	6.39 inchs, 1080 x 2340 Pixels\r\nCamera trước :	20.0 MP\r\nCamera sau :	48 MP,16 MP +12 MP ( 3 camera)\r\nRAM :	6 GB\r\nBộ nhớ trong :	64 GB\r\nCPU :	Snap dragon 855, 8, 1x2.84Ghz+3x2.42Ghz+4x1.8Ghz\r\nGPU :	Adreno 640\r\nDung lượng pin :	3300mAh\r\nHệ điều hành :	Android 9\r\nThẻ SIM :	Nano SIM, 2 Sim', 0, 1, 1, 'xiaomi-mi-9-den-1.jpeg', '2019-05-29 17:40:45', '2019-05-29 17:40:45'),
+(36, 'Xiaomi Mi 8 Lite 128GB (No.00516749)', 'xiaomi-mi-8-lite-128gb-no00516749', 1, 3, 18, 'Màn hình :	6.22 inches, 1080 x 2040 Pixel\r\nCamera trước :	24.0 MP\r\nCamera sau :	12.0 MP + 5.0 MP\r\nRAM :	6 GB\r\nBộ nhớ trong :	128 GB\r\nCPU :	SnapDragon 660, Octa-Core, 4x2.2 GHz Kryo 260 & 4x1.8 GHz Kryo 260\r\nGPU :	Adreno 512\r\nDung lượng pin :	3300mah\r\nHệ điều hành :	Android 8.1 Oreo (phiên bản Go)\r\nThẻ SIM :	Nano SIM, 2 Sim', 0, 1, 1, 'xiaomi-mi8-lite-1.jpg', '2019-05-29 17:43:17', '2019-05-29 17:43:17'),
+(37, 'Xiaomi Pocophone F1 (No.00503336)', 'xiaomi-pocophone-f1-no00503336', 1, 3, 18, 'Màn hình :	6.18 inches, 1080 x 2280 Pixels\r\nCamera trước :	20.0 MP\r\nCamera sau :	Camera kép 12MP+5MP\r\nRAM :	6 GB\r\nBộ nhớ trong :	64 GB\r\nCPU :	Snapdragon 845, 8, 2.8 GHz\r\nGPU :	Adreno 630\r\nDung lượng pin :	4000 mAh\r\nHệ điều hành :	Android 8\r\nThẻ SIM :	Nano SIM, 2 Sim', 0, 1, 1, 'xiaomi-pocophone-f1-den-1.png', '2019-05-29 17:46:04', '2019-05-29 17:46:04'),
+(38, 'Vivo V15 6GB-128GB (No.00554994)', 'vivo-v15-6gb-128gb-no00554994', 1, 7, 12, 'Màn hình :	6.53 inchs, 1080 x 2340 Pixels\r\nCamera trước :	32.0Mp\r\nCamera sau :	12Mp+8Mp+5Mp\r\nRAM :	6 GB\r\nBộ nhớ trong :	128 GB\r\nCPU :	MTK P70, 8, 2.1 GHz\r\nGPU :	ARM®Mail-G72\r\nDung lượng pin :	4000 mAh\r\nHệ điều hành :	Android 9\r\nThẻ SIM :	Nano SIM, 2 Sim', 0, 1, 1, 'vivo-v15-do-qh-1.jpeg', '2019-05-29 18:05:22', '2019-05-29 18:05:22'),
+(39, 'Vivo V11i (No.00502766)', 'vivo-v11i-no00502766', 1, 7, 12, 'Màn hình :	6.3 inchs, 1080 x 2280 Pixels\r\nCamera trước :	25.0 MP\r\nCamera sau :	16.0 + 5.0 MP(Dual Camera)\r\nRAM :	4 GB\r\nBộ nhớ trong :	128 GB\r\nCPU :	Helio P60 -Octa-core 2.0GHz, 8, 2.0 GHz\r\nGPU :	Mali-G72 MP3\r\nDung lượng pin :	3315mAh\r\nHệ điều hành :	Android 8\r\nThẻ SIM :	Nano SIM, 2 Sim', 0, 1, 1, 'vivo-v11i-tim-0.jpg', '2019-05-29 18:16:33', '2019-05-29 18:16:33'),
+(40, 'Vivo V9 Youth (No.00455497)', 'vivo-v9-youth-no00455497', 1, 7, 12, 'Màn hình :	6.3 inches, 1080 x 2280 Pixels\r\nCamera trước :	16.0 MP\r\nCamera sau :	16.0 MP + 2.0 MP\r\nRAM :	4 GB\r\nBộ nhớ trong :	32 GB\r\nCPU :	Qualcomm Snapdragon 450, 8, 1.8GHz\r\nGPU :	Adreno 506\r\nDung lượng pin :	3260mAh\r\nHệ điều hành :	Android 8.1\r\nThẻ SIM :	Nano SIM, 2 Sim', 0, 1, 1, 'vivo-v9-youth-den-1.jpeg', '2019-05-29 18:20:19', '2019-05-29 18:20:19'),
+(41, 'Macbook Pro 13 inch 128GB (2017) (No.00367556)', 'macbook-pro-13-inch-128gb-2017-no00367556', 3, 1, 12, 'CPU :	Intel, Core i5\r\nRAM :	8 GB, LPDDR3\r\nỔ cứng :	SSD, 128 GB\r\nMàn hình :	13.3 inch, 2560 x 1600 pixels\r\nCard màn hình :	Intel Iris Plus Graphics 640\r\nCổng kết nối :	LAN : 802.11ac Wi-Fi wireless networking, WIFI : IEEE 802.11a/b/g/n compatible\r\nHệ điều hành :	Mac Os\r\nTrọng lượng :	1.37 kg', 0, 1, 1, 'mac_2017_bac.jpg', '2019-05-29 18:28:29', '2019-05-29 18:28:29'),
+(42, 'Samsung Galaxy Tab S5E (No.00555888)', 'samsung-galaxy-tab-s5e-no00555888', 2, 2, 12, 'Màn hình :	10.5 inchs, 2560 x 1600 pixels\r\nCamera trước :	8.0 MP\r\nCamera sau :	13.0 MP\r\nCPU :	Qualcomm Snapdragon 670\r\nGPU :	Đang cập nhật\r\nRAM :	4 GB\r\nBộ nhớ trong :	64 GB\r\nKết nối :	Wi-Fi: 802.11 a/b/g/n/ac, Bluetooth: Bluetooth 5.0\r\nHệ điều hành :	Android One UI', 0, 1, 1, 'ss-galaxy-tab-s5e-vang-1.jpeg', '2019-05-29 18:31:26', '2019-05-29 18:31:26'),
+(43, 'Samsung Galaxy Tab A Plus 8 (2019) (No.00555887)', 'samsung-galaxy-tab-a-plus-8-2019-no00555887', 2, 2, 12, 'Màn hình :	8.0 inchs, 1920 x 1200 pixels\r\nCamera trước :	5.0 MP\r\nCamera sau :	8.0 MP\r\nCPU :	Exynos 7904\r\nGPU :	G71 MP2\r\nRAM :	3 GB\r\nBộ nhớ trong :	32 MB\r\nKết nối :	Wi-Fi: Wi-Fi 802.11 b/g/n, Bluetooth: Bluetooth 4.2\r\nHệ điều hành :	Android 8.1', 0, 1, 1, 'ss-tab-a-plus-8-den-1.jpeg', '2019-05-29 18:33:49', '2019-05-29 18:33:49'),
+(44, 'Huawei MediaPad T3 7.0 Prestige (No.00407106)', 'huawei-mediapad-t3-70-prestige-no00407106', 2, 6, 12, 'Màn hình :	7.0\", 1024 x 600 pixels\r\nCamera trước :	2 MP and fixed focus\r\nCamera sau :	2 MP and fixed focus\r\nCPU :	Quad-core 1.3 GHz processor Storage\r\nGPU :	Mali400\r\nBộ nhớ trong :	8 GB\r\nKết nối :	Hỗ trợ 3G: B2,B3,B5,B8, Wi-Fi: 802.11 b/g/n@2.4GHz, Bluetooth: Có\r\nThời gian sử dụng :	đang cập nhật\r\nHệ điều hành :	Android 7.0', 0, 1, 1, 'huawei-mediapad-t3-70-prestige-1.jpg', '2019-05-29 18:38:03', '2019-05-29 18:38:03'),
+(45, 'Huawei MediaPad T5 10 (No.00532152)', 'huawei-mediapad-t5-10-no00532152', 2, 6, 12, 'Màn hình :	10.1 inchs, 1920 x 1200 pixels\r\nCamera trước :	2.0 MP\r\nCamera sau :	5.0 MP\r\nCPU :	HUAWEI Kirin 659\r\nGPU :	Mali-T830 MP2\r\nRAM :	3 GB\r\nBộ nhớ trong :	32 GB\r\nKết nối :	Wi-Fi: Wi-Fi 802.11 b/g/n, Dual-band, Wi-Fi Direct, Wi-Fi hotspot, Bluetooth: v4.1\r\nHệ điều hành :	Android 8', 0, 1, 1, 'huawei-mediapad-t510-0.jpeg', '2019-05-29 18:40:23', '2019-05-29 18:40:23');
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `product_image`
+-- Table structure for table `product_image`
 --
 
 CREATE TABLE `product_image` (
@@ -494,7 +499,7 @@ CREATE TABLE `product_image` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `product_image`
+-- Dumping data for table `product_image`
 --
 
 INSERT INTO `product_image` (`pimg_id`, `pimg_prod`, `pimg_name`, `created_at`, `updated_at`) VALUES
@@ -502,12 +507,24 @@ INSERT INTO `product_image` (`pimg_id`, `pimg_prod`, `pimg_name`, `created_at`, 
 (11, 27, 's10_tr1_1.jpg', '2019-05-22 04:31:41', '2019-05-22 04:31:41'),
 (12, 27, 's10_xl1_1.jpg', '2019-05-22 04:31:41', '2019-05-22 04:31:41'),
 (13, 23, 'iphone-xs-max-bac-4-180x125.jpg', '2019-05-22 11:21:28', '2019-05-22 11:26:14'),
-(14, 23, 's10_tr1_1.jpg', '2019-05-22 11:23:36', '2019-05-22 11:23:36');
+(14, 23, 's10_tr1_1.jpg', '2019-05-22 11:23:36', '2019-05-22 11:23:36'),
+(15, 28, 'iphone-7-32gb-den-400x460.png', '2019-05-29 17:13:39', '2019-05-29 17:13:39'),
+(16, 29, 'iphone-6s-plus-32gb-400x460.png', '2019-05-29 17:26:30', '2019-05-29 17:26:30'),
+(17, 29, 'ip_6s_rose_gold.jpeg', '2019-05-29 17:26:30', '2019-05-29 17:26:30'),
+(18, 34, 'iPhone-Xs-Max-White.jpeg', '2019-05-29 17:37:11', '2019-05-29 17:37:11'),
+(19, 35, 'xiaomi-mi-9-xanh-1.jpeg', '2019-05-29 17:40:45', '2019-05-29 17:40:45'),
+(20, 36, 'xiaomi-mi8-lite-den-1.jpg', '2019-05-29 17:43:17', '2019-05-29 17:43:17'),
+(21, 37, 'xiaomi-pocophone-f1-xanh-1.jpeg', '2019-05-29 17:46:04', '2019-05-29 17:46:04'),
+(22, 38, 'vivo-v15-xanh-qh-1.png', '2019-05-29 18:05:22', '2019-05-29 18:05:22'),
+(23, 39, 'vivo-v11i-xanh-0.jpg', '2019-05-29 18:16:33', '2019-05-29 18:16:33'),
+(24, 40, 'vivo-v9-youth-vang-1.png', '2019-05-29 18:20:19', '2019-05-29 18:20:19'),
+(25, 41, 'mac_2017_black.jpg', '2019-05-29 18:28:29', '2019-05-29 18:28:29'),
+(26, 43, 'ss-tab-a-plus-8-xam-1.png', '2019-05-29 18:33:49', '2019-05-29 18:33:49');
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `product_options`
+-- Table structure for table `product_options`
 --
 
 CREATE TABLE `product_options` (
@@ -523,7 +540,7 @@ CREATE TABLE `product_options` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `product_options`
+-- Dumping data for table `product_options`
 --
 
 INSERT INTO `product_options` (`propt_id`, `propt_prod`, `propt_color`, `propt_ram`, `propt_rom`, `propt_price`, `propt_quantity`, `created_at`, `updated_at`) VALUES
@@ -532,12 +549,42 @@ INSERT INTO `product_options` (`propt_id`, `propt_prod`, `propt_color`, `propt_r
 (4, 27, 'Đen', 8, '128 gb', 17990000, 0, '2019-05-22 04:31:41', '2019-05-22 04:31:41'),
 (5, 27, 'Trắng', 8, '128 gb', 17990000, 0, '2019-05-22 04:31:41', '2019-05-22 04:31:41'),
 (6, 23, 'Gold', 4, '512 gb', 3000, 0, '2019-05-22 11:21:28', '2019-05-22 11:26:38'),
-(7, 12, 'Xanh Dương', 6, '64 gb', 6000000, 0, '2019-05-28 12:05:19', '2019-05-28 12:05:19');
+(8, 28, 'Đen', 2, '32 gb', 10240000, 0, '2019-05-29 17:13:39', '2019-05-29 17:13:39'),
+(9, 29, 'Vàng Đồng', 2, '32 gb', 9990000, 0, '2019-05-29 17:26:30', '2019-05-29 17:26:30'),
+(10, 29, 'Vàng Hồng', 2, '32 gb', 9790000, 0, '2019-05-29 17:26:30', '2019-05-29 17:26:30'),
+(11, 34, 'Vàng', 4, '64 gb', 29990000, 0, '2019-05-29 17:37:11', '2019-05-29 17:37:11'),
+(12, 34, 'Bạc', 4, '64 gb', 29990000, 0, '2019-05-29 17:37:11', '2019-05-29 17:37:11'),
+(13, 34, 'Vàng', 4, '256 gb', 35990000, 0, '2019-05-29 17:37:11', '2019-05-29 17:37:11'),
+(14, 34, 'Bạc', 4, '256 gb', 35990000, 0, '2019-05-29 17:37:11', '2019-05-29 17:37:11'),
+(15, 34, 'Vàng', 4, '512 gb', 39990000, 0, '2019-05-29 17:37:11', '2019-05-29 17:37:11'),
+(16, 34, 'Bạc', 4, '512 gb', 35990000, 0, '2019-05-29 17:37:11', '2019-05-29 17:37:11'),
+(17, 35, 'Xanh Dương', 6, '64 gb', 11990000, 0, '2019-05-29 17:40:45', '2019-05-29 17:40:45'),
+(18, 35, 'Đen', 6, '64 gb', 11990000, 0, '2019-05-29 17:40:45', '2019-05-29 17:40:45'),
+(19, 36, 'Đen', 6, '128 gb', 7490000, 0, '2019-05-29 17:43:17', '2019-05-29 17:43:17'),
+(20, 36, 'Xanh Dương', 6, '128 gb', 7490000, 0, '2019-05-29 17:43:17', '2019-05-29 17:43:17'),
+(21, 37, 'Xanh Dương', 6, '64 gb', 7990000, 0, '2019-05-29 17:46:04', '2019-05-29 17:46:04'),
+(22, 37, 'Đen', 6, '64 gb', 7990000, 0, '2019-05-29 17:46:04', '2019-05-29 17:46:04'),
+(23, 38, 'Đỏ', 6, '128 gb', 7990000, 0, '2019-05-29 18:05:22', '2019-05-29 18:11:11'),
+(24, 38, 'Xanh Dương', 6, '128 gb', 7990000, 0, '2019-05-29 18:05:22', '2019-05-29 18:05:22'),
+(25, 39, 'Tím', 4, '128 gb', 5990000, 0, '2019-05-29 18:16:33', '2019-05-29 18:16:33'),
+(26, 39, 'Xanh Dương', 4, '128 gb', 5990000, 0, '2019-05-29 18:16:33', '2019-05-29 18:16:33'),
+(27, 40, 'Đen', 4, '32 gb', 3990000, 0, '2019-05-29 18:20:19', '2019-05-29 18:20:19'),
+(28, 40, 'Vàng', 4, '32 gb', 3990000, 0, '2019-05-29 18:20:19', '2019-05-29 18:20:19'),
+(29, 41, 'Đen', 8, '128 gb', 33990000, 0, '2019-05-29 18:28:29', '2019-05-29 18:28:29'),
+(30, 41, 'Đen', 8, '256 gb', 38990000, 0, '2019-05-29 18:28:29', '2019-05-29 18:28:29'),
+(31, 41, 'Bạc', 8, '128 gb', 33990000, 0, '2019-05-29 18:28:29', '2019-05-29 18:28:29'),
+(32, 41, 'Bạc', 8, '256 gb', 38990000, 0, '2019-05-29 18:28:29', '2019-05-29 18:28:29'),
+(33, 42, 'Gold', 4, '64 gb', 12490000, 0, '2019-05-29 18:31:26', '2019-05-29 18:31:26'),
+(34, 42, 'Bạc', 4, '64 gb', 12490000, 0, '2019-05-29 18:31:26', '2019-05-29 18:31:26'),
+(35, 43, 'Đen', 3, '32 gb', 6990000, 0, '2019-05-29 18:33:49', '2019-05-29 18:33:49'),
+(36, 43, 'Xám', 3, '32 gb', 6990000, 0, '2019-05-29 18:33:49', '2019-05-29 18:33:49'),
+(37, 44, 'Gold', 2, '8 gb', 2090000, 0, '2019-05-29 18:38:03', '2019-05-29 18:38:03'),
+(38, 45, 'Đen', 3, '32 gb', 5690000, 0, '2019-05-29 18:40:23', '2019-05-29 18:40:23');
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `promotion`
+-- Table structure for table `promotion`
 --
 
 CREATE TABLE `promotion` (
@@ -556,7 +603,7 @@ CREATE TABLE `promotion` (
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `provider`
+-- Table structure for table `provider`
 --
 
 CREATE TABLE `provider` (
@@ -572,7 +619,7 @@ CREATE TABLE `provider` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `provider`
+-- Dumping data for table `provider`
 --
 
 INSERT INTO `provider` (`prov_id`, `prov_name`, `prov_email`, `prov_phone`, `prov_fax`, `prov_address`, `prov_desc`, `created_at`, `updated_at`) VALUES
@@ -581,7 +628,7 @@ INSERT INTO `provider` (`prov_id`, `prov_name`, `prov_email`, `prov_phone`, `pro
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `slide`
+-- Table structure for table `slide`
 --
 
 CREATE TABLE `slide` (
@@ -594,7 +641,7 @@ CREATE TABLE `slide` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `slide`
+-- Dumping data for table `slide`
 --
 
 INSERT INTO `slide` (`slide_id`, `slide_caption`, `slide_img`, `slide_status`, `created_at`, `updated_at`) VALUES
@@ -608,7 +655,7 @@ INSERT INTO `slide` (`slide_id`, `slide_caption`, `slide_img`, `slide_status`, `
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `stock`
+-- Table structure for table `stock`
 --
 
 CREATE TABLE `stock` (
@@ -624,7 +671,7 @@ CREATE TABLE `stock` (
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `user`
+-- Table structure for table `user`
 --
 
 CREATE TABLE `user` (
@@ -639,7 +686,7 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC;
 
 --
--- Đang đổ dữ liệu cho bảng `user`
+-- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`username`, `password`, `empl_id`, `perm_id`, `status`, `remember_token`, `created_at`, `updated_at`) VALUES
@@ -648,23 +695,23 @@ INSERT INTO `user` (`username`, `password`, `empl_id`, `perm_id`, `status`, `rem
 ('nv11', '$2y$10$FTdJq5JRhwRJgWV4APBsQ.N/dUhnKaCOX3sed4tQ4AT3Y3ek/Y1DK', 11, 3, 0, '6EvC0M046TGobcmm9ocxbuzrA30xp2mxKTsUx03H', '2019-05-28 10:42:29', '2019-05-28 10:42:29');
 
 --
--- Chỉ mục cho các bảng đã đổ
+-- Indexes for dumped tables
 --
 
 --
--- Chỉ mục cho bảng `brand`
+-- Indexes for table `brand`
 --
 ALTER TABLE `brand`
   ADD PRIMARY KEY (`brand_id`);
 
 --
--- Chỉ mục cho bảng `cart`
+-- Indexes for table `cart`
 --
 ALTER TABLE `cart`
   ADD PRIMARY KEY (`cart_id`);
 
 --
--- Chỉ mục cho bảng `cartdetail`
+-- Indexes for table `cartdetail`
 --
 ALTER TABLE `cartdetail`
   ADD PRIMARY KEY (`cartdt_id`),
@@ -672,46 +719,46 @@ ALTER TABLE `cartdetail`
   ADD KEY `cartdt_prod` (`cartdt_propt`);
 
 --
--- Chỉ mục cho bảng `category`
+-- Indexes for table `category`
 --
 ALTER TABLE `category`
   ADD PRIMARY KEY (`cate_id`);
 
 --
--- Chỉ mục cho bảng `comment`
+-- Indexes for table `comment`
 --
 ALTER TABLE `comment`
   ADD PRIMARY KEY (`cmt_id`),
   ADD KEY `cmt_prod` (`cmt_prod`);
 
 --
--- Chỉ mục cho bảng `commission`
+-- Indexes for table `commission`
 --
 ALTER TABLE `commission`
   ADD PRIMARY KEY (`cms_id`),
   ADD KEY `cms_empl` (`cms_empl`);
 
 --
--- Chỉ mục cho bảng `customer`
+-- Indexes for table `customer`
 --
 ALTER TABLE `customer`
   ADD PRIMARY KEY (`cus_id`);
 
 --
--- Chỉ mục cho bảng `employees`
+-- Indexes for table `employees`
 --
 ALTER TABLE `employees`
   ADD PRIMARY KEY (`empl_id`),
   ADD UNIQUE KEY `empl_identity_card` (`empl_identity_card`);
 
 --
--- Chỉ mục cho bảng `goodsexport`
+-- Indexes for table `goodsexport`
 --
 ALTER TABLE `goodsexport`
   ADD PRIMARY KEY (`gdsex_id`);
 
 --
--- Chỉ mục cho bảng `guarantee`
+-- Indexes for table `guarantee`
 --
 ALTER TABLE `guarantee`
   ADD PRIMARY KEY (`gtd_id`),
@@ -721,7 +768,7 @@ ALTER TABLE `guarantee`
   ADD KEY `gtd_empl_reimburse` (`gtd_empl_reimburse`);
 
 --
--- Chỉ mục cho bảng `invoice`
+-- Indexes for table `invoice`
 --
 ALTER TABLE `invoice`
   ADD PRIMARY KEY (`invo_id`),
@@ -729,7 +776,7 @@ ALTER TABLE `invoice`
   ADD KEY `invo_prov` (`invo_prov`);
 
 --
--- Chỉ mục cho bảng `invoicedetail`
+-- Indexes for table `invoicedetail`
 --
 ALTER TABLE `invoicedetail`
   ADD PRIMARY KEY (`invdt_id`),
@@ -737,13 +784,13 @@ ALTER TABLE `invoicedetail`
   ADD KEY `invdt_prod` (`invdt_prod`);
 
 --
--- Chỉ mục cho bảng `migrations`
+-- Indexes for table `migrations`
 --
 ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `orders`
+-- Indexes for table `orders`
 --
 ALTER TABLE `orders`
   ADD PRIMARY KEY (`order_id`),
@@ -751,7 +798,7 @@ ALTER TABLE `orders`
   ADD KEY `order_empl` (`order_empl`);
 
 --
--- Chỉ mục cho bảng `ordersdetail`
+-- Indexes for table `ordersdetail`
 --
 ALTER TABLE `ordersdetail`
   ADD PRIMARY KEY (`orddt_id`),
@@ -759,19 +806,19 @@ ALTER TABLE `ordersdetail`
   ADD KEY `orddt_prod` (`orddt_propt`);
 
 --
--- Chỉ mục cho bảng `password_resets`
+-- Indexes for table `password_resets`
 --
 ALTER TABLE `password_resets`
   ADD KEY `password_resets_email_index` (`email`);
 
 --
--- Chỉ mục cho bảng `permission`
+-- Indexes for table `permission`
 --
 ALTER TABLE `permission`
   ADD PRIMARY KEY (`perm_id`);
 
 --
--- Chỉ mục cho bảng `product`
+-- Indexes for table `product`
 --
 ALTER TABLE `product`
   ADD PRIMARY KEY (`prod_id`),
@@ -780,14 +827,14 @@ ALTER TABLE `product`
   ADD KEY `prod_cate` (`prod_cate`);
 
 --
--- Chỉ mục cho bảng `product_image`
+-- Indexes for table `product_image`
 --
 ALTER TABLE `product_image`
   ADD PRIMARY KEY (`pimg_id`),
   ADD KEY `pimg_prod` (`pimg_prod`);
 
 --
--- Chỉ mục cho bảng `product_options`
+-- Indexes for table `product_options`
 --
 ALTER TABLE `product_options`
   ADD PRIMARY KEY (`propt_id`),
@@ -795,26 +842,26 @@ ALTER TABLE `product_options`
   ADD KEY `prquan_prod` (`propt_prod`);
 
 --
--- Chỉ mục cho bảng `promotion`
+-- Indexes for table `promotion`
 --
 ALTER TABLE `promotion`
   ADD PRIMARY KEY (`prom_id`),
   ADD KEY `prom_prod` (`prom_propt`);
 
 --
--- Chỉ mục cho bảng `provider`
+-- Indexes for table `provider`
 --
 ALTER TABLE `provider`
   ADD PRIMARY KEY (`prov_id`);
 
 --
--- Chỉ mục cho bảng `slide`
+-- Indexes for table `slide`
 --
 ALTER TABLE `slide`
   ADD PRIMARY KEY (`slide_id`);
 
 --
--- Chỉ mục cho bảng `stock`
+-- Indexes for table `stock`
 --
 ALTER TABLE `stock`
   ADD PRIMARY KEY (`stock_id`),
@@ -822,7 +869,7 @@ ALTER TABLE `stock`
   ADD KEY `stock_prov` (`stock_prov`);
 
 --
--- Chỉ mục cho bảng `user`
+-- Indexes for table `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`username`),
@@ -830,154 +877,154 @@ ALTER TABLE `user`
   ADD KEY `perm_id` (`perm_id`);
 
 --
--- AUTO_INCREMENT cho các bảng đã đổ
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT cho bảng `brand`
+-- AUTO_INCREMENT for table `brand`
 --
 ALTER TABLE `brand`
   MODIFY `brand_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT cho bảng `cart`
+-- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
   MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT cho bảng `cartdetail`
+-- AUTO_INCREMENT for table `cartdetail`
 --
 ALTER TABLE `cartdetail`
   MODIFY `cartdt_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT cho bảng `category`
+-- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
   MODIFY `cate_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT cho bảng `comment`
+-- AUTO_INCREMENT for table `comment`
 --
 ALTER TABLE `comment`
   MODIFY `cmt_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT cho bảng `commission`
+-- AUTO_INCREMENT for table `commission`
 --
 ALTER TABLE `commission`
   MODIFY `cms_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `customer`
+-- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
   MODIFY `cus_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT cho bảng `employees`
+-- AUTO_INCREMENT for table `employees`
 --
 ALTER TABLE `employees`
   MODIFY `empl_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
--- AUTO_INCREMENT cho bảng `goodsexport`
+-- AUTO_INCREMENT for table `goodsexport`
 --
 ALTER TABLE `goodsexport`
   MODIFY `gdsex_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `guarantee`
+-- AUTO_INCREMENT for table `guarantee`
 --
 ALTER TABLE `guarantee`
   MODIFY `gtd_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `invoice`
+-- AUTO_INCREMENT for table `invoice`
 --
 ALTER TABLE `invoice`
   MODIFY `invo_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `invoicedetail`
+-- AUTO_INCREMENT for table `invoicedetail`
 --
 ALTER TABLE `invoicedetail`
   MODIFY `invdt_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `migrations`
+-- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT cho bảng `orders`
+-- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
   MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT cho bảng `ordersdetail`
+-- AUTO_INCREMENT for table `ordersdetail`
 --
 ALTER TABLE `ordersdetail`
   MODIFY `orddt_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT cho bảng `permission`
+-- AUTO_INCREMENT for table `permission`
 --
 ALTER TABLE `permission`
   MODIFY `perm_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT cho bảng `product`
+-- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `prod_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `prod_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
--- AUTO_INCREMENT cho bảng `product_image`
+-- AUTO_INCREMENT for table `product_image`
 --
 ALTER TABLE `product_image`
-  MODIFY `pimg_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `pimg_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
--- AUTO_INCREMENT cho bảng `product_options`
+-- AUTO_INCREMENT for table `product_options`
 --
 ALTER TABLE `product_options`
-  MODIFY `propt_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `propt_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
--- AUTO_INCREMENT cho bảng `promotion`
+-- AUTO_INCREMENT for table `promotion`
 --
 ALTER TABLE `promotion`
   MODIFY `prom_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `provider`
+-- AUTO_INCREMENT for table `provider`
 --
 ALTER TABLE `provider`
   MODIFY `prov_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT cho bảng `slide`
+-- AUTO_INCREMENT for table `slide`
 --
 ALTER TABLE `slide`
   MODIFY `slide_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- Các ràng buộc cho các bảng đã đổ
+-- Constraints for dumped tables
 --
 
 --
--- Các ràng buộc cho bảng `cartdetail`
+-- Constraints for table `cartdetail`
 --
 ALTER TABLE `cartdetail`
   ADD CONSTRAINT `cartdetail_ibfk_1` FOREIGN KEY (`cartdt_cart`) REFERENCES `cart` (`cart_id`) ON DELETE CASCADE,
   ADD CONSTRAINT `cartdetail_ibfk_2` FOREIGN KEY (`cartdt_propt`) REFERENCES `product_options` (`propt_id`);
 
 --
--- Các ràng buộc cho bảng `guarantee`
+-- Constraints for table `guarantee`
 --
 ALTER TABLE `guarantee`
   ADD CONSTRAINT `guarantee_ibfk_1` FOREIGN KEY (`gtd_propt`) REFERENCES `product_options` (`propt_id`),
@@ -986,65 +1033,60 @@ ALTER TABLE `guarantee`
   ADD CONSTRAINT `guarantee_ibfk_4` FOREIGN KEY (`gtd_empl_reimburse`) REFERENCES `employees` (`empl_id`);
 
 --
--- Các ràng buộc cho bảng `invoice`
+-- Constraints for table `invoice`
 --
 ALTER TABLE `invoice`
   ADD CONSTRAINT `invoice_ibfk_1` FOREIGN KEY (`invo_prov`) REFERENCES `provider` (`prov_id`);
 
 --
--- Các ràng buộc cho bảng `invoicedetail`
+-- Constraints for table `invoicedetail`
 --
 ALTER TABLE `invoicedetail`
   ADD CONSTRAINT `invoicedetail_ibfk_1` FOREIGN KEY (`invdt_invo`) REFERENCES `invoice` (`invo_id`),
   ADD CONSTRAINT `invoicedetail_ibfk_2` FOREIGN KEY (`invdt_prod`) REFERENCES `product` (`prod_id`);
 
 --
--- Các ràng buộc cho bảng `orders`
+-- Constraints for table `orders`
 --
 ALTER TABLE `orders`
   ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`order_cus`) REFERENCES `customer` (`cus_id`),
   ADD CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`order_empl`) REFERENCES `employees` (`empl_id`);
 
 --
--- Các ràng buộc cho bảng `ordersdetail`
+-- Constraints for table `ordersdetail`
 --
 ALTER TABLE `ordersdetail`
   ADD CONSTRAINT `ordersdetail_ibfk_1` FOREIGN KEY (`orddt_order`) REFERENCES `orders` (`order_id`) ON DELETE CASCADE,
   ADD CONSTRAINT `ordersdetail_ibfk_2` FOREIGN KEY (`orddt_propt`) REFERENCES `product_options` (`propt_id`);
 
 --
--- Các ràng buộc cho bảng `product`
+-- Constraints for table `product`
 --
 ALTER TABLE `product`
   ADD CONSTRAINT `product_ibfk_1` FOREIGN KEY (`prod_cate`) REFERENCES `category` (`cate_id`),
   ADD CONSTRAINT `product_ibfk_2` FOREIGN KEY (`prod_brand`) REFERENCES `brand` (`brand_id`);
 
 --
--- Các ràng buộc cho bảng `product_image`
+-- Constraints for table `product_image`
 --
 ALTER TABLE `product_image`
   ADD CONSTRAINT `product_image_ibfk_1` FOREIGN KEY (`pimg_prod`) REFERENCES `product` (`prod_id`) ON DELETE CASCADE;
 
 --
--- Các ràng buộc cho bảng `product_options`
+-- Constraints for table `product_options`
 --
 ALTER TABLE `product_options`
   ADD CONSTRAINT `product_options_ibfk_1` FOREIGN KEY (`propt_prod`) REFERENCES `product` (`prod_id`) ON DELETE CASCADE;
 
 --
--- Các ràng buộc cho bảng `promotion`
+-- Constraints for table `promotion`
 --
 ALTER TABLE `promotion`
   ADD CONSTRAINT `promotion_ibfk_1` FOREIGN KEY (`prom_propt`) REFERENCES `product_options` (`propt_id`);
 
 --
--- Các ràng buộc cho bảng `user`
+-- Constraints for table `user`
 --
 ALTER TABLE `user`
   ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`perm_id`) REFERENCES `permission` (`perm_id`),
   ADD CONSTRAINT `user_ibfk_2` FOREIGN KEY (`empl_id`) REFERENCES `employees` (`empl_id`);
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
