@@ -7,28 +7,29 @@
                 </button>
             </div>
             <div class="modal-body">
-                <b>Mã đơn bảo hành: </b>{{$item->gtd_id}}<br>
-                <b>Mã đơn hàng: </b>{{$item->gtd_orders}}<br>
-                <b>Sản phẩm: </b>{{$item->prod_name}}<br>
-                <b>Serial: </b>{{$item->gtd_serial}} <br>
-                <b>Tên Khách hàng: </b>{{$item->cus_name}}<br>
-                <b>SĐT: </b>{{$item->cus_phone}}<br>
-                <b>CMND: </b>{{$item->cus_identity_card}}<br>
-                <b>Email: </b>{{$item->cus_email}}<br>
-                <b>Nhân viên nhận: </b>{{$item->gtd_empl_receive}}<br>
-                <b>Ngày nhận: </b>{{date_format(date_create($item->gtd_date_receive),"d-m-Y")}}<br>
-                <b>Mô tả: </b><br>
-                <b>Trạng thái </b>  @if ($item->gtd_status == 0)
-                                    Recieved
-                                        @elseif ($item->gtd_status == 1)
-                                        Doing
-                                            @elseif ($item->gtd_status == 2)
-                                            Done
+                <b>Mã đơn bảo hành: </b>{{$guarantee->gtd_id}}<br>
+                <b>Mã đơn hàng: </b>{{$guarantee->gtd_orders}}<br>
+                <b>Sản phẩm: </b>{{$guarantee->prod_name}} ram {{$guarantee->propt_ram}} gb, rom {{$guarantee->propt_rom}}, màu
+                {{$guarantee->propt_color}}<br>
+                <b>Serial: </b>{{$guarantee->gtd_serial}} <br>
+                <b>Tên Khách hàng: </b>{{$guarantee->cus_name}}<br>
+                <b>SĐT: </b>{{$guarantee->cus_phone}}<br>
+                <b>CMND: </b>{{$guarantee->cus_identity_card}}<br>
+                <b>Email: </b>{{$guarantee->cus_email}}<br>
+                <b>Nhân viên nhận: </b>{{$gtd_empl_receive->empl_name}}<br>
+                <b>Ngày nhận: </b>{{date_format(date_create($guarantee->gtd_date_receive),"d-m-Y")}}<br>
+                <b>Thông tin yêu cầu bảo hành: </b>{{$guarantee->gtd_required_content}}<br>
+                <b>Nội dung: </b>{{$guarantee->gtd_content}}<br>
+                <b>Trạng thái </b>  @if ($guarantee->gtd_status == 0)
+                                        Đang chờ đi bảo hành
+                                        @elseif ($guarantee->gtd_status == 1)
+                                        Đang bảo hành
+                                            @elseif ($guarantee->gtd_status == 2)
+                                            Đã xong
                                                 @else 
-                                                Refunded <br>
-                                                <b>Nhân viên trả: </b> {{$item->gtd_emp_reimburse}}<br>
-                                                <b>Ngày trả : </b> {{date_format(date_create($empl->gtd_date_reimburse),"d-m-Y")}}<br>
-
+                                                Đã trả sản phẩm <br>
+                                                <b>Nhân viên trả: </b> {{$gtd_empl_reimburse->empl_name}}<br>
+                                                <b>Ngày trả : </b> {{date_format(date_create($guarantee->gtd_date_reimburse),"d-m-Y")}}<br>
                                     @endif<br>
             </div>
         </div>

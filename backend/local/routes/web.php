@@ -173,7 +173,39 @@ Route::group(['namespace' => 'Admin'], function () {
 
         Route::group(['prefix' => 'guarantee'], function() {
             Route::get('/','GuaranteeController@getGuarantee');
-            Route::get('/view/{id}','GuaranteeController@');
+
+            Route::get('check/','GuaranteeController@getCheckOrder');
+
+            Route::post('add/','GuaranteeController@postAddGuarantee');
+
+            Route::get('/view/{id}','GuaranteeController@getViewGuarantee');
+            
+            Route::get('/edit/{id}','GuaranteeController@getEditGuarantee');
+            Route::post('/edit/{id}','GuaranteeController@postEditGuarantee');
+        });
+
+        Route::group(['prefix' => 'invoice'], function() {
+            Route::get('/','InvoiceController@getInvo');
+
+            Route::get('/add/','InvoiceController@getAddInvo');
+            Route::post('add/','InvoiceController@postAddInvo');
+
+            Route::get('approved/','InvoiceController@getApprovedInvo');
+
+            Route::get('/view/{id}','InvoiceController@getViewInvo');
+            
+            Route::get('/edit/{id}','InvoiceController@getEditInvo');
+            Route::post('/edit/{id}','InvoiceController@postEditInvo');
+
+            Route::get('/delete','InvoiceController@getDeleteInvo');
+
+            Route::get('/cancel/','InvoiceController@getCancelInvo');
+
+            Route::get('/item/add','InvoiceController@getAddItem');
+            Route::get('/item/delete','InvoiceController@getDelItem');
+            
+            Route::get('/item/update/qty','InvoiceController@getUpdateQtyItem');
+            Route::get('/item/update/price','InvoiceController@getUpdatePriceItem');
         });
 
     });
