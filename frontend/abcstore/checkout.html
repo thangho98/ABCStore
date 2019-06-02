@@ -37,6 +37,8 @@
 
     <!-- Modernizer js -->
     <script src="js/vendor/modernizr-3.5.0.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 
 <body>
@@ -696,29 +698,29 @@
         <div class="checkout-area pb-100 pt-15 pb-sm-60">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-4 col-md-4">
+                    <div class="col-lg-7 col-md-7">
                         <div class="checkbox-form mb-sm-40">
-                            <h3>Chi tiết hóa đơn</h3>
+                            <h3>Xác thực thông tin giao hàng</h3>
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-8">
                                     <div class="checkout-form-list mb-30">
                                         <label>Họ Tên<span class="required">*</span></label>
                                         <input type="text" placeholder="" />
                                     </div>
                                 </div>
-                                <div class="col-md-12">
+                                <div class="col-md-4">
                                     <div class="checkout-form-list mb-30">
                                         <label>CMND <span class="required">*</span></label>
                                         <input type="text" placeholder="" />
                                     </div>
                                 </div>
-                                <div class="col-md-12">
+                                <div class="col-md-8">
                                     <div class="checkout-form-list mb-30">
                                         <label>Email <span class="required">*</span></label>
-                                        <input type="email" placeholder="email" />
+                                        <input type="Email" placeholder="email" />
                                     </div>
                                 </div>
-                                <div class="col-md-12">
+                                <div class="col-md-4">
                                     <div class="checkout-form-list mb-30">
                                         <label>SĐT <span class="required">*</span></label>
                                         <input type="text" placeholder="Số điện thoại" />
@@ -733,10 +735,102 @@
                                         </div>
                                     </div>
                                 </div> -->
+                                <div class="col-md-12 different-address ">
+                                    <!-- <div class="ship-different-title ">
+                                        <h3>
+                                            <label>Địa chỉ giao hàng</label>
+                                            <input id="ship-box" type="checkbox" checked/>
+                                        </h3>
+                                    </div>
+                                    <div id="ship-box-info"> -->
+                                    <h4>Địa chỉ giao hàng</h4> <br>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="country-select clearfix mb-30">
+                                                <label>Tỉnh/Thành phố <span class="required">*</span></label>
+                                                <div>
+                                                    <input type="text" name="searchProvince" id="searchProvince" class="form-control" placeholder="Tỉnh / Thành Phố">
+                                                </div>
+                                                <ul class="list-group" id="result"></ul>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="country-select clearfix mb-30">
+                                                <label>Quận, Huyện<span class="required">*</span></label>
+                                                <select class="wide">
+                                                    <option value="volvo">Bangladesh</option>
+                                                    <option value="saab">Algeria</option>
+                                                    <option value="mercedes">Afghanistan</option>
+                                                    <option value="audi">Ghana</option>
+                                                    <option value="audi2">Albania</option>
+                                                    <option value="audi3">Bahrain</option>
+                                                    <option value="audi4">Colombia</option>
+                                                    <option value="audi5">Dominican Republic</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="country-select clearfix mb-30">
+                                                <label>Phường, Xã<span class="required">*</span></label>
+                                                <select class="wide">
+                                                    <option value="volvo">Bangladesh</option>
+                                                    <option value="saab">Algeria</option>
+                                                    <option value="mercedes">Afghanistan</option>
+                                                    <option value="audi">Ghana</option>
+                                                    <option value="audi2">Albania</option>
+                                                    <option value="audi3">Bahrain</option>
+                                                    <option value="audi4">Colombia</option>
+                                                    <option value="audi5">Dominican Republic</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <div class="checkout-form-list mb-30">
+                                                <label>Số nhà, tên đường <span class="required">*</span></label>
+                                                <input type="text" placeholder="Số nhà, tên đường" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="checkout-form-list">
+                                                <label>Thời gian giao<span class="required">*</span></label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="country-select clearfix mb-30">
+                                                <select class="wide">
+                                                    <option value="volvo">Bangladesh</option>
+                                                    <option value="saab">Algeria</option>
+                                                    <option value="mercedes">Afghanistan</option>
+                                                    <option value="audi">Ghana</option>
+                                                    <option value="audi2">Albania</option>
+                                                    <option value="audi3">Bahrain</option>
+                                                    <option value="audi4">Colombia</option>
+                                                    <option value="audi5">Dominican Republic</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="country-select clearfix mb-30">
+                                                <select class="wide">
+                                                    <option value="volvo">Bangladesh</option>
+                                                    <option value="saab">Algeria</option>
+                                                    <option value="mercedes">Afghanistan</option>
+                                                    <option value="audi">Ghana</option>
+                                                    <option value="audi2">Albania</option>
+                                                    <option value="audi3">Bahrain</option>
+                                                    <option value="audi4">Colombia</option>
+                                                    <option value="audi5">Dominican Republic</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <!-- </div> -->
+                                    </div>
+                                </div>
                             </div>                       
                         </div>
                     </div>
-                    <div class="col-lg-8 col-md-8">
+                    <div class="col-lg-5 col-md-5">
                         <div class="your-order">
                             <h3>Đơn hàng của bạn</h3>
                             <div class="your-order-table table-responsive">
@@ -1150,6 +1244,22 @@
     <script src="js/plugins.js"></script>
     <!-- Main activaion js -->
     <script src="js/main.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('#searchProvince').keyup(function(){
+                $('#result').html('');
+                var province = $('#searchProvince').val();
+                var expression = new RegExp(province, "i");
+                $.getJSON('https://thongtindoanhnghiep.co/api/city', function(data){
+                    $.each(data, function(key, value){
+                        if (value.Title.search(expression) != -1) {
+                            $('#result').append(value.Title);
+                        }
+                    });
+                })
+            });
+        }); 
+    </script>
 </body>
 
 </html>
