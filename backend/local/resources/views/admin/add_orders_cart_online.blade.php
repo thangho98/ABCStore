@@ -239,7 +239,7 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="custom-control custom-checkbox custom-control-primary">
-                                        <input type="checkbox" class="custom-control-input" id="wizard-validation-terms">
+                                            <input type="checkbox" class="custom-control-input" id="wizard-validation-terms" name="wizard-validation-terms">
                                         <label class="custom-control-label" for="wizard-validation-terms">Đồng
                                             ý với các điều khoản</label>
                                     </div>
@@ -263,7 +263,7 @@
                                     </button>
                                 </div>
                                 <div class="col-4 text-right">
-                                    <button type="button" class="btn btn-secondary" data-wizard="next">
+                                    <button id="btnNext" type="button" class="btn btn-secondary" data-wizard="next">
                                         Sau <i class="fa fa-angle-right ml-1"></i>
                                     </button>
                                     <button type="submit" class="btn btn-primary d-none" data-wizard="finish">
@@ -311,6 +311,15 @@ jQuery(function() {
 <!-- Page JS Code -->
 <script>
 $(document).ready(function() {
+
+    var toltal_qty = {{$total_qty}};
+    if(toltal_qty <= 0){
+        $("#btnNext").attr("disabled", true);
+    }
+    else{
+        $('#btnNext').removeAttr("disabled");
+    }
+
     $('#select-product').change(function() {
         var id = $('#select-product').val();
 
@@ -343,7 +352,10 @@ $(document).ready(function() {
         var id = $('#select-options').val();
         // URL
         console.log(id);
-        if(id == null) return;
+        if(id == null) {
+            swal("Bị lỗi", "Bạn chưa chọn một phiên bản", "error");
+            return;
+        }
 
         // Data
         var data = {

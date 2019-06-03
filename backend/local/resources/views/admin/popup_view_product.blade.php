@@ -13,6 +13,7 @@
                     <b>Tên sản phẩm: </b>{{$prod->prod_name}}<br>
                     <b>Danh mục: </b>{{$prod->cate_name}}<br>
                     <b>Thương hiệu: </b>{{$prod->brand_name}}<br>
+                    <b>Thời gian bảo hành: </b>{{$prod->prod_warranty_period}} tháng<br>
                     <b>Tình trạng: </b>@if ($prod->prod_status==0)
                             Sắp ra mắt
                             @elseif($prod->prod_status==1)
@@ -49,6 +50,7 @@
                         <strong>Chưa có phiên bản nào cho sản phẩm!!!</strong>
                     </div>  
                 @else
+                <div class="table-responsive">
                     <table class="table table-sm table-vcenter table-hover">
                         <thead>
                             <tr>
@@ -71,6 +73,8 @@
                             @endfor
                         </tbody>
                     </table>
+                </div>
+                    
                 @endif     
             </div>
             <div class="row mt-3">

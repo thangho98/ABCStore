@@ -54,71 +54,74 @@
                     </aside>
                 </div>
                 <div class="block-content block-content-full">
-                    <!-- DataTables init on table by adding .js-dataTable-buttons class, functionality is initialized in js/pages/be_tables_datatables.min.js which was auto compiled from _es6/pages/be_tables_datatables.js -->
-                    <table class="table table-bordered table-striped table-vcenter" id="table-brand">
-                        <thead>
-                            <tr>
-                                <th style="width: 1px;" class="text-center orderby remove-sorting">
-                                    <input type="checkbox"
-                                        onclick="$('input[name*=\'selected\']').prop('checked', this.checked);">
-                                </th>
-                                <th class="text-center orderby" style="width: 60px;">Mã SP</th>
-                                <th class="orderby">Tên Sản phẩm</th>
-                                <th class="d-none d-sm-table-cell orderby remove-sorting">Ảnh poster
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-vcenter" id="table-brand">
+                            <thead>
+                                <tr>
+                                    <th style="width: 1px;" class="text-center orderby remove-sorting">
+                                        <input type="checkbox"
+                                            onclick="$('input[name*=\'selected\']').prop('checked', this.checked);">
                                     </th>
-                                <th class="d-none d-sm-table-cell orderby">Danh mục</th>
-                                <th class="d-none d-sm-table-cell orderby">Thương hiệu
-                                </th>
-                                <th class="d-none d-sm-table-cell orderby">Trạng thái
-                                </th>
-                                <th style="width: 100px;" class="text-right orderby remove-sorting">Thao tác</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($list_prod as $item)
-                            <tr>
-                                <td class="text-center">
-                                    <input type="checkbox" name="selected[]" value="{{$item->prod_id}}">
-                                </td>
-                                <td class="text-center font-size-sm">{{$item->prod_id}}</td>
-                                <td class="font-w600 font-size-sm">
-                                    {{$item->prod_name}}
-                                </td>
-                                <td class="d-none d-sm-table-cell text-center">
-                                    <img class="thumbnail" height="75px;" width="75px;"
-                                        src="{{asset('local/storage/app/images/product/'.$item->prod_poster)}}">
-                                </td>
-                                <td class="d-none d-sm-table-cell">
-                                    {{$item->cate_name}}
-                                </td>
-                                <td class="d-none d-sm-table-cell">
-                                    {{$item->brand_name}}
-                                </td>
-                                <td class="text-center d-sm-table-cell">
-                                    @if ($item->prod_status==0)
-                                    Sắp ra mắt
-                                    @elseif($item->prod_status==1)
-                                    Đang kinh doanh
-                                    @else
-                                    Ngừng kinh doanh
-                                    @endif
-                                </td>
-                                <td class="text-right">
-                                    <div class="py-2 mb-2">
-                                        <button type="button" class="btn btn-sm btn-info" title="Xem chi tiết"
-                                            data-toggle="tooltip" onclick="showDetail({{$item->prod_id}})">
-                                            <i class="fa fa-fw fa-eye"></i>
-                                        </button>
-                                        <button type="button" class="btn btn-sm btn-warning" data-toggle="tooltip"
-                                            onclick="showEdit({{$item->prod_id}})" title="Sửa">
-                                            <i class="fa fa-fw fa-pencil-alt"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                                    <th style="width: 150px;" class="text-center orderby" style="width: 60px;">Mã SP</th>
+                                    <th style="width: 20%;" class="orderby">Tên Sản phẩm</th>
+                                    <th style="width: 15%;" class="d-none d-sm-table-cell orderby remove-sorting">Ảnh poster
+                                    </th>
+                                    <th style="width: 15%;" class="d-none d-sm-table-cell orderby">Danh mục</th>
+                                    <th style="width: 15%;" class="d-none d-sm-table-cell orderby">Thương hiệu
+                                    </th>
+                                    <th style="width: 20%;" class="d-none d-sm-table-cell orderby">Trạng thái
+                                    </th>
+                                    <th style="width: 15%;" class="text-right orderby remove-sorting">Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($list_prod as $item)
+                                <tr>
+                                    <td class="text-center">
+                                        <input type="checkbox" name="selected[]" value="{{$item->prod_id}}">
+                                    </td>
+                                    <td class="text-center font-size-sm">{{$item->prod_id}}</td>
+                                    <td class="font-w600 font-size-sm">
+                                        {{$item->prod_name}}
+                                    </td>
+                                    <td class="d-none d-sm-table-cell text-center">
+                                        <img class="thumbnail" height="75px;" width="75px;"
+                                            src="{{asset('local/storage/app/images/product/'.$item->prod_poster)}}">
+                                    </td>
+                                    <td class="d-none d-sm-table-cell">
+                                        {{$item->cate_name}}
+                                    </td>
+                                    <td class="d-none d-sm-table-cell">
+                                        {{$item->brand_name}}
+                                    </td>
+                                    <td class="text-center d-sm-table-cell">
+                                        @if ($item->prod_status==0)
+                                        Sắp ra mắt
+                                        @elseif($item->prod_status==1)
+                                        Đang kinh doanh
+                                        @else
+                                        Ngừng kinh doanh
+                                        @endif
+                                    </td>
+                                    <td class="text-right">
+                                        <div class="py-2 mb-2">
+                                            <button type="button" class="btn btn-sm btn-info" title="Xem chi tiết"
+                                                data-toggle="tooltip" onclick="showDetail({{$item->prod_id}})">
+                                                <i class="fa fa-fw fa-eye"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-sm btn-warning" data-toggle="tooltip"
+                                                onclick="showEdit({{$item->prod_id}})" title="Sửa">
+                                                <i class="fa fa-fw fa-pencil-alt"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- DataTables init on table by adding .js-dataTable-buttons class, functionality is initialized in js/pages/be_tables_datatables.min.js which was auto compiled from _es6/pages/be_tables_datatables.js -->
+
                 </div>
             </form>
         </div>
@@ -179,15 +182,20 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                {{-- <div class="form-group col-md-6">
-                                <label for="selectStatus">Trạng thái <span class="text-danger">*</span></label>
-                                        <select class="form-control" id="selectStatus" name="status" required>
-                                            <option value="1">Sắp ra mắt</option>
-                                            <option value="2">Đang kinh doanh</option>
-                                            <option value="3">Ngừng kinh doanh</option>
-                                        </select>
-                                </div> --}}
+                                <div class="form-group col-md-6">
+                                    <label for="inputWarrantyPeriod">Thời gian bảo hành <span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control text-center"
+                                            id="inputWarrantyPeriod" name="warranty_period" min="1"
+                                            placeholder="Nhập thời gian bảo hành">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">tháng</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
                             </div>
+                            
                             <div class="col-12">
                                 <h4>Thêm các phiên bản của điện thoại</h4>
                                 <div id="list-options">
@@ -228,43 +236,50 @@
                                     <div id="options-1" class="options mb-3">
                                         <div class="form-row">
                                             <div class="form-group col-md-4">
-                                                <label for="inputColor1">Màu sắc<span class="text-danger">*</span></label>
-                                                <input list="list-color" type="text" class="form-control" id="inputColor1" name="option[1][color]"
-                                                    placeholder="Nhập màu sắc" required>
+                                                <label for="inputColor1">Màu sắc<span
+                                                        class="text-danger">*</span></label>
+                                                <input list="list-color" type="text" class="form-control"
+                                                    id="inputColor1" name="option[1][color]" placeholder="Nhập màu sắc"
+                                                    required>
                                             </div>
                                             <div class="form-group col-md-4">
-                                                <label for="inputRam1">Bộ nhớ ram (gb) <span class="text-danger">*</span></label>
-                                                <input list="list-ram" type="text" class="form-control" id="inputRam1" name="option[1][ram]"
-                                                    placeholder="Nhập bộ nhớ ram" required>
+                                                <label for="inputRam1">Bộ nhớ ram (gb) <span
+                                                        class="text-danger">*</span></label>
+                                                <input list="list-ram" type="text" class="form-control" id="inputRam1"
+                                                    name="option[1][ram]" placeholder="Nhập bộ nhớ ram" required>
                                             </div>
                                             <div class="form-group col-md-4">
-                                                <label for="inputRom1">Bộ nhớ rom <span class="text-danger">*</span></label>
-                                                <input list="list-rom" type="text" class="form-control" id="inputRom1" name="option[1][rom]"
-                                                    placeholder="Nhập bộ nhớ rom" required>
+                                                <label for="inputRom1">Bộ nhớ rom <span
+                                                        class="text-danger">*</span></label>
+                                                <input list="list-rom" type="text" class="form-control" id="inputRom1"
+                                                    name="option[1][rom]" placeholder="Nhập bộ nhớ rom" required>
                                             </div>
                                         </div>
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
                                                 <label for="inputPrice1">Giá <span class="text-danger">*</span></label>
                                                 <div class="input-group">
-                                                    <input type="number" class="form-control text-center" id="inputPrice1" name="option[1][price]"
-                                                        min="0" placeholder="..">
+                                                    <input type="number" class="form-control text-center"
+                                                        id="inputPrice1" name="option[1][price]" min="0"
+                                                        placeholder="..">
                                                     <div class="input-group-append">
                                                         <span class="input-group-text">VNĐ</span>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="form-group col-md-6 d-flex align-items-end justify-content-center">
-                                                <button class="btn btn-danger" onclick="$('#options-1').remove();" type="button">Xóa phiên bản</button>
+                                            <div
+                                                class="form-group col-md-6 d-flex align-items-end justify-content-center">
+                                                <button class="btn btn-danger" onclick="$('#options-1').remove();"
+                                                    type="button">Xóa phiên bản</button>
                                             </div>
                                         </div>
                                     </div>
-                                    
+
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-12 text-right">
-                                        <button class="btn btn-info" type="button"
-                                            onclick=addOptions();>Thêm phiên bản</button>
+                                        <button class="btn btn-info" type="button" onclick=addOptions();>Thêm phiên
+                                            bản</button>
                                     </div>
                                 </div>
                             </div>
@@ -296,10 +311,10 @@
                                         <tr>
                                             <td class="text-left">
                                                 <img id="image-poster" class="thumbnail"
-                                                    src="assets/media/img/new_seo-10-75.png" onclick="chooseImg('poster');"
-                                                    height="75px;" width="75px;">
-                                                <input type="file" hidden name="poster" value=""
-                                                    id="input-image-poster" onchange="changeImg(this, 'poster');" accept="image/*">
+                                                    src="assets/media/img/new_seo-10-75.png"
+                                                    onclick="chooseImg('poster');" height="75px;" width="75px;">
+                                                <input type="file" hidden name="poster" value="" id="input-image-poster"
+                                                    onchange="changeImg(this, 'poster');" accept="image/*">
                                             </td>
                                         </tr>
                                     </tbody>
@@ -381,115 +396,121 @@
 <script src="assets/js/plugins/ion-rangeslider/js/ion.rangeSlider.min.js"></script>
 <script src="assets/js/plugins/jquery-validation/jquery.validate.min.js"></script>
 <!-- Page JS Helpers (BS Datepicker + BS Colorpicker + BS Maxlength + Select2 + Masked Inputs + Ion Range Slider plugins) -->
-<script>jQuery(function () { One.helpers(['datepicker', 'colorpicker', 'maxlength', 'select2', 'masked-inputs', 'rangeslider']); });</script>
 <script>
-    $(document).ready(function () {
-        var table = $('#table-brand').DataTable({
-            'columnDefs': [{
-
-                'targets': [0,3,7], /* column index */
-
-                'orderable': false, /* true or false */
-
-            }],
-            select: {
-                style: 'api'
-            },
-            "pagingType": "full_numbers"
-        });
-
-        new $.fn.dataTable.Buttons(table, {
-            dom: {
-                container: {
-                    tag: 'aside',
-                    className: 'text-center bg-body-light py-2 mb-2'
-                }
-            },
-            buttons: [
-                {
-                    extend: 'copy',
-                    exportOptions: {
-                        columns: [1, 2, 4, 5, 6]
-                    },
-                    text: 'Copy',
-                    className: 'btn btn-sm btn-primary'
-                },
-                {
-                    extend: 'csv',
-                    exportOptions: {
-                        columns: [1, 2, 4, 5, 6]
-                    },
-                    text: 'Export to CSV',
-                    className: 'btn btn-sm btn-primary',
-                    filename: function () {
-                        var d = new Date();
-                        var n = d.getTime();
-                        return 'danhsachsanpham-' + n;
-                    },
-                    title: function () {
-                        return 'Danh sách Sản phẩm';
-                    }
-                },
-                {
-                    extend: 'excel',
-                    exportOptions: {
-                        columns: [1, 2, 4, 5, 6]
-                    },
-                    text: 'Export to xlsx',
-                    className: 'btn btn-sm btn-primary',
-                    filename: function () {
-                        var d = new Date();
-                        var n = d.getTime();
-                        return 'danhsachsanpham-' + n;
-                    },
-                    title: function () {
-                        return 'Danh sách Sản phẩm';
-                    }
-                },
-                {
-                    extend: 'pdf',
-                    exportOptions: {
-                        columns: [1, 2, 4, 5, 6]
-                    },
-                    text: 'Export to pdf',
-                    className: 'btn btn-sm btn-primary',
-                    filename: function () {
-                        var d = new Date();
-                        var n = d.getTime();
-                        return 'danhsachsanpham-' + n;
-                    },
-                    title: function () {
-                        return 'Danh sách Sản phẩm';
-                    }
-                },
-                {
-                    extend: 'print',
-                    exportOptions: {
-                        columns: [1, 2, 4, 5, 6]
-                    },
-                    text: 'Print',
-                    className: 'btn btn-sm btn-primary',
-                    filename: function () {
-                        var d = new Date();
-                        var n = d.getTime();
-                        return 'danhsachsanpham-' + n;
-                    },
-                    title: function () {
-                        return 'Danh sách Sản phẩm';
-                    }
-                }
-            ]
-        });
-        table.buttons(0, null).container().prependTo(
-            table.table().container()
-        );
-    });
+jQuery(function() {
+    One.helpers(['datepicker', 'colorpicker', 'maxlength', 'select2', 'masked-inputs', 'rangeslider']);
+});
 </script>
 <script>
-    var temp = 1;
-    function addOptions() {
-        temp++;
-        let option =`
+$(document).ready(function() {
+    var table = $('#table-brand').DataTable({
+        'columnDefs': [{
+
+            'targets': [0, 3, 7],
+            /* column index */
+
+            'orderable': false,
+            /* true or false */
+
+        }],
+        select: {
+            style: 'api'
+        },
+        "pagingType": "full_numbers"
+    });
+
+    new $.fn.dataTable.Buttons(table, {
+        dom: {
+            container: {
+                tag: 'aside',
+                className: 'text-center bg-body-light py-2 mb-2'
+            }
+        },
+        buttons: [{
+                extend: 'copy',
+                exportOptions: {
+                    columns: [1, 2, 4, 5, 6]
+                },
+                text: 'Copy',
+                className: 'btn btn-sm btn-primary'
+            },
+            {
+                extend: 'csv',
+                exportOptions: {
+                    columns: [1, 2, 4, 5, 6]
+                },
+                text: 'Export to CSV',
+                className: 'btn btn-sm btn-primary',
+                filename: function() {
+                    var d = new Date();
+                    var n = d.getTime();
+                    return 'danhsachsanpham-' + n;
+                },
+                title: function() {
+                    return 'Danh sách Sản phẩm';
+                }
+            },
+            {
+                extend: 'excel',
+                exportOptions: {
+                    columns: [1, 2, 4, 5, 6]
+                },
+                text: 'Export to xlsx',
+                className: 'btn btn-sm btn-primary',
+                filename: function() {
+                    var d = new Date();
+                    var n = d.getTime();
+                    return 'danhsachsanpham-' + n;
+                },
+                title: function() {
+                    return 'Danh sách Sản phẩm';
+                }
+            },
+            {
+                extend: 'pdf',
+                exportOptions: {
+                    columns: [1, 2, 4, 5, 6]
+                },
+                text: 'Export to pdf',
+                className: 'btn btn-sm btn-primary',
+                filename: function() {
+                    var d = new Date();
+                    var n = d.getTime();
+                    return 'danhsachsanpham-' + n;
+                },
+                title: function() {
+                    return 'Danh sách Sản phẩm';
+                }
+            },
+            {
+                extend: 'print',
+                exportOptions: {
+                    columns: [1, 2, 4, 5, 6]
+                },
+                text: 'Print',
+                className: 'btn btn-sm btn-primary',
+                filename: function() {
+                    var d = new Date();
+                    var n = d.getTime();
+                    return 'danhsachsanpham-' + n;
+                },
+                title: function() {
+                    return 'Danh sách Sản phẩm';
+                }
+            }
+        ]
+    });
+    table.buttons(0, null).container().prependTo(
+        table.table().container()
+    );
+});
+</script>
+<script>
+var temp = 1;
+
+function addOptions() {
+    temp++;
+    let option = `
         <div id="options-${temp}" class="options mb-3">
             <div class="form-row">
                 <div class="form-group col-md-4">
@@ -525,31 +546,32 @@
             </div>
         </div>
         `
-        $('#list-options').append(option);
-    }
+    $('#list-options').append(option);
+}
 
-    function chooseImg(temp) {
-        $('#input-image-' + temp).click();
-        console.log('hello');
-    }
+function chooseImg(temp) {
+    $('#input-image-' + temp).click();
+    console.log('hello');
+}
 
-    function changeImg(input, temp) {
-        //Nếu như tồn thuộc tính file, đồng nghĩa người dùng đã chọn file mới
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-            //Sự kiện file đã được load vào website
-            reader.onload = function (e) {
-                //Thay đổi đường dẫn ảnh
-                $('#image-' + temp).attr('src', e.target.result);
-            }
-            reader.readAsDataURL(input.files[0]);
+function changeImg(input, temp) {
+    //Nếu như tồn thuộc tính file, đồng nghĩa người dùng đã chọn file mới
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        //Sự kiện file đã được load vào website
+        reader.onload = function(e) {
+            //Thay đổi đường dẫn ảnh
+            $('#image-' + temp).attr('src', e.target.result);
         }
+        reader.readAsDataURL(input.files[0]);
     }
+}
 
-    var index = 1;
-    function addImage() {
-        index++;
-        let row = `
+var index = 1;
+
+function addImage() {
+    index++;
+    let row = `
         <tr id="image-row${index}">
             <td class="text-left">
                 <img id="image-${index}" class="thumbnail"
@@ -563,51 +585,51 @@
                         class="fa fa-minus-circle"></i></button></td>
         </tr>
         `;
-        $('#images > tbody').append(row);
-    }
+    $('#images > tbody').append(row);
+}
 
-    function showDetail(prod_id) {
-        // URL có kèm tham số number
-        var url = '{{asset('admin/product/view')}}/' + prod_id;
+function showDetail(prod_id) {
+    // URL có kèm tham số number
+    var url = '{{asset('admin/product/view')}}/' + prod_id;
 
-        // Data lúc này cho bằng rỗng
-        var data = {};
+    // Data lúc này cho bằng rỗng
+    var data = {};
 
-        // Success Function
-        var success = function (result) {
-            $('#popupshow').append(result);
-            $('#popup-view-detail').toggleClass('hidden');
-            $('.darktheme').toggleClass('active');
-        };
-
-        // Result Type
-        var dataType = 'text';
-
-        // Send Ajax
-        $.get(url, data, success, dataType);
+    // Success Function
+    var success = function(result) {
+        $('#popupshow').append(result);
+        $('#popup-view-detail').toggleClass('hidden');
+        $('.darktheme').toggleClass('active');
     };
 
-    function showEdit(prod_id) {
-        // URL có kèm tham số number
-        var url = '{{asset('admin/product/edit')}}/' + prod_id;
+    // Result Type
+    var dataType = 'text';
 
-        // Data lúc này cho bằng rỗng
-        var data = {};
+    // Send Ajax
+    $.get(url, data, success, dataType);
+};
 
-        // Success Function
-        var success = function (result) {
-            $('#popupshow').append(result);
-            $('#popup-form-edit').toggleClass('hidden');
-            $('.darktheme').toggleClass('active');
-            $('#edit-form').removeAttr('novalidate');
-        };
+function showEdit(prod_id) {
+    // URL có kèm tham số number
+    var url = '{{asset('admin/product/edit')}}/' + prod_id;
 
-        // Result Type
-        var dataType = 'text';
+    // Data lúc này cho bằng rỗng
+    var data = {};
 
-        // Send Ajax
-        $.get(url, data, success, dataType);
+    // Success Function
+    var success = function(result) {
+        $('#popupshow').append(result);
+        $('#popup-form-edit').toggleClass('hidden');
+        $('.darktheme').toggleClass('active');
+        $('#edit-form').removeAttr('novalidate');
     };
+
+    // Result Type
+    var dataType = 'text';
+
+    // Send Ajax
+    $.get(url, data, success, dataType);
+};
 </script>
 <!-- Page JS Code -->
 <script src="assets/js/myscript.js"></script>

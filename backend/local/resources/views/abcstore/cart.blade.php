@@ -1,37 +1,7 @@
 @extends('abcstore.layout.master')
 @section('title','Giỏ hàng')
 @section('main')
-<div class="main-page-banner home-3">
-    <div class="container">
-        <div class="row">
-            <!-- Vertical Menu Start Here -->
-            <div class="col-xl-3 col-lg-4 d-none d-lg-block">
-                <div class="vertical-menu mb-all-30">
-                    <nav>
-                        <ul class="vertical-menu-list">
-                            <li>
-                                <a href="shop.html"><span><img src="img/vertical-menu/4.png" alt="menu-icon"></span>Điện
-                                    thoại</a>
-                            </li>
-                            <li>
-                                <a href="shop.html"><span><img src="img/vertical-menu/8.png" alt="menu-icon"></span>Máy
-                                    tính bảng</a>
-                            </li>
-                            <li>
-                                <a href="shop.html"><span><img src="img/vertical-menu/9.png"
-                                            alt="menu-icon"></span>Laptop</a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-            </div>
-            <!-- Vertical Menu End Here -->
-        </div>
-        <!-- Row End -->
-    </div>
-    <!-- Container End -->
-</div>
-<!-- Categorie Menu & Slider Area End Here -->
+@include('abcstore.layout.main-page-banner')
 <!-- Breadcrumb Start -->
 <div class="breadcrumb-area mt-30">
     <div class="container">

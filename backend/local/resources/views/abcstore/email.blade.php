@@ -26,8 +26,8 @@
 			{{$info['cus_identity_card']}}
 		</p>
 		<p>
-			<strong class="info">Được đặt lúc: {{$carts->created_at}}</strong>
-			{{$info['cus_identity_card']}}
+			<strong class="info">Được đặt lúc: </strong>
+			{{$carts->created_at}}
 		</p>
 	</div>						
 	<div id="hoa-don">
@@ -53,7 +53,7 @@
 			@endforeach
 			<tr>
 				<td colspan="3" align="left">Tổng tiền:</td>
-				<td colspan="2" align="right">{{number_format($total_carts,0,',','.')}} VNĐ</td>
+				<td colspan="3" align="right">{{number_format($total_carts,0,',','.')}} VNĐ</td>
 			</tr>
 		</table>
 	</div>

@@ -38,12 +38,12 @@
                     <table class="table table-vcenter table-hover">
                         <thead class="thead-dark">
                             <tr>
-                                <th>Tên sản phẩm</th>
-                                <th class="d-none d-sm-table-cell text-center">
+                                <th style="width: 50%;">Tên sản phẩm</th>
+                                <th style="width: 30%;" class="d-none d-sm-table-cell text-center">
                                     Số lượng</th>
-                                <th>Giá gốc</th>
-                                <th>Giá khuyến mãi</th>
-                                <th>Tổng</th>
+                                <th style="width: 30%;">Giá gốc</th>
+                                <th style="width: 30%;">Giá khuyến mãi</th>
+                                <th style="width: 30%;">Tổng</th>
                             </tr>
                         </thead>
                         <tbody>

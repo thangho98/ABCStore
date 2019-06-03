@@ -57,6 +57,7 @@ class ProductController extends Controller
         $product->prod_cate = $req->cate;
         $product->prod_brand = $req->brand;
         $product->prod_detail = $req->detail;
+        $product->prod_warranty_period = $req->warranty_period;
         $product->prod_poster = '';
         if(!empty($dataPoster)){
             $posterName = $dataPoster->getClientOriginalName();
@@ -129,6 +130,7 @@ class ProductController extends Controller
         $product->prod_slug = str_slug($req->name);
         $product->prod_cate = $req->cate;
         $product->prod_brand = $req->brand;
+        $product->prod_warranty_period = $req->warranty_period;
         $product->prod_detail = $req->detail;
         if(!empty($dataPoster)){
             $posterName = $dataPoster->getClientOriginalName();

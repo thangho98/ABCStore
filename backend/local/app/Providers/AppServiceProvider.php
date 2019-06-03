@@ -27,5 +27,10 @@ class AppServiceProvider extends ServiceProvider
             $list_cate = Category::all();
             $view->with('list_cate',$list_cate);
         });
+        
+        view()->composer('abcstore.layout.main-page-banner', function ($view) {
+            $list_cate = Category::all();
+            $view->with('catelist',$list_cate);
+        });
     }
 }

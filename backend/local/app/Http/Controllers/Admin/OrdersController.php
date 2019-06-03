@@ -49,6 +49,7 @@ class OrdersController extends Controller
         $empl_id = Auth::user()->empl_id;
         //Cart::session($empl_id)->clear();
         $data['total_orders'] = Cart::session($empl_id)->getTotal();
+        $data['total_qty'] = Cart::session($empl_id)->getTotalQuantity();
         $data['content'] = Cart::session($empl_id)->getContent();
         $data['list_prod'] = Product::where('prod_status',1)
                             ->get();
@@ -131,6 +132,7 @@ class OrdersController extends Controller
         }
         
         $data['total_orders'] = Cart::session($empl_id)->getTotal();
+        $data['total_qty'] = Cart::session($empl_id)->getTotalQuantity();
         $data['content'] = Cart::session($empl_id)->getContent();
         $data['list_prod'] = Product::where('prod_status',1)
                             ->get();

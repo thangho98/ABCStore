@@ -14,6 +14,12 @@ Route::get('/category/{id}/{slug}', 'FrontendController@getProductByCategory');
 
 Route::get('/search', 'FrontendController@getSearch');
 
+Route::get('/shop', 'FrontendController@getShop');
+
+Route::get('/search', 'FrontendController@getSearch');
+
+Route::get('/shop/ajax', 'FrontendController@getListProduct');
+
 Route::group(['prefix' => 'cart'], function () {
 
     Route::get('show', 'CartCusController@getShowCart');
@@ -148,6 +154,60 @@ Route::group(['namespace' => 'Admin'], function () {
             Route::get('/cancel/','OrdersController@getCancelOrders');
         });
         
+        Route::group(['prefix' => 'user'], function () {
+            Route::get('/','UsersController@getUsers');
+
+            Route::post('add/','UsersController@postAddUser');
+
+            Route::get('/edit/{id}','UsersController@getEditUser');
+            Route::post('/edit/{id}','UsersController@postEditUser');
+
+            Route::get('/delete','UsersController@getDeleteUser');
+
+            Route::get('/reset/','UsersController@getResetPassUser');
+        });
+
+        Route::group(['prefix' => 'permission'], function () {
+            Route::get('/','PermissionController@getPermission');
+        });
+
+        Route::group(['prefix' => 'guarantee'], function() {
+            Route::get('/','GuaranteeController@getGuarantee');
+
+            Route::get('check/','GuaranteeController@getCheckOrder');
+
+            Route::post('add/','GuaranteeController@postAddGuarantee');
+
+            Route::get('/view/{id}','GuaranteeController@getViewGuarantee');
+            
+            Route::get('/edit/{id}','GuaranteeController@getEditGuarantee');
+            Route::post('/edit/{id}','GuaranteeController@postEditGuarantee');
+        });
+
+        Route::group(['prefix' => 'invoice'], function() {
+            Route::get('/','InvoiceController@getInvo');
+
+            Route::get('/add/','InvoiceController@getAddInvo');
+            Route::post('add/','InvoiceController@postAddInvo');
+
+            Route::get('approved/','InvoiceController@getApprovedInvo');
+
+            Route::get('/view/{id}','InvoiceController@getViewInvo');
+            
+            Route::get('/edit/{id}','InvoiceController@getEditInvo');
+            Route::post('/edit/{id}','InvoiceController@postEditInvo');
+
+            Route::get('/delete','InvoiceController@getDeleteInvo');
+
+            Route::get('/cancel/','InvoiceController@getCancelInvo');
+
+            Route::get('/item/add','InvoiceController@getAddItem');
+            Route::get('/item/delete','InvoiceController@getDelItem');
+            
+            Route::get('/item/update/qty','InvoiceController@getUpdateQtyItem');
+            Route::get('/item/update/price','InvoiceController@getUpdatePriceItem');
+        });
+
     });
     Route::get('/logout','HomeController@getLogout');
 });

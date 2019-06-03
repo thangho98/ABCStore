@@ -70,13 +70,13 @@
                 <div class="form-group col-md-6">
                     <label for="inputStatus">Trạng thái <span class="text-danger">*</span></label>
                     <select class="form-control" id="inputStatus" name="status">
-                            <option value="0" @if ($empl->empl_status == 0)
+                        <option value="0" @if ($empl->empl_status == 0)
+                            selected
+                        @endif>Đang làm</option>
+                        <option value="1"  @if ($empl->empl_status == 1)
                                 selected
-                            @endif>Đang làm</option>
-                            <option value="1"  @if ($empl->empl_status == 1)
-                                    selected
-                                @endif>Đã nghỉ</option>
-                        </select>
+                            @endif>Đã nghỉ</option>
+                    </select>
                 </div>
             </div>
         <div class="tile-footer-2">

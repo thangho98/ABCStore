@@ -1,5 +1,5 @@
 @extends('admin.layout.master')
-@section('title','Thanh toán đơn hàng')
+@section('title','Thêm hóa đơn nhập hàng')
 @section('add_css_and_script')
 <!-- Page JS Plugins CSS -->
 <link rel="stylesheet" href="assets/js/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css">
@@ -18,14 +18,14 @@
         <div class="content content-full">
             <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
                 <h1 class="flex-sm-fill h3 my-2">
-                    Thêm hóa đơn mới <small
+                    Thêm hóa đơn nhập hàng mới <small
                         class="d-block d-sm-inline-block mt-2 mt-sm-0 font-size-base font-w400 text-muted"></small>
                 </h1>
                 <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
                     <ol class="breadcrumb breadcrumb-alt">
-                        <li class="breadcrumb-item">Bán hàng</li>
+                        <li class="breadcrumb-item">Nhập hàng</li>
                         <li class="breadcrumb-item" aria-current="page">
-                            <a class="link-fx" href="">Đơn hàng</a>
+                            <a class="link-fx" href="">Thêm mới</a>
                         </li>
                     </ol>
                 </nav>
@@ -51,8 +51,7 @@
                                 Chi tiết đơn hàng</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#wizard-validation-step2" data-toggle="tab">2. Thông tin
-                                Khách hàng
+                            <a class="nav-link" href="#wizard-validation-step2" data-toggle="tab">2. Thông tin đơn hàng
                             </a>
                         </li>
                         <li class="nav-item">
@@ -108,7 +107,7 @@
                                     <!-- Table Head Dark -->
                                     <div class="block">
                                         <div class="block-header">
-                                            <h3 class="block-title">Danh sách giỏ hàng</h3>
+                                            <h3 class="block-title">Danh sách sản phẩm</h3>
                                         </div>
                                         <div class="block-content">
                                             <table class="table table-vcenter">
@@ -119,8 +118,7 @@
                                                         <th style="width: 250px;">Phiên bản</th>
                                                         <th class="d-none d-sm-table-cell text-center"
                                                             style="width: 150px;">Số lượng</th>
-                                                        <th style="width: 150px;">Giá gốc</th>
-                                                        <th style="width: 160px;">Giá khuyến mãi</th>
+                                                        <th class="text-center">Giá</th>
                                                         <th class="text-center" style="width: 120px;">Thao tác
                                                         </th>
                                                     </tr>
@@ -129,26 +127,36 @@
                                                     @foreach ($content as $item)
                                                     <tr>
                                                         <th class="text-center" scope="row">
-                                                            {{$item->id}}
+                                                            {{$item['id']}}
                                                         </th>
-                                                        <td class="font-w600 font-size-sm">{{$item->name}}</td>
+                                                        <td class="font-w600 font-size-sm">{{$item['name']}}</td>
                                                         <td class="font-w600 font-size-sm">Màu:
-                                                            {{$item->attributes['propt_color']}}, Ram:
-                                                            {{$item->attributes['propt_ram']}} gb, Rom:
-                                                            {{$item->attributes['propt_rom']}}</td>
+                                                            {{$item['attributes']['propt_color']}}, Ram:
+                                                            {{$item['attributes']['propt_ram']}} gb, Rom:
+                                                            {{$item['attributes']['propt_rom']}}</td>
                                                         <td class="d-none d-table-cell">
                                                             <div class="form-group">
-                                                                <input id="input${product.id}"
-                                                                    class="form-control text-center" type="number" onchange="updateCart(this.value,'{{$item->id}}')"
-                                                                    required min="1" value="{{$item->quantity}}">
+                                                                <input id="inputQty${product.id}"
+                                                                    class="form-control text-center" type="number" onchange="updateQtyItem(this.value,'{{$item['id']}}');"
+                                                                    required min="1" value="{{$item['quantity']}}">
                                                             </div>
                                                         </td>
-                                                        <td>{{number_format($item->price,0,',','.')}} VNĐ</td>
-                                                        <td>{{number_format($item->price,0,',','.')}} VNĐ</td>
+                                                        <td class="d-none d-table-cell">
+                                                            <div class="form-group">
+                                                                <div class="input-group">
+                                                                    <input type="number" class="form-control text-center"
+                                                                        id="inputQty" name="price" min="0"
+                                                                        placeholder=".." value="{{$item['price']}}" onchange="updatePriceItem(this.value,'{{$item['id']}}');">
+                                                                    <div class="input-group-append">
+                                                                        <span class="input-group-text">VNĐ</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
                                                         <td class="text-center">
                                                             <div class="btn-group">
                                                                 <button type="button"
-                                                                    class="btn btn-sm btn-danger deleteproduct" onclick="deleteCart({{$item->id}})"
+                                                                    class="btn btn-sm btn-danger deleteproduct" onclick="deleteItem({{$item['id']}})"
                                                                     data-toggle="tooltip" title="Xóa sản phẩm">
                                                                     <i class="fa fa-fw fa-times"></i>
                                                                 </button>
@@ -169,30 +177,29 @@
                             <div class="tab-pane" id="wizard-validation-step2" role="tabpanel">
                                 <div class="form-row">
                                     <div class="form-group col-6">
-                                        <label for="wizard-validation-name">Họ tên</label>
-                                        <input class="form-control" type="text" id="wizard-validation-name"
-                                            name="cus_name" required>
+                                        <label for="wizard-validation-name">Mã hóa đơn</label>
+                                        <input class="form-control" type="text" id="invo_code"
+                                            name="invo_code" required>
                                     </div>
                                     <div class="form-group col-6">
-                                        <label for="wizard-validation-phone">SĐT</label>
-                                        <input class="form-control" type="text" id="wizard-validation-phone"
-                                            name="cus_phone" required>
+                                        <label for="wizard-validation-phone">Ngày nhập</label>
+                                        <input type="text" class="js-datepicker form-control" id="invo_date" name="invo_date" required data-week-start="1" data-autoclose="true" data-today-highlight="true" data-date-format="dd-mm-yyyy" placeholder="dd-mm-yyyy">
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-6">
-                                        <label for="wizard-validation-email">Email</label>
-                                        <input class="form-control" type="email" id="wizard-validation-email"
-                                            name="cus_email" required>
-                                    </div>
-                                    <div class="form-group col-6">
-                                        <label for="wizard-validation-identity-card">CMND</label>
-                                        <input class="form-control" type="text" id="wizard-validation-identity-card"
-                                            name="cus_identity_card" required>
+                                        <label for="wizard-validation-email">Nhà cung cấp</label>
+                                        <select class="js-select2 form-control" id="invo_prov" style="width: 100%;"
+                                            data-placeholder="Chọn một nhà cung cấp.." required name="invo_prov">
+                                            <option></option>
+                                            <!-- Required for data-placeholder attribute to work with Select2 plugin -->
+                                            @foreach ($list_provider as $item)
+                                            <option value="{{$item->prov_id}}">{{$item->prov_name}}
+                                            </option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
-
-
                             </div>
                             <!-- END Step 2 -->
 
@@ -214,24 +221,19 @@
                                                         @foreach ($content as $item)
                                                             <tr class="cart_item">
                                                                 <td class="product-name">
-                                                                        {{$item->name}} {{$item->attributes['propt_ram']}} gb {{$item->attributes['propt_rom']}} {{$item->attributes['propt_color']}} 
-                                                                    <span class="product-quantity"> × {{$item->quantity}}</span>
+                                                                        {{$item['name']}} {{$item['attributes']['propt_ram']}} gb {{$item['attributes']['propt_rom']}} {{$item['attributes']['propt_color']}} 
+                                                                    <span class="product-quantity"> × {{$item['quantity']}}</span>
                                                                 </td>
                                                                 <td class="product-total">
-                                                                    <span class="amount">{{number_format($item->price*$item->quantity,0,',','.')}} VNĐ</span>
+                                                                    <span class="amount">{{number_format($item['price']*$item['quantity'],0,',','.')}} VNĐ</span>
                                                                 </td>
                                                             </tr>
                                                         @endforeach
                                                     </tbody>
                                                     <tfoot>
-                                                        <tr class="cart-subtotal">
-                                                            <th>Phụ phí </th>
-                                                            <td><span class="amount">0 VNĐ</span>
-                                                            </td>
-                                                        </tr>
                                                         <tr class="order-total">
-                                                            <th>Tổng tiền thanh toán</th>
-                                                            <td><span class=" total amount">{{number_format($total_orders,0,',','.')}} VNĐ</span>
+                                                            <th>Tổng tiền hóa đơn</th>
+                                                            <td><span class=" total amount">{{number_format($total,0,',','.')}} VNĐ</span>
                                                             </td>
                                                         </tr>
                                                     </tfoot>
@@ -300,6 +302,7 @@
 <script src="assets/js/pages/be_forms_wizard.min.js"></script>
 
 <!-- Page JS Plugins -->
+<script src="assets/js/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
 <script src="assets/js/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
 <script src="assets/js/plugins/select2/js/select2.full.min.js"></script>
 <script src="assets/js/plugins/jquery.maskedinput/jquery.maskedinput.min.js"></script>
@@ -308,7 +311,7 @@
 <!-- Page JS Helpers (BS Datepicker + BS Colorpicker + BS Maxlength + Select2 + Masked Inputs + Ion Range Slider plugins) -->
 <script>
 jQuery(function() {
-    One.helpers(['maxlength', 'select2', 'masked-inputs', 'rangeslider']);
+    One.helpers(['datepicker','maxlength', 'select2', 'masked-inputs', 'rangeslider']);
 });
 </script>
 <!-- Page JS Code -->
@@ -350,6 +353,7 @@ $(document).ready(function() {
         // Send Ajax
         $.get(url, data, success, dataType);
     });
+    
     $('#add-product').click(function(){
         var id = $('#select-options').val();
         // URL
@@ -365,7 +369,7 @@ $(document).ready(function() {
         };
 
         $.ajax({
-            url: "{{asset('admin/orders/item/add')}}",
+            url: "{{asset('admin/invoice/item/add')}}",
             type: "get",
             data: data,
             success: function (result) {
@@ -376,6 +380,8 @@ $(document).ready(function() {
             }
         });
     });
+
+
 
     $('#cancelAddOrders').click(function(){
         swal({
@@ -389,7 +395,7 @@ $(document).ready(function() {
 			if (willDelete) {
                 swal("Đã thoát!", "Đối tượng đã được xóa.", "success")
                 .then((value) => {
-                    window.location.href = '{{asset('admin/orders/cancel')}}';
+                    window.location.href = '{{asset('admin/invoice/cancel')}}';
                 });
                             }
 			else {
@@ -399,11 +405,9 @@ $(document).ready(function() {
     });
 });
 
-    
-
-    function deleteCart(id) {
+    function deleteItem(id) {
         if(id == null) return;
-        var url = "{{asset('admin/orders/item/delete')}}";
+        var url = "{{asset('admin/invoice/item/delete')}}";
 
         // Data
         var data = {
@@ -420,10 +424,20 @@ $(document).ready(function() {
         $.get(url, data, success);
     }
 
-    function updateCart(qty, id){
+    function updateQtyItem(qty, id){
 		$.get(
-			"{{asset('admin/orders/item/update')}}",
+			"{{asset('admin/invoice/item/update/qty')}}",
 			{qty:qty, id:id},
+			function(){
+				location.reload();
+			}
+		);
+	}
+
+    function updatePriceItem(price, id){
+		$.get(
+			"{{asset('admin/invoice/item/update/price')}}",
+			{price:price, id:id},
 			function(){
 				location.reload();
 			}
