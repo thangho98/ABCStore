@@ -84,7 +84,10 @@ Route::group(['namespace' => 'Admin'], function () {
             
             Route::get('/delete','ProductController@getDeleteProd');
         });
-
+        Route::group(['prefix' => 'promotion'], function() {
+            Route::get('/','PromotionController@getPromotion');
+            //Route::get('/view/{id}','PromotionController@');
+        });
         Route::group(['prefix' => 'provider'], function () {
             Route::get('/','ProviderController@getProv');
 
@@ -173,8 +176,9 @@ Route::group(['namespace' => 'Admin'], function () {
 
         Route::group(['prefix' => 'guarantee'], function() {
             Route::get('/','GuaranteeController@getGuarantee');
-            Route::get('/view/{id}','GuaranteeController@');
+            //Route::get('/view/{id}','GuaranteeController@');
         });
+
 
     });
     Route::get('/logout','HomeController@getLogout');

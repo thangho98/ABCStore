@@ -80,7 +80,9 @@
                                     <td class="text-center">
                                         <input type="checkbox" name="selected[]" value="{{$item->prod_id}}">
                                     </td>
-                                    <td class="text-center font-size-sm">{{$item->prod_id}}</td>
+                                    <td class="text-center font-size-sm">
+                                        {{$item->prod_id}}
+                                    </td>
                                     <td class="font-w600 font-size-sm">
                                         {{$item->prod_name}}
                                     </td>
