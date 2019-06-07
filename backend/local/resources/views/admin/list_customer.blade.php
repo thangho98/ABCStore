@@ -59,7 +59,7 @@
                                     <input type="checkbox"
                                         onclick="$('input[name*=\'selected\']').prop('checked', this.checked);">
                                 </th>
-                                <th class="text-center orderby" style="width: 100px;">Mã KH</th>
+                                <th class="text-center orderby" style="width: 130px;">Mã KH</th>
                                 <th class="orderby">Tên Khách hàng</th>
                                 <th class="d-none d-sm-table-cell orderby">SĐT</th>
                                 <th class="d-none d-sm-table-cell orderby">CMND</th>
@@ -84,7 +84,7 @@
                                     {{$item->cus_identity_card}}
                                 </td>
                                 <td class="text-center d-sm-table-cell">
-                                    {{$item->email}}
+                                    {{$item->cus_email}}
                                 </td>
                                 <td class="text-right">
                                     <div class="py-2 mb-2">

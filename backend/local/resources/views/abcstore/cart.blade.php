@@ -47,7 +47,7 @@
                                             Màu: {{$item->attributes['propt_color']}}</a>
                                         </td>
                                         <td class="product-price"><span class="amount">{{number_format($item->price,0,',','.')}} VNĐ</span></td>
-                                        <td class="product-quantity"><input type="number" min="1" value="{{$item->quantity}}" onchange="updateCart(this.value,'{{$item->id}}')" /></td>
+                                        <td class="product-quantity"><input type="number" min="1" value="{{$item->quantity}}" max="{{$item['attributes']->propt_quantity}}" onchange="updateCart(this.value,'{{$item->id}}')" /></td>
                                         <td class="product-subtotal">{{number_format($item->price*$item->quantity,0,',','.')}} VNĐ</td>
                                         <td class="product-remove"> 
                                             <a href="{{asset('cart/delete/'.$item->id)}}"><i class="fa fa-times"

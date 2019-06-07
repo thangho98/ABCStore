@@ -182,6 +182,9 @@ Route::group(['namespace' => 'Admin'], function () {
             
             Route::get('/edit/{id}','GuaranteeController@getEditGuarantee');
             Route::post('/edit/{id}','GuaranteeController@postEditGuarantee');
+
+            Route::get('/print/receive/{id}','GuaranteeController@getPrintGuaranteeReceive');
+            Route::get('/print/reimburse/{id}','GuaranteeController@getPrintGuaranteeReimburse');
         });
 
         Route::group(['prefix' => 'invoice'], function() {

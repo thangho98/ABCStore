@@ -60,7 +60,7 @@
                             <th class="text-center orderby">Ngày nhận</th>
                             <th class="text-center orderby">Ngày trả</th>
                             <th class="text-center orderby" style="width: 15%;"> Trạng thái </th>
-                            <th style="width: 120px;" class="text-center orderby remove-sorting">Thao tác</th>
+                            <th style="width: 150px;" class="text-center orderby remove-sorting">Thao tác</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -104,6 +104,12 @@
                                         @endif>
                                         <i class="fa fa-fw fa-pencil-alt"></i>
                                     </button>
+                                    <a href="{{asset('admin/guarantee/print/reimburse/'.$item->gtd_id)}}" class="btn btn-sm btn-primary" data-toggle="tooltip"
+                                         title="In phiếu trả bảo hành" @if ($item->gtd_status != 3)
+                                            disabled
+                                        @endif>
+                                        <i class="fa fa-fw fa-print"></i>
+                                    </a>
                                 </div>
                             </td>
                         </tr>
@@ -427,8 +433,6 @@
         $('#submitAddGuarantee').on('click', function () {
 		$form = $('#add-form');
 
-		$form.submit();
-
 		if ($form.valid()) {
 
 			var datas = new FormData($form[0]);
@@ -444,8 +448,8 @@
 				success: function (data) {
 					swal("Đã thêm!", "Đối tượng đã được thêm.", "success")
 						.then((value) => {
-							console.log('Submission was successful.');
-							location.reload();
+							console.log(data);
+                            window.location.href = data;
 						});
 				},
 				error: function (data) {

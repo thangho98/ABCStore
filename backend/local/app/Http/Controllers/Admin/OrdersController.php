@@ -85,14 +85,6 @@ class OrdersController extends Controller
         $orders->order_remember_token = $req->_token;
         $orders->save();
 
-        $orders = Orders::where('order_date',date("Y-m-d"))
-                        ->where('order_empl', $empl_id)
-                        ->where('order_cus', $cus->cus_id)
-                        ->where('order_total_prod', $total_qty_orders)
-                        ->where('order_total_price', $total_orders)
-                        ->where('order_remember_token', $req->_token)
-                        ->first();
-
         $content = Cart::session($empl_id)->getContent();
 
         foreach ($content as $key => $value) {
@@ -169,14 +161,6 @@ class OrdersController extends Controller
         $orders->order_total_price = $total_orders;
         $orders->order_remember_token = $req->_token;
         $orders->save();
-
-        $orders = Orders::where('order_date',date("Y-m-d"))
-                        ->where('order_empl', $empl_id)
-                        ->where('order_cus', $cus->cus_id)
-                        ->where('order_total_prod', $total_qty_orders)
-                        ->where('order_total_price', $total_orders)
-                        ->where('order_remember_token', $req->_token)
-                        ->first();
 
         $content = Cart::session($empl_id)->getContent();
 

@@ -24,7 +24,7 @@ class EditCateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'unique:category,cate_name,'.$this->segment(5).',cate_id'
+            'name' => 'unique:category,cate_name,'.$this->segment(4).',cate_id'
         ];
     }
 
