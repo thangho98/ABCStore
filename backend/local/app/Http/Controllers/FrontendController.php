@@ -75,7 +75,7 @@ class FrontendController extends Controller
                 ->get();
         }
 
-        //dd($data);  
+         
 
         $list_cate_featured = $data['list_cate_featured'];
         foreach ($list_cate_featured as $key1 => $value1) {
@@ -90,15 +90,15 @@ class FrontendController extends Controller
                 ->where('prod_new','0')
                 ->where('cate_id',$value1->cate_id)
                 ->where('brand_id',$value2->brand_id)
+                ->join('product_options','product.prod_id','product_options.propt_prod')
                 ->join('category','product.prod_cate','category.cate_id')
                 ->join('brand','product.prod_brand','brand.brand_id')
-                ->select(DB::raw('prod_id, prod_name, prod_poster'))
+                ->select(DB::raw('prod_id, prod_name, prod_poster, min(propt_price) as prod_price'))
                 ->orderBy('prod_id','desc')
                 ->get();
             }
         }       
-
-        return view('abcstore.index', $data);
+        return view('abcstore.home', $data);
     }
 
     public function getProduct($id, Request $req)
@@ -114,24 +114,16 @@ class FrontendController extends Controller
                                 ->orderBy('propt_rom','desc')
                                 ->get();
 
-        // if(!(empty($req->ram) && empty($req->rom))){
-        //     $data['list_color'] = ProductOptions::where('propt_prod',$id)
-        //                 ->where('propt_ram',$req->ram)
-        //                 ->where('propt_rom',$req->rom)
-        //                 ->select(DB::raw('DISTINCT propt_color'))
-        //                 ->get();
-        //     $data['ram'] = $req->ram;
-        //     $data['rom'] = $req->rom;
-        // }
-        // else if(count($data['list_memory']) > 0){
-        //     $data['list_color'] = ProductOptions::where('propt_prod',$id)
-        //                     ->where('propt_ram',$data['list_memory'][0]->propt_ram)
-        //                     ->where('propt_rom',$data['list_memory'][0]->propt_rom)
-        //                     ->select(DB::raw('DISTINCT propt_color'))
-        //                     ->get();
-        //     $data['ram'] = $data['list_memory'][0]->propt_ram;
-        //     $data['rom'] = $data['list_memory'][0]->propt_rom;
-        // }
+        $data['min_price'] = ProductOptions::where('propt_prod',$id)
+                                ->select(DB::raw('min(propt_price) as price'))
+                                ->first();
+        
+        $data['max_price'] = ProductOptions::where('propt_prod',$id)
+                                ->select(DB::raw('max(propt_price) as price'))
+                                ->first();
+
+        //dd($data);
+        
         if(count($data['list_memory']) > 0){
             $data['list_color'] = ProductOptions::where('propt_prod',$id)
                                 ->where('propt_ram',$data['list_memory'][0]->propt_ram)

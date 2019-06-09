@@ -105,6 +105,19 @@ class GuaranteeController extends Controller
         $guarantee->gtd_date_receive = date("Y-m-d");
         $guarantee->gtd_status = 0;
         $guarantee->save();
+
+        $guarantee = Guarantee::where('gtd_orders',$req->order_id)
+        ->where('gtd_orders',$req->order_id)
+        ->where('gtd_propt',$req->propt_id)
+        ->where('gtd_serial',$req->serial)
+        ->where('gtd_required_content',$req->required_content)
+        ->where('gtd_orders',$req->order_id)
+        ->where('gtd_empl_receive',Auth::user()->empl_id)
+        ->where('gtd_date_receive',date("Y-m-d"))
+        ->where('gtd_status',0)
+        ->first();
+
+        return asset('admin/guarantee/print/receive/'.$guarantee->gtd_id);
     }
 
     public function getViewGuarantee($id)
@@ -151,35 +164,29 @@ class GuaranteeController extends Controller
 
     public function getPrintGuaranteeReceive($id)
     {
-        $data['orders'] = DB::table('orders')
-                            ->where('order_id',$id)
+        $data['guarantee'] = DB::table('guarantee')
+                            ->where('gtd_id',$id)
+                            ->join('orders','guarantee.gtd_orders','orders.order_id')
                             ->join('customer','orders.order_cus','customer.cus_id')
-                            ->leftjoin('employees','orders.order_empl','employees.empl_id')
-                            ->first();
-
-        $data['list_ordersdetail'] = DB::table('ordersdetail')
-                            ->where('orddt_order',$id)
-                            ->join('product_options','ordersdetail.orddt_propt','product_options.propt_id')
+                            ->join('employees','guarantee.gtd_empl_receive','employees.empl_id')
+                            ->join('product_options','guarantee.gtd_propt','product_options.propt_id')
                             ->join('product','product_options.propt_prod','product.prod_id')
-                            ->get();
+                            ->first();
                             
-        return view('admin.print_orders', $data);
+        return view('admin.print_receive_guarantee', $data);
     }
 
     public function getPrintGuaranteeReimburse($id)
     {
-        $data['orders'] = DB::table('orders')
-                            ->where('order_id',$id)
+        $data['guarantee'] = DB::table('guarantee')
+                            ->where('gtd_id',$id)
+                            ->join('orders','guarantee.gtd_orders','orders.order_id')
                             ->join('customer','orders.order_cus','customer.cus_id')
-                            ->leftjoin('employees','orders.order_empl','employees.empl_id')
-                            ->first();
-
-        $data['list_ordersdetail'] = DB::table('ordersdetail')
-                            ->where('orddt_order',$id)
-                            ->join('product_options','ordersdetail.orddt_propt','product_options.propt_id')
+                            ->join('employees','guarantee.gtd_empl_reimburse','employees.empl_id')
+                            ->join('product_options','guarantee.gtd_propt','product_options.propt_id')
                             ->join('product','product_options.propt_prod','product.prod_id')
-                            ->get();
+                            ->first();
                             
-        return view('admin.print_orders', $data);
+        return view('admin.print_reimburse_guarantee', $data);
     }
 }

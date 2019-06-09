@@ -52,7 +52,7 @@ class CategoryController extends Controller
         $category->save();
     }
 
-    public function getDeleteCate()
+    public function getDeleteCate(Request $req)
     {
         $selected = $req->selected;
         if($selected != null){

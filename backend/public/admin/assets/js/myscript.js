@@ -25,7 +25,7 @@ $(document).ready(function () {
 	$('#submitAdd').on('click', function () {
 		$form = $('#add-form');
 
-		$form.submit();
+		//$form.submit();
 
 		if ($form.valid()) {
 

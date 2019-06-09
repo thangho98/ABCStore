@@ -10,7 +10,7 @@
                     <label>Thương hiệu nổi tiếng</label>
                     <div class="custom-control custom-switch mb-1">
                         <input type="checkbox" class="custom-control-input" id="example-sw-edit1" name="isfamous" value="1"
-                        @if ($brand->brand_isfamous)
+                        @if ($brand->brand_famous)
                             checked
                         @endif>
                         <label class="custom-control-label" for="example-sw-edit1"></label>

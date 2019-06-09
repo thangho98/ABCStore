@@ -58,7 +58,7 @@
                                     <input type="checkbox"
                                         onclick="$('input[name*=\'selected\']').prop('checked', this.checked);">
                                 </th>
-                                <th class="text-center orderby" style="width: 100px;">Mã ĐG</th>
+                                <th class="text-center orderby" style="width: 130px;">Mã ĐG</th>
                                 <th class="orderby">Tên người đánh giá</th>
                                 <th class="d-none d-sm-table-cell orderby">EMAIL</th>
                                 <th class="d-none d-sm-table-cell orderby">Sản phẩm</th>

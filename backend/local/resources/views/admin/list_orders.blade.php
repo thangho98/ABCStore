@@ -96,7 +96,7 @@
                                             data-toggle="tooltip" onclick="showDetail({{$item->order_id}})">
                                             <i class="fa fa-fw fa-eye"></i>
                                         </button>
-                                        <a class="btn btn-sm btn-primary" title="Xem chi tiết"
+                                        <a class="btn btn-sm btn-primary" title="In hóa đơn"
                                             data-toggle="tooltip" href="{{asset('admin/orders/print/'.$item->order_id)}}">
                                             <i class="fa fa-fw fa-print"></i>
                                         </a>
@@ -152,7 +152,7 @@
         var table = $('#table-brand').DataTable({
             'columnDefs': [{
 
-                'targets': [0, 7], /* column index */
+                'targets': [7], /* column index */
 
                 'orderable': false, /* true or false */
 

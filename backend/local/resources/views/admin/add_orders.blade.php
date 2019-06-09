@@ -350,6 +350,7 @@ $(document).ready(function() {
         // Send Ajax
         $.get(url, data, success, dataType);
     });
+    
     $('#add-product').click(function(){
         var id = $('#select-options').val();
         // URL

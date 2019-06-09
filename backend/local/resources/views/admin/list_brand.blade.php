@@ -61,7 +61,7 @@
                                     <input type="checkbox"
                                         onclick="$('input[name*=\'selected\']').prop('checked', this.checked);">
                                 </td>
-                                <th class="text-center orderby" style="width: 80px;">Mã TH</th>
+                                <th class="text-center orderby" style="width: 130px;">Mã TH</th>
                                 <th class="orderby">Tên Thương hiệu</th>
                                 <th class="d-none d-sm-table-cell orderby" style="width: 30%;">Mô tả</th>
                                 <th class="d-none d-sm-table-cell orderby" style="width: 230px;">Thương hiệu nổi
@@ -85,7 +85,7 @@
                                     {{$item->brand_desc}}
                                 </td>
                                 <td class="text-center d-none d-sm-table-cell">
-                                    @if ($item->brand_isfamous)
+                                    @if ($item->brand_famous)
                                     <i class="fa fa-check fa-lg"></i>
                                     @endif
                                 </td>
@@ -112,29 +112,28 @@
 @endsection
 @section('popup')
 <div id="popupshow">
-    <div class="popup-form hidden form-inline" id="popup-form-add">
+    <div class="popup-form hidden" id="popup-form-add">
         <form action="{{asset('admin/brand/add')}}" id="add-form" method="POST" novalidate>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="inputName">Tên thương hiệu <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="inputName" name="name" placeholder="Nhập tên thương hiệu"
-                            required>
-                    </div>
-                    <div class="form-group col-md-4 ml-4">
-                        <label>Thương hiệu nổi tiếng</label>
-                        <div class="custom-control custom-switch mb-1">
-                            <input type="checkbox" class="custom-control-input" id="example-sw-custom1" name="isfamous" value="1">
-                            <label class="custom-control-label" for="example-sw-custom1"></label>
-                        </div>
-                    </div>
-    
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label>Tên thương hiệu <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" name="name" placeholder="Nhập tên thương hiệu"
+                        required>
                 </div>
-                <div class="form-group">
-                    <label for="example-textarea-input">Mô tả</label>
-                    <textarea class="form-control" id="example-textarea-input"
-                        name="description" rows="4"
-                        placeholder="Nhập mô tả"></textarea>
+                <div class="form-group col-md-4 ml-4">
+                    <label>Thương hiệu nổi tiếng <span class="text-danger">*</span></label>
+                    <div class="custom-control custom-switch mb-1">
+                        <input type="checkbox" class="custom-control-input" id="example-sw-custom1" name="isfamous" value="1">
+                        <label class="custom-control-label" for="example-sw-custom1"></label>
+                    </div>
                 </div>
+            </div>
+            <div class="form-group">
+                <label for="example-textarea-input">Mô tả</label>
+                <textarea class="form-control" id="example-textarea-input"
+                    name="description" rows="4"
+                    placeholder="Nhập mô tả"></textarea>
+            </div>
             <div class="tile-footer-2">
                 <button class="btn btn-primary" type="button" id="submitAdd">Thêm</button>
                 <button class="btn btn-danger" type="button" id="cancelAdd">Hủy</button>

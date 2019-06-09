@@ -84,12 +84,6 @@ class CartCusController extends Controller
         $cus->cus_email = $req->cus_email;
         $cus->cus_identity_card = $req->cus_identity_card;
         $cus->save();
-
-        $cus = Customer::where('cus_name',$req->cus_name)
-                        ->where('cus_phone',$req->cus_phone)
-                        ->where('cus_email',$req->cus_email)
-                        ->where('cus_identity_card',$req->cus_identity_card)
-                        ->first();
         
         $carts = new Carts;
         $carts->cart_date = date("Y-m-d");
@@ -97,20 +91,13 @@ class CartCusController extends Controller
         $carts->cart_total_prod = Cart::getTotalQuantity();;
         $carts->cart_total_price = Cart::getTotal();
         $carts->cart_remember_token = $req->_token;
+        $carts->cart_status = 0;
         $carts->save();
 
         
         $data['content'] = Cart::getContent();
         $data['total_carts'] = Cart::getTotal();
         $data['total_qty_carts'] = Cart::getTotalQuantity();
-        
-
-        $carts = Carts::where('cart_date',date("Y-m-d"))
-                        ->where('cart_cus', $cus->cus_id)
-                        ->where('cart_total_prod', $data['total_qty_carts'])
-                        ->where('cart_total_price', $data['total_carts'])
-                        ->where('cart_remember_token', $req->_token)
-                        ->first();
 
         foreach ($data['content'] as $key => $value) {
             $cartdetail = new CartDetail;
@@ -127,15 +114,15 @@ class CartCusController extends Controller
         $data['carts'] = $carts;
         $data['info'] = $req->all();
         
-        Mail::send('abcstore.email', $data, function ($message) use($email) {
-            $message->from('thanglong2098@gmail.com', 'ABCStore');
+        // Mail::send('abcstore.email', $data, function ($message) use($email) {
+        //     $message->from('thanglong2098@gmail.com', 'ABCStore');
 
-            $message->to($email, $email);
+        //     $message->to($email, $email);
 
-            $message->cc('16521484@gm.uit.edu.vn', 'ABCStore');
+        //     $message->cc('16521484@gm.uit.edu.vn', 'ABCStore');
 
-            $message->subject('Xác nhận hóa đơn mua hàng ABCStore');
-        });
+        //     $message->subject('Xác nhận hóa đơn mua hàng ABCStore');
+        // });
 
 
         Cart::clear();

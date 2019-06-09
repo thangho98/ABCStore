@@ -120,7 +120,6 @@
 @section('popup')
 <div id="popupshow">
 </div>
-
 @endsection
 @section('scriptjs')
 <script src="assets/js/plugins/sweetalert.min.js"></script>

@@ -68,9 +68,6 @@ class InvoiceController extends Controller
         $invo->invo_total_price = $invoiceSession->getTotal();
         $invo->invo_status = 0;
         $invo->save();
-        
-        $invo =  Invoice::where('invo_code', $req->invo_code)
-        ->where('invo_prov', $req->invo_prov)->first();
 
         foreach ($content as $key => $value) {
             $invoDetail = new InvoiceDetail;

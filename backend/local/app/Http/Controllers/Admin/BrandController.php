@@ -23,10 +23,10 @@ class BrandController extends Controller
         $brand->brand_slug = str_slug($req->name);
         $brand->brand_desc = $req->description;
         if($req->isfamous == 1){
-            $brand->brand_isfamous = true;
+            $brand->brand_famous = true;
         }
         else{
-            $brand->brand_isfamous = false;
+            $brand->brand_famous = false;
         }
         $brand->save();
     }
@@ -44,10 +44,10 @@ class BrandController extends Controller
         $brand->brand_slug = str_slug($req->name);
         $brand->brand_desc = $req->description;
         if($req->isfamous == 1){
-            $brand->brand_isfamous = true;
+            $brand->brand_famous = true;
         }
         else{
-            $brand->brand_isfamous = false;
+            $brand->brand_famous = false;
         }
         $brand->save();
     }
