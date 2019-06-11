@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th6 09, 2019 lúc 03:07 PM
+-- Thời gian đã tạo: Th6 11, 2019 lúc 04:17 PM
 -- Phiên bản máy phục vụ: 10.1.38-MariaDB
 -- Phiên bản PHP: 7.3.2
 
@@ -39,6 +39,34 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `revenue_year` ()  NO SQL
 SELECT revenue.reve_year, SUM(revenue.reve_sale) AS reve_sale, SUM(revenue.reve_buy) AS reve_buy, SUM(revenue.reve_salary) AS reve_salary, SUM(revenue.reve_income) AS reve_income
 FROM revenue
 GROUP BY revenue.reve_year$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `statistics_product_all` ()  NO SQL
+SELECT product.prod_id, product.prod_name, SUM(ordersdetail.orddt_quantity) AS quantity, SUM(ordersdetail.orddt_promotion_price) AS price
+FROM product, product_options, ordersdetail
+WHERE product.prod_id = product_options.propt_prod AND product_options.propt_id = ordersdetail.orddt_propt
+GROUP BY product.prod_id, product.prod_name
+ORDER BY quantity DESC$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `statistics_product_month` (IN `month` INT, IN `year` INT)  NO SQL
+SELECT product.prod_id, product.prod_name, SUM(ordersdetail.orddt_quantity) AS quantity, SUM(ordersdetail.orddt_promotion_price) AS price
+FROM product, product_options, ordersdetail, orders
+WHERE product.prod_id = product_options.propt_prod AND product_options.propt_id = ordersdetail.orddt_propt AND orders.order_id = ordersdetail.orddt_order AND month(orders.order_date) = month AND year(orders.order_date) = year
+GROUP BY product.prod_id, product.prod_name
+ORDER BY quantity DESC$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `statistics_product_quarter` (IN `quarter` INT, IN `year` INT)  NO SQL
+SELECT product.prod_id, product.prod_name, SUM(ordersdetail.orddt_quantity) AS quantity, SUM(ordersdetail.orddt_promotion_price) AS price
+FROM product, product_options, ordersdetail, orders
+WHERE product.prod_id = product_options.propt_prod AND product_options.propt_id = ordersdetail.orddt_propt AND orders.order_id = ordersdetail.orddt_order AND quarter(orders.order_date) = quarter AND year(orders.order_date) = year
+GROUP BY product.prod_id, product.prod_name
+ORDER BY quantity DESC$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `statistics_product_year` (IN `year` INT)  NO SQL
+SELECT product.prod_id, product.prod_name, SUM(ordersdetail.orddt_quantity) AS quantity, SUM(ordersdetail.orddt_promotion_price) AS price
+FROM product, product_options, ordersdetail, orders
+WHERE product.prod_id = product_options.propt_prod AND product_options.propt_id = ordersdetail.orddt_propt AND orders.order_id = ordersdetail.orddt_order AND year(orders.order_date) = year
+GROUP BY product.prod_id, product.prod_name
+ORDER BY quantity DESC$$
 
 DELIMITER ;
 
@@ -235,7 +263,9 @@ CREATE TABLE `commission` (
 --
 
 INSERT INTO `commission` (`cms_id`, `cms_month`, `cms_year`, `cms_empl`, `cms_total`, `created_at`, `updated_at`) VALUES
-(2, 6, 2019, 8, 539700, '2019-06-09 12:52:05', '2019-06-09 12:52:05');
+(2, 6, 2019, 8, 539700, '2019-06-09 12:52:05', '2019-06-09 12:52:05'),
+(3, 6, 2019, 10, 0, '2019-06-11 02:35:00', '2019-06-11 02:35:00'),
+(4, 6, 2019, 11, 0, '2019-06-11 02:35:00', '2019-06-11 02:35:00');
 
 --
 -- Bẫy `commission`
@@ -349,7 +379,7 @@ CREATE TABLE `employees` (
 --
 
 INSERT INTO `employees` (`empl_id`, `empl_name`, `empl_sex`, `empl_email`, `empl_phone`, `empl_address`, `empl_birthday`, `empl_identity_card`, `empl_start_date`, `empl_basic_salary`, `empl_status`, `created_at`, `updated_at`) VALUES
-(8, 'thang thai', 0, 'thanglong2098@gmail.com', '0328119182', 'thu duc', '1998-04-25', '0147258369', '2018-05-08', 1000000, 1, '2019-05-12 21:13:11', '2019-05-12 21:35:01'),
+(8, 'thang thai', 0, 'thanglong2098@gmail.com', '0328119182', 'thu duc', '1998-04-25', '0147258369', '2018-05-08', 1000000, 0, '2019-05-12 21:13:11', '2019-06-09 16:30:56'),
 (10, 'thang thai', 0, 'thanglong2098@gmail.com', '328119182', 'thu duc', '1998-04-25', '01472583693', '2018-05-08', 1000000, 0, '2019-05-12 21:36:27', '2019-05-12 21:36:27'),
 (11, 'thang thai', 1, 'thanglong2098@gmail.com', '0328119182', 'thu duc', '1998-04-25', '014725836904', '2018-05-08', 20, 0, '2019-05-12 21:42:29', '2019-05-12 21:42:29');
 
@@ -792,16 +822,27 @@ INSERT INTO `product_options` (`propt_id`, `propt_prod`, `propt_color`, `propt_r
 
 CREATE TABLE `promotion` (
   `prom_id` int(11) NOT NULL,
-  `prom_name` int(11) NOT NULL,
+  `prom_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `prom_propt` int(11) NOT NULL,
-  `prom_start_date` datetime NOT NULL,
-  `prom_end_date` datetime NOT NULL,
-  `prom_percent` float NOT NULL,
+  `prom_start_date` date NOT NULL,
+  `prom_end_date` date NOT NULL,
+  `prom_percent` int(11) NOT NULL,
   `prom_unit_price` double NOT NULL,
   `prom_promotion_price` double NOT NULL,
+  `prom_status` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `promotion`
+--
+
+INSERT INTO `promotion` (`prom_id`, `prom_name`, `prom_propt`, `prom_start_date`, `prom_end_date`, `prom_percent`, `prom_unit_price`, `prom_promotion_price`, `prom_status`, `created_at`, `updated_at`) VALUES
+(5, 'Back to school 2019', 5, '2019-06-12', '2019-06-16', 15, 18000000, 15300000, 1, '2019-06-10 17:52:10', '2019-06-12 03:45:05'),
+(6, 'Back to school 2019', 9, '2019-06-12', '2019-06-16', 20, 9990000, 7992000, 1, '2019-06-10 17:52:10', '2019-06-12 03:45:05'),
+(7, 'Back to school 2019', 4, '2019-06-12', '2019-06-16', 15, 17990000, 15291500, 1, '2019-06-11 03:25:35', '2019-06-12 03:45:05'),
+(8, 'Back to school 2019', 23, '2019-06-12', '2019-06-16', 10, 7990000, 7191000, 1, '2019-06-11 03:25:35', '2019-06-12 03:45:05');
 
 -- --------------------------------------------------------
 
@@ -1154,7 +1195,7 @@ ALTER TABLE `comment`
 -- AUTO_INCREMENT cho bảng `commission`
 --
 ALTER TABLE `commission`
-  MODIFY `cms_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `cms_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT cho bảng `customer`
@@ -1178,13 +1219,13 @@ ALTER TABLE `guarantee`
 -- AUTO_INCREMENT cho bảng `invoice`
 --
 ALTER TABLE `invoice`
-  MODIFY `invo_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `invo_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT cho bảng `invoicedetail`
 --
 ALTER TABLE `invoicedetail`
-  MODIFY `invdt_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `invdt_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT cho bảng `migrations`
@@ -1232,7 +1273,7 @@ ALTER TABLE `product_options`
 -- AUTO_INCREMENT cho bảng `promotion`
 --
 ALTER TABLE `promotion`
-  MODIFY `prom_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `prom_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT cho bảng `provider`
@@ -1350,6 +1391,32 @@ DELIMITER $$
 CREATE DEFINER=`root`@`localhost` EVENT `UpdateStatusCart` ON SCHEDULE EVERY 1 MINUTE STARTS '2019-06-07 17:19:28' ON COMPLETION NOT PRESERVE ENABLE DO update cart 
 set cart.cart_status = 3 
 where DATE_ADD(cart.cart_date,INTERVAL 10 DAY) < now() and cart_status NOT IN (2,3)$$
+
+CREATE DEFINER=`root`@`localhost` EVENT `UpdateCommission` ON SCHEDULE EVERY 1 MINUTE STARTS '2019-06-01 00:00:00' ON COMPLETION NOT PRESERVE ENABLE DO BEGIN
+	DECLARE done INT DEFAULT 0;
+    DECLARE _empl_id INT;
+	DECLARE employees_cursor CURSOR FOR
+    	SELECT empl_id
+		FROM employees
+		WHERE empl_status = 0 AND empl_id NOT IN (SELECT cms_empl FROM commission WHERE cms_month = month(now()) and cms_year=year(now())); 
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1; 
+	
+    OPEN employees_cursor;
+		read_loop: LOOP
+		FETCH employees_cursor INTO _empl_id;
+		IF done THEN
+		LEAVE read_loop;
+		END IF;
+		INSERT INTO commission(cms_month,cms_year,cms_empl,cms_total) VALUES (month(now()),year(now()),_empl_id,0);
+		END LOOP;
+	CLOSE employees_cursor;
+END$$
+
+CREATE DEFINER=`root`@`localhost` EVENT `UpdateStatusEndPromotion` ON SCHEDULE EVERY 1 SECOND STARTS '2019-06-01 00:00:00' ON COMPLETION NOT PRESERVE ENABLE DO UPDATE promotion
+SET promotion.prom_status = 2
+WHERE now() > promotion.prom_end_date AND promotion.prom_status = 1$$
+
+CREATE DEFINER=`root`@`localhost` EVENT `UpdateStatusStartPromotion` ON SCHEDULE EVERY 1 SECOND STARTS '2019-06-01 00:00:00' ON COMPLETION NOT PRESERVE ENABLE DO UPDATE promotion SET promotion.prom_status = 1 WHERE promotion.prom_status = 0 AND promotion.prom_start_date <= now()$$
 
 DELIMITER ;
 COMMIT;

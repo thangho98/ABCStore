@@ -49,8 +49,8 @@
                         <button type="button" class="btn btn-success" data-toggle="tooltip" title="Làm mới">
                             <i class="fa fa-fw fa-sync-alt"></i>
                         </button>
-                        <button type="button" data-toggle="tooltip" title="Xóa" class="btn btn-danger" id="btnDel"><i
-                                class="fa fa-fw fa-trash"></i></button>
+                        {{-- <button type="button" data-toggle="tooltip" title="Xóa" class="btn btn-danger" id="btnDel"><i
+                                class="fa fa-fw fa-trash"></i></button> --}}
                     </aside>
                 </div>
                 <div class="block-content block-content-full">

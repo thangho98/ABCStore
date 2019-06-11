@@ -640,13 +640,13 @@
                                 </a>
                             </li>
                             <li class="nav-main-item">
-                                <a class="nav-main-link" href="{{asset('admin/product')}}">
-                                    <span class="nav-main-link-name">Sản phẩm</span>
+                                <a class="nav-main-link" href="{{asset('admin/brand')}}">
+                                    <span class="nav-main-link-name">Thương hiệu</span>
                                 </a>
                             </li>
                             <li class="nav-main-item">
-                                <a class="nav-main-link" href="{{asset('admin/brand')}}">
-                                    <span class="nav-main-link-name">Thương hiệu</span>
+                                <a class="nav-main-link" href="{{asset('admin/product')}}">
+                                    <span class="nav-main-link-name">Sản phẩm</span>
                                 </a>
                             </li>
                             <li class="nav-main-item">
