@@ -90,7 +90,7 @@
                                         <button type="button" @if ($item->status == 0)
                                             disabled
                                         @endif onclick="resetPass('{{$item->username}}')" class="btn btn-sm btn-danger" data-toggle="tooltip" title="reset mật khẩu">
-                                            <i class="fa fa-fw fa-sync"></i>
+                                            <i class="fa fa-fw fa-power-off"></i>
                                         </button>
                                         <button type="button" class="btn btn-sm btn-warning" data-toggle="tooltip"
                                             onclick="showEdit('{{$item->username}}')" title="Sửa">

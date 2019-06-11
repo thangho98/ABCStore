@@ -12,8 +12,8 @@
                 </div>
             </div>   
             <div class="form-group">
-                <label for="inputAddress">Email <span class="text-danger">*</span></label>
-                <input type="email" class="form-control" id="inputAddress" name="email" value="{{$cus->cus_email}}" required>
+                <label for="inputAddress">Địa chỉ <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="inputAddress" name="address" value="{{$cus->cus_address}}" required>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-6">
