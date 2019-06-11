@@ -669,6 +669,11 @@
                                     <span class="nav-main-link-name">Đánh giá</span>
                                 </a>
                             </li>
+                            <li class="nav-main-item">
+                                <a class="nav-main-link" href="{{asset('admin/promotion')}}">
+                                    <span class="nav-main-link-name">Khuyến mãi</span>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                     <li class="nav-main-item">
@@ -679,26 +684,21 @@
                         </a>
                         <ul class="nav-main-submenu">
                             <li class="nav-main-item">
-                                <a class="nav-main-link" href="be_pages_error_all.html">
+                                <a class="nav-main-link" href="{{asset('admin/statistics/revenue/all')}}">
                                     <span class="nav-main-link-name">Doanh thu</span>
                                 </a>
                             </li>
                             <li class="nav-main-item">
-                                <a class="nav-main-link" href="op_error_400.html">
+                                <a class="nav-main-link" href="{{asset('admin/statistics/product')}}">
                                     <span class="nav-main-link-name">Sản phẩm</span>
                                 </a>
                             </li>
                             <li class="nav-main-item">
-                                <a class="nav-main-link" href="op_error_401.html">
-                                    <span class="nav-main-link-name">Hoa hồng</span>
-                                </a>
-                            </li>
-                            <li class="nav-main-item">
-                                <a class="nav-main-link" href="op_error_403.html">
+                                <a class="nav-main-link" href="{{asset('admin/statistics/salary')}}">
                                     <span class="nav-main-link-name">Lương nhân viên</span>
                                 </a>
                             </li>
-                            <li class="nav-main-item">
+                            {{-- <li class="nav-main-item">
                                 <a class="nav-main-link" href="op_error_404.html">
                                     <span class="nav-main-link-name">Ai đang online</span>
                                 </a>
@@ -707,7 +707,7 @@
                                 <a class="nav-main-link" href="op_error_404.html">
                                     <span class="nav-main-link-name">Trạng thái</span>
                                 </a>
-                            </li>
+                            </li> --}}
                         </ul>
                     </li>
                     <li class="nav-main-heading">Nhân viên</li>
@@ -742,7 +742,7 @@
                             <span class="nav-main-link-name">Nhập hàng</span>
                         </a>
                     </li>
-                    <li class="nav-main-item">
+                    {{-- <li class="nav-main-item">
                         <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
                             aria-expanded="false" href="#">
                             <i class="nav-main-link-icon si si-layers"></i>
@@ -765,8 +765,7 @@
                                 </a>
                             </li>
                         </ul>
-                    </li>
-
+                    </li> --}}
                     <li class="nav-main-heading">Hệ thống</li>
                     <li class="nav-main-item">
                         <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
@@ -806,17 +805,12 @@
                                 <ul class="nav-main-submenu">
                                     <li class="nav-main-item">
                                         <a class="nav-main-link" href="#">
-                                            <span class="nav-main-link-name">Thuế</span>
+                                            <span class="nav-main-link-name">Slide</span>
                                         </a>
                                     </li>
                                     <li class="nav-main-item">
                                         <a class="nav-main-link" href="#">
-                                            <span class="nav-main-link-name">Tình trạng kho</span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-main-item">
-                                        <a class="nav-main-link" href="#">
-                                            <span class="nav-main-link-name">Tình trạng đơn hàng</span>
+                                            <span class="nav-main-link-name">Banner quảng cáo</span>
                                         </a>
                                     </li>
                                 </ul>

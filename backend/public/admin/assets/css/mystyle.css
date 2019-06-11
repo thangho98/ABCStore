@@ -1,3 +1,9 @@
+.tile-footer-3 {
+    border-top: 1px solid #ddd;
+    padding: 20px 0 0 0;
+    margin-top: 10px;
+}
+
 .tile-footer {
     border-top: 1px solid #ddd;
     padding: 20px 0 0 0;
@@ -203,4 +209,9 @@ Not supports in Firefox and IE */
     padding-right: 5px;
     border: 1px solid green;
     border-radius: 5px;
+}
+
+.error {
+    color: #F00;
+    background-color: #FFF;
 }

@@ -123,6 +123,27 @@ Route::group(['namespace' => 'Admin'], function () {
             Route::get('/delete/', 'CustomerController@getDeleteCus');
         });
 
+        Route::group(['prefix' => 'promotion'], function () {
+            Route::get('/','PromotionController@getPromotions');
+            
+            Route::get('/add','PromotionController@getAddProm');
+            Route::post('/add','PromotionController@postAddProm');
+
+            Route::get('/items/','PromotionController@getItems');
+            Route::get('/item/add','PromotionController@getAddItem');
+            Route::get('/item/delete','PromotionController@getDelItem');
+            Route::get('/item/update','PromotionController@getUpdateItem');
+
+            Route::get('/view/{id}','PromotionController@getViewProm');
+
+            // Route::get('/edit/{id}','PromotionController@getEditEmpl');
+            // Route::post('/edit/{id}','PromotionController@postEditEmpl');
+            
+            Route::get('/delete','PromotionController@getDeleteProm');
+
+            Route::get('/cancel/','PromotionController@getCancelAddProm');
+        });
+
         Route::group(['prefix' => 'cart'], function () {
             Route::get('/','CartController@getCartOnline');
             
@@ -210,6 +231,19 @@ Route::group(['namespace' => 'Admin'], function () {
             Route::get('/item/update/qty','InvoiceController@getUpdateQtyItem');
             Route::get('/item/update/price','InvoiceController@getUpdatePriceItem');
         });
+
+        Route::group(['prefix' => 'statistics'], function() {
+            Route::get('revenue/all','StatisticsController@getRevenueAll');
+            Route::get('revenue/month','StatisticsController@getRevenueMonth');
+            Route::get('revenue/quarter','StatisticsController@getRevenueQuarter');
+            Route::get('revenue/year','StatisticsController@getRevenueYear');
+
+            Route::get('product/','StatisticsController@getStatisticsProduct');
+
+            Route::get('salary','CommissionController@getSalary');
+        });
+
+        
 
     });
     Route::get('/logout','HomeController@getLogout');

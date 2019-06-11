@@ -140,10 +140,10 @@
                                                             <div class="form-group">
                                                                 <input id="input${product.id}"
                                                                     class="form-control text-center" type="number" onchange="updateCart(this.value,'{{$item->id}}')"
-                                                                    required min="1" value="{{$item->quantity}}">
+                                                                    required min="1" max="{{$item->attributes['propt_quantity']}}" value="{{$item->quantity}}">
                                                             </div>
                                                         </td>
-                                                        <td>{{number_format($item->price,0,',','.')}} VNĐ</td>
+                                                        <td>{{number_format($item->attributes['propt_price'],0,',','.')}} VNĐ</td>
                                                         <td>{{number_format($item->price,0,',','.')}} VNĐ</td>
                                                         <td class="text-center">
                                                             <div class="btn-group">
@@ -370,6 +370,7 @@ $(document).ready(function() {
             type: "get",
             data: data,
             success: function (result) {
+                console.log(result);
                 location.reload();
             },
             error: function (result) {
