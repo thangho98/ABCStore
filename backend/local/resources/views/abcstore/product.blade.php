@@ -275,7 +275,7 @@
                     </div>
                     <!-- Product Content End -->
                     @if ($item->prod_new)
-                        <span class="sticker-new">new</span>
+                        <span class="sticker-new">mới</span>
                     @endif
                     
                 </div>
