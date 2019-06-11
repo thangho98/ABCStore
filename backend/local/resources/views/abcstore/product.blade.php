@@ -84,7 +84,7 @@
                                 @else
                                 <span id="price" class="price">{{number_format($min_price->price,0,',','.')}} VNĐ - {{number_format($max_price->price,0,',','.')}} VNĐ</span>
                                 @endif
-                                <span  id="saving-price" class="saving-price">save 8%</span></p>
+                                <span id="saving-price"></span></p>
                         </div>
                         <div class="product-size mb-20 clearfix">
                             <label>Bộ nhớ</label>
@@ -291,7 +291,6 @@
 @endsection
 @section('scriptjs')
 <script>
-
     function chooseColor(id) {
         $('#input-checkbox-'+id).prop("checked",true);
         $('#input-checkbox-'+id).change();
@@ -306,6 +305,9 @@
     }
 
     function getColor() {
+        $('#saving-price').html('');
+        $('#saving-price').removeClass('saving-price');
+
         var color = $("input:radio[name ='color_select']:checked").val();
         //alert(color);
 
@@ -324,24 +326,33 @@
             color: color
         };
 
-        
-
         // Success Function
         var success = function(result) {
             console.log(result);
 
+            var options = result['options'];
+            var promotion = result['promotion'];
+
             let urlCart = "{{asset('cart/add/')}}/";
-            console.log(urlCart);
 
             $('#quantity').empty();
 
             $("#addCart").removeAttr("href");
 
-            $('#prev-price').html(formatNumber(result['propt_price'])+' VNĐ');
-            $('#price').html(formatNumber(result['propt_price'])+' VNĐ');
-            if(result['propt_quantity'] != 0){
-                $("#addCart").attr("href", urlCart + result['propt_id']);
-                $('#quantity').append(`<span class="in-stock"><i class="ion-checkmark-round"></i> Còn ${result['propt_quantity']} sản phẩm trong kho`);
+            $('#prev-price').html(formatNumber(options['propt_price'])+' VNĐ');
+            if(promotion == null){
+                $('#price').html(formatNumber(options['propt_price'])+' VNĐ');
+            }
+            else{
+                $('#price').html(formatNumber(promotion['prom_promotion_price'])+' VNĐ');
+                $('#saving-price').addClass('saving-price');
+                $('#saving-price').html(`Tiết kiệm ${promotion['prom_percent']}%`);
+            }
+
+
+            if(options['propt_quantity'] != 0){
+                $("#addCart").attr("href", urlCart + options['propt_id']);
+                $('#quantity').append(`<span class="in-stock"><i class="ion-checkmark-round"></i> Còn ${options['propt_quantity']} sản phẩm trong kho`);
             }
             else{
                 $('#quantity').append('<span class="out-of-stock"><i class="fa fa-ban"></i>Hết hàng </span>');

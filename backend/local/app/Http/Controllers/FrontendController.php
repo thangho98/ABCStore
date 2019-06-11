@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\ProductImage;
 use App\Models\ProductOptions;
+use App\Models\Promotion;
 use App\Models\Category;
 use App\Models\Brand;
 use App\Models\Comment;
@@ -97,7 +98,18 @@ class FrontendController extends Controller
                 ->orderBy('prod_id','desc')
                 ->get();
             }
-        }       
+        }
+        
+        $data['list_promotion'] = DB::table('product')
+            ->join('product_options','product.prod_id','product_options.propt_prod')
+            ->join('promotion','product_options.propt_id','promotion.prom_propt')
+            ->where('prod_status','1')
+            ->where('prom_status','1')
+            ->orderBy('prom_id','desc')
+            ->get();
+
+        //dd($data);
+        
         return view('abcstore.home', $data);
     }
 
@@ -176,12 +188,15 @@ class FrontendController extends Controller
 
     public function getOptionsProduct($id, Request $req)
     {
-        $options = ProductOptions::where('propt_prod',$id)
+        $data['options'] = ProductOptions::where('propt_prod',$id)
                             ->where('propt_ram',$req->ram)
                             ->where('propt_rom',$req->rom)
                             ->where('propt_color',$req->color)
                             ->first();
-        return json_encode($options);
+        $data['promotion'] = Promotion::where('prom_status',1)
+                            ->where('prom_propt',$data['options']->propt_id)
+                            ->first();
+        return json_encode($data);
     }
 
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th6 07, 2019 lúc 11:10 AM
+-- Thời gian đã tạo: Th6 11, 2019 lúc 04:17 PM
 -- Phiên bản máy phục vụ: 10.1.38-MariaDB
 -- Phiên bản PHP: 7.3.2
 
@@ -21,6 +21,54 @@ SET time_zone = "+00:00";
 --
 -- Cơ sở dữ liệu: `abcstore`
 --
+
+DELIMITER $$
+--
+-- Thủ tục
+--
+CREATE DEFINER=`root`@`localhost` PROCEDURE `revenue_month` (IN `year` INT)  NO SQL
+SELECT * FROM revenue WHERE revenue.reve_year = year$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `revenue_quarter` (IN `year` INT)  NO SQL
+SELECT reve_quarter, revenue.reve_year, SUM(revenue.reve_sale) AS reve_sale, SUM(revenue.reve_buy) AS reve_buy, SUM(revenue.reve_salary) AS reve_salary, SUM(revenue.reve_income) AS reve_income
+FROM revenue
+WHERE revenue.reve_year = year
+GROUP BY revenue.reve_quarter$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `revenue_year` ()  NO SQL
+SELECT revenue.reve_year, SUM(revenue.reve_sale) AS reve_sale, SUM(revenue.reve_buy) AS reve_buy, SUM(revenue.reve_salary) AS reve_salary, SUM(revenue.reve_income) AS reve_income
+FROM revenue
+GROUP BY revenue.reve_year$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `statistics_product_all` ()  NO SQL
+SELECT product.prod_id, product.prod_name, SUM(ordersdetail.orddt_quantity) AS quantity, SUM(ordersdetail.orddt_promotion_price) AS price
+FROM product, product_options, ordersdetail
+WHERE product.prod_id = product_options.propt_prod AND product_options.propt_id = ordersdetail.orddt_propt
+GROUP BY product.prod_id, product.prod_name
+ORDER BY quantity DESC$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `statistics_product_month` (IN `month` INT, IN `year` INT)  NO SQL
+SELECT product.prod_id, product.prod_name, SUM(ordersdetail.orddt_quantity) AS quantity, SUM(ordersdetail.orddt_promotion_price) AS price
+FROM product, product_options, ordersdetail, orders
+WHERE product.prod_id = product_options.propt_prod AND product_options.propt_id = ordersdetail.orddt_propt AND orders.order_id = ordersdetail.orddt_order AND month(orders.order_date) = month AND year(orders.order_date) = year
+GROUP BY product.prod_id, product.prod_name
+ORDER BY quantity DESC$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `statistics_product_quarter` (IN `quarter` INT, IN `year` INT)  NO SQL
+SELECT product.prod_id, product.prod_name, SUM(ordersdetail.orddt_quantity) AS quantity, SUM(ordersdetail.orddt_promotion_price) AS price
+FROM product, product_options, ordersdetail, orders
+WHERE product.prod_id = product_options.propt_prod AND product_options.propt_id = ordersdetail.orddt_propt AND orders.order_id = ordersdetail.orddt_order AND quarter(orders.order_date) = quarter AND year(orders.order_date) = year
+GROUP BY product.prod_id, product.prod_name
+ORDER BY quantity DESC$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `statistics_product_year` (IN `year` INT)  NO SQL
+SELECT product.prod_id, product.prod_name, SUM(ordersdetail.orddt_quantity) AS quantity, SUM(ordersdetail.orddt_promotion_price) AS price
+FROM product, product_options, ordersdetail, orders
+WHERE product.prod_id = product_options.propt_prod AND product_options.propt_id = ordersdetail.orddt_propt AND orders.order_id = ordersdetail.orddt_order AND year(orders.order_date) = year
+GROUP BY product.prod_id, product.prod_name
+ORDER BY quantity DESC$$
+
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -60,7 +108,7 @@ CREATE TABLE `cart` (
   `cart_id` int(11) NOT NULL,
   `cart_cus` int(11) NOT NULL,
   `cart_total_prod` int(11) NOT NULL,
-  `cart_total_price` float NOT NULL,
+  `cart_total_price` double NOT NULL,
   `cart_date` date NOT NULL,
   `cart_remember_token` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `cart_status` int(11) NOT NULL,
@@ -118,9 +166,9 @@ CREATE TABLE `cartdetail` (
   `cartdt_cart` int(11) NOT NULL,
   `cartdt_propt` int(11) NOT NULL,
   `cartdt_prod_quantity` int(11) NOT NULL,
-  `cartdt_prod_unit_price` float NOT NULL,
-  `cartdt_prod_promotion_price` float NOT NULL,
-  `cartdt_total` float NOT NULL,
+  `cartdt_prod_unit_price` double NOT NULL,
+  `cartdt_prod_promotion_price` double NOT NULL,
+  `cartdt_total` double NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -205,10 +253,61 @@ CREATE TABLE `commission` (
   `cms_month` int(11) NOT NULL,
   `cms_year` int(11) NOT NULL,
   `cms_empl` int(11) NOT NULL,
-  `cms_total_price` float NOT NULL,
+  `cms_total` double NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `commission`
+--
+
+INSERT INTO `commission` (`cms_id`, `cms_month`, `cms_year`, `cms_empl`, `cms_total`, `created_at`, `updated_at`) VALUES
+(2, 6, 2019, 8, 539700, '2019-06-09 12:52:05', '2019-06-09 12:52:05'),
+(3, 6, 2019, 10, 0, '2019-06-11 02:35:00', '2019-06-11 02:35:00'),
+(4, 6, 2019, 11, 0, '2019-06-11 02:35:00', '2019-06-11 02:35:00');
+
+--
+-- Bẫy `commission`
+--
+DELIMITER $$
+CREATE TRIGGER `insert_commission` BEFORE INSERT ON `commission` FOR EACH ROW BEGIN
+	DECLARE flag INT;
+    DECLARE total_salary DOUBLE;
+    DECLARE salary DOUBLE;
+    
+    SET salary = NEW.cms_total;
+    
+    SELECT COUNT(*) INTO flag FROM revenue WHERE revenue.reve_month = NEW.cms_month AND revenue.reve_year = NEW.cms_year;
+    
+    IF(flag = 0) THEN
+    BEGIN
+    	INSERT INTO `revenue` (`reve_month`, `reve_year`, `reve_sale`, `reve_buy`, `reve_salary`, `reve_income`) VALUES (NEW.cms_month, NEW.cms_year, '0', '0', salary, '0');
+    END;
+    ELSE
+    BEGIN
+    	SELECT revenue.reve_salary INTO total_salary FROM revenue WHERE revenue.reve_month = NEW.cms_month AND revenue.reve_year = NEW.cms_year;
+        
+        SET total_salary = total_salary + salary;
+        
+        UPDATE revenue SET revenue.reve_salary = total_salary WHERE revenue.reve_month = NEW.cms_month AND revenue.reve_year = NEW.cms_year;
+    END;
+    END IF;
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `update_commission` BEFORE UPDATE ON `commission` FOR EACH ROW BEGIN
+    DECLARE total_salary DOUBLE;
+    
+    SELECT revenue.reve_salary INTO total_salary FROM revenue WHERE revenue.reve_month = NEW.cms_month AND revenue.reve_year = NEW.cms_year;
+        
+    SET total_salary = total_salary + NEW.cms_total - OLD.cms_total;
+        
+    UPDATE revenue SET revenue.reve_salary = total_salary WHERE revenue.reve_month = NEW.cms_month AND revenue.reve_year = NEW.cms_year;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -243,7 +342,15 @@ INSERT INTO `customer` (`cus_id`, `cus_name`, `cus_phone`, `cus_identity_card`, 
 (19, 'Hồ Thái Thăng', '328119182', 2147483647, 'thanglong2098@gmail.com', '2019-06-07 03:26:27', '2019-06-07 03:26:27'),
 (20, 'Hồ Thái Thăng', '328119182', 2147483647, 'thanglong2098@gmail.com', '2019-06-07 03:28:07', '2019-06-07 03:28:07'),
 (21, 'Hồ Thái Thăng', '328119182', 2147483647, 'thanglong2098@gmail.com', '2019-06-07 03:32:42', '2019-06-07 03:32:42'),
-(22, 'Hồ Thái Thăng', '328119182', 2147483647, 'thanglong2098@gmail.com', '2019-06-07 03:47:58', '2019-06-07 03:47:58');
+(22, 'Hồ Thái Thăng', '328119182', 2147483647, 'thanglong2098@gmail.com', '2019-06-07 03:47:58', '2019-06-07 03:47:58'),
+(23, 'Hồ Thái Thăng', '0328119182', 2147483647, 'thanglong2098@gmail.com', '2019-06-09 12:35:47', '2019-06-09 12:35:47'),
+(24, 'Hồ Thái Thăng', '0328119182', 2147483647, 'thanglong2098@gmail.com', '2019-06-09 12:38:54', '2019-06-09 12:38:54'),
+(25, 'Hồ Thái Thăng', '0328119182', 2147483647, 'thanglong2098@gmail.com', '2019-06-09 12:43:10', '2019-06-09 12:43:10'),
+(26, 'Hồ Thái Thăng', '328119182', 1321459787, 'thanglong2098@gmail.com', '2019-06-09 12:43:40', '2019-06-09 12:43:40'),
+(27, 'Nguyễn Phi Yến', '0328119182', 2147483647, 'thanglong2098@gmail.com', '2019-06-09 12:45:01', '2019-06-09 12:45:01'),
+(28, 'Nguyễn Phi Yến', '0328119182', 2147483647, 'thanglong2098@gmail.com', '2019-06-09 12:47:06', '2019-06-09 12:47:06'),
+(29, 'Hồ Thái Thăng', '0328119182', 2147483647, 'thanglong2098@gmail.com', '2019-06-09 12:50:55', '2019-06-09 12:50:55'),
+(30, 'Hồ Thái Thăng', '6328119182', 2147483647, 'thanglong2098@gmail.com', '2019-06-09 12:52:05', '2019-06-09 12:52:05');
 
 -- --------------------------------------------------------
 
@@ -261,7 +368,7 @@ CREATE TABLE `employees` (
   `empl_birthday` date NOT NULL,
   `empl_identity_card` varchar(12) COLLATE utf8_unicode_ci NOT NULL,
   `empl_start_date` date NOT NULL,
-  `empl_basic_salary` float NOT NULL,
+  `empl_basic_salary` double NOT NULL,
   `empl_status` tinyint(4) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
@@ -272,7 +379,7 @@ CREATE TABLE `employees` (
 --
 
 INSERT INTO `employees` (`empl_id`, `empl_name`, `empl_sex`, `empl_email`, `empl_phone`, `empl_address`, `empl_birthday`, `empl_identity_card`, `empl_start_date`, `empl_basic_salary`, `empl_status`, `created_at`, `updated_at`) VALUES
-(8, 'thang thai', 0, 'thanglong2098@gmail.com', '0328119182', 'thu duc', '1998-04-25', '0147258369', '2018-05-08', 1000000, 1, '2019-05-12 21:13:11', '2019-05-12 21:35:01'),
+(8, 'thang thai', 0, 'thanglong2098@gmail.com', '0328119182', 'thu duc', '1998-04-25', '0147258369', '2018-05-08', 1000000, 0, '2019-05-12 21:13:11', '2019-06-09 16:30:56'),
 (10, 'thang thai', 0, 'thanglong2098@gmail.com', '328119182', 'thu duc', '1998-04-25', '01472583693', '2018-05-08', 1000000, 0, '2019-05-12 21:36:27', '2019-05-12 21:36:27'),
 (11, 'thang thai', 1, 'thanglong2098@gmail.com', '0328119182', 'thu duc', '1998-04-25', '014725836904', '2018-05-08', 20, 0, '2019-05-12 21:42:29', '2019-05-12 21:42:29');
 
@@ -319,19 +426,58 @@ CREATE TABLE `invoice` (
   `invo_date` date NOT NULL,
   `invo_empl` int(11) NOT NULL,
   `invo_total_prod` int(11) NOT NULL,
-  `invo_total_price` float NOT NULL,
+  `invo_total_price` double NOT NULL,
   `invo_status` tinyint(4) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `invoice`
+-- Bẫy `invoice`
 --
-
-INSERT INTO `invoice` (`invo_id`, `invo_code`, `invo_prov`, `invo_date`, `invo_empl`, `invo_total_prod`, `invo_total_price`, `invo_status`, `created_at`, `updated_at`) VALUES
-(1, '123456', 1, '2019-05-01', 8, 107, 107000000, 1, '2019-05-30 10:47:00', '2019-05-30 11:12:14'),
-(7, '655464', 1, '2019-04-30', 8, 1, 1000000, 0, '2019-05-30 17:40:10', '2019-05-30 17:40:29');
+DELIMITER $$
+CREATE TRIGGER `insert_invoice` AFTER INSERT ON `invoice` FOR EACH ROW BEGIN
+	DECLARE flag INT;
+    DECLARE year INT;
+    DECLARE month INT;
+    DECLARE spending_money DOUBLE;
+    
+    SET month = month(NEW.invo_date), year = year(NEW.invo_date);
+    
+    SELECT COUNT(*) INTO flag FROM revenue WHERE revenue.reve_month = month AND revenue.year = year;
+    
+    IF(flag = 0) THEN
+    BEGIN
+    	INSERT INTO `revenue` (`reve_month`, `reve_year`, `reve_sale`, `reve_buy`, `reve_salary`, `reve_income`) VALUES (month, year, '0', NEW.invo_total_price, '0', '0');
+    END;
+    ELSE
+    BEGIN
+    	SELECT revenue.reve_buy INTO spending_money FROM revenue WHERE revenue.reve_month = month AND revenue.reve_year = year;
+        
+        SET spending_money = spending_money + NEW.invo_total_price;
+        
+        UPDATE revenue SET revenue.reve_buy = spending_money WHERE revenue.reve_month = month AND revenue.reve_year = year;
+    END;
+    END IF;
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `update_invoice` BEFORE UPDATE ON `invoice` FOR EACH ROW BEGIN
+    DECLARE year INT;
+    DECLARE month INT;
+    DECLARE spending_money DOUBLE;
+    
+    SET month = month(NEW.invo_date), year = year(NEW.invo_date);
+    
+    SELECT revenue.reve_buy INTO spending_money FROM revenue WHERE revenue.reve_month = month AND revenue.reve_year = year;
+        
+    SET spending_money = spending_money + NEW.invo_total_price - OLD.invo_total_price;
+        
+    UPDATE revenue SET revenue.reve_buy = spending_money WHERE revenue.reve_month = month AND revenue.reve_year = year;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -344,18 +490,11 @@ CREATE TABLE `invoicedetail` (
   `invdt_invo` int(11) NOT NULL,
   `invdt_propt` int(11) NOT NULL,
   `invdt_quantity` int(11) NOT NULL,
-  `invdt_unit_price` float NOT NULL,
-  `invdt_total` int(11) NOT NULL,
+  `invdt_unit_price` double NOT NULL,
+  `invdt_total` double NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Đang đổ dữ liệu cho bảng `invoicedetail`
---
-
-INSERT INTO `invoicedetail` (`invdt_id`, `invdt_invo`, `invdt_propt`, `invdt_quantity`, `invdt_unit_price`, `invdt_total`, `created_at`, `updated_at`) VALUES
-(17, 7, 5, 1, 1000000, 1000000, '2019-05-30 17:40:29', '2019-05-30 17:40:29');
 
 -- --------------------------------------------------------
 
@@ -389,7 +528,7 @@ CREATE TABLE `orders` (
   `order_empl` int(11) NOT NULL,
   `order_cus` int(11) NOT NULL,
   `order_total_prod` int(11) NOT NULL,
-  `order_total_price` float NOT NULL,
+  `order_total_price` double NOT NULL,
   `order_remember_token` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
@@ -403,7 +542,67 @@ INSERT INTO `orders` (`order_id`, `order_date`, `order_empl`, `order_cus`, `orde
 (3, '2019-05-24', 8, 3, 3, 77970000, 'Ibtx0dkoqKjapvRlpLXk1T1eAzCa31I1qHvgRLsF', '2019-05-24 02:56:44', '2019-05-24 03:44:30'),
 (4, '2019-05-26', 8, 8, 3, 77970000, 'PznHsmQInZTruo8Vrr0DfGCiqMgEotJcrgyMOFck', '2019-05-26 04:02:53', '2019-05-26 04:02:53'),
 (5, '2019-05-26', 8, 9, 0, 0, 'J3DC96YZ0hA8WJLhXnN2klBQ89O0N9dj3ebxbZGc', '2019-05-26 05:01:17', '2019-05-26 05:01:17'),
-(6, '2019-05-26', 8, 10, 0, 0, 'J3DC96YZ0hA8WJLhXnN2klBQ89O0N9dj3ebxbZGc', '2019-05-26 05:06:47', '2019-05-26 05:06:47');
+(6, '2019-05-26', 8, 10, 0, 0, 'J3DC96YZ0hA8WJLhXnN2klBQ89O0N9dj3ebxbZGc', '2019-05-26 05:06:47', '2019-05-26 05:06:47'),
+(7, '2019-06-09', 8, 28, 2, 47990000, 'D90YtNZ0AfXmKWuUuo2NCSvOCkciw8x6Czx83xs3', '2019-06-09 12:47:07', '2019-06-09 12:47:07'),
+(8, '2019-06-09', 8, 29, 2, 17780000, 'D90YtNZ0AfXmKWuUuo2NCSvOCkciw8x6Czx83xs3', '2019-06-09 12:50:55', '2019-06-09 12:50:55'),
+(9, '2019-06-09', 8, 30, 1, 17990000, 'D90YtNZ0AfXmKWuUuo2NCSvOCkciw8x6Czx83xs3', '2019-06-09 12:52:05', '2019-06-09 12:52:05');
+
+--
+-- Bẫy `orders`
+--
+DELIMITER $$
+CREATE TRIGGER `insert_order` BEFORE INSERT ON `orders` FOR EACH ROW BEGIN
+	DECLARE flag1 INT;
+    DECLARE flag2 INT;
+    DECLARE year INT;
+    DECLARE month INT;
+    DECLARE coefficient DOUBLE DEFAULT 0.03;
+    DECLARE sale DOUBLE;
+    DECLARE buy DOUBLE;
+    DECLARE salary DOUBLE;
+    DECLARE tienloi DOUBLE;
+	DECLARE tienhh DOUBLE;
+    
+    SET year = year(New.order_date), month = month(New.order_date);
+    
+    SELECT COUNT(*) INTO flag1 FROM commission WHERE commission.cms_year = year AND commission.cms_month = month AND commission.cms_empl = NEW.order_empl;
+    
+    IF(flag1 = 0) THEN
+    BEGIN
+		SET tienhh = NEW.order_total_price*coefficient;
+    	INSERT INTO `commission` (`cms_empl`, `cms_month`, `cms_year`, `cms_total`) VALUES (NEW.order_empl, month, year, tienhh); 
+    END;
+    ELSE
+    BEGIN
+    	SELECT commission.cms_total INTO tienhh FROM commission WHERE commission.cms_year = year AND commission.cms_month = month AND commission.cms_empl = NEW.order_empl;
+        
+        SET tienhh = tienhh + NEW.order_total_price*coefficient;
+        
+        UPDATE commission SET commission.cms_total = tienhh  WHERE commission.cms_year = year AND commission.cms_month = month AND commission.cms_empl = NEW.order_empl;
+    END;
+    END IF;
+    
+    SELECT COUNT(*) INTO flag2 FROM revenue WHERE revenue.reve_month = month AND revenue.reve_year = year;
+    
+    IF(flag2 = 0) THEN
+    BEGIN
+    	INSERT INTO `revenue` (`reve_month`, `reve_year`, `reve_sale`, `reve_buy`, `reve_salary`, `reve_income`) VALUES (month, year, NEW.order_total_price, '0', '0', '0');
+    END;
+    ELSE
+    BEGIN
+    	SELECT revenue.reve_sale INTO sale FROM revenue WHERE revenue.reve_month = month AND revenue.reve_year = year;
+        SELECT revenue.reve_sale INTO buy FROM revenue WHERE revenue.reve_month = month AND revenue.reve_year = year;
+        SELECT revenue.reve_salary INTO salary FROM revenue WHERE revenue.reve_month = month AND revenue.reve_year = year;
+        
+        SET sale = sale + NEW.order_total_price;
+        SET tienloi = sale - buy - salary;
+        
+        UPDATE revenue SET revenue.reve_sale = sale, revenue.reve_income = tienloi WHERE revenue.reve_month = month AND revenue.reve_year = year;
+    END;
+    END IF;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -416,9 +615,9 @@ CREATE TABLE `ordersdetail` (
   `orddt_order` int(11) NOT NULL,
   `orddt_propt` int(11) NOT NULL,
   `orddt_quantity` int(11) NOT NULL,
-  `orddt_unit_price` float NOT NULL,
-  `orddt_promotion_price` float NOT NULL,
-  `orddt_total` float NOT NULL,
+  `orddt_unit_price` double NOT NULL,
+  `orddt_promotion_price` double NOT NULL,
+  `orddt_total` double NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -432,7 +631,12 @@ INSERT INTO `ordersdetail` (`orddt_id`, `orddt_order`, `orddt_propt`, `orddt_qua
 (2, 3, 5, 1, 17990000, 17990000, 17990000, '2019-05-24 02:56:44', '2019-05-24 03:58:24'),
 (3, 4, 1, 1, 29990000, 29990000, 29990000, '2019-05-26 04:02:53', '2019-05-26 04:02:53'),
 (4, 4, 2, 1, 29990000, 29990000, 29990000, '2019-05-26 04:02:53', '2019-05-26 04:02:53'),
-(5, 4, 4, 1, 17990000, 17990000, 17990000, '2019-05-26 04:02:53', '2019-05-26 04:02:53');
+(5, 4, 4, 1, 17990000, 17990000, 17990000, '2019-05-26 04:02:53', '2019-05-26 04:02:53'),
+(6, 7, 2, 1, 29990000, 29990000, 29990000, '2019-06-09 12:47:07', '2019-06-09 12:47:07'),
+(7, 7, 5, 1, 18000000, 18000000, 18000000, '2019-06-09 12:47:07', '2019-06-09 12:47:07'),
+(8, 8, 10, 1, 9790000, 9790000, 9790000, '2019-06-09 12:50:55', '2019-06-09 12:50:55'),
+(9, 8, 23, 1, 7990000, 7990000, 7990000, '2019-06-09 12:50:55', '2019-06-09 12:50:55'),
+(10, 9, 4, 1, 17990000, 17990000, 17990000, '2019-06-09 12:52:05', '2019-06-09 12:52:05');
 
 -- --------------------------------------------------------
 
@@ -562,7 +766,7 @@ CREATE TABLE `product_options` (
   `propt_color` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   `propt_ram` float NOT NULL,
   `propt_rom` varchar(11) COLLATE utf8_unicode_ci NOT NULL,
-  `propt_price` float NOT NULL,
+  `propt_price` double NOT NULL,
   `propt_quantity` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
@@ -618,16 +822,27 @@ INSERT INTO `product_options` (`propt_id`, `propt_prod`, `propt_color`, `propt_r
 
 CREATE TABLE `promotion` (
   `prom_id` int(11) NOT NULL,
-  `prom_name` int(11) NOT NULL,
+  `prom_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `prom_propt` int(11) NOT NULL,
-  `prom_start_date` datetime NOT NULL,
-  `prom_end_date` datetime NOT NULL,
-  `prom_percent` float NOT NULL,
-  `prom_unit_price` float NOT NULL,
-  `prom_promotion_price` float NOT NULL,
+  `prom_start_date` date NOT NULL,
+  `prom_end_date` date NOT NULL,
+  `prom_percent` int(11) NOT NULL,
+  `prom_unit_price` double NOT NULL,
+  `prom_promotion_price` double NOT NULL,
+  `prom_status` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `promotion`
+--
+
+INSERT INTO `promotion` (`prom_id`, `prom_name`, `prom_propt`, `prom_start_date`, `prom_end_date`, `prom_percent`, `prom_unit_price`, `prom_promotion_price`, `prom_status`, `created_at`, `updated_at`) VALUES
+(5, 'Back to school 2019', 5, '2019-06-12', '2019-06-16', 15, 18000000, 15300000, 1, '2019-06-10 17:52:10', '2019-06-12 03:45:05'),
+(6, 'Back to school 2019', 9, '2019-06-12', '2019-06-16', 20, 9990000, 7992000, 1, '2019-06-10 17:52:10', '2019-06-12 03:45:05'),
+(7, 'Back to school 2019', 4, '2019-06-12', '2019-06-16', 15, 17990000, 15291500, 1, '2019-06-11 03:25:35', '2019-06-12 03:45:05'),
+(8, 'Back to school 2019', 23, '2019-06-12', '2019-06-16', 10, 7990000, 7191000, 1, '2019-06-11 03:25:35', '2019-06-12 03:45:05');
 
 -- --------------------------------------------------------
 
@@ -653,6 +868,64 @@ CREATE TABLE `provider` (
 
 INSERT INTO `provider` (`prov_id`, `prov_name`, `prov_email`, `prov_phone`, `prov_fax`, `prov_address`, `prov_desc`, `created_at`, `updated_at`) VALUES
 (1, 'TRANG VÀNG VIỆT NAM', 'contact@trangvangvietnam.com', '1900 54 55 80', '+84 (024) 3636 9371', 'Tầng 6, Tòa Nhà Vinafood1, 94 Lương Yên, P. Bạch Đằng, Q. Hai Bà Trưng, Hà Nội', 'Trụ sở Hà Nội', '2019-05-17 12:39:59', '2019-05-17 12:39:59');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `revenue`
+--
+
+CREATE TABLE `revenue` (
+  `reve_id` int(11) NOT NULL,
+  `reve_month` int(11) NOT NULL,
+  `reve_year` int(11) DEFAULT NULL,
+  `reve_quarter` int(11) NOT NULL,
+  `reve_sale` double NOT NULL,
+  `reve_buy` double NOT NULL,
+  `reve_salary` double NOT NULL,
+  `reve_income` double NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `revenue`
+--
+
+INSERT INTO `revenue` (`reve_id`, `reve_month`, `reve_year`, `reve_quarter`, `reve_sale`, `reve_buy`, `reve_salary`, `reve_income`, `created_at`, `updated_at`) VALUES
+(1, 6, 2019, 2, 83760000, 0, 50063100, 33696900, '2019-06-09 12:47:07', '2019-06-09 12:52:05');
+
+--
+-- Bẫy `revenue`
+--
+DELIMITER $$
+CREATE TRIGGER `insert_revenue` BEFORE INSERT ON `revenue` FOR EACH ROW BEGIN
+	 DECLARE salary DOUBLE;
+	
+	 SELECT SUM(employees.empl_basic_salary) INTO salary FROM employees WHERE employees.empl_status = 1;
+     
+     SET NEW.reve_salary = salary + NEW.reve_salary;
+    
+    SET NEW.reve_income = NEW.reve_sale - NEW.reve_buy - NEW.reve_salary;
+	
+    IF( NEW.reve_month >= 1 AND NEW.reve_month <=3) THEN
+    	SET NEW.reve_quarter = 1;
+    ELSEIF (NEW.reve_month >= 4 AND NEW.reve_month <=6) THEN
+    	SET NEW.reve_quarter = 2;
+    ELSEIF (NEW.reve_month >= 7 AND NEW.reve_month <=9) THEN
+    	SET NEW.reve_quarter = 3;
+    ELSE
+    	SET NEW.reve_quarter = 4;
+    END IF;
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `update_revenue` BEFORE UPDATE ON `revenue` FOR EACH ROW BEGIN
+    SET NEW.reve_income = NEW.reve_sale - NEW.reve_buy - NEW.reve_salary;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -864,6 +1137,13 @@ ALTER TABLE `provider`
   ADD PRIMARY KEY (`prov_id`);
 
 --
+-- Chỉ mục cho bảng `revenue`
+--
+ALTER TABLE `revenue`
+  ADD PRIMARY KEY (`reve_id`),
+  ADD UNIQUE KEY `reve_month` (`reve_month`,`reve_year`);
+
+--
 -- Chỉ mục cho bảng `slide`
 --
 ALTER TABLE `slide`
@@ -915,13 +1195,13 @@ ALTER TABLE `comment`
 -- AUTO_INCREMENT cho bảng `commission`
 --
 ALTER TABLE `commission`
-  MODIFY `cms_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `cms_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT cho bảng `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `cus_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `cus_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT cho bảng `employees`
@@ -939,13 +1219,13 @@ ALTER TABLE `guarantee`
 -- AUTO_INCREMENT cho bảng `invoice`
 --
 ALTER TABLE `invoice`
-  MODIFY `invo_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `invo_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT cho bảng `invoicedetail`
 --
 ALTER TABLE `invoicedetail`
-  MODIFY `invdt_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `invdt_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT cho bảng `migrations`
@@ -957,13 +1237,13 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT cho bảng `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT cho bảng `ordersdetail`
 --
 ALTER TABLE `ordersdetail`
-  MODIFY `orddt_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `orddt_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT cho bảng `permission`
@@ -993,13 +1273,19 @@ ALTER TABLE `product_options`
 -- AUTO_INCREMENT cho bảng `promotion`
 --
 ALTER TABLE `promotion`
-  MODIFY `prom_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `prom_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT cho bảng `provider`
 --
 ALTER TABLE `provider`
   MODIFY `prov_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT cho bảng `revenue`
+--
+ALTER TABLE `revenue`
+  MODIFY `reve_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT cho bảng `slide`
@@ -1102,9 +1388,35 @@ DELIMITER $$
 --
 -- Sự kiện
 --
-CREATE DEFINER=`root`@`localhost` EVENT `UpdateStatusCart` ON SCHEDULE EVERY 1 MINUTE STARTS '2019-06-07 10:51:44' ON COMPLETION NOT PRESERVE ENABLE DO update cart 
+CREATE DEFINER=`root`@`localhost` EVENT `UpdateStatusCart` ON SCHEDULE EVERY 1 MINUTE STARTS '2019-06-07 17:19:28' ON COMPLETION NOT PRESERVE ENABLE DO update cart 
 set cart.cart_status = 3 
 where DATE_ADD(cart.cart_date,INTERVAL 10 DAY) < now() and cart_status NOT IN (2,3)$$
+
+CREATE DEFINER=`root`@`localhost` EVENT `UpdateCommission` ON SCHEDULE EVERY 1 MINUTE STARTS '2019-06-01 00:00:00' ON COMPLETION NOT PRESERVE ENABLE DO BEGIN
+	DECLARE done INT DEFAULT 0;
+    DECLARE _empl_id INT;
+	DECLARE employees_cursor CURSOR FOR
+    	SELECT empl_id
+		FROM employees
+		WHERE empl_status = 0 AND empl_id NOT IN (SELECT cms_empl FROM commission WHERE cms_month = month(now()) and cms_year=year(now())); 
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1; 
+	
+    OPEN employees_cursor;
+		read_loop: LOOP
+		FETCH employees_cursor INTO _empl_id;
+		IF done THEN
+		LEAVE read_loop;
+		END IF;
+		INSERT INTO commission(cms_month,cms_year,cms_empl,cms_total) VALUES (month(now()),year(now()),_empl_id,0);
+		END LOOP;
+	CLOSE employees_cursor;
+END$$
+
+CREATE DEFINER=`root`@`localhost` EVENT `UpdateStatusEndPromotion` ON SCHEDULE EVERY 1 SECOND STARTS '2019-06-01 00:00:00' ON COMPLETION NOT PRESERVE ENABLE DO UPDATE promotion
+SET promotion.prom_status = 2
+WHERE now() > promotion.prom_end_date AND promotion.prom_status = 1$$
+
+CREATE DEFINER=`root`@`localhost` EVENT `UpdateStatusStartPromotion` ON SCHEDULE EVERY 1 SECOND STARTS '2019-06-01 00:00:00' ON COMPLETION NOT PRESERVE ENABLE DO UPDATE promotion SET promotion.prom_status = 1 WHERE promotion.prom_status = 0 AND promotion.prom_start_date <= now()$$
 
 DELIMITER ;
 COMMIT;

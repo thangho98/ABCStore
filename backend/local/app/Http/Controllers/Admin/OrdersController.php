@@ -9,6 +9,7 @@ use App\Models\Orders;
 use App\Models\OrdersDetail;
 use App\Models\Customer;
 use App\Models\Product;
+use App\Models\Promotion;
 use App\Models\ProductOptions;
 use App\Models\Carts;
 use App\Models\CartDetail;
@@ -66,12 +67,6 @@ class OrdersController extends Controller
         $cus->cus_identity_card = $req->cus_identity_card;
         $cus->save();
 
-        $cus = Customer::where('cus_name',$req->cus_name)
-                        ->where('cus_phone',$req->cus_phone)
-                        ->where('cus_email',$req->cus_email)
-                        ->where('cus_identity_card',$req->cus_identity_card)
-                        ->first();
-
         $empl_id = Auth::user()->empl_id;
         $total_qty_orders = Cart::session($empl_id)->getTotalQuantity();
         $total_orders = Cart::session($empl_id)->getTotal();
@@ -93,7 +88,7 @@ class OrdersController extends Controller
             $ordersdetail->orddt_propt = $key;
             $ordersdetail->orddt_quantity = $value->quantity;
             $ordersdetail->orddt_unit_price = $value->attributes['propt_price'];
-            $ordersdetail->orddt_promotion_price = $value->attributes['propt_price'];
+            $ordersdetail->orddt_promotion_price = $value->price;
             $ordersdetail->orddt_total = $value->quantity*$value->price;
             $ordersdetail->save();
         }
@@ -115,7 +110,7 @@ class OrdersController extends Controller
                 Cart::session($empl_id)->add(array(
                     'id' => $value->cartdt_propt,
                     'name' => $product->prod_name,
-                    'price' => $options->propt_price,
+                    'price' => $value->cartdt_prod_promotion_price,
                     'quantity' => 1,
                     'attributes' => $options
                 ));
@@ -143,12 +138,6 @@ class OrdersController extends Controller
         $cus->cus_identity_card = $req->cus_identity_card;
         $cus->save();
 
-        $cus = Customer::where('cus_name',$req->cus_name)
-                        ->where('cus_phone',$req->cus_phone)
-                        ->where('cus_email',$req->cus_email)
-                        ->where('cus_identity_card',$req->cus_identity_card)
-                        ->first();
-
         $empl_id = Auth::user()->empl_id;
         $total_qty_orders = Cart::session($empl_id)->getTotalQuantity();
         $total_orders = Cart::session($empl_id)->getTotal();
@@ -170,7 +159,7 @@ class OrdersController extends Controller
             $ordersdetail->orddt_propt = $key;
             $ordersdetail->orddt_quantity = $value->quantity;
             $ordersdetail->orddt_unit_price = $value->attributes['propt_price'];
-            $ordersdetail->orddt_promotion_price = $value->attributes['propt_price'];
+            $ordersdetail->orddt_promotion_price = $value->price;
             $ordersdetail->orddt_total = $value->quantity*$value->price;
             $ordersdetail->save();
         }
@@ -186,6 +175,7 @@ class OrdersController extends Controller
     public function getOptions($id)
     {
         $list_options = ProductOptions::where('propt_prod',$id)
+                            ->where('propt_quantity','>',0)
                             ->get();
         return json_encode($list_options);
     }
@@ -201,10 +191,17 @@ class OrdersController extends Controller
 
         $options = ProductOptions::find($req->id);
         $product = Product::find($options->propt_prod);
+        $promotion = Promotion::where('prom_status',1)
+                ->where('prom_propt',$options->propt_id)
+                ->first();
+        $price =  $options->propt_price;
+        if($promotion != null){
+            $price = $promotion->prom_promotion_price;
+        }
         Cart::session($empl_id)->add(array(
             'id' => $req->id,
             'name' => $product->prod_name,
-            'price' => $options->propt_price,
+            'price' => $price,
             'quantity' => 1,
             'attributes' => $options
         ));

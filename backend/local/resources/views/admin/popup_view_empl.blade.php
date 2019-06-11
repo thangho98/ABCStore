@@ -29,10 +29,10 @@
         </div>
     </div>
     <script>
-            $('#closeDetail').on('click', function () {
-                $('#popup-view-detail').addClass('hidden');
-                $('.darktheme').removeClass('active');
-                $('#popup-view-detail').remove();
-            });
-        </script>
+        $('#closeDetail').on('click', function () {
+            $('#popup-view-detail').addClass('hidden');
+            $('.darktheme').removeClass('active');
+            $('#popup-view-detail').remove();
+        });
+    </script>
 </div>

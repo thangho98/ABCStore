@@ -53,140 +53,42 @@
         <!-- Product Title End -->
         <!-- Hot Deal Product Activation Start -->
         <div class="hot-deal-active owl-carousel">
-            <div class="single-product">
-                <!-- Product Image Start -->
-                <div class="pro-img">
-                    <a href="product.html">
-                        <img class="primary-img" src="{{asset('public/abcstore')}}/img/products/1.jpg" alt="single-product">
-                        <img class="secondary-img" src="{{asset('public/abcstore')}}/img/products/7.jpg" alt="single-product">
-                    </a>
-                    <div class="countdown" data-countdown="2020/03/01"></div>
-                </div>
-                <!-- Product Image End -->
-                <!-- Product Content Start -->
-                <div class="pro-content">
-                    <div class="pro-info">
-                        <h4><a href="product.html">Poly and Bark Vortex Side</a></h4>
-                        <p><span class="price">$84.45</span><del class="prev-price">$105.50</del></p>
-                        <div class="label-product l_sale">20<span class="symbol-percent">%</span></div>
-                    </div>
-                </div>
-                <!-- Product Content End -->
-            </div>
-            <!-- Single Product End -->
+            @foreach ($list_promotion as $item)
             <!-- Single Product Start -->
             <div class="single-product">
                 <!-- Product Image Start -->
                 <div class="pro-img">
-                    <a href="product.html">
-                        <img class="primary-img" src="{{asset('public/abcstore')}}/img/products/24.jpg" alt="single-product">
-                        <img class="secondary-img" src="{{asset('public/abcstore')}}/img/products/25.jpg" alt="single-product">
+                    <a href="{{asset('/product/'.$item->prod_id)}}">
+                        <img width="226px;" height="226px;" class="primary-img" src="{{asset('local/storage/app/images/product/'.$item->prod_poster)}}" alt="single-product">
                     </a>
-                    <div class="countdown" data-countdown="2020/03/01"></div>
+                <div class="countdown" data-countdown="{{date_format(date_create($item->prom_end_date),"Y/m/d")}}"></div>
                 </div>
                 <!-- Product Image End -->
                 <!-- Product Content Start -->
                 <div class="pro-content">
                     <div class="pro-info">
-                        <h4><a href="product.html">Light Inverted Pendant Quick</a></h4>
-                        <p><span class="price">$84.45</span><del class="prev-price">$105.50</del></p>
-                        <div class="label-product l_sale">20<span class="symbol-percent">%</span></div>
+                        <h4><a href="{{asset('/product/'.$item->prod_id)}}">{{$item->prod_name}} {{$item->propt_color}}, Ram:
+                            {{-- {{$item->propt_ram}} gb, Rom: {{$item->propt_rom}} --}}
+                        </a></h4>
+                        <p><span class="price">{{number_format($item->prom_promotion_price,0,',','.')}}
+                                VNĐ</span>
+                            <del class="prev-price">{{number_format($item->prom_unit_price,0,',','.')}}
+                                    VNĐ</del></p>
+                            <div class="label-product l_sale">{{$item->prom_percent}}<span class="symbol-percent">%</span></div>
+                    </div>
+                    <div class="pro-actions">
+                        <div class="actions-primary">
+                            <a href="cart.html" title="Add to Cart"> + Thêm vào giỏ hàng</a>
+                        </div>
                     </div>
                 </div>
                 <!-- Product Content End -->
+                @if ($item->prod_new == 1)
+                    <span class="sticker-new">new</span>
+                @endif
             </div>
             <!-- Single Product End -->
-            <!-- Single Product Start -->
-            <div class="single-product">
-                <!-- Product Image Start -->
-                <div class="pro-img">
-                    <a href="product.html">
-                        <img class="primary-img" src="{{asset('public/abcstore')}}/img/products/42.jpg" alt="single-product">
-                        <img class="secondary-img" src="{{asset('public/abcstore')}}/img/products/43.jpg" alt="single-product">
-                    </a>
-                    <div class="countdown" data-countdown="2020/03/01"></div>
-                </div>
-                <!-- Product Image End -->
-                <!-- Product Content Start -->
-                <div class="pro-content">
-                    <div class="pro-info">
-                        <h4><a href="product.html">Terra Xpress HE Cooking </a></h4>
-                        <p><span class="price">$84.45</span><del class="prev-price">$105.50</del></p>
-                        <div class="label-product l_sale">15<span class="symbol-percent">%</span></div>
-                    </div>
-                </div>
-                <!-- Product Content End -->
-                <span class="sticker-new">new</span>
-            </div>
-            <!-- Single Product End -->
-            <!-- Single Product Start -->
-            <div class="single-product">
-                <!-- Product Image Start -->
-                <div class="pro-img">
-                    <a href="product.html">
-                        <img class="primary-img" src="{{asset('public/abcstore')}}/img/products/30.jpg" alt="single-product">
-                        <img class="secondary-img" src="{{asset('public/abcstore')}}/img/products/31.jpg" alt="single-product">
-                    </a>
-                    <div class="countdown" data-countdown="2020/03/01"></div>
-                </div>
-                <!-- Product Image End -->
-                <!-- Product Content Start -->
-                <div class="pro-content">
-                    <div class="pro-info">
-                        <h4><a href="product.html">Calandiva Wrapped 12cm</a></h4>
-                        <p><span class="price">$84.45</span><del class="prev-price">$105.50</del></p>
-                        <div class="label-product l_sale">20<span class="symbol-percent">%</span></div>
-                    </div>
-                </div>
-                <!-- Product Content End -->
-            </div>
-            <!-- Single Product End -->
-            <!-- Single Product Start -->
-            <div class="single-product">
-                <!-- Product Image Start -->
-                <div class="pro-img">
-                    <a href="product.html">
-                        <img class="primary-img" src="{{asset('public/abcstore')}}/img/products/8.jpg" alt="single-product">
-                        <img class="secondary-img" src="{{asset('public/abcstore')}}/img/products/9.jpg" alt="single-product">
-                    </a>
-                    <div class="countdown" data-countdown="2020/03/01"></div>
-                </div>
-                <!-- Product Image End -->
-                <!-- Product Content Start -->
-                <div class="pro-content">
-                    <div class="pro-info">
-                        <h4><a href="product.html">Gpoly and Bark Eames Styl...</a></h4>
-                        <p><span class="price">$84.45</span><del class="prev-price">$105.50</del></p>
-                        <div class="label-product l_sale">10<span class="symbol-percent">%</span></div>
-                    </div>
-                </div>
-                <!-- Product Content End -->
-                <span class="sticker-new">new</span>
-            </div>
-            <!-- Single Product End -->
-            <!-- Single Product Start -->
-            <div class="single-product">
-                <!-- Product Image Start -->
-                <div class="pro-img">
-                    <a href="product.html">
-                        <img class="primary-img" src="{{asset('public/abcstore')}}/img/products/10.jpg" alt="single-product">
-                        <img class="secondary-img" src="{{asset('public/abcstore')}}/img/products/11.jpg" alt="single-product">
-                    </a>
-                    <div class="countdown" data-countdown="2020/03/01"></div>
-                </div>
-                <!-- Product Image End -->
-                <!-- Product Content Start -->
-                <div class="pro-content">
-                    <div class="pro-info">
-                        <h4><a href="product.html">Poly and Bark Vortex Side</a></h4>
-                        <p><span class="price">$84.45</span><del class="prev-price">$105.50</del></p>
-                        <div class="label-product l_sale">37<span class="symbol-percent">%</span></div>
-                    </div>
-                </div>
-                <!-- Product Content End -->
-                <span class="sticker-new">new</span>
-            </div>
-            <!-- Single Product End -->
+            @endforeach
         </div>
         <!-- Hot Deal Product Active End -->
 
