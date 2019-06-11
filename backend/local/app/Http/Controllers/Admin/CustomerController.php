@@ -24,7 +24,7 @@ class CustomerController extends Controller
     {
         $cus = Customer::find($id);
         $cus->cus_phone = $req->phone;
-        $cus->cus_address = $req->address;
+        $cus->cus_email = $req->email;
         $cus->save();
     }
 
