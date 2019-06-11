@@ -210,7 +210,7 @@
                                         </div>
                                         <!-- Product Content End -->
                                         @if ($prod->prod_new)
-                                        <span class="sticker-new">new</span>
+                                        <span class="sticker-new">mới</span>
                                         @endif
                                     </div>
                                 </div>
@@ -233,7 +233,7 @@
                                                     src="{{asset('local/storage/app/images/product/'.$prod->prod_poster)}}"
                                                     alt="single-product">
                                             </a>
-                                            <span class="sticker-new">new</span>
+                                            <span class="sticker-new">mới</span>
                                         </div>
                                     </div>
                                     <!-- Product Image End -->

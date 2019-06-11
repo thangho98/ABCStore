@@ -48,7 +48,34 @@ class FrontendController extends Controller
                 ->orderBy('prod_id','desc')
                 ->get();
         }
+        
+        $data['list_prod_new'] = json_encode($data['list_prod_new']);
+        $data['list_prod_new'] = json_decode($data['list_prod_new'], true);
 
+        //dd($data);
+        
+        $insec = 0;
+        foreach ($data['list_prod_new'] as $key => $list_prod) {
+            foreach ($list_prod as $index => $prod) {
+                $prom = DB::table('product_options')
+                ->where('prom_status','1')
+                ->where('propt_prod',$prod['prod_id'])
+                ->join('promotion','product_options.propt_id','promotion.prom_propt')
+                ->select(DB::raw('max(prom_percent) as prom_percent, prom_promotion_price'))
+                ->groupBy('propt_prod')
+                ->first();
+                
+                if($prom != null){
+                    $data['list_prod_new'][$key][$index]['prom_promotion_price'] = $prom->prom_promotion_price;
+                    $data['list_prod_new'][$key][$index]['prom_percent'] =  $prom->prom_percent;
+                }
+                else{
+                    $data['list_prod_new'][$key][$index]['prom_promotion_price'] = 0;
+                    $data['list_prod_new'][$key][$index]['prom_percent'] = 0;
+                }
+            }
+        }
+        //dd($data);
 
         $data['list_cate_featured'] = DB::table('product')
             ->where('prod_featured','1')
@@ -75,8 +102,6 @@ class FrontendController extends Controller
                 ->groupBy('brand_id','brand_name')
                 ->get();
         }
-
-         
 
         $list_cate_featured = $data['list_cate_featured'];
         foreach ($list_cate_featured as $key1 => $value1) {
@@ -105,12 +130,14 @@ class FrontendController extends Controller
             ->join('promotion','product_options.propt_id','promotion.prom_propt')
             ->where('prod_status','1')
             ->where('prom_status','1')
+            ->groupBy('prod_id','prod_name')
+            ->distinct('prod_id')
             ->orderBy('prom_id','desc')
             ->get();
 
-        //dd($data);
         
-        return view('abcstore.home', $data);
+        
+        return view('abcstore.index', $data);
     }
 
     public function getProduct($id, Request $req)
@@ -178,12 +205,19 @@ class FrontendController extends Controller
     
     public function getOptionsColorProduct($id, Request $req)
     {
-        $list_color = ProductOptions::where('propt_prod',$id)
+        $data['min_price'] = ProductOptions::where('propt_prod',$id)
+                                ->select(DB::raw('min(propt_price) as price'))
+                                ->first();
+        
+        $data['max_price'] = ProductOptions::where('propt_prod',$id)
+                                ->select(DB::raw('max(propt_price) as price'))
+                                ->first();
+        $data['list_color'] = ProductOptions::where('propt_prod',$id)
                             ->where('propt_ram',$req->ram)
                             ->where('propt_rom',$req->rom)
                             ->select(DB::raw('DISTINCT propt_color'))
                             ->get();
-        return json_encode($list_color);
+        return json_encode($data);
     }
 
     public function getOptionsProduct($id, Request $req)
