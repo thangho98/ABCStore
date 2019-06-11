@@ -84,7 +84,7 @@
                 </div>
                 <!-- Product Content End -->
                 @if ($item->prod_new == 1)
-                    <span class="sticker-new">new</span>
+                    <span class="sticker-new">mới</span>
                 @endif
             </div>
             <!-- Single Product End -->
@@ -125,8 +125,7 @@
             <div class="tab-content">
                 @for ($i = 0; $i < count($list_cate_new); $i++)
                 @if ($i==0)
-                <div id="{{$list_cate_new[$i]->cate_slug}}"
-                    class="tab-pane fade show active">
+                <div id="{{$list_cate_new[$i]->cate_slug}}" class="tab-pane fade show active">
                     <!-- Arrivals Product Activation Start Here -->
                     <div class="electronics-pro-active owl-carousel">
                         <!-- Double Product Start -->
@@ -140,9 +139,9 @@
                             <div class="single-product">
                                 <!-- Product Image Start -->
                                 <div class="pro-img">
-                                    <a href="{{asset('/product/'.$list_prod_new[$nameArr][$index]->prod_id)}}">
-                                        <img class="{{asset('/product/'.$list_prod_new[$nameArr][$index]->prod_id)}}"
-                                            src="{{asset('local/storage/app/images/product/'.$list_prod_new[$nameArr][$index]->prod_poster)}}"
+                                    <a href="{{asset('/product/'.$list_prod_new[$nameArr][$index]['prod_id'])}}">
+                                        <img class="{{asset('/product/'.$list_prod_new[$nameArr][$index]['prod_id'])}}"
+                                            src="{{asset('local/storage/app/images/product/'.$list_prod_new[$nameArr][$index]['prod_poster'])}}"
                                             alt="single-product">
                                     </a>
                                 </div>
@@ -151,15 +150,21 @@
                                 <div class="pro-content">
                                     <div class="pro-info">
                                         <h4>
-                                            <a href="{{asset('/product/'.$list_prod_new[$nameArr][$index]->prod_id)}}">{{$list_prod_new[$nameArr][$index]->prod_name}}</a>
+                                            <a href="{{asset('/product/'.$list_prod_new[$nameArr][$index]['prod_id'])}}">{{$list_prod_new[$nameArr][$index]['prod_name']}}</a>
                                         </h4>
-                                        <p><span class="price">{{number_format($list_prod_new[$nameArr][$index]->prod_price,0,',','.')}}
-                                                VNĐ</span><del class="prev-price">$400.50</del></p>
-                                        <div class="label-product l_sale">30<span class="symbol-percent">%</span></div>
+                                        @if ($list_prod_new[$nameArr][$index]['prom_percent'] != 0)
+                                            <p><span class="price">{{number_format($list_prod_new[$nameArr][$index]['prod_price'],0,',','.')}}
+                                                VNĐ</span><del class="prev-price">{{number_format($list_prod_new[$nameArr][$index]['prom_promotion_price'],0,',','.')}}
+                                                    VNĐ</del></p>
+                                            <div class="label-product l_sale">{{$list_prod_new[$nameArr][$index]['prom_percent']}}<span class="symbol-percent">%</span></div>
+                                        @else
+                                        <p><span class="price">{{number_format($list_prod_new[$nameArr][$index]['prod_price'],0,',','.')}}
+                                            VNĐ</span></p>
+                                        @endif
                                     </div>
                                 </div>
                                 <!-- Product Content End -->
-                                <span class="sticker-new">new</span>
+                                <span class="sticker-new">mới</span>
                             </div>
                             <!-- Single Product End -->
                             @php
@@ -169,9 +174,9 @@
                             <div class="single-product">
                                 <!-- Product Image Start -->
                                 <div class="pro-img">
-                                    <a href="{{asset('/product/'.$list_prod_new[$nameArr][$index]->prod_id)}}">
+                                    <a href="{{asset('/product/'.$list_prod_new[$nameArr][$index]['prod_id'])}}">
                                         <img class="primary-img"
-                                            src="{{asset('local/storage/app/images/product/'.$list_prod_new[$nameArr][$index]->prod_poster)}}"
+                                            src="{{asset('local/storage/app/images/product/'.$list_prod_new[$nameArr][$index]['prod_poster'])}}"
                                             alt="single-product">
                                     </a>
                                 </div>
@@ -180,15 +185,21 @@
                                 <div class="pro-content">
                                     <div class="pro-info">
                                         <h4><a
-                                                href="{{asset('/product/'.$list_prod_new[$nameArr][$index]->prod_id)}}">{{$list_prod_new[$nameArr][$index]->prod_name}}</a>
+                                                href="{{asset('/product/'.$list_prod_new[$nameArr][$index]['prod_id'])}}">{{$list_prod_new[$nameArr][$index]['prod_name']}}</a>
                                         </h4>
-                                        <p><span class="price">{{number_format($list_prod_new[$nameArr][$index]->prod_price,0,',','.')}}
-                                                VNĐ</span><del class="prev-price">$400.50</del></p>
-                                        <div class="label-product l_sale">30<span class="symbol-percent">%</span></div>
+                                        @if ($list_prod_new[$nameArr][$index]['prom_percent'] != 0)
+                                        <p><span class="price">{{number_format($list_prod_new[$nameArr][$index]['prod_price'],0,',','.')}}
+                                            VNĐ</span><del class="prev-price">{{number_format($list_prod_new[$nameArr][$index]['prom_promotion_price'],0,',','.')}}
+                                                VNĐ</del></p>
+                                        <div class="label-product l_sale">{{$list_prod_new[$nameArr][$index]['prom_percent']}}<span class="symbol-percent">%</span></div>
+                                        @else
+                                        <p><span class="price">{{number_format($list_prod_new[$nameArr][$index]['prod_price'],0,',','.')}}
+                                            VNĐ</span></p>
+                                        @endif
                                     </div>
                                 </div>
                                 <!-- Product Content End -->
-                                <span class="sticker-new">new</span>
+                                <span class="sticker-new">mới</span>
                             </div>
                             @endif
                             @php
@@ -197,7 +208,7 @@
                         </div>
                         @endwhile
                     </div>
-                        <!-- Arrivals Product Activation End Here -->
+                    <!-- Arrivals Product Activation End Here -->
                 </div>
                 @else
                 <div id="{{$list_cate_new[$i]->cate_slug}}" class="tab-pane fade">
@@ -214,9 +225,9 @@
                             <div class="single-product">
                                 <!-- Product Image Start -->
                                 <div class="pro-img">
-                                    <a href="{{asset('/product/'.$list_prod_new[$nameArr][$index]->prod_id)}}">
-                                        <img class="primary-img"
-                                            src="{{asset('local/storage/app/images/product/'.$list_prod_new[$nameArr][$index]->prod_poster)}}"
+                                    <a href="{{asset('/product/'.$list_prod_new[$nameArr][$index]['prod_id'])}}">
+                                        <img class="{{asset('/product/'.$list_prod_new[$nameArr][$index]['prod_id'])}}"
+                                            src="{{asset('local/storage/app/images/product/'.$list_prod_new[$nameArr][$index]['prod_poster'])}}"
                                             alt="single-product">
                                     </a>
                                 </div>
@@ -224,28 +235,34 @@
                                 <!-- Product Content Start -->
                                 <div class="pro-content">
                                     <div class="pro-info">
-                                        <h4><a
-                                                href="{{asset('/product/'.$list_prod_new[$nameArr][$index]->prod_id)}}">{{$list_prod_new[$nameArr][$index]->prod_name}}</a>
+                                        <h4>
+                                            <a href="{{asset('/product/'.$list_prod_new[$nameArr][$index]['prod_id'])}}">{{$list_prod_new[$nameArr][$index]['prod_name']}}</a>
                                         </h4>
-                                        <p><span class="price">{{number_format($list_prod_new[$nameArr][$index]->prod_price,0,',','.')}}
-                                                VNĐ</span><del class="prev-price">$400.50</del></p>
-                                        <div class="label-product l_sale">30<span class="symbol-percent">%</span></div>
+                                        @if ($list_prod_new[$nameArr][$index]['prom_percent'] != 0)
+                                            <p><span class="price">{{number_format($list_prod_new[$nameArr][$index]['prod_price'],0,',','.')}}
+                                                VNĐ</span><del class="prev-price">{{number_format($list_prod_new[$nameArr][$index]['prom_promotion_price'],0,',','.')}}
+                                                    VNĐ</del></p>
+                                            <div class="label-product l_sale">{{$list_prod_new[$nameArr][$index]['prom_percent']}}<span class="symbol-percent">%</span></div>
+                                        @else
+                                        <p><span class="price">{{number_format($list_prod_new[$nameArr][$index]['prod_price'],0,',','.')}}
+                                            VNĐ</span></p>
+                                        @endif
                                     </div>
                                 </div>
                                 <!-- Product Content End -->
-                                <span class="sticker-new">new</span>
+                                <span class="sticker-new">mới</span>
                             </div>
                             <!-- Single Product End -->
                             @php
-                                $index++;
+                            $index++;
                             @endphp
                             @if ($index < count($list_prod_new[$nameArr]))
                             <div class="single-product">
                                 <!-- Product Image Start -->
                                 <div class="pro-img">
-                                    <a href="{{asset('/product/'.$list_prod_new[$nameArr][$index]->prod_id)}}">
+                                    <a href="{{asset('/product/'.$list_prod_new[$nameArr][$index]['prod_id'])}}">
                                         <img class="primary-img"
-                                            src="{{asset('local/storage/app/images/product/'.$list_prod_new[$nameArr][$index]->prod_poster)}}"
+                                            src="{{asset('local/storage/app/images/product/'.$list_prod_new[$nameArr][$index]['prod_poster'])}}"
                                             alt="single-product">
                                     </a>
                                 </div>
@@ -254,15 +271,21 @@
                                 <div class="pro-content">
                                     <div class="pro-info">
                                         <h4><a
-                                                href="{{asset('/product/'.$list_prod_new[$nameArr][$index]->prod_id)}}">{{$list_prod_new[$nameArr][$index]->prod_name}}</a>
+                                                href="{{asset('/product/'.$list_prod_new[$nameArr][$index]['prod_id'])}}">{{$list_prod_new[$nameArr][$index]['prod_name']}}</a>
                                         </h4>
-                                        <p><span class="price">{{number_format($list_prod_new[$nameArr][$index]->prod_price,0,',','.')}}
-                                                VNĐ</span><del class="prev-price">$400.50</del></p>
-                                        <div class="label-product l_sale">30<span class="symbol-percent">%</span></div>
+                                        @if ($list_prod_new[$nameArr][$index]['prom_percent'] != 0)
+                                        <p><span class="price">{{number_format($list_prod_new[$nameArr][$index]['prod_price'],0,',','.')}}
+                                            VNĐ</span><del class="prev-price">{{number_format($list_prod_new[$nameArr][$index]['prom_promotion_price'],0,',','.')}}
+                                                VNĐ</del></p>
+                                        <div class="label-product l_sale">{{$list_prod_new[$nameArr][$index]['prom_percent']}}<span class="symbol-percent">%</span></div>
+                                        @else
+                                        <p><span class="price">{{number_format($list_prod_new[$nameArr][$index]['prod_price'],0,',','.')}}
+                                            VNĐ</span></p>
+                                        @endif
                                     </div>
                                 </div>
                                 <!-- Product Content End -->
-                                <span class="sticker-new">new</span>
+                                <span class="sticker-new">mới</span>
                             </div>
                             @endif
                             @php
