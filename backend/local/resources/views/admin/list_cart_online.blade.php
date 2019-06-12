@@ -106,7 +106,8 @@
                                         </a> --}}
                                         @elseif($item->cart_status == 1)
                                         <a type="button" class="btn btn-sm btn-link" title="Thanh toán"
-                                            data-toggle="tooltip" href="{{asset('admin/orders/cart/'.$item->cart_id)}}">
+                                            @if (Session::get('user')->perm_id == 2) href="{{asset('admin/orders/cart/'.$item->cart_id)}}" @endif
+                                            data-toggle="tooltip">
                                             <i class="fa fa-fw fa-shopping-cart"></i>
                                         </a>
                                         @endif

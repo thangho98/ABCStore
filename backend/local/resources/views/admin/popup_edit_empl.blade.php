@@ -6,8 +6,8 @@
                 <input type="text" class="form-control" id="inputName" name="name" value="{{$empl->empl_name}}" placeholder="Nhập tên nhân viên" required>
             </div>
             <div class="form-group col-md-6">
-                <label for="inputBirthday">Ngày sinh <span class="text-danger">*</span></label>
-                <input type="text" class="js-datepicker form-control" id="inputBirthday" name="birthday"
+                <label for="inputEditBirthday">Ngày sinh <span class="text-danger">*</span></label>
+                <input type="text" class="js-datepicker form-control" id="inputEditBirthday" name="birthday"
                     data-week-start="1" data-autoclose="true" data-today-highlight="true" data-date-format="dd-mm-yyyy"
                     value="{{date_format(date_create($empl->empl_birthday),"d-m-Y")}}" placeholder="dd-mm-yyyy" required>
             </div>
@@ -50,8 +50,8 @@
         </div>
         <div class="form-row">
             <div class="form-group col-md-6">
-                <label for="inputStartDate">Ngày vào làm <span class="text-danger">*</span></label>
-                <input type="text" class="form-control js-datepicker" id="inputStartDate" name="start_date"
+                <label for="inputEditStartDate">Ngày vào làm <span class="text-danger">*</span></label>
+                <input type="text" class="form-control js-datepicker" id="inputEditStartDate" name="start_date"
                     data-week-start="1" data-autoclose="true" data-today-highlight="true" data-date-format="dd-mm-yyyy"
                     value="{{date_format(date_create($empl->empl_start_date),"d-m-Y")}}" placeholder="dd-mm-yyyy" required>
             </div>
@@ -102,23 +102,23 @@
             $('#submitEdit').on('click', function () {
                 $form = $('#edit-form');
                 if ($form.valid()) {
-                    $form.submit();
-                // $.ajax({
-                //     url: $form.attr('action'),
-                //     type: $form.attr('method'),
-                //     data: $form.serialize(),
-                //     success: function (data) {
-                //         swal("Đã sửa!", "Đối tượng đã được sửa.", "success")
-                //             .then((value) => {
-                //                 console.log('Submission was successful.');
-                //                 location.reload();
-                //             });
-                //     },
-                //     error: function (data) {
-                //         swal("Bị lỗi", "Đối tượng này đã bị lỗi :)", "error");
-                //         console.log('An error occurred.');
-                //     }
-                // });
+                    //$form.submit();
+                $.ajax({
+                    url: $form.attr('action'),
+                    type: $form.attr('method'),
+                    data: $form.serialize(),
+                    success: function (data) {
+                        swal("Đã sửa!", "Đối tượng đã được sửa.", "success")
+                            .then((value) => {
+                                console.log('Submission was successful.');
+                                location.reload();
+                            });
+                    },
+                    error: function (data) {
+                        swal("Bị lỗi", "Đối tượng này đã bị lỗi :)", "error");
+                        console.log('An error occurred.');
+                    }
+                });
             }
             });
             $('#cancelEdit').on('click', function () {
@@ -146,4 +146,6 @@
         }
     }
     </script>
+    <script src="assets/js/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+    <script>jQuery(function () { One.helpers(['datepicker', 'colorpicker', 'maxlength', 'select2', 'masked-inputs', 'rangeslider']); });</script>
 </div>

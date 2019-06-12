@@ -3,9 +3,9 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Auth;
+use Session;
 
-class CheckLogedOut
+class CheckRoleSale
 {
     /**
      * Handle an incoming request.
@@ -16,8 +16,15 @@ class CheckLogedOut
      */
     public function handle($request, Closure $next)
     {
-        if(Auth::guest()){
-            return redirect()->intended('login');
+        $perm = Session::get('user')->perm_id;
+        switch ($perm) {
+            case 3:
+                return redirect()->intended('admin/guarantee');
+                break;
+
+            case 4:
+                return redirect()->intended('admin/invoice');
+                break;
         }
         return $next($request);
     }

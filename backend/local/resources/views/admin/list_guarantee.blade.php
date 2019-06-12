@@ -41,7 +41,7 @@
         <div class="block">
             <div class="block-header row justify-content-end">
                 <aside class="py-2 mb-2">
-                    <button type="button" class="btn btn-primary" data-toggle="tooltip" title="Thêm" id="addbutton">
+                    <button type="button" class="btn btn-primary" @if (Session::get('user')->perm_id != 3) disabled @endif data-toggle="tooltip" title="Thêm" id="addbutton">
                         <i class="fa fa-fw fa-plus"></i>
                     </button>
                     <button type="button" class="btn btn-success" onclick="location.reload();" data-toggle="tooltip" title="Làm mới">
@@ -99,7 +99,7 @@
                                         <i class="fa fa-fw fa-eye"></i>
                                     </button>
                                     <button type="button" class="btn btn-sm btn-warning" data-toggle="tooltip"
-                                        onclick="showEdit({{$item->gtd_id}})" title="Cập nhật" @if ($item->gtd_status == 3)
+                                        onclick="showEdit({{$item->gtd_id}})" title="Cập nhật" @if ($item->gtd_status == 3 || Session::get('user')->perm_id != 3)
                                             disabled
                                         @endif>
                                         <i class="fa fa-fw fa-pencil-alt"></i>
