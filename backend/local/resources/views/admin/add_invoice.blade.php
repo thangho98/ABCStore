@@ -330,7 +330,7 @@ $(document).ready(function() {
         var id = $('#select-product').val();
 
         // URL
-        var url = "{{asset('admin/orders/options')}}/" + id;
+        var url = "{{asset('admin/invoice/options')}}/" + id;
 
         // Data
         var data = {};
@@ -388,7 +388,7 @@ $(document).ready(function() {
 			title: "Bạn có muốn hủy?",
 			text: "Sau khi hủy, bạn sẽ không thể khôi phục đối tượng này!",
 			icon: "warning",
-			buttons: ["Không, hủy nó đi!", "Vâng, tôi chấp nhận!"],
+			buttons: ["Không, giữ nó lại!", "Vâng, tôi chấp nhận!"],
 			dangerMode: true,
 		})
 		.then((willDelete) => {

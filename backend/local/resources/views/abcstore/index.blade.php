@@ -78,13 +78,14 @@
                     </div>
                     <div class="pro-actions">
                         <div class="actions-primary">
-                            <a href="cart.html" title="Add to Cart"> + Thêm vào giỏ hàng</a>
+                                {{$item->prom_name}}
+                            {{-- <a href="cart.html" title="Add to Cart"> + Thêm vào giỏ hàng</a> --}}
                         </div>
                     </div>
                 </div>
                 <!-- Product Content End -->
                 @if ($item->prod_new == 1)
-                    <span class="sticker-new">new</span>
+                    <span class="sticker-new">mới</span>
                 @endif
             </div>
             <!-- Single Product End -->
@@ -164,7 +165,7 @@
                                     </div>
                                 </div>
                                 <!-- Product Content End -->
-                                <span class="sticker-new">new</span>
+                                <span class="sticker-new">mới</span>
                             </div>
                             <!-- Single Product End -->
                             @php
@@ -199,7 +200,7 @@
                                     </div>
                                 </div>
                                 <!-- Product Content End -->
-                                <span class="sticker-new">new</span>
+                                <span class="sticker-new">mới</span>
                             </div>
                             @endif
                             @php
@@ -250,7 +251,7 @@
                                     </div>
                                 </div>
                                 <!-- Product Content End -->
-                                <span class="sticker-new">new</span>
+                                <span class="sticker-new">mới</span>
                             </div>
                             <!-- Single Product End -->
                             @php
@@ -285,7 +286,7 @@
                                     </div>
                                 </div>
                                 <!-- Product Content End -->
-                                <span class="sticker-new">new</span>
+                                <span class="sticker-new">mới</span>
                             </div>
                             @endif
                             @php

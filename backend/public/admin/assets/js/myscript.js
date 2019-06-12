@@ -84,7 +84,7 @@ $(document).ready(function () {
 			title: "Bạn có muốn xóa?",
 			text: "Sau khi xóa, bạn sẽ không thể khôi phục đối tượng này!",
 			icon: "warning",
-			buttons: ["Không, xóa nó đi!", "Vâng, tôi chấp nhận!"],
+			buttons: ["Không, giữ nó lại!", "Vâng, tôi chấp nhận!"],
 			dangerMode: true,
 		})
 			.then((willDelete) => {

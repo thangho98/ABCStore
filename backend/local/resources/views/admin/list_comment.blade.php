@@ -42,7 +42,7 @@
             <form id="formdata" action="{{asset('admin/comment/delete')}}" method="GET" enctype="multipart/form-data">
                 <div class="block-header row justify-content-end">
                     <aside class="py-2 mb-2">
-                        <button type="button" class="btn btn-success" data-toggle="tooltip" title="Làm mới">
+                        <button type="button" class="btn btn-success" onclick="location.reload();" data-toggle="tooltip" title="Làm mới">
                             <i class="fa fa-fw fa-sync-alt"></i>
                         </button>
                         <button type="button" data-toggle="tooltip" title="Xóa" class="btn btn-danger" id="btnDel"><i
