@@ -306,6 +306,10 @@
 
     function getColor() {
         $('#saving-price').html('');
+        $('#prev-price').html('');
+        $('#price').html('');
+        $('#quantity').empty();
+
         $('#saving-price').removeClass('saving-price');
 
         var color = $("input:radio[name ='color_select']:checked").val();
@@ -335,15 +339,15 @@
 
             let urlCart = "{{asset('cart/add/')}}/";
 
-            $('#quantity').empty();
-
             $("#addCart").removeAttr("href");
 
-            $('#prev-price').html(formatNumber(options['propt_price'])+' VNĐ');
+            
             if(promotion == null){
+                $('#prev-price').html('');
                 $('#price').html(formatNumber(options['propt_price'])+' VNĐ');
             }
             else{
+                $('#prev-price').html(formatNumber(options['propt_price'])+' VNĐ');
                 $('#price').html(formatNumber(promotion['prom_promotion_price'])+' VNĐ');
                 $('#saving-price').addClass('saving-price');
                 $('#saving-price').html(`Tiết kiệm ${promotion['prom_percent']}%`);
@@ -400,6 +404,13 @@
         });
         
         $('#selectMemory').change(function(){
+
+            $('#saving-price').html('');
+            $('#saving-price').removeClass('saving-price');
+            $('#prev-price').html('');
+            $('#price').html('');
+            $('#quantity').empty();
+
             let memory = $('#selectMemory').val();
             let res = memory.split("-");
             
@@ -425,7 +436,8 @@
                 $('#rdoColor').empty();
                 var html = ``;
                 var index = 0;
-                $.each(result, function(key, item) {
+                var list_color = result['list_color'];
+                $.each(list_color, function(key, item) {
                     html +=
                         `
                         <div id="item-checkbox-${index}" class="item-checkbox" onclick="chooseColor(${index})">
@@ -435,9 +447,20 @@
                             </div>
                         </div>
                         `;
+                    index++;
                 });
                 
                 $('#rdoColor').append(html);
+
+                var min_price = result['min_price']['price'];
+                var max_price = result['max_price']['price'];
+
+                if(min_price != max_price){
+                    $('#price').html(formatNumber(min_price)+' VNĐ - '+formatNumber(max_price)+' VNĐ');
+                }
+                else{
+                    $('#price').html(formatNumber(max_price)+' VNĐ');
+                }
             };
 
             // Result Type
@@ -449,31 +472,5 @@
 
 
     });
-
-// var mycheckbox = document.querySelectorAll('.mycheckbox .item-checkbox');
-// var myradiobutton = document.getElementsByName('color_select');
-// for (let i = 0; i < mycheckbox.length; i++) {
-// mycheckbox[i].addEventListener('click', function () {
-//     for (let j = 0; j < mycheckbox.length; j++) {
-//         if (mycheckbox[j].classList.contains('active')) {
-//             mycheckbox[j].classList.remove('active');
-//             document.getElementById("tri").outerHTML = "";
-//         }
-//     }
-//     myradiobutton[i].checked = true;
-//     this.classList.add('active');
-//     var triangle = document.createElement('div');
-//     triangle.classList.add('triangle-check');
-//     triangle.id = 'tri';
-//     var check = document.createElement('i');
-//     check.classList.add('fa', 'fa-check', 'mini-check');
-//     if (!triangle.contains(check)) {
-//         triangle.appendChild(check);
-//     }
-//     if (!this.contains(triangle)) {
-//         this.appendChild(triangle);
-//     }
-// });
-// }
 </script>
 @endsection

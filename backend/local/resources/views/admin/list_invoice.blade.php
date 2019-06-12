@@ -43,7 +43,7 @@
                     <a class="btn btn-primary" data-toggle="tooltip" title="Thêm" href="{{asset('admin/invoice/add')}}">
                         <i class="fa fa-fw fa-plus"></i>
                     </a>
-                    <button type="button" class="btn btn-success" data-toggle="tooltip" title="Làm mới">
+                    <button type="button" class="btn btn-success" onclick="location.reload();" data-toggle="tooltip" title="Làm mới">
                         <i class="fa fa-fw fa-sync-alt"></i>
                     </button>
                     
@@ -84,12 +84,12 @@
                                 @if ($item->invo_status == 0)
                                 <span class="badge badge-danger">chưa duyệt</span>
                                 @else
-                                <span class="badge badge-dark"> Đã duyệt</span>
+                                <span class="badge badge-dark">Đã duyệt</span>
                                 @endif 
                             </td>
                             <td class="text-right">
                                 <div class="py-2 mb-2">
-                                    <button type="button" @if ($item->invo_status == 1) disabled @endif class="btn btn-sm btn-secondary" title="Xem chi tiết"
+                                    <button type="button" @if ($item->invo_status == 1 || Session::get('user')->perm_id != 1) disabled @endif class="btn btn-sm btn-secondary" title="Duyệt"
                                         data-toggle="tooltip" onclick="approvedInvo('{{$item->invo_id}}')">
                                         <i class="fa fa-fw fa-check-circle"></i>
                                     </button>
@@ -97,10 +97,10 @@
                                         data-toggle="tooltip" onclick="showDetail('{{$item->invo_id}}')">
                                         <i class="fa fa-fw fa-eye"></i>
                                     </button>
-                                    <button @if ($item->invo_status == 1 || Auth::user()->empl_id != $item->invo_empl) disabled @endif onclick="editInvo('{{$item->invo_id}}')" type="button" class="btn btn-sm btn-warning" data-toggle="tooltip" title="Sửa">
+                                    <button @if ($item->invo_status == 1 || Session::get('user')->empl_id != $item->invo_empl) disabled @endif onclick="editInvo('{{$item->invo_id}}')" type="button" class="btn btn-sm btn-warning" data-toggle="tooltip" title="Sửa">
                                         <i class="fa fa-fw fa-pencil-alt"></i>
                                     </button>
-                                    <button @if ($item->invo_status == 1 || Auth::user()->empl_id != $item->invo_empl) disabled @endif onclick="delInvo('{{$item->invo_id}}')" type="button" data-toggle="tooltip" title="Xóa" class="btn btn-sm btn-danger">
+                                    <button @if ($item->invo_status == 1 || Session::get('user')->empl_id != $item->invo_empl) disabled @endif onclick="delInvo('{{$item->invo_id}}')" type="button" data-toggle="tooltip" title="Xóa" class="btn btn-sm btn-danger">
                                         <i class="fa fa-fw fa-trash"></i>
                                     </button>
                                 </div>

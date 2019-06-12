@@ -46,8 +46,9 @@
                         <button type="button" class="btn btn-primary" data-toggle="tooltip" title="Thêm" id="addbutton">
                             <i class="fa fa-fw fa-plus"></i>
                         </button>
-                        <button type="button" class="btn btn-success" data-toggle="tooltip" title="Làm mới">
+                        <button type="button" class="btn btn-success" onclick="location.reload();" data-toggle="tooltip" title="Làm mới">
                             <i class="fa fa-fw fa-sync-alt"></i>
+                        </button>
                         </button>
                         {{-- <button type="button" data-toggle="tooltip" title="Xóa" class="btn btn-danger" id="btnDel"><i
                                 class="fa fa-fw fa-trash"></i></button> --}}

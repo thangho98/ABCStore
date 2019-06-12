@@ -41,7 +41,7 @@
         <div class="block">
             <div class="block-header row justify-content-end">
                 <aside class="py-2 mb-2">
-                    <button type="button" class="btn btn-success" data-toggle="tooltip" title="Làm mới">
+                    <button type="button" class="btn btn-success" onclick="location.reload();" data-toggle="tooltip" title="Làm mới">
                         <i class="fa fa-fw fa-sync-alt"></i>
                     </button>
                 </aside>

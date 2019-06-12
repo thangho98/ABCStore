@@ -46,8 +46,16 @@ class InvoiceController extends Controller
         $data['total'] = $invoiceSession->getTotal();
         $data['total_qty'] = $invoiceSession->getTotalQuantity();
         
-        
+        //dd(Session($empl_id));
+
         return view('admin.add_invoice',$data);
+    }
+
+    public function getOptions($id)
+    {
+        $list_options = ProductOptions::where('propt_prod',$id)
+                            ->get();
+        return json_encode($list_options);
     }
 
     public function postAddInvo(Request $req)
@@ -89,6 +97,7 @@ class InvoiceController extends Controller
         $invo = Invoice::find($req->invo_id);
         if($invo->invo_status == 0){
             $invo->invo_status = 1;
+            $invo->invo_date_approved = date("Y/m/d");
             $invo->save();
         }
     }
@@ -191,12 +200,14 @@ class InvoiceController extends Controller
         $empl_id = Auth::user()->empl_id;
         if(Session($empl_id)){
             $invoiceSession = Session::get($empl_id);
-            
             $options = ProductOptions::find($req->id);
             $product = Product::find($options->propt_prod);
             $invoiceSession->add($req->id,$product->prod_name,1,0,$options);
 
+            
+
             Session::put($empl_id, $invoiceSession);
+            //dd(Session($empl_id));
         }
     }
 

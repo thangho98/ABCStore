@@ -45,7 +45,7 @@
                         <button type="button" class="btn btn-primary" data-toggle="tooltip" title="Thêm" id="addbutton">
                             <i class="fa fa-fw fa-plus"></i>
                         </button>
-                        <button type="button" class="btn btn-success" data-toggle="tooltip" title="Làm mới">
+                        <button type="button" class="btn btn-success" onclick="location.reload();" data-toggle="tooltip" title="Làm mới">
                             <i class="fa fa-fw fa-sync-alt"></i>
                         </button>
                         {{-- <button type="button" data-toggle="tooltip" title="Xóa" class="btn btn-danger" id="btnDel"><i
@@ -135,77 +135,86 @@
 @endsection
 @section('popup')
 <div id="popupshow">
-    <div class="popup-form hidden" id="popup-form-add">
-        <form action="{{asset('admin/employees/add')}}" id="add-form" method="POST" novalidate>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="inputName">Tên nhân viên <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="inputName" name="name" placeholder="Nhập tên nhân viên"
-                            required>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="inputBirthday">Ngày sinh <span class="text-danger">*</span></label>
-                        <input type="text" class="js-datepicker form-control" id="inputBirthday" name="birthday"
-                            data-week-start="1" data-autoclose="true" data-today-highlight="true"
-                            data-date-format="dd-mm-yyyy" placeholder="dd-mm-yyyy" required>
-                    </div>
-    
+    <div class="popup-form hidden scrollbar" id="popup-form-add">
+        <form action="{{asset('admin/employees/add')}}" id="add-form" method="POST" novalidate enctype="multipart/form-data">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="inputName">Tên nhân viên <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="inputName" name="name" placeholder="Nhập tên nhân viên"
+                        required>
                 </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="inputIdentityCard">CMND <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="inputIdentityCard" name="identityCard"
-                            placeholder="Nhập chứng minh thư" required>
+                <div class="form-group col-md-6">
+                    <label for="inputBirthday">Ngày sinh <span class="text-danger">*</span></label>
+                    <input type="text" class="js-datepicker form-control" id="inputBirthday" name="birthday"
+                        data-week-start="1" data-autoclose="true" data-today-highlight="true"
+                        data-date-format="dd-mm-yyyy" placeholder="dd-mm-yyyy" required>
+                </div>
+
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="inputIdentityCard">CMND <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="inputIdentityCard" name="identityCard"
+                        placeholder="Nhập chứng minh thư" required>
+                </div>
+                <div class="form-group col-md-3 ml-4">
+                    <label class="d-block">Giới tính <span class="text-danger">*</span></label>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" class="custom-control-input" id="example-rd-custom-inline1" name="gender"
+                            value="0" checked>
+                        <label class="custom-control-label" for="example-rd-custom-inline1">Nam</label>
                     </div>
-                    <div class="form-group col-md-3 ml-4">
-                        <label class="d-block">Giới tính <span class="text-danger">*</span></label>
-                        <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio" class="custom-control-input" id="example-rd-custom-inline1" name="gender"
-                                value="0" checked>
-                            <label class="custom-control-label" for="example-rd-custom-inline1">Nam</label>
-                        </div>
-                        <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio" class="custom-control-input" id="example-rd-custom-inline2" name="gender"
-                                value="1">
-                            <label class="custom-control-label" for="example-rd-custom-inline2">Nữ</label>
-                        </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" class="custom-control-input" id="example-rd-custom-inline2" name="gender"
+                            value="1">
+                        <label class="custom-control-label" for="example-rd-custom-inline2">Nữ</label>
                     </div>
                 </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="inputEmail">Email <span class="text-danger">*</span></label>
-                        <input type="email" class="form-control" id="inputEmail" placeholder="Nhập email" name="email"
-                            required>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="inputTel">SĐT <span class="text-danger">*</span></label>
-                        <input type="tel" class="form-control" id="inputTel" placeholder="Nhập số điện thoại" name="phone"
-                            required>
-                    </div>
-    
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="inputEmail">Email <span class="text-danger">*</span></label>
+                    <input type="email" class="form-control" id="inputEmail" placeholder="Nhập email" name="email"
+                        required>
                 </div>
-                <div class="form-group">
-                    <label for="inputAddress">Địa chỉ <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="inputAddress" name="address" placeholder="Nhập địa chỉ" required>
+                <div class="form-group col-md-6">
+                    <label for="inputTel">SĐT <span class="text-danger">*</span></label>
+                    <input type="tel" class="form-control" id="inputTel" placeholder="Nhập số điện thoại" name="phone"
+                        required>
                 </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="inputStartDate">Ngày vào làm <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control js-datepicker" id="inputStartDate" name="start_date"
-                            data-week-start="1" data-autoclose="true" data-today-highlight="true"
-                            data-date-format="dd-mm-yyyy" placeholder="dd-mm-yyyy" required>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="inputSalary">Lương cơ bản <span class="text-danger">*</span></label>
-                        <div class="input-group">
-                            <input type="number" class="form-control text-center" id="inputSalary" name="salary" min="0"
-                                placeholder="..">
-                            <div class="input-group-append">
-                                <span class="input-group-text">VNĐ</span>
-                            </div>
+            </div>
+            <div class="form-group">
+                <label for="inputAddress">Địa chỉ <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="inputAddress" name="address" placeholder="Nhập địa chỉ" required>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="inputStartDate">Ngày vào làm <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control js-datepicker" id="inputStartDate" name="start_date"
+                        data-week-start="1" data-autoclose="true" data-today-highlight="true"
+                        data-date-format="dd-mm-yyyy" placeholder="dd-mm-yyyy" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputSalary">Lương cơ bản <span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <input type="number" class="form-control text-center" id="inputSalary" name="salary" min="0"
+                            placeholder="..">
+                        <div class="input-group-append">
+                            <span class="input-group-text">VNĐ</span>
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="input-image-avatar">Avatar <span class="text-danger">*</span></label>
+                    <img id="image-avatar" class="thumbnail"
+                        src="assets/media/img/new_seo-10-75.png"
+                        onclick="chooseImg('avatar');" height="150px;" width="150px;">
+                    <input type="file" hidden name="avatar" id="input-image-avatar"
+                        onchange="changeImg(this, 'avatar');" accept="image/*" required>
+                </div>
+            </div>
             <div class="tile-footer-2">
                 <button class="btn btn-primary" type="button" id="submitAdd">Thêm</button>
                 <button class="btn btn-danger" type="button" id="cancelAdd">Hủy</button>
@@ -391,5 +400,23 @@
         // Send Ajax
         $.get(url, data, success, dataType);
     };
+
+    function chooseImg(temp) {
+        $('#input-image-' + temp).click();
+        console.log('hello');
+    }
+
+    function changeImg(input, temp) {
+        //Nếu như tồn thuộc tính file, đồng nghĩa người dùng đã chọn file mới
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            //Sự kiện file đã được load vào website
+            reader.onload = function(e) {
+                //Thay đổi đường dẫn ảnh
+                $('#image-' + temp).attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
 </script>
 @endsection

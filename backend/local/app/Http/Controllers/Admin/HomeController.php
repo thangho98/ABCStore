@@ -5,10 +5,11 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Auth;
+use Session;
 
 class HomeController extends Controller
 {
-    public function getHome()
+    public function getHome(Request $request)
     {
         return view('admin.home');
     }
@@ -21,6 +22,7 @@ class HomeController extends Controller
     public function getLogout()
     {
         Auth::logout();
+        Session::flush();
         return redirect()->intended('login');
     }
 }

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Auth;
+use Session;
+use App\Models\Employees;
 
 class LoginController extends Controller
 {
@@ -22,7 +24,14 @@ class LoginController extends Controller
         else{
             $remember = false;
         }
-        if(Auth::attempt($valid, $remember)){
+        if (Auth::viaRemember()) {
+            Auth::logout();
+        }
+        if(Auth::attempt($valid,$remember)){
+
+            $employees = Employees::find(Auth::user()->empl_id);
+            Session::put('user',Auth::user());
+            Session::put('employees',$employees);
             
             return redirect()->intended('admin/home');
         }

@@ -44,7 +44,7 @@
                     <a href="{{asset('admin/orders/add')}}" class="btn btn-primary" data-toggle="tooltip" title="Thêm">
                         <i class="fa fa-fw fa-plus"></i>
                     </a>
-                    <button type="button" class="btn btn-success" data-toggle="tooltip" title="Làm mới" onclick="location.reload();">
+                    <button type="button" class="btn btn-success" onclick="location.reload();" data-toggle="tooltip" title="Làm mới">
                         <i class="fa fa-fw fa-sync-alt"></i>
                     </button>
                 </aside>

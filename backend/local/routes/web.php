@@ -214,6 +214,8 @@ Route::group(['namespace' => 'Admin'], function () {
             Route::get('/add/','InvoiceController@getAddInvo');
             Route::post('add/','InvoiceController@postAddInvo');
 
+            Route::get('/options/{id}','InvoiceController@getOptions');
+
             Route::get('approved/','InvoiceController@getApprovedInvo');
 
             Route::get('/view/{id}','InvoiceController@getViewInvo');

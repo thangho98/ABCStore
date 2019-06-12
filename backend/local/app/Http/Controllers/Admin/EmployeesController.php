@@ -27,6 +27,15 @@ class EmployeesController extends Controller
         $empl->empl_start_date = date_format(date_create($req->start_date),"Y/m/d");
         $empl->empl_basic_salary = $req->salary;
         $empl->empl_status = 0;
+
+        $dataAvatar = $req->file('avatar');
+        $empl->empl_avatar = '';
+        if(!empty($dataAvatar)){
+            $avatarName = $dataAvatar->getClientOriginalName();
+            $empl->empl_avatar = $avatarName;
+            $dataAvatar->storeAs('images/employees/',$avatarName);
+        }
+
         $empl->save();
     }
 
@@ -55,6 +64,14 @@ class EmployeesController extends Controller
         $empl->empl_start_date = date_format(date_create($req->start_date),"Y/m/d");
         $empl->empl_basic_salary = $req->salary;
         $empl->empl_status = $req->status;
+
+        $dataAvatar = $req->file('avatar');
+        if(!empty($dataAvatar)){
+            $avatarName = $dataAvatar->getClientOriginalName();
+            $empl->empl_avatar = $avatarName;
+            $dataAvatar->storeAs('images/employees/',$avatarName);
+        }
+        
         $empl->save();
     }
 
