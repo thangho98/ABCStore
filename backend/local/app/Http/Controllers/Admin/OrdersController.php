@@ -47,7 +47,7 @@ class OrdersController extends Controller
 
     public function getAddOrders()
     {
-        $empl_id = Auth::user()->empl_id;
+        $empl_id = Session::get('user')->empl_id;
         //Cart::session($empl_id)->clear();
         $data['total_orders'] = Cart::session($empl_id)->getTotal();
         $data['total_qty'] = Cart::session($empl_id)->getTotalQuantity();
@@ -67,7 +67,7 @@ class OrdersController extends Controller
         $cus->cus_identity_card = $req->cus_identity_card;
         $cus->save();
 
-        $empl_id = Auth::user()->empl_id;
+        $empl_id = Session::get('user')->empl_id;
         $total_qty_orders = Cart::session($empl_id)->getTotalQuantity();
         $total_orders = Cart::session($empl_id)->getTotal();
         
@@ -100,7 +100,7 @@ class OrdersController extends Controller
     {
         $carts = Carts::find($id);
         $data['cus'] = Customer::find($carts->cart_cus);
-        $empl_id = Auth::user()->empl_id;
+        $empl_id = Session::get('user')->empl_id;
 
         if(Session::get('userID') == null){
             $list_option = CartDetail::where('cartdt_cart',$id)->get();
@@ -138,7 +138,7 @@ class OrdersController extends Controller
         $cus->cus_identity_card = $req->cus_identity_card;
         $cus->save();
 
-        $empl_id = Auth::user()->empl_id;
+        $empl_id = Session::get('user')->empl_id;
         $total_qty_orders = Cart::session($empl_id)->getTotalQuantity();
         $total_orders = Cart::session($empl_id)->getTotal();
         
@@ -182,7 +182,7 @@ class OrdersController extends Controller
 
     public function getAddItem(Request $req)
     {
-        $empl_id = Auth::user()->empl_id; // or any string represents user identifier
+        $empl_id = Session::get('user')->empl_id; // or any string represents user identifier
 
         $prod = Cart::session($empl_id)->get($req->id);
         if(!empty($prod)){
@@ -209,13 +209,13 @@ class OrdersController extends Controller
 
     public function getDelItem(Request $req)
     {
-        $empl_id = Auth::user()->empl_id; // or any string represents user identifier
+        $empl_id = Session::get('user')->empl_id; // or any string represents user identifier
         Cart::session($empl_id)->remove($req->id);
     }
 
     public function getUpdateItem(Request $req)
     {
-        $empl_id = Auth::user()->empl_id;
+        $empl_id = Session::get('user')->empl_id;
         Cart::session($empl_id)->update($req->id, array(
             'quantity' => array(
                 'relative' => false,
@@ -243,7 +243,7 @@ class OrdersController extends Controller
 
     public function getCancelOrders()
     {
-        $empl_id = Auth::user()->empl_id;
+        $empl_id = Session::get('user')->empl_id;
         Cart::session($empl_id)->clear();
         return redirect('admin/orders/');
     }

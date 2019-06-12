@@ -41,10 +41,10 @@
         <div class="block">
             <div class="block-header row justify-content-end">
                 <aside class="py-2 mb-2">
-                    <button type="button" class="btn btn-success" onclick="location.reload();" data-toggle="tooltip" title="Làm mới">
-                        <i class="fa fa-fw fa-sync-alt"></i>
+                    <button type="button" class="btn btn-primary" data-toggle="tooltip" title="Thêm" id="addbutton">
+                        <i class="fa fa-fw fa-plus"></i>
                     </button>
-                    <button type="button" class="btn btn-success" data-toggle="tooltip" title="Làm mới">
+                    <button type="button" class="btn btn-success" onclick="location.reload();" data-toggle="tooltip" title="Làm mới">
                         <i class="fa fa-fw fa-sync-alt"></i>
                     </button>
                 </aside>
@@ -99,17 +99,23 @@
                                         <i class="fa fa-fw fa-eye"></i>
                                     </button>
                                     <button type="button" class="btn btn-sm btn-warning" data-toggle="tooltip"
-                                        onclick="showEdit({{$item->gtd_id}})" title="Cập nhập" @if ($item->gtd_status == 3)
+                                        onclick="showEdit({{$item->gtd_id}})" title="Cập nhật" @if ($item->gtd_status == 3)
                                             disabled
                                         @endif>
                                         <i class="fa fa-fw fa-pencil-alt"></i>
                                     </button>
+                                    @if ($item->gtd_status == 3)
                                     <a href="{{asset('admin/guarantee/print/reimburse/'.$item->gtd_id)}}" class="btn btn-sm btn-primary" data-toggle="tooltip"
-                                         title="In phiếu trả bảo hành" @if ($item->gtd_status != 3)
-                                            disabled
-                                        @endif>
-                                        <i class="fa fa-fw fa-print"></i>
+                                        title="In phiếu trả bảo hành">
+                                       <i class="fa fa-fw fa-print"></i>
                                     </a>
+                                    @else
+                                    <a href="{{asset('admin/guarantee/print/receive/'.$item->gtd_id)}}" class="btn btn-sm btn-primary" data-toggle="tooltip"
+                                        title="In phiếu nhận bảo hành">
+                                       <i class="fa fa-fw fa-print"></i>
+                                    </a>
+                                    @endif
+                                    
                                 </div>
                             </td>
                         </tr>

@@ -43,6 +43,7 @@ $(document).ready(function () {
 				type: "info"
 			});
 	});
+
 	$('#submitAdd').on('click', function () {
 		$form = $('#add-form');
 
@@ -80,14 +81,16 @@ $(document).ready(function () {
 	});
 
 	$('#btnDel').click(function () {
-		swal({
-			title: "Bạn có muốn xóa?",
-			text: "Sau khi xóa, bạn sẽ không thể khôi phục đối tượng này!",
-			icon: "warning",
-			buttons: ["Không, giữ nó lại!", "Vâng, tôi chấp nhận!"],
-			dangerMode: true,
-		})
-			.then((willDelete) => {
+		var numberOfChecked = $('input[name*="selected"]:checked').length;
+		console.log(numberOfChecked);
+		if (numberOfChecked > 0) {
+			swal({
+				title: "Bạn có muốn xóa?",
+				text: "Sau khi xóa, bạn sẽ không thể khôi phục đối tượng này!",
+				icon: "warning",
+				buttons: ["Không, giữ nó lại!", "Vâng, tôi chấp nhận!"],
+				dangerMode: true,
+			}).then((willDelete) => {
 				if (willDelete) {
 					$.ajax({
 						url: $('#formdata').attr('action'),
@@ -104,6 +107,11 @@ $(document).ready(function () {
 					swal("Đã hủy", "Đối tượng vẫn được giữ lại :)", "error");
 				}
 			});
+		}
+		else {
+			swal("Thông báo", "Không có đối tượng nào để xóa :)", "error");
+		}
+
 	});
 
 	$('.button-edit').click(function () {
@@ -140,3 +148,63 @@ $(document).ready(function () {
 		$(".remove-sorting").removeClass("sorting");
 	});
 });
+
+function notifySuccess(title, message) {
+	$.notify({
+		title: title,
+		message: message,
+		icon: 'fa fa-check mr-1'
+	},
+		{
+			type: "success",
+			placement: {
+				from: "top",
+				align: "center"
+			},
+		});
+}
+
+function notifyInfo(title, message) {
+	$.notify({
+		title: title,
+		message: message,
+		icon: 'fa fa-info-circle mr-1'
+	},
+		{
+			type: "info",
+			placement: {
+				from: "top",
+				align: "center"
+			},
+		});
+}
+
+function notifyWarning(title, message) {
+	$.notify({
+		title: title,
+		message: message,
+		icon: 'fa fa-exclamation mr-1'
+	},
+		{
+			type: "warning",
+			placement: {
+				from: "top",
+				align: "center"
+			},
+		});
+}
+
+function notifyDanger(title, message) {
+	$.notify({
+		title: title,
+		message: message,
+		icon: 'fa fa-times mr-1',
+	},
+		{
+			type: "danger",
+			placement: {
+				from: "top",
+				align: "center"
+			},
+		});
+}

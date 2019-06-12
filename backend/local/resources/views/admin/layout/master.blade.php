@@ -526,7 +526,7 @@
             <!-- Side Header -->
             <div class="content-header bg-white-5">
                 <!-- Logo -->
-                <a class="font-w600 text-dual" href="index.html">
+                <a class="font-w600 text-dual" href="{{asset('/home')}}">
                     <i class="fa fa-circle-notch text-primary"></i>
                     <span class="smini-hide">
                         <span class="font-w700 font-size-h5">ABC</span> <span class="font-w400">Store</span>
@@ -967,6 +967,9 @@
         -->
     <script src="assets/js/oneui.app.min.js"></script>
     <script src="assets/js/jquery-ui.min.js"></script>
+    <script src="assets/js/plugins/bootstrap-notify/bootstrap-notify.min.js"></script>
+    <script src="assets/js/plugins/sweetalert.min.js"></script>
+    <script>jQuery(function(){ One.helpers('notify'); });</script>
     @yield('scriptjs')
 </body>
 

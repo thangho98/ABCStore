@@ -245,8 +245,10 @@ Route::group(['namespace' => 'Admin'], function () {
             Route::get('salary','CommissionController@getSalary');
         });
 
-        
+        Route::get('/account/password','HomeController@getChangePassword');
+        Route::post('/account/password','HomeController@postChangePassword');
 
     });
     Route::get('/logout','HomeController@getLogout');
+   
 });

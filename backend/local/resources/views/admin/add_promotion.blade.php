@@ -170,7 +170,6 @@
 </main>
 @endsection
 @section('scriptjs')
-<script src="assets/js/plugins/sweetalert.min.js"></script>
 
 <!-- Page JS Plugins -->
 <script src="assets/js/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>

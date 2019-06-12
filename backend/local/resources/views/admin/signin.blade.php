@@ -194,6 +194,22 @@
 
     <!-- Page JS Code -->
     <script src="assets/js/pages/op_auth_signin.min.js"></script>
+    <script src="assets/js/myscript.js"></script>
+    <script src="assets/js/jquery-ui.min.js"></script>
+    <script src="assets/js/plugins/bootstrap-notify/bootstrap-notify.min.js"></script>
+    <script src="assets/js/plugins/sweetalert.min.js"></script>
+    <script>jQuery(function(){ One.helpers('notify'); });</script>
+    <script>
+        $(document).ready(function(){
+            @if (Session::has('error'))
+                notifyDanger('error: ','{{Session::get('error')}}');
+            @endif
+            
+            @if (Session::has('success'))
+                notifySuccess('success: ','{{Session::get('success')}}');
+            @endif
+        });
+    </script>
 </body>
 
 </html>

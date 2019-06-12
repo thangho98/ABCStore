@@ -294,7 +294,6 @@
 </main>
 @endsection
 @section('scriptjs')
-<script src="assets/js/plugins/sweetalert.min.js"></script>
 
 <script src="assets/js/plugins/jquery-bootstrap-wizard/bs4/jquery.bootstrap.wizard.min.js"></script>
 <script src="assets/js/plugins/jquery-validation/jquery.validate.min.js"></script>

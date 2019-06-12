@@ -94,10 +94,15 @@
                         <div role="separator" class="dropdown-divider"></div>
                         <h5 class="dropdown-header text-uppercase">Hành động</h5>
                         <a class="dropdown-item d-flex align-items-center justify-content-between"
+                            href="{{asset('/admin/account/password')}}">
+                            <span>Đổi mật khẩu</span>
+                            <i class="si si-key ml-1"></i>
+                        </a>
+                        {{-- <a class="dropdown-item d-flex align-items-center justify-content-between"
                             href="op_auth_lock.html">
                             <span>Khóa tài khoản</span>
                             <i class="si si-lock ml-1"></i>
-                        </a>
+                        </a> --}}
                         <a class="dropdown-item d-flex align-items-center justify-content-between"
                             href="{{asset('/logout')}}">
                             <span>Đăng xuất</span>

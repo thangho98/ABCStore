@@ -24,9 +24,7 @@ class LoginController extends Controller
         else{
             $remember = false;
         }
-        if (Auth::viaRemember()) {
-            Auth::logout();
-        }
+
         if(Auth::attempt($valid,$remember)){
 
             $employees = Employees::find(Auth::user()->empl_id);

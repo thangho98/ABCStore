@@ -93,7 +93,11 @@
                                     </tbody>
                                 </table>
                                 <div class="wc-proceed-to-checkout">
-                                    <a href="{{asset('cart/checkout')}}">Tiến hành thanh Toán</a>
+                                    <a @if (count($content)>0)
+                                        href="{{asset('cart/checkout')}}"
+                                    @else
+                                        href="#"
+                                    @endif >Tiến hành thanh Toán</a>
                                 </div>
                             </div>
                         </div>

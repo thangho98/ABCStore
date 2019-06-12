@@ -93,7 +93,7 @@
                                 <th class="orderby">Tên SP</th>
                                 <th class="d-none d-sm-table-cell orderby">Số lượng bán ra
                                 </th>
-                                <th class="d-none d-sm-table-cell orderby">Tiền thu vào</th>
+                                <th class="d-none d-sm-table-cell orderby">Tiền bán</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -118,6 +118,9 @@
                                     {{number_format($item->price,0,',','.')}} VNĐ
                                 </td>
                             </tr>
+                            @php
+                                $i++;
+                            @endphp
                             @endforeach
                         </tbody>
                         <tfoot>
@@ -145,7 +148,6 @@
 
 @endsection
 @section('scriptjs')
-<script src="assets/js/plugins/sweetalert.min.js"></script>
 
 <script src="assets/js/plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="assets/js/plugins/datatables/dataTables.bootstrap4.min.js"></script>
