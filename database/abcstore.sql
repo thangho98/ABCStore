@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th6 11, 2019 lúc 04:17 PM
--- Phiên bản máy phục vụ: 10.1.38-MariaDB
--- Phiên bản PHP: 7.3.2
+-- Thời gian đã tạo: Th6 12, 2019 lúc 12:32 PM
+-- Phiên bản máy phục vụ: 10.3.15-MariaDB
+-- Phiên bản PHP: 7.3.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -82,8 +82,8 @@ CREATE TABLE `brand` (
   `brand_slug` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `brand_desc` text COLLATE utf8_unicode_ci NOT NULL,
   `brand_famous` tinyint(1) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -112,20 +112,9 @@ CREATE TABLE `cart` (
   `cart_date` date NOT NULL,
   `cart_remember_token` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `cart_status` int(11) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Đang đổ dữ liệu cho bảng `cart`
---
-
-INSERT INTO `cart` (`cart_id`, `cart_cus`, `cart_total_prod`, `cart_total_price`, `cart_date`, `cart_remember_token`, `cart_status`, `created_at`, `updated_at`) VALUES
-(4, 8, 2, 59980000, '2019-05-26', 'LDKe4gkAStvPDOxypletS4wpWmvYRhgC7ifcVVGp', 2, '2019-05-26 03:14:40', '2019-05-26 04:02:53'),
-(7, 19, 2, 15980000, '2019-06-27', 'MCTbdqvVPrg88sJwhCFTPC4elxNskoxauiSnOWQ3', 3, '2019-06-07 03:26:27', '2019-06-07 03:27:01'),
-(8, 20, 2, 15980000, '2019-06-07', 'MCTbdqvVPrg88sJwhCFTPC4elxNskoxauiSnOWQ3', 3, '2019-06-07 03:28:07', '2019-06-07 03:28:44'),
-(9, 21, 4, 31960000, '2019-06-07', 'MCTbdqvVPrg88sJwhCFTPC4elxNskoxauiSnOWQ3', 3, '2019-06-07 03:32:42', '2019-06-07 03:32:44'),
-(10, 22, 4, 31960000, '2019-06-07', 'MCTbdqvVPrg88sJwhCFTPC4elxNskoxauiSnOWQ3', 3, '2019-06-07 03:47:58', '2019-06-20 03:54:33');
 
 --
 -- Bẫy `cart`
@@ -133,8 +122,8 @@ INSERT INTO `cart` (`cart_id`, `cart_cus`, `cart_total_prod`, `cart_total_price`
 DELIMITER $$
 CREATE TRIGGER `after_cart_update` AFTER UPDATE ON `cart` FOR EACH ROW BEGIN
 	DECLARE done INT DEFAULT 0;
-	DECLARE _cartdt_propt INT;
-            DECLARE _cartdt_prod_quantity INT;
+	DECLARE  INT;
+            DECLARE  INT;
   	DECLARE cartdetail_cursor CURSOR FOR
     	SELECT cartdt_propt,cartdt_prod_quantity
 		FROM cartdetail
@@ -143,11 +132,11 @@ CREATE TRIGGER `after_cart_update` AFTER UPDATE ON `cart` FOR EACH ROW BEGIN
   IF NEW.cart_status = 3 THEN
         OPEN cartdetail_cursor;
 		read_loop: LOOP
-		FETCH cartdetail_cursor INTO _cartdt_propt, _cartdt_prod_quantity;
+		FETCH cartdetail_cursor INTO , ;
 		IF done THEN
 		LEAVE read_loop;
 		END IF;
-		UPDATE product_options SET propt_quantity = propt_quantity + _cartdt_prod_quantity WHERE propt_id=_cartdt_propt;
+		UPDATE product_options SET propt_quantity = propt_quantity +  WHERE propt_id=;
 		END LOOP;
     END IF;
     CLOSE cartdetail_cursor;
@@ -169,21 +158,9 @@ CREATE TABLE `cartdetail` (
   `cartdt_prod_unit_price` double NOT NULL,
   `cartdt_prod_promotion_price` double NOT NULL,
   `cartdt_total` double NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Đang đổ dữ liệu cho bảng `cartdetail`
---
-
-INSERT INTO `cartdetail` (`cartdt_id`, `cartdt_cart`, `cartdt_propt`, `cartdt_prod_quantity`, `cartdt_prod_unit_price`, `cartdt_prod_promotion_price`, `cartdt_total`, `created_at`, `updated_at`) VALUES
-(5, 4, 1, 1, 29990000, 29990000, 29990000, '2019-05-26 03:14:40', '2019-05-26 03:14:40'),
-(6, 4, 2, 1, 29990000, 29990000, 29990000, '2019-05-26 03:14:40', '2019-05-26 03:14:40'),
-(9, 7, 23, 2, 7990000, 7990000, 15980000, '2019-06-07 03:26:27', '2019-06-07 03:26:27'),
-(10, 8, 23, 2, 7990000, 7990000, 15980000, '2019-06-07 03:28:07', '2019-06-07 03:28:07'),
-(11, 9, 23, 4, 7990000, 7990000, 31960000, '2019-06-07 03:32:42', '2019-06-07 03:32:42'),
-(12, 10, 23, 4, 7990000, 7990000, 31960000, '2019-06-07 03:47:58', '2019-06-07 03:47:58');
 
 --
 -- Bẫy `cartdetail`
@@ -204,8 +181,8 @@ CREATE TABLE `category` (
   `cate_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `cate_slug` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `cate_icon` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -215,8 +192,7 @@ CREATE TABLE `category` (
 INSERT INTO `category` (`cate_id`, `cate_name`, `cate_slug`, `cate_icon`, `created_at`, `updated_at`) VALUES
 (1, 'Điện thoại', 'dien-thoai', '4.png', '2019-05-20 03:59:50', '2019-05-13 08:01:07'),
 (2, 'Máy tính bảng', 'may-tinh-bang', '8.png', '2019-05-20 04:00:11', '2019-05-13 08:29:55'),
-(3, 'Laptop', 'laptop', '9.png', '2019-05-20 04:00:21', '2019-05-13 08:30:09'),
-(5, 'Thế giới', 'the-gioi', '10.png', '2019-05-31 07:50:26', '2019-05-31 10:55:24');
+(3, 'Laptop', 'laptop', '9.png', '2019-05-20 04:00:21', '2019-05-13 08:30:09');
 
 -- --------------------------------------------------------
 
@@ -231,8 +207,8 @@ CREATE TABLE `comment` (
   `cmt_content` text COLLATE utf8_unicode_ci NOT NULL,
   `cmt_voted` int(11) NOT NULL,
   `cmt_prod` int(11) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -254,18 +230,9 @@ CREATE TABLE `commission` (
   `cms_year` int(11) NOT NULL,
   `cms_empl` int(11) NOT NULL,
   `cms_total` double NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Đang đổ dữ liệu cho bảng `commission`
---
-
-INSERT INTO `commission` (`cms_id`, `cms_month`, `cms_year`, `cms_empl`, `cms_total`, `created_at`, `updated_at`) VALUES
-(2, 6, 2019, 8, 539700, '2019-06-09 12:52:05', '2019-06-09 12:52:05'),
-(3, 6, 2019, 10, 0, '2019-06-11 02:35:00', '2019-06-11 02:35:00'),
-(4, 6, 2019, 11, 0, '2019-06-11 02:35:00', '2019-06-11 02:35:00');
 
 --
 -- Bẫy `commission`
@@ -321,36 +288,9 @@ CREATE TABLE `customer` (
   `cus_phone` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `cus_identity_card` int(11) NOT NULL,
   `cus_email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Đang đổ dữ liệu cho bảng `customer`
---
-
-INSERT INTO `customer` (`cus_id`, `cus_name`, `cus_phone`, `cus_identity_card`, `cus_email`, `created_at`, `updated_at`) VALUES
-(3, 'thăng', '328119182', 123456789, 'thanglong2098@gmail.com', '2019-05-24 02:56:44', '2019-05-24 02:56:44'),
-(8, 'Nguyễn Phi Yến', '0929250409', 281161563, 'hiendaihuynh123@gmail.com', '2019-05-26 03:14:40', '2019-05-26 03:14:40'),
-(9, 'Nguyễn Phi Yến', '328119182', 123456789, 'thanglong2098@gmail.com', '2019-05-26 05:01:17', '2019-05-26 05:01:17'),
-(10, 'Nguyễn Phi Yến', '328119182', 123, 'thanglong2098@gmail.com', '2019-05-26 05:06:47', '2019-05-26 05:06:47'),
-(14, 'Hồ Thái Thăng', '0328119182', 2147483647, '16521095@gm.uit.edu.vn', '2019-06-07 03:16:26', '2019-06-07 03:16:26'),
-(15, 'Hồ Thái Thăng', '0328119182', 2147483647, '16521095@gm.uit.edu.vn', '2019-06-07 03:17:01', '2019-06-07 03:17:01'),
-(16, 'Hồ Thái Thăng', '0328119182', 2147483647, '16521095@gm.uit.edu.vn', '2019-06-07 03:17:22', '2019-06-07 03:17:22'),
-(17, 'Hồ Thái Thăng', '328119182', 2147483647, 'thanglong2098@gmail.com', '2019-06-07 03:24:39', '2019-06-07 03:24:39'),
-(18, 'Hồ Thái Thăng', '328119182', 2147483647, 'thanglong2098@gmail.com', '2019-06-07 03:26:12', '2019-06-07 03:26:12'),
-(19, 'Hồ Thái Thăng', '328119182', 2147483647, 'thanglong2098@gmail.com', '2019-06-07 03:26:27', '2019-06-07 03:26:27'),
-(20, 'Hồ Thái Thăng', '328119182', 2147483647, 'thanglong2098@gmail.com', '2019-06-07 03:28:07', '2019-06-07 03:28:07'),
-(21, 'Hồ Thái Thăng', '328119182', 2147483647, 'thanglong2098@gmail.com', '2019-06-07 03:32:42', '2019-06-07 03:32:42'),
-(22, 'Hồ Thái Thăng', '328119182', 2147483647, 'thanglong2098@gmail.com', '2019-06-07 03:47:58', '2019-06-07 03:47:58'),
-(23, 'Hồ Thái Thăng', '0328119182', 2147483647, 'thanglong2098@gmail.com', '2019-06-09 12:35:47', '2019-06-09 12:35:47'),
-(24, 'Hồ Thái Thăng', '0328119182', 2147483647, 'thanglong2098@gmail.com', '2019-06-09 12:38:54', '2019-06-09 12:38:54'),
-(25, 'Hồ Thái Thăng', '0328119182', 2147483647, 'thanglong2098@gmail.com', '2019-06-09 12:43:10', '2019-06-09 12:43:10'),
-(26, 'Hồ Thái Thăng', '328119182', 1321459787, 'thanglong2098@gmail.com', '2019-06-09 12:43:40', '2019-06-09 12:43:40'),
-(27, 'Nguyễn Phi Yến', '0328119182', 2147483647, 'thanglong2098@gmail.com', '2019-06-09 12:45:01', '2019-06-09 12:45:01'),
-(28, 'Nguyễn Phi Yến', '0328119182', 2147483647, 'thanglong2098@gmail.com', '2019-06-09 12:47:06', '2019-06-09 12:47:06'),
-(29, 'Hồ Thái Thăng', '0328119182', 2147483647, 'thanglong2098@gmail.com', '2019-06-09 12:50:55', '2019-06-09 12:50:55'),
-(30, 'Hồ Thái Thăng', '6328119182', 2147483647, 'thanglong2098@gmail.com', '2019-06-09 12:52:05', '2019-06-09 12:52:05');
 
 -- --------------------------------------------------------
 
@@ -369,19 +309,21 @@ CREATE TABLE `employees` (
   `empl_identity_card` varchar(12) COLLATE utf8_unicode_ci NOT NULL,
   `empl_start_date` date NOT NULL,
   `empl_basic_salary` double NOT NULL,
+  `empl_avatar` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `empl_status` tinyint(4) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `employees`
 --
 
-INSERT INTO `employees` (`empl_id`, `empl_name`, `empl_sex`, `empl_email`, `empl_phone`, `empl_address`, `empl_birthday`, `empl_identity_card`, `empl_start_date`, `empl_basic_salary`, `empl_status`, `created_at`, `updated_at`) VALUES
-(8, 'thang thai', 0, 'thanglong2098@gmail.com', '0328119182', 'thu duc', '1998-04-25', '0147258369', '2018-05-08', 1000000, 0, '2019-05-12 21:13:11', '2019-06-09 16:30:56'),
-(10, 'thang thai', 0, 'thanglong2098@gmail.com', '328119182', 'thu duc', '1998-04-25', '01472583693', '2018-05-08', 1000000, 0, '2019-05-12 21:36:27', '2019-05-12 21:36:27'),
-(11, 'thang thai', 1, 'thanglong2098@gmail.com', '0328119182', 'thu duc', '1998-04-25', '014725836904', '2018-05-08', 20, 0, '2019-05-12 21:42:29', '2019-05-12 21:42:29');
+INSERT INTO `employees` (`empl_id`, `empl_name`, `empl_sex`, `empl_email`, `empl_phone`, `empl_address`, `empl_birthday`, `empl_identity_card`, `empl_start_date`, `empl_basic_salary`, `empl_avatar`, `empl_status`, `created_at`, `updated_at`) VALUES
+(8, 'thang thai', 0, 'thanglong2098@gmail.com', '0328119182', 'thu duc', '1998-04-25', '0147258369', '2018-05-08', 1000000, 'logo.png', 0, '2019-05-12 21:13:11', '2019-06-11 18:21:15'),
+(10, 'thang thai', 0, 'thanglong2098@gmail.com', '328119182', 'thu duc', '1998-04-25', '01472583693', '2018-05-08', 1000000, 'Save.png', 0, '2019-05-12 21:36:27', '2019-06-11 18:23:09'),
+(11, 'thang thai', 1, 'thanglong2098@gmail.com', '0328119182', 'thu duc', '1998-04-25', '014725836904', '2018-05-08', 20, '', 0, '2019-05-12 21:42:29', '2019-05-12 21:42:29'),
+(12, 'thang thai', 0, 'thanglong2098@gmail.com', '328119182', 'thu duc', '2019-06-14', '798746541', '2019-06-13', 1000000, 'Untitled.png', 0, '2019-06-11 18:28:02', '2019-06-11 18:28:02');
 
 -- --------------------------------------------------------
 
@@ -395,23 +337,15 @@ CREATE TABLE `guarantee` (
   `gtd_propt` int(11) NOT NULL,
   `gtd_serial` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `gtd_required_content` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `gtd_content` text COLLATE utf8_unicode_ci,
+  `gtd_content` text COLLATE utf8_unicode_ci DEFAULT NULL,
   `gtd_empl_receive` int(11) NOT NULL,
   `gtd_date_receive` date NOT NULL,
   `gtd_empl_reimburse` int(11) DEFAULT NULL,
   `gtd_date_reimburse` date DEFAULT NULL,
-  `gtd_status` tinyint(5) NOT NULL DEFAULT '0',
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `gtd_status` tinyint(5) NOT NULL DEFAULT 0,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Đang đổ dữ liệu cho bảng `guarantee`
---
-
-INSERT INTO `guarantee` (`gtd_id`, `gtd_orders`, `gtd_propt`, `gtd_serial`, `gtd_required_content`, `gtd_content`, `gtd_empl_receive`, `gtd_date_receive`, `gtd_empl_reimburse`, `gtd_date_reimburse`, `gtd_status`, `created_at`, `updated_at`) VALUES
-(1, 3, 1, '123456789', 'Loa chập chần', 'Thay loa mới hoàn toàn', 8, '2019-05-29', 8, '2019-05-29', 3, '2019-05-29 09:24:54', '2019-05-29 13:08:05'),
-(8, 4, 2, '798456', 'hư màn hình', NULL, 8, '2019-05-31', NULL, NULL, 0, '2019-05-31 04:59:47', '2019-05-31 04:59:47');
 
 -- --------------------------------------------------------
 
@@ -428,53 +362,70 @@ CREATE TABLE `invoice` (
   `invo_total_prod` int(11) NOT NULL,
   `invo_total_price` double NOT NULL,
   `invo_status` tinyint(4) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `invo_date_approved` date DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Bẫy `invoice`
 --
 DELIMITER $$
-CREATE TRIGGER `insert_invoice` AFTER INSERT ON `invoice` FOR EACH ROW BEGIN
-	DECLARE flag INT;
-    DECLARE year INT;
-    DECLARE month INT;
-    DECLARE spending_money DOUBLE;
-    
-    SET month = month(NEW.invo_date), year = year(NEW.invo_date);
-    
-    SELECT COUNT(*) INTO flag FROM revenue WHERE revenue.reve_month = month AND revenue.year = year;
-    
-    IF(flag = 0) THEN
-    BEGIN
-    	INSERT INTO `revenue` (`reve_month`, `reve_year`, `reve_sale`, `reve_buy`, `reve_salary`, `reve_income`) VALUES (month, year, '0', NEW.invo_total_price, '0', '0');
-    END;
-    ELSE
-    BEGIN
-    	SELECT revenue.reve_buy INTO spending_money FROM revenue WHERE revenue.reve_month = month AND revenue.reve_year = year;
-        
-        SET spending_money = spending_money + NEW.invo_total_price;
-        
-        UPDATE revenue SET revenue.reve_buy = spending_money WHERE revenue.reve_month = month AND revenue.reve_year = year;
-    END;
+CREATE TRIGGER `approved_invoice` AFTER UPDATE ON `invoice` FOR EACH ROW BEGIN 
+DECLARE done INT DEFAULT 0; 
+DECLARE  INT; 
+DECLARE  INT; 
+DECLARE invodetail_cursor CURSOR FOR
+	SELECT invdt_propt, invdt_quantity
+    	FROM invoicedetail
+        WHERE invdt_invo = NEW.invo_id;
+DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
+IF NEW.invo_status = 1 THEN
+    OPEN invodetail_cursor;
+    read_loop: LOOP
+    FETCH invodetail_cursor INTO ,;
+    IF done THEN
+    LEAVE read_loop;
     END IF;
+    UPDATE product_options SET propt_quantity = propt_quantity +  WHERE propt_id = ; 
+    END LOOP; 
+END IF; 
+CLOSE invodetail_cursor; 
 END
 $$
 DELIMITER ;
 DELIMITER $$
 CREATE TRIGGER `update_invoice` BEFORE UPDATE ON `invoice` FOR EACH ROW BEGIN
+    DECLARE flag INT;
     DECLARE year INT;
     DECLARE month INT;
     DECLARE spending_money DOUBLE;
     
-    SET month = month(NEW.invo_date), year = year(NEW.invo_date);
+    IF (NEW.invo_status = 1) THEN
+    BEGIN
+    	SET NEW.invo_date_approved = date(now());
+    END;
+    ELSEIF (NEW.invo_status = 0) THEN
+    BEGIN
+    	 SET month = month(NEW.invo_date), year = year(NEW.invo_date);
     
-    SELECT revenue.reve_buy INTO spending_money FROM revenue WHERE revenue.reve_month = month AND revenue.reve_year = year;
-        
-    SET spending_money = spending_money + NEW.invo_total_price - OLD.invo_total_price;
-        
-    UPDATE revenue SET revenue.reve_buy = spending_money WHERE revenue.reve_month = month AND revenue.reve_year = year;
+        SELECT COUNT(*) INTO flag FROM revenue WHERE revenue.reve_month = month AND revenue.reve_year = year;
+
+        IF(flag = 0) THEN
+        BEGIN
+            INSERT INTO `revenue` (`reve_month`, `reve_year`, `reve_sale`, `reve_buy`, `reve_salary`, `reve_income`) VALUES (month, year, '0', NEW.invo_total_price, '0', '0');
+        END;
+        ELSE
+        BEGIN
+            SELECT revenue.reve_buy INTO spending_money FROM revenue WHERE revenue.reve_month = month AND revenue.reve_year = year;
+
+            SET spending_money = spending_money + NEW.invo_total_price;
+
+            UPDATE revenue SET revenue.reve_buy = spending_money WHERE revenue.reve_month = month AND revenue.reve_year = year;
+        END;
+        END IF;
+    END;
+    END IF; 
 END
 $$
 DELIMITER ;
@@ -492,8 +443,8 @@ CREATE TABLE `invoicedetail` (
   `invdt_quantity` int(11) NOT NULL,
   `invdt_unit_price` double NOT NULL,
   `invdt_total` double NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -530,22 +481,9 @@ CREATE TABLE `orders` (
   `order_total_prod` int(11) NOT NULL,
   `order_total_price` double NOT NULL,
   `order_remember_token` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Đang đổ dữ liệu cho bảng `orders`
---
-
-INSERT INTO `orders` (`order_id`, `order_date`, `order_empl`, `order_cus`, `order_total_prod`, `order_total_price`, `order_remember_token`, `created_at`, `updated_at`) VALUES
-(3, '2019-05-24', 8, 3, 3, 77970000, 'Ibtx0dkoqKjapvRlpLXk1T1eAzCa31I1qHvgRLsF', '2019-05-24 02:56:44', '2019-05-24 03:44:30'),
-(4, '2019-05-26', 8, 8, 3, 77970000, 'PznHsmQInZTruo8Vrr0DfGCiqMgEotJcrgyMOFck', '2019-05-26 04:02:53', '2019-05-26 04:02:53'),
-(5, '2019-05-26', 8, 9, 0, 0, 'J3DC96YZ0hA8WJLhXnN2klBQ89O0N9dj3ebxbZGc', '2019-05-26 05:01:17', '2019-05-26 05:01:17'),
-(6, '2019-05-26', 8, 10, 0, 0, 'J3DC96YZ0hA8WJLhXnN2klBQ89O0N9dj3ebxbZGc', '2019-05-26 05:06:47', '2019-05-26 05:06:47'),
-(7, '2019-06-09', 8, 28, 2, 47990000, 'D90YtNZ0AfXmKWuUuo2NCSvOCkciw8x6Czx83xs3', '2019-06-09 12:47:07', '2019-06-09 12:47:07'),
-(8, '2019-06-09', 8, 29, 2, 17780000, 'D90YtNZ0AfXmKWuUuo2NCSvOCkciw8x6Czx83xs3', '2019-06-09 12:50:55', '2019-06-09 12:50:55'),
-(9, '2019-06-09', 8, 30, 1, 17990000, 'D90YtNZ0AfXmKWuUuo2NCSvOCkciw8x6Czx83xs3', '2019-06-09 12:52:05', '2019-06-09 12:52:05');
 
 --
 -- Bẫy `orders`
@@ -618,25 +556,9 @@ CREATE TABLE `ordersdetail` (
   `orddt_unit_price` double NOT NULL,
   `orddt_promotion_price` double NOT NULL,
   `orddt_total` double NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Đang đổ dữ liệu cho bảng `ordersdetail`
---
-
-INSERT INTO `ordersdetail` (`orddt_id`, `orddt_order`, `orddt_propt`, `orddt_quantity`, `orddt_unit_price`, `orddt_promotion_price`, `orddt_total`, `created_at`, `updated_at`) VALUES
-(1, 3, 1, 2, 29990000, 29990000, 59980000, '2019-05-24 02:56:44', '2019-05-24 03:58:38'),
-(2, 3, 5, 1, 17990000, 17990000, 17990000, '2019-05-24 02:56:44', '2019-05-24 03:58:24'),
-(3, 4, 1, 1, 29990000, 29990000, 29990000, '2019-05-26 04:02:53', '2019-05-26 04:02:53'),
-(4, 4, 2, 1, 29990000, 29990000, 29990000, '2019-05-26 04:02:53', '2019-05-26 04:02:53'),
-(5, 4, 4, 1, 17990000, 17990000, 17990000, '2019-05-26 04:02:53', '2019-05-26 04:02:53'),
-(6, 7, 2, 1, 29990000, 29990000, 29990000, '2019-06-09 12:47:07', '2019-06-09 12:47:07'),
-(7, 7, 5, 1, 18000000, 18000000, 18000000, '2019-06-09 12:47:07', '2019-06-09 12:47:07'),
-(8, 8, 10, 1, 9790000, 9790000, 9790000, '2019-06-09 12:50:55', '2019-06-09 12:50:55'),
-(9, 8, 23, 1, 7990000, 7990000, 7990000, '2019-06-09 12:50:55', '2019-06-09 12:50:55'),
-(10, 9, 4, 1, 17990000, 17990000, 17990000, '2019-06-09 12:52:05', '2019-06-09 12:52:05');
 
 -- --------------------------------------------------------
 
@@ -659,8 +581,8 @@ CREATE TABLE `password_resets` (
 CREATE TABLE `permission` (
   `perm_id` int(11) NOT NULL,
   `perm_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -688,11 +610,11 @@ CREATE TABLE `product` (
   `prod_warranty_period` int(11) NOT NULL,
   `prod_detail` text COLLATE utf8_unicode_ci NOT NULL,
   `prod_status` tinyint(4) NOT NULL,
-  `prod_new` tinyint(1) NOT NULL DEFAULT '1',
-  `prod_featured` tinyint(1) NOT NULL DEFAULT '1',
+  `prod_new` tinyint(1) NOT NULL DEFAULT 1,
+  `prod_featured` tinyint(1) NOT NULL DEFAULT 1,
   `prod_poster` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -727,8 +649,8 @@ CREATE TABLE `product_image` (
   `pimg_id` int(11) NOT NULL,
   `pimg_prod` int(11) NOT NULL,
   `pimg_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -768,8 +690,8 @@ CREATE TABLE `product_options` (
   `propt_rom` varchar(11) COLLATE utf8_unicode_ci NOT NULL,
   `propt_price` double NOT NULL,
   `propt_quantity` int(11) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -777,10 +699,10 @@ CREATE TABLE `product_options` (
 --
 
 INSERT INTO `product_options` (`propt_id`, `propt_prod`, `propt_color`, `propt_ram`, `propt_rom`, `propt_price`, `propt_quantity`, `created_at`, `updated_at`) VALUES
-(1, 23, 'Xám', 4, '64 gb', 29990000, 5, '2019-05-21 11:33:18', '2019-05-22 13:11:39'),
-(2, 23, 'Bạc', 4, '128 gb', 29990000, 5, '2019-05-21 11:33:18', '2019-05-22 13:11:39'),
-(4, 27, 'Đen', 8, '128 gb', 17990000, 0, '2019-05-22 04:31:41', '2019-05-22 04:31:41'),
-(5, 27, 'Trắng', 8, '128 gb', 18000000, 0, '2019-05-22 04:31:41', '2019-06-06 10:09:24'),
+(1, 23, 'Xám', 4, '64 gb', 29990000, 0, '2019-05-21 11:33:18', '2019-06-12 09:33:22'),
+(2, 23, 'Bạc', 4, '128 gb', 29990000, 0, '2019-05-21 11:33:18', '2019-06-12 09:33:22'),
+(4, 27, 'Đen', 8, '128 gb', 17990000, 0, '2019-05-22 04:31:41', '2019-06-12 09:33:22'),
+(5, 27, 'Trắng', 8, '128 gb', 18000000, 0, '2019-05-22 04:31:41', '2019-06-12 09:33:22'),
 (6, 23, 'Gold', 4, '512 gb', 3000, 0, '2019-05-22 11:21:28', '2019-05-22 11:26:38'),
 (8, 28, 'Đen', 2, '32 gb', 10240000, 0, '2019-05-29 10:13:39', '2019-05-29 10:13:39'),
 (9, 29, 'Vàng Đồng', 2, '32 gb', 9990000, 0, '2019-05-29 10:26:30', '2019-05-29 10:26:30'),
@@ -797,7 +719,7 @@ INSERT INTO `product_options` (`propt_id`, `propt_prod`, `propt_color`, `propt_r
 (20, 36, 'Xanh Dương', 6, '128 gb', 7490000, 0, '2019-05-29 10:43:17', '2019-05-29 10:43:17'),
 (21, 37, 'Xanh Dương', 6, '64 gb', 7990000, 0, '2019-05-29 10:46:04', '2019-05-29 10:46:04'),
 (22, 37, 'Đen', 6, '64 gb', 7990000, 0, '2019-05-29 10:46:04', '2019-05-29 10:46:04'),
-(23, 38, 'Đỏ', 6, '128 gb', 7990000, 12, '2019-05-29 11:05:22', '2019-06-20 03:54:33'),
+(23, 38, 'Đỏ', 6, '128 gb', 7990000, 0, '2019-05-29 11:05:22', '2019-06-12 09:33:22'),
 (24, 38, 'Xanh Dương', 6, '128 gb', 7990000, 0, '2019-05-29 11:05:22', '2019-06-06 14:27:34'),
 (25, 39, 'Tím', 4, '128 gb', 5990000, 0, '2019-05-29 11:16:33', '2019-05-29 11:16:33'),
 (26, 39, 'Xanh Dương', 4, '128 gb', 5990000, 0, '2019-05-29 11:16:33', '2019-05-29 11:16:33'),
@@ -830,8 +752,8 @@ CREATE TABLE `promotion` (
   `prom_unit_price` double NOT NULL,
   `prom_promotion_price` double NOT NULL,
   `prom_status` int(11) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -843,6 +765,16 @@ INSERT INTO `promotion` (`prom_id`, `prom_name`, `prom_propt`, `prom_start_date`
 (6, 'Back to school 2019', 9, '2019-06-12', '2019-06-16', 20, 9990000, 7992000, 1, '2019-06-10 17:52:10', '2019-06-12 03:45:05'),
 (7, 'Back to school 2019', 4, '2019-06-12', '2019-06-16', 15, 17990000, 15291500, 1, '2019-06-11 03:25:35', '2019-06-12 03:45:05'),
 (8, 'Back to school 2019', 23, '2019-06-12', '2019-06-16', 10, 7990000, 7191000, 1, '2019-06-11 03:25:35', '2019-06-12 03:45:05');
+
+--
+-- Bẫy `promotion`
+--
+DELIMITER $$
+CREATE TRIGGER `insert_promotion` BEFORE INSERT ON `promotion` FOR EACH ROW BEGIN
+	SET NEW.prom_promotion_price = NEW.prom_unit_price - NEW.prom_unit_price*(NEW.prom_percent/100);
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -858,8 +790,8 @@ CREATE TABLE `provider` (
   `prov_fax` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `prov_address` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `prov_desc` text COLLATE utf8_unicode_ci NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -884,16 +816,9 @@ CREATE TABLE `revenue` (
   `reve_buy` double NOT NULL,
   `reve_salary` double NOT NULL,
   `reve_income` double NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Đang đổ dữ liệu cho bảng `revenue`
---
-
-INSERT INTO `revenue` (`reve_id`, `reve_month`, `reve_year`, `reve_quarter`, `reve_sale`, `reve_buy`, `reve_salary`, `reve_income`, `created_at`, `updated_at`) VALUES
-(1, 6, 2019, 2, 83760000, 0, 50063100, 33696900, '2019-06-09 12:47:07', '2019-06-09 12:52:05');
 
 --
 -- Bẫy `revenue`
@@ -937,9 +862,9 @@ CREATE TABLE `slide` (
   `slide_id` int(11) NOT NULL,
   `slide_caption` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `slide_img` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `slide_status` tinyint(1) NOT NULL DEFAULT '1',
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `slide_status` tinyint(1) NOT NULL DEFAULT 1,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -976,9 +901,9 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`username`, `password`, `empl_id`, `perm_id`, `status`, `remember_token`, `created_at`, `updated_at`) VALUES
-('admin', '$2y$10$lT/JBapfQt0LdVNnjVax1exxL/QxE3etpABXvhQfE/IOSOb4jVdfC', 8, 1, 0, 'QNrK2SsEBI6CmfiBPxWpFcUtSoYQDPpqeigkiIdt9iHxwqmpfce7OKJ5B5Vg', NULL, NULL),
+('admin', '$2y$10$lT/JBapfQt0LdVNnjVax1exxL/QxE3etpABXvhQfE/IOSOb4jVdfC', 8, 1, 0, 'mp9azJo01gcDi2k7hbKusi6dfTvRo7hO2BtF1jbB1vukep8aBdKCNf5V0Nuq', NULL, NULL),
 ('nv10', '$2y$10$fp6FM2ZFO/sd9ZCBISDwmODnta4ILoWKJC8izJZKUdpTjwWLtyIw2', 10, 2, 0, '6EvC0M046TGobcmm9ocxbuzrA30xp2mxKTsUx03H', '2019-05-28 09:24:45', '2019-05-28 11:05:14'),
-('nv11', '$2y$10$FTdJq5JRhwRJgWV4APBsQ.N/dUhnKaCOX3sed4tQ4AT3Y3ek/Y1DK', 11, 3, 0, '6EvC0M046TGobcmm9ocxbuzrA30xp2mxKTsUx03H', '2019-05-28 10:42:29', '2019-05-28 10:42:29');
+('nv11', '$2y$10$FTdJq5JRhwRJgWV4APBsQ.N/dUhnKaCOX3sed4tQ4AT3Y3ek/Y1DK', 11, 3, 0, '6EvC0M046TGobcmm9ocxbuzrA30xp2mxKTsUx03Hj', '2019-05-28 10:42:29', '2019-05-28 10:42:29');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -1207,7 +1132,7 @@ ALTER TABLE `customer`
 -- AUTO_INCREMENT cho bảng `employees`
 --
 ALTER TABLE `employees`
-  MODIFY `empl_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `empl_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT cho bảng `guarantee`
@@ -1219,13 +1144,13 @@ ALTER TABLE `guarantee`
 -- AUTO_INCREMENT cho bảng `invoice`
 --
 ALTER TABLE `invoice`
-  MODIFY `invo_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `invo_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT cho bảng `invoicedetail`
 --
 ALTER TABLE `invoicedetail`
-  MODIFY `invdt_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `invdt_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT cho bảng `migrations`
@@ -1273,7 +1198,7 @@ ALTER TABLE `product_options`
 -- AUTO_INCREMENT cho bảng `promotion`
 --
 ALTER TABLE `promotion`
-  MODIFY `prom_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `prom_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT cho bảng `provider`
