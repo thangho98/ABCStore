@@ -1,5 +1,5 @@
 @extends('admin.layout.master')
-@section('title','Thêm khuyến mãi')
+@section('title','Sửa khuyến mãi')
 @section('add_css_and_script')
 <!-- Page JS Plugins CSS -->
 <!-- Page JS Plugins CSS -->
@@ -45,23 +45,23 @@
             <div class="block-content">
                 <div class="row">
                     <div class="col-md-12">
-                        <form id="FormAdd" action="{{asset('admin/promotion/add')}}" method="POST">
+                        <form id="FormEdit" action="{{asset('admin/promotion/edit/'.$prom->prom_id)}}" method="POST">
                             <div class="form-group">
                                 <label>Tên Khuyến mãi <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="inputName" name="name" placeholder="Nhập tên khuyến mãi"
+                                <input type="text" class="form-control" value="{{$prom->prom_name}}"  id="inputName" name="name" placeholder="Nhập tên khuyến mãi"
                                     required>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label>Ngày bắt đầu <span class="text-danger">*</span></label>
                                     <input type="text" class="js-datepicker form-control" id="inputStartDate" name="start_date"
-                                        data-week-start="1" data-autoclose="true" data-today-highlight="true"
+                                        data-week-start="1" data-autoclose="true" data-today-highlight="true" value="{{date_format(date_create($prom->prom_start_date),"d-m-Y")}}"
                                         data-date-format="dd-mm-yyyy" placeholder="dd-mm-yyyy" required>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label>Ngày kết thúc <span class="text-danger">*</span></label>
                                     <input type="text" class="js-datepicker form-control" id="inputEndDate" name="end_date"
-                                        data-week-start="1" data-autoclose="true" data-today-highlight="true"
+                                        data-week-start="1" data-autoclose="true" data-today-highlight="true" value="{{date_format(date_create($prom->prom_end_date),"d-m-Y")}}"
                                         data-date-format="dd-mm-yyyy" placeholder="dd-mm-yyyy" required>
                                 </div>
                             </div>
@@ -158,8 +158,8 @@
                 </div>
                 <div class="tile-footer-3">
                     <aside class="px-3">
-                        <button class="btn btn-primary" type="button" id="submitAddPromotion">Thêm</button>
-                        <button class="btn btn-danger" type="button" id="cancelAddPromotion">Hủy</button>
+                        <button class="btn btn-primary" type="button" id="submitEditPromotion">Sửa</button>
+                        <button class="btn btn-danger" type="button" id="cancelEditPromotion">Hủy</button>
                     </aside>
                 <div>
                 </div>
@@ -244,7 +244,7 @@ $(document).ready(function() {
         });
     });
 
-    $('#cancelAddPromotion').click(function(){
+    $('#cancelEidtPromotion').click(function(){
         swal({
 			title: "Bạn có muốn hủy?",
 			text: "Sau khi hủy, bạn sẽ không thể khôi phục đối tượng này!",
@@ -263,8 +263,8 @@ $(document).ready(function() {
 			}
 		});
     });
-    $('#submitAddPromotion').click(function(){
-        $form = $('#FormAdd');
+    $('#submitEditPromotion').click(function(){
+        $form = $('#FormEdit');
 
         if($form.valid()){
             let startDate = toDate($('#inputStartDate').val());

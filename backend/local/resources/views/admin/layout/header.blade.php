@@ -60,7 +60,7 @@
                     <img class="rounded" @if (Session::get('employees')->empl_avatar != '')
                         src="{{asset('local/storage/app/images/employees/'.Session::get('employees')->empl_avatar)}}"
                     @else
-                        src="assets/media/avatars/avatar10.jpg"
+                        src="{{asset('public/admin')}}/assets/media/avatars/avatar10.jpg"
                     @endif  alt="Header Avatar"
                         style="width: 18px;">
                     <span class="d-none d-sm-inline-block ml-1">{{Session::get('employees')->empl_name}}</span>
@@ -73,7 +73,7 @@
                         @if (Session::get('employees')->empl_avatar != '')
                         src="{{asset('local/storage/app/images/employees/'.Session::get('employees')->empl_avatar)}}"
                     @else
-                        src="assets/media/avatars/avatar10.jpg"
+                        src="{{asset('public/admin')}}/assets/media/avatars/avatar10.jpg"
                     @endif alt="">
                     </div>
                     <div class="p-2">

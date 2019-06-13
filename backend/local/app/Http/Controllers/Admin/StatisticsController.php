@@ -148,4 +148,47 @@ class StatisticsController extends Controller
 
         return view('admin.statistics_product',$data);
     }
+
+    public function getStatisticsProductOptions(Request $req)
+    {
+        if(empty($req->selectType)){
+            $data['selectType'] = '0';
+        }
+        else{
+            $data['selectType'] = $req->selectType;
+        }
+        
+        switch ($data['selectType']) {
+            case '0':
+                $data['product_statistics'] = DB::select('CALL `statistics_product_all`();');
+                break;
+            case '1':
+                $data['month'] = $req->month;
+                $data['year'] = $req->year;
+                $data['product_statistics'] = DB::select(' CALL `statistics_product_month`(?,?)',[$req->month,$req->year]);
+                break;
+            case '2':
+                $data['quarter'] = $req->quarter;
+                $data['year'] = $req->year;
+                $data['product_statistics'] = DB::select(' CALL `statistics_product_quarter`(?,?)',[$req->quarter,$req->year]);
+                break;
+            case '3':
+                $data['year'] = $req->year;
+                $data['product_statistics'] = DB::select(' CALL `statistics_product_year`(?)',[$req->year]);
+                break;
+        }
+
+        //dd($data);
+
+        if(!empty($data['product_statistics'])){
+            $data['sum_quantity'] = 0;
+            $data['sum_price'] = 0;
+            foreach ($data['product_statistics'] as $key => $value) {
+                $data['sum_quantity'] += $value->quantity;
+                $data['sum_price'] += $value->price;
+            }
+        }
+
+        return view('admin.statistics_product',$data);
+    }
 }

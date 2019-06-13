@@ -1,15 +1,15 @@
 @extends('admin.layout.master')
 @section('title','Khuyến mãi')
 @section('add_css_and_script')
-<link rel="stylesheet" href="assets/js/plugins/datatables/dataTables.bootstrap4.css">
-<link rel="stylesheet" href="assets/js/plugins/datatables/buttons-bs4/buttons.bootstrap4.min.css">
+<link rel="stylesheet" href="{{asset('public/admin')}}/assets/js/plugins/datatables/dataTables.bootstrap4.css">
+<link rel="stylesheet" href="{{asset('public/admin')}}/assets/js/plugins/datatables/buttons-bs4/buttons.bootstrap4.min.css">
 
 <!-- Page JS Plugins CSS -->
-<link rel="stylesheet" href="assets/js/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css">
-<link rel="stylesheet" href="assets/js/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css">
-<link rel="stylesheet" href="assets/js/plugins/select2/css/select2.min.css">
-<link rel="stylesheet" href="assets/js/plugins/ion-rangeslider/css/ion.rangeSlider.css">
-<link rel="stylesheet" href="assets/css/mystyle.css">
+<link rel="stylesheet" href="{{asset('public/admin')}}/assets/js/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css">
+<link rel="stylesheet" href="{{asset('public/admin')}}/assets/js/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css">
+<link rel="stylesheet" href="{{asset('public/admin')}}/assets/js/plugins/select2/css/select2.min.css">
+<link rel="stylesheet" href="{{asset('public/admin')}}/assets/js/plugins/ion-rangeslider/css/ion.rangeSlider.css">
+<link rel="stylesheet" href="{{asset('public/admin')}}/assets/css/mystyle.css">
 @endsection
 
 @section('main')
@@ -63,11 +63,8 @@
                                             onclick="$('input[name*=\'selected\']').prop('checked', this.checked);">
                                     </th>
                                     <th class="text-center orderby">Tên KM</th>
-                                    <th class="orderby">Tên Phiên Bản</th>
                                     <th class="d-none d-sm-table-cell orderby">Ngày bắt đầu</th>
                                     <th class="d-none d-sm-table-cell orderby">Ngày kết thúc
-                                    </th>
-                                    <th class="d-none d-sm-table-cell orderby">Hệ số km
                                     </th>
                                     <th class="d-none d-sm-table-cell orderby">Trạng thái
                                     </th>
@@ -81,17 +78,11 @@
                                         <input @if ($item->prom_status != 0) disabled @else name="selected[]" @endif type="checkbox"  value="{{$item->prom_id}}">
                                     </td>
                                     <td class="font-w600 font-size-sm">{{$item->prom_name}}</td>
-                                    <td class="font-w600 font-size-sm">
-                                        {{$item->prod_name}} {{$item->propt_ram}} gb {{$item->propt_rom}} {{$item->propt_color}}
-                                    </td>
                                     <td class="text-center d-sm-table-cell">
                                         {{$item->prom_start_date}}
                                     </td>
                                     <td class="text-center d-sm-table-cell">
                                         {{$item->prom_end_date}}
-                                    </td>
-                                    <td class="text-center d-sm-table-cell">
-                                        {{$item->prom_percent}} %
                                     </td>
                                     <td class="d-none d-sm-table-cell">
                                         @if ($item->prom_status == 0)
@@ -108,10 +99,12 @@
                                                 data-toggle="tooltip" onclick="showDetail({{$item->prom_id}})">
                                                 <i class="fa fa-fw fa-eye"></i>
                                             </button>
-                                            {{-- <button type="button" class="btn btn-sm btn-warning" data-toggle="tooltip"
-                                                onclick="showEdit({{$item->prom_id}})" title="Sửa">
+                                            <a class="btn btn-sm btn-warning" data-toggle="tooltip"
+                                                @if ($item->prom_status == 0)
+                                                    href="{{asset('admin/promotion/edit/'.$item->prom_id)}}"
+                                                @endif title="Sửa">
                                                 <i class="fa fa-fw fa-pencil-alt"></i>
-                                            </button> --}}
+                                            </a>
                                         </div>
                                     </td>
                                 </tr>
@@ -134,27 +127,27 @@
 </div>
 @endsection
 @section('scriptjs')
-<script src="assets/js/plugins/sweetalert.min.js"></script>
+<script src="{{asset('public/admin')}}/assets/js/plugins/sweetalert.min.js"></script>
 
-<script src="assets/js/plugins/datatables/jquery.dataTables.min.js"></script>
-<script src="assets/js/plugins/datatables/dataTables.bootstrap4.min.js"></script>
-<script src="assets/js/plugins/datatables/buttons/dataTables.buttons.min.js"></script>
-<script src="assets/js/plugins/datatables/buttons/buttons.flash.min.js"></script>
-<script src="assets/js/plugins/datatables/buttons/buttons.print.min.js"></script>
-<script src="assets/js/plugins/datatables/buttons/buttons.html5.min.js"></script>
-<script src="assets/js/plugins/datatables/buttons/buttons.colVis.min.js"></script>
-<script src="assets/js/plugins/datatables/jszip/jszip.min.js"></script>
+<script src="{{asset('public/admin')}}/assets/js/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="{{asset('public/admin')}}/assets/js/plugins/datatables/dataTables.bootstrap4.min.js"></script>
+<script src="{{asset('public/admin')}}/assets/js/plugins/datatables/buttons/dataTables.buttons.min.js"></script>
+<script src="{{asset('public/admin')}}/assets/js/plugins/datatables/buttons/buttons.flash.min.js"></script>
+<script src="{{asset('public/admin')}}/assets/js/plugins/datatables/buttons/buttons.print.min.js"></script>
+<script src="{{asset('public/admin')}}/assets/js/plugins/datatables/buttons/buttons.html5.min.js"></script>
+<script src="{{asset('public/admin')}}/assets/js/plugins/datatables/buttons/buttons.colVis.min.js"></script>
+<script src="{{asset('public/admin')}}/assets/js/plugins/datatables/jszip/jszip.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-<script src="assets/js/plugins/datatables/pdfmake/vfs_fonts.js"></script>
+<script src="{{asset('public/admin')}}/assets/js/plugins/datatables/pdfmake/vfs_fonts.js"></script>
 
 <!-- Page JS Plugins -->
-<script src="assets/js/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
-<script src="assets/js/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js"></script>
-<script src="assets/js/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
-<script src="assets/js/plugins/select2/js/select2.full.min.js"></script>
-<script src="assets/js/plugins/jquery.maskedinput/jquery.maskedinput.min.js"></script>
-<script src="assets/js/plugins/ion-rangeslider/js/ion.rangeSlider.min.js"></script>
-<script src="assets/js/plugins/jquery-validation/jquery.validate.min.js"></script>
+<script src="{{asset('public/admin')}}/assets/js/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script src="{{asset('public/admin')}}/assets/js/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js"></script>
+<script src="{{asset('public/admin')}}/assets/js/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
+<script src="{{asset('public/admin')}}/assets/js/plugins/select2/js/select2.full.min.js"></script>
+<script src="{{asset('public/admin')}}/assets/js/plugins/jquery.maskedinput/jquery.maskedinput.min.js"></script>
+<script src="{{asset('public/admin')}}/assets/js/plugins/ion-rangeslider/js/ion.rangeSlider.min.js"></script>
+<script src="{{asset('public/admin')}}/assets/js/plugins/jquery-validation/jquery.validate.min.js"></script>
 
 <!-- Page JS Helpers (BS Datepicker + BS Colorpicker + BS Maxlength + Select2 + Masked Inputs + Ion Range Slider plugins) -->
 <script>jQuery(function () { One.helpers(['datepicker', 'colorpicker', 'maxlength', 'select2', 'masked-inputs', 'rangeslider']); });</script>
@@ -165,7 +158,7 @@
         var table = $('#table-brand').DataTable({
             'columnDefs': [{
 
-                'targets': [0, 7], /* column index */
+                'targets': [0, 5], /* column index */
 
                 'orderable': false, /* true or false */
 
@@ -187,7 +180,7 @@
                 {
                     extend: 'copy',
                     exportOptions: {
-                        columns: [1, 2, 3, 4, 5, 6]
+                        columns: [1, 2, 3, 4]
                     },
                     text: 'Copy',
                     className: 'btn btn-sm btn-primary'
@@ -195,7 +188,7 @@
                 {
                     extend: 'csv',
                     exportOptions: {
-                        columns: [1, 2, 3, 4, 5, 6]
+                        columns: [1, 2, 3, 4]
                     },
                     text: 'Export to CSV',
                     className: 'btn btn-sm btn-primary',
@@ -211,7 +204,7 @@
                 {
                     extend: 'excel',
                     exportOptions: {
-                        columns: [1, 2, 3, 4, 5, 6]
+                        columns: [1, 2, 3, 4]
                     },
                     text: 'Export to xlsx',
                     className: 'btn btn-sm btn-primary',
@@ -227,7 +220,7 @@
                 {
                     extend: 'pdf',
                     exportOptions: {
-                        columns: [1, 2, 3, 4, 5, 6]
+                        columns: [1, 2, 3, 4]
                     },
                     text: 'Export to pdf',
                     className: 'btn btn-sm btn-primary',
@@ -243,7 +236,7 @@
                 {
                     extend: 'print',
                     exportOptions: {
-                        columns: [1, 2, 3, 4, 5, 6]
+                        columns: [1, 2, 3, 4]
                     },
                     text: 'Print',
                     className: 'btn btn-sm btn-primary',
@@ -264,7 +257,7 @@
         );
     });
 </script>
-<script src="assets/js/myscript.js"></script>
+<script src="{{asset('public/admin')}}/assets/js/myscript.js"></script>
 <script>
     function showDetail(prom_id) {
         // URL có kèm tham số number

@@ -1,6 +1,6 @@
 <div class="popup-form hidden" id="popup-form-edit">
     {{-- <base href="{{asset('public/admin')}}/">
-    <link rel="stylesheet" href="assets/js/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css"> --}}
+    <link rel="stylesheet" href="{{asset('public/admin')}}/assets/js/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css"> --}}
     <div class="content-popup">
         <div class="js-wizard-validation scrollbar content-form">
             <!-- Step Tabs -->
@@ -206,7 +206,7 @@
                                     <td class="text-left">
                                         <img id="image-edit-poster" class="thumbnail"
                                             @if ($prod->prod_poster == '')
-                                            src="assets/media/img/new_seo-10-75.png"
+                                            src="{{asset('public/admin')}}/assets/media/img/new_seo-10-75.png"
                                             @else
                                                 src="{{asset('local/storage/app/images/product/'.$prod->prod_poster)}}"
                                             @endif
@@ -375,7 +375,7 @@
         <tr id="image-row${indexAdd}">
             <td class="text-left">
                 <img id="image-add${indexAdd}" class="thumbnail"
-                    src="assets/media/img/new_seo-10-75.png" onclick="chooseAddImg(${indexAdd});"
+                    src="{{asset('public/admin')}}/assets/media/img/new_seo-10-75.png" onclick="chooseAddImg(${indexAdd});"
                     height="75px;" width="75px;">
                 <input type="file" hidden name="product_add_image[${indexAdd}][image]" value=""
                     id="input-image-add${indexAdd}" onchange="changeAddImg(this, ${indexAdd});" accept="image/*">

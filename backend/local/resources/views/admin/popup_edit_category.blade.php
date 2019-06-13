@@ -13,7 +13,7 @@
             <div class="form-group mt-4 col-1">
                 <img id="image-edit-{{$cate->cate_id}}" class="thumbnail"
                 @if ($cate->cate_icon == '')
-                    src="{{asset('public/admin/assets/media/img/new_seo-10-75.png')}}"
+                    src="{{asset('public/admin')}}/assets/media/img/new_seo-10-75.png"
                 @else
                     src="{{asset('local/storage/app/images/category/'.$cate->cate_icon)}}"
                 @endif  onclick="chooseEditImg('{{$cate->cate_id}}');" height="50px;" width="50px;">

@@ -134,8 +134,6 @@ class FrontendController extends Controller
             ->distinct('prod_id')
             ->orderBy('prom_id','desc')
             ->get();
-
-        
         
         return view('abcstore.index', $data);
     }

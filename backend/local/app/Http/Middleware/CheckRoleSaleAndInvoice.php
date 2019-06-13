@@ -16,7 +16,6 @@ class CheckRoleSaleAndInvoice
      */
     public function handle($request, Closure $next)
     {
-        dd($request->getRequestUri());
         $perm = Session::get('user')->perm_id;
         switch ($perm) {
             case 1:

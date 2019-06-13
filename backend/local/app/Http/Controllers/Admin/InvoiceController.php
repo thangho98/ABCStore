@@ -129,6 +129,9 @@ class InvoiceController extends Controller
         $data['invo'] = Invoice::find($id);
         $listInvoDetail = InvoiceDetail::where('invdt_invo', $id)->get();
         
+        if($data['invo'] != 0){
+            return redirect('admin/invoice/');
+        }
 
         $empl_id = Session::get('user')->empl_id;
         $session = 'invoice-'. $empl_id;
@@ -252,6 +255,7 @@ class InvoiceController extends Controller
         $session = 'invoice-'. $empl_id;
         
         Cart::session($session)->clear();
+        Session::forget($session);
         return redirect('admin/invoice/');
     }
 }

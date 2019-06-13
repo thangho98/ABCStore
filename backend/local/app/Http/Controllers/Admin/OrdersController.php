@@ -99,6 +99,11 @@ class OrdersController extends Controller
     public function getAddOrdersFromCart($id)
     {
         $carts = Carts::find($id);
+
+        if($carts->cart_status != 1){
+            return redirect('admin/orders/');
+        }
+
         $data['cus'] = Customer::find($carts->cart_cus);
         $empl_id = Session::get('user')->empl_id;
 
@@ -245,6 +250,7 @@ class OrdersController extends Controller
     {
         $empl_id = Session::get('user')->empl_id;
         Cart::session($empl_id)->clear();
+        Session::forget($empl_id);
         return redirect('admin/orders/');
     }
 }

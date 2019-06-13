@@ -84,7 +84,7 @@
                 @if ($empl->empl_avatar != '')
                     src="{{asset('local/storage/app/images/employees/'.$empl->empl_avatar)}}"
                 @else
-                    src="assets/media/img/new_seo-10-75.png"
+                    src="{{asset('public/admin')}}/assets/media/img/new_seo-10-75.png"
                 @endif
                     onclick="chooseEditImg('avatar');"  height="150px;" width="150px;">
                 <input type="file" hidden name="avatar" id="input-image-edit-avatar"
@@ -146,6 +146,6 @@
         }
     }
     </script>
-    <script src="assets/js/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+    <script src="{{asset('public/admin')}}/assets/js/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
     <script>jQuery(function () { One.helpers(['datepicker', 'colorpicker', 'maxlength', 'select2', 'masked-inputs', 'rangeslider']); });</script>
 </div>
