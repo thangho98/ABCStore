@@ -243,23 +243,22 @@ $(document).ready(function() {
             }
         });
     });
-
     $('#cancelAddPromotion').click(function(){
         swal({
 			title: "Bạn có muốn hủy?",
 			text: "Sau khi hủy, bạn sẽ không thể khôi phục đối tượng này!",
 			icon: "warning",
-			buttons: ["Không, hủy nó đi!", "Vâng, tôi chấp nhận!"],
+			buttons: ["Không, tôi muốn giữ nó lại!", "Vâng, tôi chấp nhận!"],
 			dangerMode: true,
 		}).then((willDelete) => {
 			if (willDelete) {
-                swal("Đã thoát!", "Đối tượng đã được xóa.", "success")
+                swal("Đã Hủy!", "Đối tượng đã được xóa.", "success")
                 .then((value) => {
                     window.location.href = '{{asset('admin/promotion/cancel')}}';
                 });
                             }
 			else {
-				swal("Đã hủy", "Đối tượng vẫn được giữ lại :)", "error");
+				swal("Đã thoát", "Đối tượng vẫn được giữ lại :)", "error");
 			}
 		});
     });
