@@ -25,10 +25,6 @@ class CheckRoleAdmin
             case 3:
                 return redirect()->intended('admin/guarantee');
                 break;
-
-            case 4:
-                return redirect()->intended('admin/invoice');
-                break;
         }
         return $next($request);
     }

@@ -40,7 +40,7 @@
         <div class="block">
             <div class="block-header row justify-content-end">
                 <aside class="py-2 mb-2">
-                    <a class="btn btn-primary" data-toggle="tooltip" title="Thêm"  @if (Session::get('user')->perm_id == 4) href="{{asset('admin/invoice/add')}}" @endif>
+                    <a class="btn btn-primary" data-toggle="tooltip" title="Thêm"  @if (Session::get('user')->perm_id == 2) href="{{asset('admin/invoice/add')}}" @endif>
                         <i class="fa fa-fw fa-plus"></i>
                     </a>
                     <button type="button" class="btn btn-success" onclick="location.reload();" data-toggle="tooltip" title="Làm mới">

@@ -17,7 +17,7 @@ $(document).ready(function () {
 	jQuery.extend(jQuery.validator.messages, {
 		required: "Trường này bắt buộc nhập.",
 		remote: "Please fix this field.",
-		email: "Please enter a valid email address.",
+		email: "Vui lòng nhập đúng định dạng email.",
 		url: "Please enter a valid URL.",
 		date: "Please enter a valid date.",
 		dateISO: "Please enter a valid date (ISO).",
@@ -30,8 +30,8 @@ $(document).ready(function () {
 		minlength: jQuery.validator.format("Please enter at least {0} characters."),
 		rangelength: jQuery.validator.format("Please enter a value between {0} and {1} characters long."),
 		range: jQuery.validator.format("Please enter a value between {0} and {1}."),
-		max: jQuery.validator.format("Please enter a value less than or equal to {0}."),
-		min: jQuery.validator.format("Please enter a value greater than or equal to {0}.")
+		max: jQuery.validator.format("Số lượng trong kho chỉ còn {0}."),
+		min: jQuery.validator.format("Số lượng phải lớn hơn hoặc bằng {0}.")
 	});
 
 	$('#demoNotify').click(function () {

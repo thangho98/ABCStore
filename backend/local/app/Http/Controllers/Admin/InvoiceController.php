@@ -13,9 +13,7 @@ use App\Models\Provider;
 use Auth;
 use DB;
 use Session;
-use App\InvoiceSession;
-
-use Illuminate\Support\Facades\Log;
+use Cart;
 
 class InvoiceController extends Controller
 {
@@ -31,22 +29,16 @@ class InvoiceController extends Controller
     public function getAddInvo()
     {
         $data['list_provider'] = Provider::all();
-        $empl_id = Session::get('user')->empl_id;
-        if(Session($empl_id)){
-            $invoiceSession = Session::get($empl_id);
-        }
-        else{
-            $invoiceSession = new InvoiceSession;
-            Session::put($empl_id, $invoiceSession);
-        }
         $data['list_prod'] = Product::where('prod_status','<>',2)
                             ->get();
+
+        $empl_id = Session::get('user')->empl_id;
+        $session = 'invoice-'. $empl_id;
+                
+        $data['content'] =  Cart::session($session)->getContent();
+        $data['total'] = Cart::session($session)->getTotal();
+        $data['total_qty'] = Cart::session($session)->getTotalQuantity();
         
-        $data['content'] = $invoiceSession->getContent();
-        $data['total'] = $invoiceSession->getTotal();
-        $data['total_qty'] = $invoiceSession->getTotalQuantity();
-        
-        //dd($invoiceSession);
 
         return view('admin.add_invoice',$data);
     }
@@ -61,10 +53,11 @@ class InvoiceController extends Controller
     public function postAddInvo(Request $req)
     {
         $empl_id = Session::get('user')->empl_id;
-        $invoiceSession = Session::get($empl_id);
-        $content = $invoiceSession->getContent();
-        $total = $invoiceSession->getTotal();
-        $total_qty = $invoiceSession->getTotalQuantity();
+        $session = 'invoice-'. $empl_id;
+
+        $content =  Cart::session($session)->getContent();
+        $total = Cart::session($session)->getTotal();
+        $total_qty = Cart::session($session)->getTotalQuantity();
 
         $invo = new Invoice;
 
@@ -72,8 +65,8 @@ class InvoiceController extends Controller
         $invo->invo_prov = $req->invo_prov;
         $invo->invo_date = date_format(date_create($req->invo_date),"Y/m/d");
         $invo->invo_empl = $empl_id;
-        $invo->invo_total_prod = $invoiceSession->getTotalQuantity();
-        $invo->invo_total_price = $invoiceSession->getTotal();
+        $invo->invo_total_prod = Cart::session($session)->getTotalQuantity();
+        $invo->invo_total_price = Cart::session($session)->getTotal();
         $invo->invo_status = 0;
         $invo->save();
 
@@ -87,7 +80,7 @@ class InvoiceController extends Controller
             $invoDetail->save();
         }
 
-        Session::forget($empl_id);
+        Cart::session($session)->clear();
 
         return redirect('admin/invoice/');
     }
@@ -129,29 +122,36 @@ class InvoiceController extends Controller
 
     public function getEditInvo($id)
     {
+        $data['list_provider'] = Provider::all();
+        $data['list_prod'] = Product::where('prod_status','<>',2)
+                            ->get();
+
         $data['invo'] = Invoice::find($id);
         $listInvoDetail = InvoiceDetail::where('invdt_invo', $id)->get();
-        $data['list_provider'] = Provider::all();
+        
 
         $empl_id = Session::get('user')->empl_id;
-        if(Session($empl_id)){
-            $invoiceSession = Session::get($empl_id);
-        }
-        else{
-            $invoiceSession = new InvoiceSession;
+        $session = 'invoice-'. $empl_id;
+        
+        if(!Session($session)){
             foreach ($listInvoDetail as $key => $value) {
                 $options = ProductOptions::find($value['invdt_propt']);
                 $product = Product::find($options->propt_prod);
-                $invoiceSession->add($value['invdt_propt'],$product->prod_name,$value['invdt_quantity'],$value['invdt_unit_price'],$options);
+                
+                Cart::session($session)->add(array(
+                    'id' => $value['invdt_propt'],
+                    'name' => $product->prod_name,
+                    'price' => $value['invdt_unit_price'],
+                    'quantity' => $value['invdt_quantity'],
+                    'attributes' => $options
+                ));
             }
-            Session::put($empl_id, $invoiceSession);
+            Session::put($session, $session);
         }
-        $data['list_prod'] = Product::where('prod_status',1)
-                            ->get();
-        
-        $data['content'] = $invoiceSession->getContent();
-        $data['total'] = $invoiceSession->getTotal();
-        $data['total_qty'] = $invoiceSession->getTotalQuantity();
+
+        $data['content'] =  Cart::session($session)->getContent();
+        $data['total'] =Cart::session($session)->getTotal();
+        $data['total_qty'] = Cart::session($session)->getTotalQuantity();
 
         return view('admin.edit_invoice',$data);
     }
@@ -159,19 +159,16 @@ class InvoiceController extends Controller
     public function postEditInvo($id, Request $req)
     {
         $empl_id = Session::get('user')->empl_id;
-        $invoiceSession = Session::get($empl_id);
-        $content = $invoiceSession->getContent();
-        $total = $invoiceSession->getTotal();
-        $total_qty = $invoiceSession->getTotalQuantity();
+        $session = 'invoice-'. $empl_id;
+
+        $content =  Cart::session($session)->getContent();
+        $total = Cart::session($session)->getTotal();
+        $total_qty = Cart::session($session)->getTotalQuantity();
 
         $invo = Invoice::find($id);
 
-        $invo->invo_code = $req->invo_code;
-        $invo->invo_prov = $req->invo_prov;
-        $invo->invo_date = date_format(date_create($req->invo_date),"Y/m/d");
-        $invo->invo_total_prod = $invoiceSession->getTotalQuantity();
-        $invo->invo_total_price = $invoiceSession->getTotal();
-        $invo->invo_status = 0;
+        $invo->invo_total_prod = Cart::session($session)->getTotalQuantity();
+        $invo->invo_total_price =Cart::session($session)->getTotal();
         $invo->save();
         
         $listInvoDetail = InvoiceDetail::where('invdt_invo', $id)->get();
@@ -190,7 +187,8 @@ class InvoiceController extends Controller
             $invoDetail->save();
         }
 
-        Session::forget($empl_id);
+        Cart::session($session)->clear();
+        Session::forget($session);
 
         return redirect('admin/invoice/');
     }
@@ -198,54 +196,62 @@ class InvoiceController extends Controller
     public function getAddItem(Request $req)
     {
         $empl_id = Session::get('user')->empl_id;
-        if(Session($empl_id)){
-            $invoiceSession = Session::get($empl_id);
-            $options = ProductOptions::find($req->id);
-            $product = Product::find($options->propt_prod);
-            $invoiceSession->add($req->id,$product->prod_name,1,0,$options);
-            
-            Session::put($empl_id, $invoiceSession);
-            //dd(Session($empl_id));
+        $session = 'invoice-'. $empl_id;
+
+        $prod = Cart::session($session)->get($req->id);
+        if(!empty($prod)){
+            return false;
         }
+
+        $options = ProductOptions::find($req->id);
+        $product = Product::find($options->propt_prod);
+
+        Cart::session($session)->add(array(
+            'id' => $req->id,
+            'name' => $product->prod_name,
+            'price' => 0,
+            'quantity' => 1,
+            'attributes' => $options
+        ));
     }
 
     public function getDelItem(Request $req)
     {
         $empl_id = Session::get('user')->empl_id;
-        if(Session($empl_id)){
-            $invoiceSession = Session::get($empl_id);
-            $invoiceSession->remove($req->id);
+        $session = 'invoice-'. $empl_id;
 
-            Session::put($empl_id, $invoiceSession);
-        }
+        Cart::session($empl_id)->remove($req->id);
     }
 
     public function getUpdateQtyItem(Request $req)
     {
         $empl_id = Session::get('user')->empl_id;
-        if(Session($empl_id)){
-            $invoiceSession = Session::get($empl_id);
-            $invoiceSession->update($req->id, ['quantity' => $req->qty]);
+        $session = 'invoice-'. $empl_id;
 
-            Session::put($empl_id, $invoiceSession);
-        }
+        Cart::session($session)->update($req->id, array(
+            'quantity' => array(
+                'relative' => false,
+                'value' => $req->qty
+            ),
+        ));
     }
 
     public function getUpdatePriceItem(Request $req)
     {
         $empl_id = Session::get('user')->empl_id;
-        if(Session($empl_id)){
-            $invoiceSession = Session::get($empl_id);
-            $invoiceSession->update($req->id, ['price' => $req->price]);
+        $session = 'invoice-'. $empl_id;
 
-            Session::put($empl_id, $invoiceSession);
-        }
+        Cart::session($session)->update($req->id, array(
+            'price' => $req->price,
+        ));
     }
 
     public function getCancelInvo()
     {
         $empl_id = Session::get('user')->empl_id;
-        Session::forget($empl_id);
+        $session = 'invoice-'. $empl_id;
+        
+        Cart::session($session)->clear();
         return redirect('admin/invoice/');
     }
 }

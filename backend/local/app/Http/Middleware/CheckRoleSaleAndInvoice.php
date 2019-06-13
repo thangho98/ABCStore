@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Session;
 
-class CheckRoleSale
+class CheckRoleSaleAndInvoice
 {
     /**
      * Handle an incoming request.
@@ -20,10 +20,6 @@ class CheckRoleSale
         switch ($perm) {
             case 3:
                 return redirect()->intended('admin/guarantee');
-                break;
-
-            case 4:
-                return redirect()->intended('admin/invoice');
                 break;
         }
         return $next($request);

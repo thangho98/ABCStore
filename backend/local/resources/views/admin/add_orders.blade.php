@@ -305,11 +305,7 @@
 <script src="assets/js/plugins/ion-rangeslider/js/ion.rangeSlider.min.js"></script>
 
 <!-- Page JS Helpers (BS Datepicker + BS Colorpicker + BS Maxlength + Select2 + Masked Inputs + Ion Range Slider plugins) -->
-<script>
-jQuery(function() {
-    One.helpers(['maxlength', 'select2', 'masked-inputs', 'rangeslider']);
-});
-</script>
+<script>jQuery(function () { One.helpers(['datepicker', 'colorpicker', 'maxlength', 'select2', 'masked-inputs', 'rangeslider']); });</script>
 <!-- Page JS Code -->
 <script>
 $(document).ready(function() {
@@ -400,8 +396,6 @@ $(document).ready(function() {
     });
 });
 
-    
-
     function deleteCart(id) {
         if(id == null) return;
         var url = "{{asset('admin/orders/item/delete')}}";
@@ -431,4 +425,5 @@ $(document).ready(function() {
 		);
 	}
 </script>
+<script src="assets/js/myscript.js"></script>
 @endsection

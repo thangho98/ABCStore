@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th6 12, 2019 lúc 06:25 PM
+-- Thời gian đã tạo: Th6 13, 2019 lúc 05:37 AM
 -- Phiên bản máy phục vụ: 10.3.15-MariaDB
 -- Phiên bản PHP: 7.3.6
 
@@ -138,8 +138,8 @@ CREATE TRIGGER `after_cart_update` AFTER UPDATE ON `cart` FOR EACH ROW BEGIN
 		END IF;
 		UPDATE product_options SET propt_quantity = propt_quantity + quantity WHERE propt_id = propt;
 		END LOOP;
+        CLOSE cartdetail_cursor;
     END IF;
-    CLOSE cartdetail_cursor;
 END
 $$
 DELIMITER ;
@@ -322,7 +322,7 @@ CREATE TABLE `employees` (
 INSERT INTO `employees` (`empl_id`, `empl_name`, `empl_sex`, `empl_email`, `empl_phone`, `empl_address`, `empl_birthday`, `empl_identity_card`, `empl_start_date`, `empl_basic_salary`, `empl_avatar`, `empl_status`, `created_at`, `updated_at`) VALUES
 (8, 'Hồ Thái Thăng', 0, '16521095@gm.uit.edu.vn', '0328119182', 'thu duc', '1998-04-25', '16521095', '2018-05-08', 10000000, 'logo.png', 0, '2019-05-12 21:13:11', '2019-06-12 14:40:54'),
 (10, 'Phạm Đức Toàn', 0, '16521259@gm.uit.edu.com', '0147258369', 'thu duc', '1998-04-25', '16521259', '2018-05-08', 5000000, 'Save.png', 0, '2019-05-12 21:36:27', '2019-06-12 14:40:38'),
-(11, 'Nguyễn Phi Yến', 1, '16521484@gm.uit.edu.com', '0369258147', 'thu duc', '1998-04-25', '16521484', '2018-05-08', 7999998, '', 0, '2019-05-12 21:42:29', '2019-06-12 14:43:53'),
+(11, 'Nguyễn Phi Yến', 1, '16521484@gm.uit.edu.com', '0369258147', 'thu duc', '1998-04-25', '16521484', '2018-05-08', 8000000, '', 0, '2019-05-12 21:42:29', '2019-06-12 18:13:27'),
 (12, 'Lê Văn Phước', 0, '16520959@gm.uit.edu.com', '0258147369', 'thu duc', '2019-06-14', '798746541', '2019-06-13', 5000000, 'Untitled.png', 0, '2019-06-11 18:28:02', '2019-06-12 14:45:06');
 
 -- --------------------------------------------------------
@@ -372,7 +372,8 @@ CREATE TABLE `invoice` (
 --
 
 INSERT INTO `invoice` (`invo_id`, `invo_code`, `invo_prov`, `invo_date`, `invo_empl`, `invo_total_prod`, `invo_total_price`, `invo_status`, `invo_date_approved`, `created_at`, `updated_at`) VALUES
-(3, '789456', 1, '2019-06-13', 8, 10, 1000000, 1, '2019-06-12', '2019-06-12 14:09:06', '2019-06-12 14:24:24');
+(3, '789456', 1, '2019-06-13', 8, 10, 1000000, 1, '2019-06-12', '2019-06-12 14:09:06', '2019-06-12 14:24:24'),
+(4, '789543456', 1, '2019-06-07', 12, 20, 250000000, 1, '2019-06-13', '2019-06-12 17:36:12', '2019-06-12 18:25:26');
 
 --
 -- Bẫy `invoice`
@@ -395,9 +396,9 @@ IF NEW.invo_status = 1 THEN
     LEAVE read_loop;
     END IF;
     UPDATE product_options SET propt_quantity = propt_quantity + quantity WHERE propt_id = propt; 
-    END LOOP; 
-END IF; 
-CLOSE invodetail_cursor; 
+    END LOOP;
+    CLOSE invodetail_cursor; 
+END IF;
 END
 $$
 DELIMITER ;
@@ -417,7 +418,7 @@ CREATE TRIGGER `update_invoice` BEFORE UPDATE ON `invoice` FOR EACH ROW BEGIN
 
         IF(flag = 0) THEN
         BEGIN
-            INSERT INTO `revenue` (`reve_month`, `reve_year`, `reve_sale`, `reve_buy`, `reve_salary`, `reve_income`) VALUES (month, year, '0', NEW.invo_total_price, '0', '0');
+            INSERT INTO `revenue` (`reve_month`, `reve_year`, `reve_sale`, `reve_buy`, `reve_salary`, `reve_income`) VALUES (month, year, '0', NEW.invo_total_price,'0', '0');
         END;
         ELSE
         BEGIN
@@ -456,7 +457,9 @@ CREATE TABLE `invoicedetail` (
 --
 
 INSERT INTO `invoicedetail` (`invdt_id`, `invdt_invo`, `invdt_propt`, `invdt_quantity`, `invdt_unit_price`, `invdt_total`, `created_at`, `updated_at`) VALUES
-(3, 3, 2, 10, 100000, 1000000, '2019-06-12 14:09:10', '2019-06-12 14:09:10');
+(3, 3, 2, 10, 100000, 1000000, '2019-06-12 14:09:10', '2019-06-12 14:09:10'),
+(5, 4, 2, 10, 10000000, 100000000, '2019-06-12 17:59:14', '2019-06-12 17:59:14'),
+(6, 4, 6, 10, 15000000, 150000000, '2019-06-12 17:59:14', '2019-06-12 17:59:14');
 
 -- --------------------------------------------------------
 
@@ -602,9 +605,8 @@ CREATE TABLE `permission` (
 
 INSERT INTO `permission` (`perm_id`, `perm_name`, `created_at`, `updated_at`) VALUES
 (1, 'admin', '2019-05-12 04:45:50', '0000-00-00 00:00:00'),
-(2, 'nhân viên bán hàng', '2019-05-28 08:21:27', '2019-05-28 08:21:27'),
-(3, 'nhân viên bảo hành', '2019-05-28 08:21:27', '2019-05-28 08:21:27'),
-(4, 'nhân viên nhập hàng', '2019-05-28 08:21:27', '2019-06-12 14:30:53');
+(2, 'nhân viên bán hàng và nhập hàng', '2019-05-28 08:21:27', '2019-06-13 03:19:51'),
+(3, 'nhân viên bảo hành', '2019-05-28 08:21:27', '2019-05-28 08:21:27');
 
 -- --------------------------------------------------------
 
@@ -711,10 +713,10 @@ CREATE TABLE `product_options` (
 
 INSERT INTO `product_options` (`propt_id`, `propt_prod`, `propt_color`, `propt_ram`, `propt_rom`, `propt_price`, `propt_quantity`, `created_at`, `updated_at`) VALUES
 (1, 23, 'Xám', 4, '64 gb', 29990000, 0, '2019-05-21 11:33:18', '2019-06-12 09:33:22'),
-(2, 23, 'Bạc', 4, '128 gb', 29990000, 10, '2019-05-21 11:33:18', '2019-06-12 14:24:25'),
+(2, 23, 'Bạc', 4, '128 gb', 29990000, 20, '2019-05-21 11:33:18', '2019-06-12 18:25:26'),
 (4, 27, 'Đen', 8, '128 gb', 17990000, 0, '2019-05-22 04:31:41', '2019-06-12 09:33:22'),
 (5, 27, 'Trắng', 8, '128 gb', 18000000, 0, '2019-05-22 04:31:41', '2019-06-12 09:33:22'),
-(6, 23, 'Gold', 4, '512 gb', 3000, 0, '2019-05-22 11:21:28', '2019-05-22 11:26:38'),
+(6, 23, 'Gold', 4, '512 gb', 3000, 10, '2019-05-22 11:21:28', '2019-06-12 18:25:26'),
 (8, 28, 'Đen', 2, '32 gb', 10240000, 0, '2019-05-29 10:13:39', '2019-05-29 10:13:39'),
 (9, 29, 'Vàng Đồng', 2, '32 gb', 9990000, 0, '2019-05-29 10:26:30', '2019-05-29 10:26:30'),
 (10, 29, 'Vàng Hồng', 2, '32 gb', 9790000, 0, '2019-05-29 10:26:30', '2019-05-31 16:00:03'),
@@ -822,7 +824,7 @@ CREATE TABLE `revenue` (
   `reve_id` int(11) NOT NULL,
   `reve_month` int(11) NOT NULL,
   `reve_year` int(11) DEFAULT NULL,
-  `reve_quarter` int(11) NOT NULL,
+  `reve_quarter` int(11) DEFAULT NULL,
   `reve_sale` double NOT NULL,
   `reve_buy` double NOT NULL,
   `reve_salary` double NOT NULL,
@@ -832,13 +834,20 @@ CREATE TABLE `revenue` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
+-- Đang đổ dữ liệu cho bảng `revenue`
+--
+
+INSERT INTO `revenue` (`reve_id`, `reve_month`, `reve_year`, `reve_quarter`, `reve_sale`, `reve_buy`, `reve_salary`, `reve_income`, `created_at`, `updated_at`) VALUES
+(5, 6, 2019, 2, 0, 250000000, 28000000, -278000000, '2019-06-12 18:25:26', '2019-06-12 18:25:26');
+
+--
 -- Bẫy `revenue`
 --
 DELIMITER $$
 CREATE TRIGGER `insert_revenue` BEFORE INSERT ON `revenue` FOR EACH ROW BEGIN
 	 DECLARE salary DOUBLE;
 	
-	 SELECT SUM(employees.empl_basic_salary) INTO salary FROM employees WHERE employees.empl_status = 1;
+	 SELECT IFNULL(SUM(employees.empl_basic_salary),0) INTO salary FROM employees WHERE employees.empl_status = 0;
      
      SET NEW.reve_salary = salary + NEW.reve_salary;
     
@@ -912,10 +921,10 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`username`, `password`, `empl_id`, `perm_id`, `status`, `remember_token`, `created_at`, `updated_at`) VALUES
-('admin', '$2y$10$Tri2ztrGuT8meagw5HFEZOoQHFY5G1BfVQdVVCL3QJHqflLHhEJrW', 8, 1, 0, 'OknhIKEQgcKSWfcwkuVOGtxBLLycCJh21M8bg3Weatb7O3e5a2EjKLI5crvj', NULL, '2019-06-12 13:46:35'),
+('admin', '$2y$10$Tri2ztrGuT8meagw5HFEZOoQHFY5G1BfVQdVVCL3QJHqflLHhEJrW', 8, 1, 0, 'A2dQQUXpC1vV5Azm6KlH8qZt1WBdbrgV3EKPXdf2kYNDtpZXOivUlicfmtzr', NULL, '2019-06-12 13:46:35'),
 ('nv10', '$2y$10$fp6FM2ZFO/sd9ZCBISDwmODnta4ILoWKJC8izJZKUdpTjwWLtyIw2', 10, 2, 0, '6EvC0M046TGobcmm9ocxbuzrA30xp2mxKTsUx03H', '2019-05-28 09:24:45', '2019-05-28 11:05:14'),
-('nv11', '$2y$10$FTdJq5JRhwRJgWV4APBsQ.N/dUhnKaCOX3sed4tQ4AT3Y3ek/Y1DK', 11, 3, 0, '6EvC0M046TGobcmm9ocxbuzrA30xp2mxKTsUx03Hj', '2019-05-28 10:42:29', '2019-05-28 10:42:29'),
-('nv12', '$2y$10$hXc8G3sBlfscMsaZsDrrS.2JI0N3fU7BZz5w7mO6XXJF0fVTxQuMu', 12, 4, 0, '1xaEYEDxcUKWJupAZsLYDlNvn7iCxOhGlluepml0', '2019-06-12 14:45:34', '2019-06-12 14:45:34');
+('nv11', '$2y$10$FTdJq5JRhwRJgWV4APBsQ.N/dUhnKaCOX3sed4tQ4AT3Y3ek/Y1DK', 11, 2, 0, '6EvC0M046TGobcmm9ocxbuzrA30xp2mxKTsUx03Hj', '2019-05-28 10:42:29', '2019-05-28 10:42:29'),
+('nv12', '$2y$10$hXc8G3sBlfscMsaZsDrrS.2JI0N3fU7BZz5w7mO6XXJF0fVTxQuMu', 12, 3, 0, '1xaEYEDxcUKWJupAZsLYDlNvn7iCxOhGlluepml0', '2019-06-12 14:45:34', '2019-06-12 14:45:34');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -1156,13 +1165,13 @@ ALTER TABLE `guarantee`
 -- AUTO_INCREMENT cho bảng `invoice`
 --
 ALTER TABLE `invoice`
-  MODIFY `invo_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `invo_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT cho bảng `invoicedetail`
 --
 ALTER TABLE `invoicedetail`
-  MODIFY `invdt_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `invdt_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT cho bảng `migrations`
@@ -1222,7 +1231,7 @@ ALTER TABLE `provider`
 -- AUTO_INCREMENT cho bảng `revenue`
 --
 ALTER TABLE `revenue`
-  MODIFY `reve_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `reve_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT cho bảng `slide`

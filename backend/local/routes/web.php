@@ -47,8 +47,8 @@ Route::group(['namespace' => 'Admin'], function () {
         Route::post('/','LoginController@postReminder');
     });
     Route::group(['prefix' => 'admin','middleware' => 'CheckLogedOut'], function () {
-        Route::get('/','HomeController@returnHome');
-        Route::get('home','HomeController@getHome');
+        Route::get('/','HomeController@returnHome')->middleware('CheckRoleAdmin');
+        Route::get('home','HomeController@getHome')->middleware('CheckRoleAdmin');
 
         Route::group(['prefix' => 'brand','middleware' => 'CheckRoleAdmin'], function () {
             Route::get('/','BrandController@getBrand');
@@ -144,14 +144,14 @@ Route::group(['namespace' => 'Admin'], function () {
             Route::get('/cancel/','PromotionController@getCancelAddProm');
         });
 
-        Route::group(['prefix' => 'cart','middleware' => 'CheckRoleSale'], function () {
+        Route::group(['prefix' => 'cart','middleware' => 'CheckRoleSaleAndInvoice'], function () {
             Route::get('/','CartController@getCartOnline');
             
             Route::get('/view/{id}','CartController@getViewDetailCartOnline');
             
         });
 
-        Route::group(['prefix' => 'orders','middleware' => 'CheckRoleSale'], function () {
+        Route::group(['prefix' => 'orders','middleware' => 'CheckRoleSaleAndInvoice'], function () {
             Route::get('/','OrdersController@getOrders');
             
             Route::get('/view/{id}','OrdersController@getViewDetailOrders');
@@ -191,7 +191,7 @@ Route::group(['namespace' => 'Admin'], function () {
             Route::get('/print/reimburse/{id}','GuaranteeController@getPrintGuaranteeReimburse');
         });
 
-        Route::group(['prefix' => 'invoice','middleware' => 'CheckRoleInvoice'], function() {
+        Route::group(['prefix' => 'invoice','middleware' => 'CheckRoleSaleAndInvoice'], function() {
             Route::get('/','InvoiceController@getInvo');
 
             Route::get('/add/','InvoiceController@getAddInvo');
