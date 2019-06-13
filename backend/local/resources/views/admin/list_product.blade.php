@@ -1,16 +1,16 @@
 @extends('admin.layout.master')
 @section('title','Sản phẩm')
 @section('add_css_and_script')
-<link rel="stylesheet" href="assets/js/plugins/datatables/dataTables.bootstrap4.css">
-<link rel="stylesheet" href="assets/js/plugins/datatables/buttons-bs4/buttons.bootstrap4.min.css">
+<link rel="stylesheet" href="{{asset('public/admin')}}/assets/js/plugins/datatables/dataTables.bootstrap4.css">
+<link rel="stylesheet" href="{{asset('public/admin')}}/assets/js/plugins/datatables/buttons-bs4/buttons.bootstrap4.min.css">
 
 <!-- Page JS Plugins CSS -->
-<link rel="stylesheet" href="assets/js/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css">
-<link rel="stylesheet" href="assets/js/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css">
-<link rel="stylesheet" href="assets/js/plugins/select2/css/select2.min.css">
-<link rel="stylesheet" href="assets/js/plugins/ion-rangeslider/css/ion.rangeSlider.css">
+<link rel="stylesheet" href="{{asset('public/admin')}}/assets/js/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css">
+<link rel="stylesheet" href="{{asset('public/admin')}}/assets/js/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css">
+<link rel="stylesheet" href="{{asset('public/admin')}}/assets/js/plugins/select2/css/select2.min.css">
+<link rel="stylesheet" href="{{asset('public/admin')}}/assets/js/plugins/ion-rangeslider/css/ion.rangeSlider.css">
 
-<link rel="stylesheet" href="assets/css/mystyle.css">
+<link rel="stylesheet" href="{{asset('public/admin')}}/assets/css/mystyle.css">
 @endsection
 
 @section('main')
@@ -311,7 +311,7 @@
                                         <tr>
                                             <td class="text-left">
                                                 <img id="image-poster" class="thumbnail"
-                                                    src="assets/media/img/new_seo-10-75.png"
+                                                    src="{{asset('public/admin')}}/assets/media/img/new_seo-10-75.png"
                                                     onclick="chooseImg('poster');" height="75px;" width="75px;">
                                                 <input type="file" hidden name="poster" value="" id="input-image-poster"
                                                     onchange="changeImg(this, 'poster');" accept="image/*">
@@ -331,7 +331,7 @@
                                         <tr id="image-row1">
                                             <td class="text-left">
                                                 <img id="image-1" class="thumbnail"
-                                                    src="assets/media/img/new_seo-10-75.png" onclick="chooseImg(1);"
+                                                    src="{{asset('public/admin')}}/assets/media/img/new_seo-10-75.png" onclick="chooseImg(1);"
                                                     height="75px;" width="75px;">
                                                 <input type="file" hidden name="product_image[1][image]" value=""
                                                     id="input-image-1" onchange="changeImg(this, 1);" accept="image/*">
@@ -375,25 +375,25 @@
 @endsection
 @section('scriptjs')
 
-<script src="assets/js/plugins/datatables/jquery.dataTables.min.js"></script>
-<script src="assets/js/plugins/datatables/dataTables.bootstrap4.min.js"></script>
-<script src="assets/js/plugins/datatables/buttons/dataTables.buttons.min.js"></script>
-<script src="assets/js/plugins/datatables/buttons/buttons.flash.min.js"></script>
-<script src="assets/js/plugins/datatables/buttons/buttons.print.min.js"></script>
-<script src="assets/js/plugins/datatables/buttons/buttons.html5.min.js"></script>
-<script src="assets/js/plugins/datatables/buttons/buttons.colVis.min.js"></script>
-<script src="assets/js/plugins/datatables/jszip/jszip.min.js"></script>
+<script src="{{asset('public/admin')}}/assets/js/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="{{asset('public/admin')}}/assets/js/plugins/datatables/dataTables.bootstrap4.min.js"></script>
+<script src="{{asset('public/admin')}}/assets/js/plugins/datatables/buttons/dataTables.buttons.min.js"></script>
+<script src="{{asset('public/admin')}}/assets/js/plugins/datatables/buttons/buttons.flash.min.js"></script>
+<script src="{{asset('public/admin')}}/assets/js/plugins/datatables/buttons/buttons.print.min.js"></script>
+<script src="{{asset('public/admin')}}/assets/js/plugins/datatables/buttons/buttons.html5.min.js"></script>
+<script src="{{asset('public/admin')}}/assets/js/plugins/datatables/buttons/buttons.colVis.min.js"></script>
+<script src="{{asset('public/admin')}}/assets/js/plugins/datatables/jszip/jszip.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-<script src="assets/js/plugins/datatables/pdfmake/vfs_fonts.js"></script>
+<script src="{{asset('public/admin')}}/assets/js/plugins/datatables/pdfmake/vfs_fonts.js"></script>
 
 <!-- Page JS Plugins -->
-<script src="assets/js/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
-<script src="assets/js/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js"></script>
-<script src="assets/js/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
-<script src="assets/js/plugins/select2/js/select2.full.min.js"></script>
-<script src="assets/js/plugins/jquery.maskedinput/jquery.maskedinput.min.js"></script>
-<script src="assets/js/plugins/ion-rangeslider/js/ion.rangeSlider.min.js"></script>
-<script src="assets/js/plugins/jquery-validation/jquery.validate.min.js"></script>
+<script src="{{asset('public/admin')}}/assets/js/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script src="{{asset('public/admin')}}/assets/js/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js"></script>
+<script src="{{asset('public/admin')}}/assets/js/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
+<script src="{{asset('public/admin')}}/assets/js/plugins/select2/js/select2.full.min.js"></script>
+<script src="{{asset('public/admin')}}/assets/js/plugins/jquery.maskedinput/jquery.maskedinput.min.js"></script>
+<script src="{{asset('public/admin')}}/assets/js/plugins/ion-rangeslider/js/ion.rangeSlider.min.js"></script>
+<script src="{{asset('public/admin')}}/assets/js/plugins/jquery-validation/jquery.validate.min.js"></script>
 <!-- Page JS Helpers (BS Datepicker + BS Colorpicker + BS Maxlength + Select2 + Masked Inputs + Ion Range Slider plugins) -->
 <script>
 jQuery(function() {
@@ -574,7 +574,7 @@ function addImage() {
         <tr id="image-row${index}">
             <td class="text-left">
                 <img id="image-${index}" class="thumbnail"
-                    src="assets/media/img/new_seo-10-75.png" onclick="chooseImg(${index});"
+                    src="{{asset('public/admin')}}/assets/media/img/new_seo-10-75.png" onclick="chooseImg(${index});"
                     height="75px;" width="75px;">
                 <input type="file" hidden name="product_image[${index}][image]" value=""
                     id="input-image-${index}" onchange="changeImg(this, ${index});" accept="image/*">
@@ -631,5 +631,5 @@ function showEdit(prod_id) {
 };
 </script>
 <!-- Page JS Code -->
-<script src="assets/js/myscript.js"></script>
+<script src="{{asset('public/admin')}}/assets/js/myscript.js"></script>
 @endsection

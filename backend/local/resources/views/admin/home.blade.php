@@ -4,7 +4,7 @@
 <main id="main-container">
 
     <!-- Hero -->
-    <div class="bg-image overflow-hidden" style="background-image: url('assets/media/photos/photo3@2x.jpg');">
+    <div class="bg-image overflow-hidden" style="background-image: url('{{asset('public/admin')}}/assets/media/photos/photo3@2x.jpg');">
         <div class="bg-primary-dark-op">
             <div class="content content-narrow content-full">
                 <div
@@ -195,7 +195,7 @@
                                         <span class="font-w600">#01368</span>
                                     </td>
                                     <td class="d-none d-sm-table-cell text-center">
-                                        <img class="img-avatar img-avatar32" src="assets/media/avatars/avatar10.jpg"
+                                        <img class="img-avatar img-avatar32" src="{{asset('public/admin')}}/assets/media/avatars/avatar10.jpg"
                                             alt="">
                                     </td>
                                     <td class="font-w600">
@@ -215,7 +215,7 @@
                                         <span class="font-w600">#01368</span>
                                     </td>
                                     <td class="d-none d-sm-table-cell text-center">
-                                        <img class="img-avatar img-avatar32" src="assets/media/avatars/avatar2.jpg"
+                                        <img class="img-avatar img-avatar32" src="{{asset('public/admin')}}/assets/media/avatars/avatar2.jpg"
                                             alt="">
                                     </td>
                                     <td class="font-w600">
@@ -235,7 +235,7 @@
                                         <span class="font-w600">#01368</span>
                                     </td>
                                     <td class="d-none d-sm-table-cell text-center">
-                                        <img class="img-avatar img-avatar32" src="assets/media/avatars/avatar14.jpg"
+                                        <img class="img-avatar img-avatar32" src="{{asset('public/admin')}}/assets/media/avatars/avatar14.jpg"
                                             alt="">
                                     </td>
                                     <td class="font-w600">
@@ -255,7 +255,7 @@
                                         <span class="font-w600">#01368</span>
                                     </td>
                                     <td class="d-none d-sm-table-cell text-center">
-                                        <img class="img-avatar img-avatar32" src="assets/media/avatars/avatar6.jpg"
+                                        <img class="img-avatar img-avatar32" src="{{asset('public/admin')}}/assets/media/avatars/avatar6.jpg"
                                             alt="">
                                     </td>
                                     <td class="font-w600">
@@ -275,7 +275,7 @@
                                         <span class="font-w600">#01368</span>
                                     </td>
                                     <td class="d-none d-sm-table-cell text-center">
-                                        <img class="img-avatar img-avatar32" src="assets/media/avatars/avatar15.jpg"
+                                        <img class="img-avatar img-avatar32" src="{{asset('public/admin')}}/assets/media/avatars/avatar15.jpg"
                                             alt="">
                                     </td>
                                     <td class="font-w600">
@@ -295,7 +295,7 @@
                                         <span class="font-w600">#01368</span>
                                     </td>
                                     <td class="d-none d-sm-table-cell text-center">
-                                        <img class="img-avatar img-avatar32" src="assets/media/avatars/avatar2.jpg"
+                                        <img class="img-avatar img-avatar32" src="{{asset('public/admin')}}/assets/media/avatars/avatar2.jpg"
                                             alt="">
                                     </td>
                                     <td class="font-w600">
@@ -315,7 +315,7 @@
                                         <span class="font-w600">#01368</span>
                                     </td>
                                     <td class="d-none d-sm-table-cell text-center">
-                                        <img class="img-avatar img-avatar32" src="assets/media/avatars/avatar11.jpg"
+                                        <img class="img-avatar img-avatar32" src="{{asset('public/admin')}}/assets/media/avatars/avatar11.jpg"
                                             alt="">
                                     </td>
                                     <td class="font-w600">
@@ -560,8 +560,8 @@
 @endsection
 @section('scriptjs')
 <!-- Page JS Plugins -->
-<script src="assets/js/plugins/chart.js/Chart.bundle.min.js"></script>
+<script src="{{asset('public/admin')}}/assets/js/plugins/chart.js/Chart.bundle.min.js"></script>
 
 <!-- Page JS Code -->
-<script src="assets/js/pages/be_pages_dashboard.min.js"></script>
+<script src="{{asset('public/admin')}}/assets/js/pages/be_pages_dashboard.min.js"></script>
 @endsection

@@ -1,11 +1,11 @@
 @extends('admin.layout.master')
 @section('title','Phân quyền')
 @section('add_css_and_script')
-<link rel="stylesheet" href="assets/js/plugins/datatables/dataTables.bootstrap4.css">
-<link rel="stylesheet" href="assets/js/plugins/datatables/buttons-bs4/buttons.bootstrap4.min.css">
+<link rel="stylesheet" href="{{asset('public/admin')}}/assets/js/plugins/datatables/dataTables.bootstrap4.css">
+<link rel="stylesheet" href="{{asset('public/admin')}}/assets/js/plugins/datatables/buttons-bs4/buttons.bootstrap4.min.css">
 
 <!-- Page JS Plugins CSS -->
-<link rel="stylesheet" href="assets/css/mystyle.css">
+<link rel="stylesheet" href="{{asset('public/admin')}}/assets/css/mystyle.css">
 @endsection
 
 @section('main')
@@ -91,16 +91,16 @@
 @endsection
 @section('scriptjs')
 
-<script src="assets/js/plugins/datatables/jquery.dataTables.min.js"></script>
-<script src="assets/js/plugins/datatables/dataTables.bootstrap4.min.js"></script>
-<script src="assets/js/plugins/datatables/buttons/dataTables.buttons.min.js"></script>
-<script src="assets/js/plugins/datatables/buttons/buttons.flash.min.js"></script>
-<script src="assets/js/plugins/datatables/buttons/buttons.print.min.js"></script>
-<script src="assets/js/plugins/datatables/buttons/buttons.html5.min.js"></script>
-<script src="assets/js/plugins/datatables/buttons/buttons.colVis.min.js"></script>
-<script src="assets/js/plugins/datatables/jszip/jszip.min.js"></script>
+<script src="{{asset('public/admin')}}/assets/js/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="{{asset('public/admin')}}/assets/js/plugins/datatables/dataTables.bootstrap4.min.js"></script>
+<script src="{{asset('public/admin')}}/assets/js/plugins/datatables/buttons/dataTables.buttons.min.js"></script>
+<script src="{{asset('public/admin')}}/assets/js/plugins/datatables/buttons/buttons.flash.min.js"></script>
+<script src="{{asset('public/admin')}}/assets/js/plugins/datatables/buttons/buttons.print.min.js"></script>
+<script src="{{asset('public/admin')}}/assets/js/plugins/datatables/buttons/buttons.html5.min.js"></script>
+<script src="{{asset('public/admin')}}/assets/js/plugins/datatables/buttons/buttons.colVis.min.js"></script>
+<script src="{{asset('public/admin')}}/assets/js/plugins/datatables/jszip/jszip.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-<script src="assets/js/plugins/datatables/pdfmake/vfs_fonts.js"></script>
+<script src="{{asset('public/admin')}}/assets/js/plugins/datatables/pdfmake/vfs_fonts.js"></script>
 
 <!-- Page JS Code -->
 <script>
@@ -120,5 +120,5 @@
         });
     });
 </script>
-<script src="assets/js/myscript.js"></script>
+<script src="{{asset('public/admin')}}/assets/js/myscript.js"></script>
 @endsection
