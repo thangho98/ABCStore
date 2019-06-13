@@ -100,13 +100,14 @@
                                             <i class="fa fa-fw fa-eye"></i>
                                         </button>
                                         @if ($item->cart_status == 0)
-                                        <a type="button" class="btn btn-sm btn-warning" title="Gửi mail xác nhận"
+                                        {{-- <a type="button" class="btn btn-sm btn-warning" title="Gửi mail xác nhận"
                                             data-toggle="tooltip" href="">
                                             <i class="fa fa-fw fa-envelope"></i>
-                                        </a>
+                                        </a> --}}
                                         @elseif($item->cart_status == 1)
                                         <a type="button" class="btn btn-sm btn-link" title="Thanh toán"
-                                            data-toggle="tooltip" href="{{asset('admin/orders/cart/'.$item->cart_id)}}">
+                                            @if (Session::get('user')->perm_id == 2) href="{{asset('admin/orders/cart/'.$item->cart_id)}}" @endif
+                                            data-toggle="tooltip">
                                             <i class="fa fa-fw fa-shopping-cart"></i>
                                         </a>
                                         @endif

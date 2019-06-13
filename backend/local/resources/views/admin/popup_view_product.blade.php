@@ -59,6 +59,7 @@
                                 <th class="text-center">Bộ nhớ ram</th>
                                 <th class="text-center">Bộ nhớ rom</th>
                                 <th class="text-center">Giá</th>
+                                <th class="text-center">Số Lượng</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -69,6 +70,7 @@
                                 <th class="text-center font-w600 font-size-sm">{{$list_options[$i]->propt_ram}} gb</th>
                                 <th class="text-center font-w600 font-size-sm">{{$list_options[$i]->propt_rom}}</th>
                                 <th class="text-right font-w600 font-size-sm">{{number_format($list_options[$i]->propt_price,0,',','.')}} VNĐ</th>
+                                <th class="text-center font-w600 font-size-sm">{{$list_options[$i]->propt_quantity}}</th>
                             </tr>
                             @endfor
                         </tbody>

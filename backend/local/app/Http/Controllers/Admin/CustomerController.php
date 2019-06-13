@@ -20,7 +20,7 @@ class CustomerController extends Controller
         return view('admin.popup_edit_cus', $data);
     }
 
-    public function postEditEmpl($id, Request $req)
+    public function postEditCus($id, Request $req)
     {
         $cus = Customer::find($id);
         $cus->cus_phone = $req->phone;

@@ -41,7 +41,7 @@
         <div class="block">
             <div class="block-header row justify-content-end">
                 <aside class="py-2 mb-2">
-                    <a href="{{asset('admin/orders/add')}}" class="btn btn-primary" data-toggle="tooltip" title="Thêm">
+                    <a @if (Session::get('user')->perm_id == 2) href="{{asset('admin/orders/add')}}" @endif class="btn btn-primary" data-toggle="tooltip" title="Thêm">
                         <i class="fa fa-fw fa-plus"></i>
                     </a>
                     <button type="button" class="btn btn-success" onclick="location.reload();" data-toggle="tooltip" title="Làm mới">
@@ -120,7 +120,6 @@
 </div>
 @endsection
 @section('scriptjs')
-<script src="assets/js/plugins/sweetalert.min.js"></script>
 
 <script src="assets/js/plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="assets/js/plugins/datatables/dataTables.bootstrap4.min.js"></script>

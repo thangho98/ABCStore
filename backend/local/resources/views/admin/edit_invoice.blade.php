@@ -178,18 +178,18 @@
                                     <div class="form-group col-6">
                                         <label for="wizard-validation-name">Mã hóa đơn</label>
                                         <input class="form-control" type="text" id="invo_code"
-                                            name="invo_code" value="{{$invo->invo_code}}" required>
+                                            name="invo_code" disabled value="{{$invo->invo_code}}" required>
                                     </div>
                                     <div class="form-group col-6">
                                         <label for="wizard-validation-phone">Ngày nhập</label>
                                         <input type="text" class="js-datepicker form-control" value="{{date_format(date_create($invo->invo_date),"d-m-Y")}}"
-                                        id="invo_date" name="invo_date" required data-week-start="1" data-autoclose="true" data-today-highlight="true" data-date-format="dd-mm-yyyy" placeholder="dd-mm-yyyy">
+                                        id="invo_date" disabled name="invo_date" required data-week-start="1" data-autoclose="true" data-today-highlight="true" data-date-format="dd-mm-yyyy" placeholder="dd-mm-yyyy">
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-6">
                                         <label for="wizard-validation-email">Nhà cung cấp</label>
-                                        <select class="js-select2 form-control" id="invo_prov" style="width: 100%;"
+                                        <select disabled class="js-select2 form-control" id="invo_prov" style="width: 100%;"
                                             data-placeholder="Chọn một nhà cung cấp.." required name="invo_prov">
                                             {{-- <option></option> --}}
                                             <!-- Required for data-placeholder attribute to work with Select2 plugin -->
@@ -294,7 +294,6 @@
 </main>
 @endsection
 @section('scriptjs')
-<script src="assets/js/plugins/sweetalert.min.js"></script>
 
 <script src="assets/js/plugins/jquery-bootstrap-wizard/bs4/jquery.bootstrap.wizard.min.js"></script>
 <script src="assets/js/plugins/jquery-validation/jquery.validate.min.js"></script>
@@ -332,7 +331,7 @@ $(document).ready(function() {
         var id = $('#select-product').val();
 
         // URL
-        var url = "{{asset('admin/orders/options')}}/" + id;
+        var url = "{{asset('admin/invoice/options')}}/" + id;
 
         // Data
         var data = {};

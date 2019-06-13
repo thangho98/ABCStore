@@ -12,6 +12,7 @@ use App\Models\Guarantee;
 use App\Models\Employees;
 use DB;
 use Auth;
+use Session;
 
 class GuaranteeController extends Controller
 {
@@ -101,7 +102,7 @@ class GuaranteeController extends Controller
         $guarantee->gtd_propt = $req->propt_id;
         $guarantee->gtd_serial = $req->serial;
         $guarantee->gtd_required_content = $req->required_content;
-        $guarantee->gtd_empl_receive = Auth::user()->empl_id;
+        $guarantee->gtd_empl_receive = Session::get('user')->empl_id;
         $guarantee->gtd_date_receive = date("Y-m-d");
         $guarantee->gtd_status = 0;
         $guarantee->save();
@@ -112,7 +113,7 @@ class GuaranteeController extends Controller
         ->where('gtd_serial',$req->serial)
         ->where('gtd_required_content',$req->required_content)
         ->where('gtd_orders',$req->order_id)
-        ->where('gtd_empl_receive',Auth::user()->empl_id)
+        ->where('gtd_empl_receive',Session::get('user')->empl_id)
         ->where('gtd_date_receive',date("Y-m-d"))
         ->where('gtd_status',0)
         ->first();
@@ -156,7 +157,7 @@ class GuaranteeController extends Controller
             $guarantee->gtd_content = $req->content;
         }
         else if($req->status == 3){
-            $guarantee->gtd_empl_reimburse = Auth::user()->empl_id;
+            $guarantee->gtd_empl_reimburse = Session::get('user')->empl_id;
             $guarantee->gtd_date_reimburse = date("Y-m-d");
         }
         $guarantee->save();

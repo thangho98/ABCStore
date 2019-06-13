@@ -159,7 +159,7 @@ $(document).ready(function() {
             var url = '{{asset('admin/statistics/revenue/all')}}/';
         }
         else if(type == 1){
-            var url = '{{asset('admin/statisticsrevenue/month')}}/';
+            var url = '{{asset('admin/statistics/revenue/month')}}/';
             if(year == ''){
                 return;
             }

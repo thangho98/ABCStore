@@ -73,7 +73,12 @@ class CartCusController extends Controller
         $data['totalquantity'] = Cart::getTotalQuantity();
         $data['totalprice'] = Cart::getTotal();
         $data['content'] = Cart::getContent();
-        return view('abcstore.checkout', $data);
+        if(count($data['content'])>0){
+            return view('abcstore.checkout', $data);
+        }
+        else{
+            return redirect('cart/show');
+        }
     }
 
     public function postCheckout(Request $req)

@@ -53,13 +53,17 @@
             <div class="content-header border-bottom">
                 <!-- User Avatar -->
                 <a class="img-link mr-1" href="javascript:void(0)">
-                    <img class="img-avatar img-avatar32" src="assets/media/avatars/avatar10.jpg" alt="">
+                    <img class="img-avatar img-avatar32"@if (Session::get('employees')->empl_avatar != '')
+                    src="{{asset('local/storage/app/images/employees/'.Session::get('employees')->empl_avatar)}}"
+                @else
+                    src="assets/media/avatars/avatar10.jpg"
+                @endif alt="">
                 </a>
                 <!-- END User Avatar -->
 
                 <!-- User Info -->
                 <div class="ml-2">
-                    <a class="link-fx text-dark font-w600" href="javascript:void(0)">Thái Thăng</a>
+                    <a class="link-fx text-dark font-w600" href="javascript:void(0)">{{Session::get('employees')->empl_name}}</a>
                 </div>
                 <!-- END User Info -->
 
@@ -526,7 +530,7 @@
             <!-- Side Header -->
             <div class="content-header bg-white-5">
                 <!-- Logo -->
-                <a class="font-w600 text-dual" href="index.html">
+                <a class="font-w600 text-dual" href="{{asset('/home')}}">
                     <i class="fa fa-circle-notch text-primary"></i>
                     <span class="smini-hide">
                         <span class="font-w700 font-size-h5">ABC</span> <span class="font-w400">Store</span>
@@ -620,6 +624,7 @@
             <!-- Side Navigation -->
             <div class="content-side content-side-full">
                 <ul class="nav-main">
+                    @if (Session::get('user')->perm_id == 1)
                     <li class="nav-main-item">
                         <a class="nav-main-link active" href="{{asset('admin/home')}}">
                             <i class="nav-main-link-icon si si-speedometer"></i>
@@ -710,7 +715,11 @@
                             </li> --}}
                         </ul>
                     </li>
+                    @endif
+
                     <li class="nav-main-heading">Nhân viên</li>
+
+                    @if (Session::get('user')->perm_id == 1 || Session::get('user')->perm_id == 2)
                     <li class="nav-main-item">
                         <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
                             aria-expanded="false" href="#">
@@ -731,17 +740,23 @@
                         </ul>
                     </li>
                     <li class="nav-main-item">
-                        <a class="nav-main-link" href="{{asset('admin/guarantee')}}">
-                            <i class="nav-main-link-icon si si-grid"></i>
-                            <span class="nav-main-link-name">Bảo hành</span>
-                        </a>
-                    </li>
-                    <li class="nav-main-item">
                         <a class="nav-main-link" href="{{asset('admin/invoice')}}">
                             <i class="nav-main-link-icon si si-note"></i>
                             <span class="nav-main-link-name">Nhập hàng</span>
                         </a>
                     </li>
+                    @endif
+
+                    @if (Session::get('user')->perm_id == 1 || Session::get('user')->perm_id == 3)
+                    <li class="nav-main-item">
+                        <a class="nav-main-link" href="{{asset('admin/guarantee')}}">
+                            <i class="nav-main-link-icon si si-grid"></i>
+                            <span class="nav-main-link-name">Bảo hành</span>
+                        </a>
+                    </li>
+                    @endif
+
+                    
                     {{-- <li class="nav-main-item">
                         <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
                             aria-expanded="false" href="#">
@@ -766,6 +781,8 @@
                             </li>
                         </ul>
                     </li> --}}
+                    
+                    @if (Session::get('user')->perm_id == 1)
                     <li class="nav-main-heading">Hệ thống</li>
                     <li class="nav-main-item">
                         <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
@@ -817,7 +834,6 @@
                             </li>
                         </ul>
                     </li>
-
                     <li class="nav-main-item">
                         <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
                             aria-expanded="false" href="#">
@@ -842,6 +858,7 @@
                             </li>
                         </ul>
                     </li>
+                    @endif
                 </ul>
             </div>
             <!-- END Side Navigation -->
@@ -967,6 +984,9 @@
         -->
     <script src="assets/js/oneui.app.min.js"></script>
     <script src="assets/js/jquery-ui.min.js"></script>
+    <script src="assets/js/plugins/bootstrap-notify/bootstrap-notify.min.js"></script>
+    <script src="assets/js/plugins/sweetalert.min.js"></script>
+    <script>jQuery(function(){ One.helpers('notify'); });</script>
     @yield('scriptjs')
 </body>
 

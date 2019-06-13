@@ -78,7 +78,7 @@
                                 @foreach ($list_promotion as $item)
                                 <tr>
                                     <td class="text-center">
-                                        <input @if ($item->prom_status != 0) disabled @endif type="checkbox" name="selected[]" value="{{$item->prom_id}}">
+                                        <input @if ($item->prom_status != 0) disabled @else name="selected[]" @endif type="checkbox"  value="{{$item->prom_id}}">
                                     </td>
                                     <td class="font-w600 font-size-sm">{{$item->prom_name}}</td>
                                     <td class="font-w600 font-size-sm">

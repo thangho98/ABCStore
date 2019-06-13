@@ -47,10 +47,10 @@ Route::group(['namespace' => 'Admin'], function () {
         Route::post('/','LoginController@postReminder');
     });
     Route::group(['prefix' => 'admin','middleware' => 'CheckLogedOut'], function () {
-        Route::get('/','HomeController@returnHome');
-        Route::get('home','HomeController@getHome');
+        Route::get('/','HomeController@returnHome')->middleware('CheckRoleAdmin');
+        Route::get('home','HomeController@getHome')->middleware('CheckRoleAdmin');
 
-        Route::group(['prefix' => 'brand'], function () {
+        Route::group(['prefix' => 'brand','middleware' => 'CheckRoleAdmin'], function () {
             Route::get('/','BrandController@getBrand');
             
             Route::post('/add','BrandController@postAddBrand');
@@ -61,7 +61,7 @@ Route::group(['namespace' => 'Admin'], function () {
             Route::get('/delete','BrandController@getDeleteBrand');
         });
 
-        Route::group(['prefix' => 'category'], function () {
+        Route::group(['prefix' => 'category','middleware' => 'CheckRoleAdmin'], function () {
             Route::get('/','CategoryController@getCate');
 
             Route::post('/add','CategoryController@postAddCate');
@@ -72,7 +72,7 @@ Route::group(['namespace' => 'Admin'], function () {
             Route::get('/delete','CategoryController@getDeleteCate');
         });
 
-        Route::group(['prefix' => 'product'], function () {
+        Route::group(['prefix' => 'product','middleware' => 'CheckRoleAdmin'], function () {
             Route::get('/','ProductController@getProd');
 
             Route::get('/view/{id}','ProductController@getViewProd');
@@ -85,7 +85,7 @@ Route::group(['namespace' => 'Admin'], function () {
             Route::get('/delete','ProductController@getDeleteProd');
         });
 
-        Route::group(['prefix' => 'provider'], function () {
+        Route::group(['prefix' => 'provider','middleware' => 'CheckRoleAdmin'], function () {
             Route::get('/','ProviderController@getProv');
 
             Route::post('/add','ProviderController@postAddProv');
@@ -96,7 +96,7 @@ Route::group(['namespace' => 'Admin'], function () {
             Route::get('/delete','ProviderController@getDeleteProv');
         });
 
-        Route::group(['prefix' => 'employees'], function () {
+        Route::group(['prefix' => 'employees','middleware' => 'CheckRoleAdmin'], function () {
             Route::get('/','EmployeesController@getEmpl');
             
             Route::get('/view/{id}','EmployeesController@getViewEmpl');
@@ -109,12 +109,12 @@ Route::group(['namespace' => 'Admin'], function () {
             Route::get('/delete','EmployeesController@getDeleteEmpl');
         });
         
-        Route::group(['prefix' => 'comment'], function () {
+        Route::group(['prefix' => 'comment','middleware' => 'CheckRoleAdmin'], function () {
             Route::get('/', 'CommentController@getComment');
             Route::get('/delete/', 'CommentController@getDeleteComment');
         });
 
-        Route::group(['prefix' => 'customer'], function () {
+        Route::group(['prefix' => 'customer','middleware' => 'CheckRoleAdmin'], function () {
             Route::get('/', 'CustomerController@getCus');
 
             Route::get('/edit/{id}','CustomerController@getEditCus');
@@ -123,7 +123,7 @@ Route::group(['namespace' => 'Admin'], function () {
             Route::get('/delete/', 'CustomerController@getDeleteCus');
         });
 
-        Route::group(['prefix' => 'promotion'], function () {
+        Route::group(['prefix' => 'promotion','middleware' => 'CheckRoleAdmin'], function () {
             Route::get('/','PromotionController@getPromotions');
             
             Route::get('/add','PromotionController@getAddProm');
@@ -144,14 +144,14 @@ Route::group(['namespace' => 'Admin'], function () {
             Route::get('/cancel/','PromotionController@getCancelAddProm');
         });
 
-        Route::group(['prefix' => 'cart'], function () {
+        Route::group(['prefix' => 'cart','middleware' => 'CheckRoleSaleAndInvoice'], function () {
             Route::get('/','CartController@getCartOnline');
             
             Route::get('/view/{id}','CartController@getViewDetailCartOnline');
             
         });
 
-        Route::group(['prefix' => 'orders'], function () {
+        Route::group(['prefix' => 'orders','middleware' => 'CheckRoleSaleAndInvoice'], function () {
             Route::get('/','OrdersController@getOrders');
             
             Route::get('/view/{id}','OrdersController@getViewDetailOrders');
@@ -174,25 +174,8 @@ Route::group(['namespace' => 'Admin'], function () {
 
             Route::get('/cancel/','OrdersController@getCancelOrders');
         });
-        
-        Route::group(['prefix' => 'user'], function () {
-            Route::get('/','UsersController@getUsers');
 
-            Route::post('add/','UsersController@postAddUser');
-
-            Route::get('/edit/{id}','UsersController@getEditUser');
-            Route::post('/edit/{id}','UsersController@postEditUser');
-
-            Route::get('/delete','UsersController@getDeleteUser');
-
-            Route::get('/reset/','UsersController@getResetPassUser');
-        });
-
-        Route::group(['prefix' => 'permission'], function () {
-            Route::get('/','PermissionController@getPermission');
-        });
-
-        Route::group(['prefix' => 'guarantee'], function() {
+        Route::group(['prefix' => 'guarantee','middleware' => 'CheckRoleGuarantee'], function() {
             Route::get('/','GuaranteeController@getGuarantee');
 
             Route::get('check/','GuaranteeController@getCheckOrder');
@@ -208,7 +191,7 @@ Route::group(['namespace' => 'Admin'], function () {
             Route::get('/print/reimburse/{id}','GuaranteeController@getPrintGuaranteeReimburse');
         });
 
-        Route::group(['prefix' => 'invoice'], function() {
+        Route::group(['prefix' => 'invoice','middleware' => 'CheckRoleSaleAndInvoice'], function() {
             Route::get('/','InvoiceController@getInvo');
 
             Route::get('/add/','InvoiceController@getAddInvo');
@@ -233,8 +216,25 @@ Route::group(['namespace' => 'Admin'], function () {
             Route::get('/item/update/qty','InvoiceController@getUpdateQtyItem');
             Route::get('/item/update/price','InvoiceController@getUpdatePriceItem');
         });
+        
+        Route::group(['prefix' => 'user','middleware' => 'CheckRoleAdmin'], function () {
+            Route::get('/','UsersController@getUsers');
 
-        Route::group(['prefix' => 'statistics'], function() {
+            Route::post('add/','UsersController@postAddUser');
+
+            Route::get('/edit/{id}','UsersController@getEditUser');
+            Route::post('/edit/{id}','UsersController@postEditUser');
+
+            Route::get('/delete','UsersController@getDeleteUser');
+
+            Route::get('/reset/','UsersController@getResetPassUser');
+        });
+
+        Route::group(['prefix' => 'permission','middleware' => 'CheckRoleAdmin'], function () {
+            Route::get('/','PermissionController@getPermission');
+        });
+
+        Route::group(['prefix' => 'statistics','middleware' => 'CheckRoleAdmin'], function() {
             Route::get('revenue/all','StatisticsController@getRevenueAll');
             Route::get('revenue/month','StatisticsController@getRevenueMonth');
             Route::get('revenue/quarter','StatisticsController@getRevenueQuarter');
@@ -245,8 +245,10 @@ Route::group(['namespace' => 'Admin'], function () {
             Route::get('salary','CommissionController@getSalary');
         });
 
-        
+        Route::get('/account/password','HomeController@getChangePassword');
+        Route::post('/account/password','HomeController@postChangePassword');
 
     });
     Route::get('/logout','HomeController@getLogout');
+   
 });
