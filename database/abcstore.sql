@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th6 13, 2019 lúc 05:37 AM
+-- Thời gian đã tạo: Th6 13, 2019 lúc 12:24 PM
 -- Phiên bản máy phục vụ: 10.3.15-MariaDB
 -- Phiên bản PHP: 7.3.6
 
@@ -758,12 +758,8 @@ INSERT INTO `product_options` (`propt_id`, `propt_prod`, `propt_color`, `propt_r
 CREATE TABLE `promotion` (
   `prom_id` int(11) NOT NULL,
   `prom_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `prom_propt` int(11) NOT NULL,
   `prom_start_date` date NOT NULL,
   `prom_end_date` date NOT NULL,
-  `prom_percent` int(11) NOT NULL,
-  `prom_unit_price` double NOT NULL,
-  `prom_promotion_price` double NOT NULL,
   `prom_status` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
@@ -773,19 +769,40 @@ CREATE TABLE `promotion` (
 -- Đang đổ dữ liệu cho bảng `promotion`
 --
 
-INSERT INTO `promotion` (`prom_id`, `prom_name`, `prom_propt`, `prom_start_date`, `prom_end_date`, `prom_percent`, `prom_unit_price`, `prom_promotion_price`, `prom_status`, `created_at`, `updated_at`) VALUES
-(5, 'Back to school 2019', 5, '2019-06-12', '2019-06-16', 15, 18000000, 15300000, 1, '2019-06-10 17:52:10', '2019-06-12 03:45:05'),
-(6, 'Back to school 2019', 9, '2019-06-12', '2019-06-16', 20, 9990000, 7992000, 1, '2019-06-10 17:52:10', '2019-06-12 03:45:05'),
-(7, 'Back to school 2019', 4, '2019-06-12', '2019-06-16', 15, 17990000, 15291500, 1, '2019-06-11 03:25:35', '2019-06-12 03:45:05'),
-(8, 'Back to school 2019', 23, '2019-06-12', '2019-06-16', 10, 7990000, 7191000, 1, '2019-06-11 03:25:35', '2019-06-12 03:45:05');
+INSERT INTO `promotion` (`prom_id`, `prom_name`, `prom_start_date`, `prom_end_date`, `prom_status`, `created_at`, `updated_at`) VALUES
+(10, 'Back to school 2019', '2019-06-14', '2019-06-16', 0, '2019-06-13 07:39:50', '2019-06-13 08:50:19');
+
+-- --------------------------------------------------------
 
 --
--- Bẫy `promotion`
+-- Cấu trúc bảng cho bảng `promotiondetail`
+--
+
+CREATE TABLE `promotiondetail` (
+  `promdt_id` int(11) NOT NULL,
+  `promdt_prom` int(11) NOT NULL,
+  `promdt_propt` int(11) NOT NULL,
+  `promdt_percent` float NOT NULL,
+  `promdt_unit_price` double NOT NULL,
+  `promdt_promotion_price` double NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `promotiondetail`
+--
+
+INSERT INTO `promotiondetail` (`promdt_id`, `promdt_prom`, `promdt_propt`, `promdt_percent`, `promdt_unit_price`, `promdt_promotion_price`, `created_at`, `updated_at`) VALUES
+(3, 10, 2, 20, 29990000, 23992000, '2019-06-13 08:50:19', '2019-06-13 08:50:19'),
+(4, 10, 6, 15, 3000, 2550, '2019-06-13 08:50:19', '2019-06-13 08:50:19'),
+(5, 10, 4, 15, 17990000, 15291500, '2019-06-13 08:50:19', '2019-06-13 08:50:19');
+
+--
+-- Bẫy `promotiondetail`
 --
 DELIMITER $$
-CREATE TRIGGER `insert_promotion` BEFORE INSERT ON `promotion` FOR EACH ROW BEGIN
-	SET NEW.prom_promotion_price = NEW.prom_unit_price - NEW.prom_unit_price*(NEW.prom_percent/100);
-END
+CREATE TRIGGER `insert_promotiondetail` BEFORE INSERT ON `promotiondetail` FOR EACH ROW SET NEW.promdt_promotion_price = NEW.promdt_unit_price - NEW.promdt_unit_price*(NEW.promdt_percent/100)
 $$
 DELIMITER ;
 
@@ -921,7 +938,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`username`, `password`, `empl_id`, `perm_id`, `status`, `remember_token`, `created_at`, `updated_at`) VALUES
-('admin', '$2y$10$Tri2ztrGuT8meagw5HFEZOoQHFY5G1BfVQdVVCL3QJHqflLHhEJrW', 8, 1, 0, 'A2dQQUXpC1vV5Azm6KlH8qZt1WBdbrgV3EKPXdf2kYNDtpZXOivUlicfmtzr', NULL, '2019-06-12 13:46:35'),
+('admin', '$2y$10$Tri2ztrGuT8meagw5HFEZOoQHFY5G1BfVQdVVCL3QJHqflLHhEJrW', 8, 1, 0, 'WtraUvbeNbrwRASz5fxfKuZ3tibGY0p6m12Jn8Dz5blsMPJeZgjHyb7c7ecc', NULL, '2019-06-12 13:46:35'),
 ('nv10', '$2y$10$fp6FM2ZFO/sd9ZCBISDwmODnta4ILoWKJC8izJZKUdpTjwWLtyIw2', 10, 2, 0, '6EvC0M046TGobcmm9ocxbuzrA30xp2mxKTsUx03H', '2019-05-28 09:24:45', '2019-05-28 11:05:14'),
 ('nv11', '$2y$10$FTdJq5JRhwRJgWV4APBsQ.N/dUhnKaCOX3sed4tQ4AT3Y3ek/Y1DK', 11, 2, 0, '6EvC0M046TGobcmm9ocxbuzrA30xp2mxKTsUx03Hj', '2019-05-28 10:42:29', '2019-05-28 10:42:29'),
 ('nv12', '$2y$10$hXc8G3sBlfscMsaZsDrrS.2JI0N3fU7BZz5w7mO6XXJF0fVTxQuMu', 12, 3, 0, '1xaEYEDxcUKWJupAZsLYDlNvn7iCxOhGlluepml0', '2019-06-12 14:45:34', '2019-06-12 14:45:34');
@@ -1073,8 +1090,15 @@ ALTER TABLE `product_options`
 -- Chỉ mục cho bảng `promotion`
 --
 ALTER TABLE `promotion`
-  ADD PRIMARY KEY (`prom_id`),
-  ADD KEY `prom_prod` (`prom_propt`);
+  ADD PRIMARY KEY (`prom_id`);
+
+--
+-- Chỉ mục cho bảng `promotiondetail`
+--
+ALTER TABLE `promotiondetail`
+  ADD PRIMARY KEY (`promdt_id`),
+  ADD KEY `promdt_propt` (`promdt_propt`),
+  ADD KEY `promotiondetail_ibfk_1` (`promdt_prom`);
 
 --
 -- Chỉ mục cho bảng `provider`
@@ -1219,7 +1243,13 @@ ALTER TABLE `product_options`
 -- AUTO_INCREMENT cho bảng `promotion`
 --
 ALTER TABLE `promotion`
-  MODIFY `prom_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `prom_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT cho bảng `promotiondetail`
+--
+ALTER TABLE `promotiondetail`
+  MODIFY `promdt_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT cho bảng `provider`
@@ -1318,10 +1348,11 @@ ALTER TABLE `product_options`
   ADD CONSTRAINT `product_options_ibfk_1` FOREIGN KEY (`propt_prod`) REFERENCES `product` (`prod_id`) ON DELETE CASCADE;
 
 --
--- Các ràng buộc cho bảng `promotion`
+-- Các ràng buộc cho bảng `promotiondetail`
 --
-ALTER TABLE `promotion`
-  ADD CONSTRAINT `promotion_ibfk_1` FOREIGN KEY (`prom_propt`) REFERENCES `product_options` (`propt_id`);
+ALTER TABLE `promotiondetail`
+  ADD CONSTRAINT `promotiondetail_ibfk_1` FOREIGN KEY (`promdt_prom`) REFERENCES `promotion` (`prom_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `promotiondetail_ibfk_2` FOREIGN KEY (`promdt_propt`) REFERENCES `product_options` (`propt_id`);
 
 --
 -- Các ràng buộc cho bảng `user`
