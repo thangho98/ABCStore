@@ -7,8 +7,8 @@
     <div class="container">
         <div class="breadcrumb">
             <ul class="d-flex align-items-center">
-                <li><a href="index.html">Trang chủ</a></li>
-                <li class="active"><a href="checkout.html">Thanh Toán</a></li>
+                <li><a href="{{asset('/')}}">Trang chủ</a></li>
+                <li class="active"><a href="#">Thanh Toán</a></li>
             </ul>
         </div>
     </div>
@@ -45,7 +45,7 @@
                         <div class="col-md-12">
                             <div class="checkout-form-list mb-30">
                                 <label>CMND <span class="required">*</span></label>
-                                <input name="cus_identity_card" type="text" placeholder="Nhập số chứng minh nhân dân" required/>
+                                <input name="cus_identity_card" type="number" placeholder="Nhập số chứng minh nhân dân" required/>
                             </div>
                         </div>
                         <!-- <div class="col-md-12">

@@ -44,11 +44,15 @@ class CategoryController extends Controller
         $category = Category::find($id);
         $category->cate_name = $req->name;
         $category->cate_slug = str_slug($req->name);
+
+        //dd($dataIcon);
+
         if(!empty($dataIcon)){
             $iconName = $dataIcon->getClientOriginalName();
             $category->cate_icon = $iconName;
             $dataIcon->storeAs('images/category/',$iconName);
         }
+
         $category->save();
     }
 

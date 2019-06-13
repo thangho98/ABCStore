@@ -94,8 +94,8 @@
                                                 <span class="pro-quantity">1X</span>
                                             </div>
                                             <div class="cart-content">
-                                                <h6><a href="product.html">{{$item->name}}</a></h6>
-                                                <span class="cart-price">{{number_format($item->price,0,',','.')}}</span>
+                                                <h6><a href="{{asset('product/'.$item['attributes']->propt_prod)}}">{{$item->name}}</a></h6>
+                                                <span class="cart-price">{{number_format($item->price,0,',','.')}} VNĐ</span>
                                                 <span>Ram: {{$item['attributes']->propt_ram}} gb, Rom: {{$item['attributes']->propt_rom}}</span>
                                                 <span>Màu: {{$item['attributes']->propt_color}}</span>
                                             </div>

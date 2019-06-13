@@ -54,24 +54,24 @@ class FrontendController extends Controller
 
         //dd($data);
         
-        $insec = 0;
         foreach ($data['list_prod_new'] as $key => $list_prod) {
             foreach ($list_prod as $index => $prod) {
                 $prom = DB::table('product_options')
                 ->where('prom_status','1')
                 ->where('propt_prod',$prod['prod_id'])
-                ->join('promotion','product_options.propt_id','promotion.prom_propt')
-                ->select(DB::raw('max(prom_percent) as prom_percent, prom_promotion_price'))
+                ->join('promotiondetail','product_options.propt_id','promotiondetail.promdt_propt')
+                ->join('promotion','promotion.prom_id','promotiondetail.promdt_prom')
+                ->select(DB::raw('max(promdt_percent) as promdt_percent, promdt_promotion_price'))
                 ->groupBy('propt_prod')
                 ->first();
                 
                 if($prom != null){
-                    $data['list_prod_new'][$key][$index]['prom_promotion_price'] = $prom->prom_promotion_price;
-                    $data['list_prod_new'][$key][$index]['prom_percent'] =  $prom->prom_percent;
+                    $data['list_prod_new'][$key][$index]['promdt_promotion_price'] = $prom->promdt_promotion_price;
+                    $data['list_prod_new'][$key][$index]['promdt_percent'] =  $prom->promdt_percent;
                 }
                 else{
-                    $data['list_prod_new'][$key][$index]['prom_promotion_price'] = 0;
-                    $data['list_prod_new'][$key][$index]['prom_percent'] = 0;
+                    $data['list_prod_new'][$key][$index]['promdt_promotion_price'] = 0;
+                    $data['list_prod_new'][$key][$index]['promdt_percent'] = 0;
                 }
             }
         }
@@ -127,7 +127,8 @@ class FrontendController extends Controller
         
         $data['list_promotion'] = DB::table('product')
             ->join('product_options','product.prod_id','product_options.propt_prod')
-            ->join('promotion','product_options.propt_id','promotion.prom_propt')
+            ->join('promotiondetail','product_options.propt_id','promotiondetail.promdt_propt')
+            ->join('promotion','promotion.prom_id','promotiondetail.promdt_prom')
             ->where('prod_status','1')
             ->where('prom_status','1')
             ->groupBy('prod_id','prod_name')
@@ -135,6 +136,7 @@ class FrontendController extends Controller
             ->orderBy('prom_id','desc')
             ->get();
         
+        //dd($data);
         return view('abcstore.index', $data);
     }
 
@@ -158,8 +160,6 @@ class FrontendController extends Controller
         $data['max_price'] = ProductOptions::where('propt_prod',$id)
                                 ->select(DB::raw('max(propt_price) as price'))
                                 ->first();
-
-        //dd($data);
         
         if(count($data['list_memory']) > 0){
             $data['list_color'] = ProductOptions::where('propt_prod',$id)
@@ -171,11 +171,40 @@ class FrontendController extends Controller
         
         $data['list_image'] = ProductImage::where('pimg_prod',$id)->get();
 
-        $data['list_related'] = Product::where('prod_cate',$data['product']->prod_cate)
-                                ->where('prod_brand',$data['product']->prod_brand)
-                                ->where('prod_id','<>',$id)
-                                ->take(10)
-                                ->get();
+        $data['list_related'] = DB::table('product')
+            ->join('product_options','product.prod_id','product_options.propt_prod')
+            ->where('prod_cate',$data['product']->prod_cate)
+            ->where('prod_brand',$data['product']->prod_brand)
+            ->where('prod_id','<>',$id)
+            ->select(DB::raw('prod_id, prod_name, prod_poster, prod_new, min(propt_price) as prod_price'))
+            ->groupBy('prod_id','prod_name')
+            ->orderBy('prod_id','desc')
+            ->take(10)
+            ->get();
+        
+        $data['list_related'] = json_encode($data['list_related']);
+        $data['list_related'] = json_decode($data['list_related'], true);
+        
+        foreach ($data['list_related']  as $index => $prod) {
+            $prom = DB::table('product_options')
+                ->where('prom_status','1')
+                ->where('propt_prod',$prod['prod_id'])
+                ->join('promotiondetail','product_options.propt_id','promotiondetail.promdt_propt')
+                ->join('promotion','promotion.prom_id','promotiondetail.promdt_prom')
+                ->select(DB::raw('max(promdt_percent) as promdt_percent, promdt_promotion_price'))
+                ->groupBy('propt_prod')
+                ->first();
+            
+            if($prom != null){
+                $data['list_related'][$index]['promdt_promotion_price'] = $prom->promdt_promotion_price;
+                $data['list_related'][$index]['promdt_percent'] =  $prom->promdt_percent;
+            }
+            else{
+                $data['list_related'][$index]['promdt_promotion_price'] = 0;
+                $data['list_related'][$index]['promdt_percent'] = 0;
+            }
+        }
+
         $sum = 0;
         foreach ($data['list_comment'] as $key => $value) {
             $sum += $value->cmt_voted;
@@ -225,9 +254,14 @@ class FrontendController extends Controller
                             ->where('propt_rom',$req->rom)
                             ->where('propt_color',$req->color)
                             ->first();
-        $data['promotion'] = Promotion::where('prom_status',1)
-                            ->where('prom_propt',$data['options']->propt_id)
+
+        $data['promotion'] = DB::table('promotiondetail')
+                            ->join('promotion','promotion.prom_id','promotiondetail.promdt_prom')
+                            ->where('prom_status',1)
+                            ->where('promdt_propt',$data['options']->propt_id)
+                            ->orderBy('prom_id','desc')
                             ->first();
+                            
         return json_encode($data);
     }
 
@@ -247,11 +281,59 @@ class FrontendController extends Controller
             ->take(4)
             ->get();
         
+        $data['list_new_product'] = json_encode($data['list_new_product']);
+        $data['list_new_product'] = json_decode($data['list_new_product'], true);
+        
+        foreach ($data['list_new_product']  as $index => $prod) {
+            $prom = DB::table('product_options')
+                ->where('prom_status','1')
+                ->where('propt_prod',$prod['prod_id'])
+                ->join('promotiondetail','product_options.propt_id','promotiondetail.promdt_propt')
+                ->join('promotion','promotion.prom_id','promotiondetail.promdt_prom')
+                ->select(DB::raw('max(promdt_percent) as promdt_percent, promdt_promotion_price'))
+                ->groupBy('propt_prod')
+                ->first();
+            
+            if($prom != null){
+                $data['list_new_product'][$index]['promdt_promotion_price'] = $prom->promdt_promotion_price;
+                $data['list_new_product'][$index]['promdt_percent'] =  $prom->promdt_percent;
+            }
+            else{
+                $data['list_new_product'][$index]['promdt_promotion_price'] = 0;
+                $data['list_new_product'][$index]['promdt_percent'] = 0;
+            }
+        }
+
+        
         $data['list_product'] = DB::table('product')->where('prod_status','1')
             ->join('product_options','product.prod_id','product_options.propt_prod')
             ->select(DB::raw('prod_id, prod_name, prod_new, prod_detail, prod_warranty_period, prod_poster, min(propt_price) as prod_price'))
             ->groupBy('prod_id')
-            ->orderBy('prod_id','desc')->get();
+            ->orderBy('prod_id','desc')
+            ->get();
+
+        $data['list_product'] = json_encode($data['list_product']);
+        $data['list_product'] = json_decode($data['list_product'], true);
+        
+        foreach ($data['list_product']  as $index => $prod) {
+            $prom = DB::table('product_options')
+                ->where('prom_status','1')
+                ->where('propt_prod',$prod['prod_id'])
+                ->join('promotiondetail','product_options.propt_id','promotiondetail.promdt_propt')
+                ->join('promotion','promotion.prom_id','promotiondetail.promdt_prom')
+                ->select(DB::raw('max(promdt_percent) as promdt_percent, promdt_promotion_price'))
+                ->groupBy('propt_prod')
+                ->first();
+            
+            if($prom != null){
+                $data['list_product'][$index]['promdt_promotion_price'] = $prom->promdt_promotion_price;
+                $data['list_product'][$index]['promdt_percent'] =  $prom->promdt_percent;
+            }
+            else{
+                $data['list_product'][$index]['promdt_promotion_price'] = 0;
+                $data['list_product'][$index]['promdt_percent'] = 0;
+            }
+        }    
         
         $data['list_ram'] = DB::table('product_options')
             ->where('prod_status','1')
@@ -287,6 +369,29 @@ class FrontendController extends Controller
             ->take(4)
             ->get();
         
+        $data['list_new_product'] = json_encode($data['list_new_product']);
+        $data['list_new_product'] = json_decode($data['list_new_product'], true);
+            
+        foreach ($data['list_new_product']  as $index => $prod) {
+            $prom = DB::table('product_options')
+                ->where('prom_status','1')
+                ->where('propt_prod',$prod['prod_id'])
+                ->join('promotiondetail','product_options.propt_id','promotiondetail.promdt_propt')
+                ->join('promotion','promotion.prom_id','promotiondetail.promdt_prom')
+                ->select(DB::raw('max(promdt_percent) as promdt_percent, promdt_promotion_price'))
+                ->groupBy('propt_prod')
+                ->first();
+            
+            if($prom != null){
+                $data['list_new_product'][$index]['promdt_promotion_price'] = $prom->promdt_promotion_price;
+                $data['list_new_product'][$index]['promdt_percent'] =  $prom->promdt_percent;
+            }
+            else{
+                $data['list_new_product'][$index]['promdt_promotion_price'] = 0;
+                $data['list_new_product'][$index]['promdt_percent'] = 0;
+            }
+        }
+        
         $queryListProduct = DB::table('product')->where('prod_status','1')
             ->join('product_options','product.prod_id','product_options.propt_prod')
             ->select(DB::raw('prod_id, prod_name, prod_new, prod_detail, prod_warranty_period, prod_poster, min(propt_price) as prod_price'))
@@ -307,6 +412,28 @@ class FrontendController extends Controller
         $data['search'] = $req->search;
 
         $data['list_product'] = $queryListProduct->get();
+        $data['list_product'] = json_encode($data['list_product']);
+        $data['list_product'] = json_decode($data['list_product'], true);
+        
+        foreach ($data['list_product']  as $index => $prod) {
+            $prom = DB::table('product_options')
+                ->where('prom_status','1')
+                ->where('propt_prod',$prod['prod_id'])
+                ->join('promotiondetail','product_options.propt_id','promotiondetail.promdt_propt')
+                ->join('promotion','promotion.prom_id','promotiondetail.promdt_prom')
+                ->select(DB::raw('max(promdt_percent) as promdt_percent, promdt_promotion_price'))
+                ->groupBy('propt_prod')
+                ->first();
+            
+            if($prom != null){
+                $data['list_product'][$index]['promdt_promotion_price'] = $prom->promdt_promotion_price;
+                $data['list_product'][$index]['promdt_percent'] =  $prom->promdt_percent;
+            }
+            else{
+                $data['list_product'][$index]['promdt_promotion_price'] = 0;
+                $data['list_product'][$index]['promdt_percent'] = 0;
+            }
+        }
         
         $queryListBrand = DB::table('brand')
             ->join('product','brand.brand_id','product.prod_brand');
@@ -327,6 +454,8 @@ class FrontendController extends Controller
             ->orderBy('propt_rom','desc');
         
         $products = $queryListProduct->get();
+        
+
         for ($i = 0; $i < count($products); $i++) { 
             if($i == 0){
                 $queryListBrand->where('prod_id', $products[$i]->prod_id);
@@ -349,7 +478,6 @@ class FrontendController extends Controller
 
     public function getListProduct(Request $req)
     {
-
         $queryListProduct = DB::table('product')->where('prod_status','1')
                                         ->join('product_options','product.prod_id','product_options.propt_prod')
                                         ->select(DB::raw('prod_id, prod_name, prod_new, prod_detail, prod_poster, min(propt_price) as prod_price'))
@@ -418,6 +546,28 @@ class FrontendController extends Controller
         }
 
         $data['list_product'] = $queryListProduct->get();
+        $data['list_product'] = json_encode($data['list_product']);
+        $data['list_product'] = json_decode($data['list_product'], true);
+        
+        foreach ($data['list_product']  as $index => $prod) {
+            $prom = DB::table('product_options')
+                ->where('prom_status','1')
+                ->where('propt_prod',$prod['prod_id'])
+                ->join('promotiondetail','product_options.propt_id','promotiondetail.promdt_propt')
+                ->join('promotion','promotion.prom_id','promotiondetail.promdt_prom')
+                ->select(DB::raw('max(promdt_percent) as promdt_percent, promdt_promotion_price'))
+                ->groupBy('propt_prod')
+                ->first();
+            
+            if($prom != null){
+                $data['list_product'][$index]['promdt_promotion_price'] = $prom->promdt_promotion_price;
+                $data['list_product'][$index]['promdt_percent'] =  $prom->promdt_percent;
+            }
+            else{
+                $data['list_product'][$index]['promdt_promotion_price'] = 0;
+                $data['list_product'][$index]['promdt_percent'] = 0;
+            }
+        }
 
         return view('abcstore.list_product',$data);
     }

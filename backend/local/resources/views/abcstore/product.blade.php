@@ -7,9 +7,9 @@
     <div class="container">
         <div class="breadcrumb">
             <ul class="d-flex align-items-center">
-                <li><a href="index.html">Trang chủ</a></li>
-                <li><a href="shop.html">Cửa hàng</a></li>
-                <li class="active"><a href="product.html">Sản phẩm</a></li>
+                <li><a href="{{asset('/')}}">Trang chủ</a></li>
+                <li><a href="{{asset('/shop')}}">Cửa hàng</a></li>
+                <li class="active"><a href="#">Sản phẩm</a></li>
             </ul>
         </div>
     </div>
@@ -254,32 +254,37 @@
             @foreach ($list_related as $item)
                 <!-- Single Product Start -->
             <div class="single-product">
-                    <!-- Product Image Start -->
-                    <div class="pro-img">
-                        <a href="product.html">
-                            <img class="primary-img" src="{{asset('local/storage/app/images/product/'.$item->prod_poster)}}" alt="single-product">
-                        </a>
-                    </div>
-                    <!-- Product Image End -->
-                    <!-- Product Content Start -->
-                    <div class="pro-content">
-                        <div class="pro-info">
-                            <h4><a href="product.html">{{$item->prod_name}}</a></h4>
-                            <p><span class="price">$160.45</span></p>
-                        </div>
-                        <div class="pro-actions">
-                            <div class="actions-primary">
-                                <a href="cart.html" title="Add to Cart"> + Thêm vào giỏ hàng</a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Product Content End -->
-                    @if ($item->prod_new)
-                        <span class="sticker-new">mới</span>
-                    @endif
-                    
+                <!-- Product Image Start -->
+                <div class="pro-img">
+                    <a href="{{asset('/product/'.$item['prod_id'])}}">
+                        <img width="226px;" height="226px;" class="primary-img" src="{{asset('local/storage/app/images/product/'.$item['prod_poster'])}}" alt="single-product">
+                    </a>
                 </div>
-                <!-- Single Product End -->
+                <!-- Product Image End -->
+                <!-- Product Content Start -->
+                <div class="pro-content">
+                    <div class="pro-info">
+                        <h4><a href="{{asset('/product/'.$item['prod_id'])}}">{{$item['prod_name']}}</a></h4>
+                        @if ($item['promdt_percent'] != 0)
+                        <p><span class="price">{{number_format($item['promdt_promotion_price'],0,',','.')}}
+                            VNĐ</span><del class="prev-price">{{number_format($item['prod_price'],0,',','.')}}
+                            VNĐ</del></p>
+                        @else
+                        <p><span class="price">{{number_format($item['prod_price'],0,',','.')}}
+                            VNĐ</span><del class="prev-price"></del></p>
+                        @endif
+                        @if ($item['promdt_percent'] != 0)
+                        <div class="label-product l_sale">{{$item['promdt_percent'] }}<span
+                                class="symbol-percent">%</span></div>
+                        @endif
+                    </div>
+                </div>
+                <!-- Product Content End -->
+                @if ($item['prod_new'])
+                    <span class="sticker-new">mới</span>
+                @endif
+            </div>
+            <!-- Single Product End -->
             @endforeach
         </div>
         <!-- Hot Deal Product Active End -->
@@ -348,9 +353,9 @@
             }
             else{
                 $('#prev-price').html(formatNumber(options['propt_price'])+' VNĐ');
-                $('#price').html(formatNumber(promotion['prom_promotion_price'])+' VNĐ');
+                $('#price').html(formatNumber(promotion['promdt_promotion_price'])+' VNĐ');
                 $('#saving-price').addClass('saving-price');
-                $('#saving-price').html(`Tiết kiệm ${promotion['prom_percent']}%`);
+                $('#saving-price').html(`Tiết kiệm ${promotion['promdt_percent']}%`);
             }
 
 
@@ -469,8 +474,6 @@
             // Send Ajax
             $.get(url, data, success, dataType);
         });
-
-
     });
 </script>
 @endsection

@@ -31,12 +31,17 @@
                 console.log("hello");
                 
                 $form = $('#edit-form');
-
+                
                 if ($form.valid()) {
+                    var datas = new FormData($form[0]);
                     $.ajax({
                         url: $form.attr('action'),
+                        enctype: 'multipart/form-data',
+                        processData: false,
+                        contentType: false,
+                        cache: false,
                         type: $form.attr('method'),
-                        data: $form.serialize(),
+                        data: datas,
                         success: function (data) {
                             swal("Đã sửa!", "Đối tượng đã được sửa.", "success")
                                 .then((value) => {

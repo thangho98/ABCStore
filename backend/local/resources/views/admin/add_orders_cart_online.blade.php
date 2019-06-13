@@ -143,7 +143,11 @@
                                                             </div>
                                                         </td>
                                                         <td>{{number_format($item->attributes['propt_price'],0,',','.')}} VNĐ</td>
-                                                        <td>{{number_format($item->price,0,',','.')}} VNĐ</td>
+                                                        @if ($item->price == $item->attributes['propt_price'])
+                                                            <td></td>
+                                                        @else
+                                                            <td>{{number_format($item->price,0,',','.')}} VNĐ</td>
+                                                        @endif
                                                         <td class="text-center">
                                                             <div class="btn-group">
                                                                 <button type="button"
@@ -173,9 +177,9 @@
                                             name="cus_name" value="{{$cus->cus_name}}" required>
                                     </div>
                                     <div class="form-group col-6">
-                                        <label for="wizard-validation-phone">SĐT</label>
-                                        <input class="form-control" type="text" id="wizard-validation-phone"
-                                            name="cus_phone" value="{{$cus->cus_phone}}" required>
+                                        <label for="wizard-validation-identity-card">CMND</label>
+                                        <input readonly class="form-control" type="text" id="wizard-validation-identity-card"
+                                            name="cus_identity_card" value="{{$cus->cus_identity_card}}" required>
                                     </div>
                                 </div>
                                 <div class="form-row">
@@ -185,9 +189,9 @@
                                             name="cus_email" value="{{$cus->cus_email}}" required>
                                     </div>
                                     <div class="form-group col-6">
-                                        <label for="wizard-validation-identity-card">CMND</label>
-                                        <input class="form-control" type="text" id="wizard-validation-identity-card"
-                                            name="cus_identity_card" value="{{$cus->cus_identity_card}}" required>
+                                        <label for="wizard-validation-phone">SĐT</label>
+                                        <input class="form-control" type="text" id="wizard-validation-phone"
+                                            name="cus_phone" value="{{$cus->cus_phone}}" required>
                                     </div>
                                 </div>
                             </div>

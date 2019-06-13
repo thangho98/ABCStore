@@ -10,6 +10,7 @@ use App\Models\OrdersDetail;
 use App\Models\Customer;
 use App\Models\Product;
 use App\Models\Promotion;
+use App\Models\PromotionDetail;
 use App\Models\ProductOptions;
 use App\Models\Carts;
 use App\Models\CartDetail;
@@ -60,11 +61,25 @@ class OrdersController extends Controller
 
     public function postAddOrders(Request $req)
     {
-        $cus = new Customer;
-        $cus->cus_name = $req->cus_name;
-        $cus->cus_phone = $req->cus_phone;
-        $cus->cus_email = $req->cus_email;
-        $cus->cus_identity_card = $req->cus_identity_card;
+        $req->validate([
+                'cus_identity_card' => 'unique:customer,cus_identity_card',
+            ],
+            [
+                'cus_identity_card.unique' => 'Chứng minh nhân dân không được trùng'
+            ]
+        );
+        if($req->cus_id == null){
+            $cus = new Customer;
+            $cus->cus_name = $req->cus_name;
+            $cus->cus_phone = $req->cus_phone;
+            $cus->cus_email = $req->cus_email;
+            $cus->cus_identity_card = $req->cus_identity_card;
+        }
+        else{
+            $cus = Customer::find($req->cus_id);
+            $cus->cus_email = $req->cus_email;
+            $cus->cus_phone = $req->cus_phone;
+        }
         $cus->save();
 
         $empl_id = Session::get('user')->empl_id;
@@ -140,7 +155,6 @@ class OrdersController extends Controller
         $cus->cus_name = $req->cus_name;
         $cus->cus_phone = $req->cus_phone;
         $cus->cus_email = $req->cus_email;
-        $cus->cus_identity_card = $req->cus_identity_card;
         $cus->save();
 
         $empl_id = Session::get('user')->empl_id;
@@ -196,12 +210,17 @@ class OrdersController extends Controller
 
         $options = ProductOptions::find($req->id);
         $product = Product::find($options->propt_prod);
-        $promotion = Promotion::where('prom_status',1)
-                ->where('prom_propt',$options->propt_id)
-                ->first();
+
+        $promotion = DB::table('promotiondetail')
+                    ->join('promotion','promotion.prom_id','promotiondetail.promdt_prom')
+                    ->where('prom_status',1)
+                    ->where('promdt_propt',$options->propt_id)
+                    ->orderBy('prom_id','desc')
+                    ->first();
+
         $price =  $options->propt_price;
         if($promotion != null){
-            $price = $promotion->prom_promotion_price;
+            $price = $promotion->promdt_promotion_price;
         }
         Cart::session($empl_id)->add(array(
             'id' => $req->id,
@@ -252,5 +271,12 @@ class OrdersController extends Controller
         Cart::session($empl_id)->clear();
         Session::forget($empl_id);
         return redirect('admin/orders/');
+    }
+
+    public function getCheckCus(Request $req)
+    {
+        $cus = Customer::where('cus_identity_card',$req->identity_card)
+                ->first();
+        return json_encode($cus);
     }
 }

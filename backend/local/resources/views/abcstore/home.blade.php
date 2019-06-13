@@ -44,6 +44,7 @@
 </div>
 <!-- Categorie Menu & Slider Area End Here -->
 <!-- Hot Deal Products Start Here -->
+@if (count($list_promotion) > 0)
 <div class="hot-deal-products off-white-bg pb-60 pb-sm-50">
     <div class="container">
         <!-- Product Title Start -->
@@ -70,17 +71,17 @@
                         <h4><a href="{{asset('/product/'.$item->prod_id)}}">{{$item->prod_name}} {{$item->propt_color}}, Ram:
                             {{-- {{$item->propt_ram}} gb, Rom: {{$item->propt_rom}} --}}
                         </a></h4>
-                        <p><span class="price">{{number_format($item->prom_promotion_price,0,',','.')}}
+                        <p><span class="price">{{number_format($item->promdt_promotion_price,0,',','.')}}
                                 VNĐ</span>
-                            <del class="prev-price">{{number_format($item->prom_unit_price,0,',','.')}}
+                            <del class="prev-price">{{number_format($item->promdt_unit_price,0,',','.')}}
                                     VNĐ</del></p>
-                            <div class="label-product l_sale">{{$item->prom_percent}}<span class="symbol-percent">%</span></div>
+                            <div class="label-product l_sale">{{$item->promdt_percent}}<span class="symbol-percent">%</span></div>
                     </div>
-                    <div class="pro-actions">
+                    {{-- <div class="pro-actions">
                         <div class="actions-primary">
                             <a href="cart.html" title="Add to Cart"> + Thêm vào giỏ hàng</a>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
                 <!-- Product Content End -->
                 @if ($item->prod_new == 1)
@@ -94,7 +95,9 @@
 
     </div>
     <!-- Container End -->
-</div>
+</div>  
+@endif
+
 <!-- Hot Deal Products End Here -->
 <!-- Arrivals Products Area Start Here -->
 <div class="arrivals-product pt-20 pb-85 pb-sm-45">
@@ -152,11 +155,11 @@
                                         <h4>
                                             <a href="{{asset('/product/'.$list_prod_new[$nameArr][$index]['prod_id'])}}">{{$list_prod_new[$nameArr][$index]['prod_name']}}</a>
                                         </h4>
-                                        @if ($list_prod_new[$nameArr][$index]['prom_percent'] != 0)
+                                        @if ($list_prod_new[$nameArr][$index]['promdt_percent'] != 0)
                                             <p><span class="price">{{number_format($list_prod_new[$nameArr][$index]['prod_price'],0,',','.')}}
-                                                VNĐ</span><del class="prev-price">{{number_format($list_prod_new[$nameArr][$index]['prom_promotion_price'],0,',','.')}}
+                                                VNĐ</span><del class="prev-price">{{number_format($list_prod_new[$nameArr][$index]['promdt_promotion_price'],0,',','.')}}
                                                     VNĐ</del></p>
-                                            <div class="label-product l_sale">{{$list_prod_new[$nameArr][$index]['prom_percent']}}<span class="symbol-percent">%</span></div>
+                                            <div class="label-product l_sale">{{$list_prod_new[$nameArr][$index]['promdt_percent']}}<span class="symbol-percent">%</span></div>
                                         @else
                                         <p><span class="price">{{number_format($list_prod_new[$nameArr][$index]['prod_price'],0,',','.')}}
                                             VNĐ</span></p>
@@ -187,11 +190,11 @@
                                         <h4><a
                                                 href="{{asset('/product/'.$list_prod_new[$nameArr][$index]['prod_id'])}}">{{$list_prod_new[$nameArr][$index]['prod_name']}}</a>
                                         </h4>
-                                        @if ($list_prod_new[$nameArr][$index]['prom_percent'] != 0)
+                                        @if ($list_prod_new[$nameArr][$index]['promdt_percent'] != 0)
                                         <p><span class="price">{{number_format($list_prod_new[$nameArr][$index]['prod_price'],0,',','.')}}
-                                            VNĐ</span><del class="prev-price">{{number_format($list_prod_new[$nameArr][$index]['prom_promotion_price'],0,',','.')}}
+                                            VNĐ</span><del class="prev-price">{{number_format($list_prod_new[$nameArr][$index]['promdt_promotion_price'],0,',','.')}}
                                                 VNĐ</del></p>
-                                        <div class="label-product l_sale">{{$list_prod_new[$nameArr][$index]['prom_percent']}}<span class="symbol-percent">%</span></div>
+                                        <div class="label-product l_sale">{{$list_prod_new[$nameArr][$index]['promdt_percent']}}<span class="symbol-percent">%</span></div>
                                         @else
                                         <p><span class="price">{{number_format($list_prod_new[$nameArr][$index]['prod_price'],0,',','.')}}
                                             VNĐ</span></p>
@@ -238,11 +241,11 @@
                                         <h4>
                                             <a href="{{asset('/product/'.$list_prod_new[$nameArr][$index]['prod_id'])}}">{{$list_prod_new[$nameArr][$index]['prod_name']}}</a>
                                         </h4>
-                                        @if ($list_prod_new[$nameArr][$index]['prom_percent'] != 0)
+                                        @if ($list_prod_new[$nameArr][$index]['promdt_percent'] != 0)
                                             <p><span class="price">{{number_format($list_prod_new[$nameArr][$index]['prod_price'],0,',','.')}}
-                                                VNĐ</span><del class="prev-price">{{number_format($list_prod_new[$nameArr][$index]['prom_promotion_price'],0,',','.')}}
+                                                VNĐ</span><del class="prev-price">{{number_format($list_prod_new[$nameArr][$index]['promdt_promotion_price'],0,',','.')}}
                                                     VNĐ</del></p>
-                                            <div class="label-product l_sale">{{$list_prod_new[$nameArr][$index]['prom_percent']}}<span class="symbol-percent">%</span></div>
+                                            <div class="label-product l_sale">{{$list_prod_new[$nameArr][$index]['promdt_percent']}}<span class="symbol-percent">%</span></div>
                                         @else
                                         <p><span class="price">{{number_format($list_prod_new[$nameArr][$index]['prod_price'],0,',','.')}}
                                             VNĐ</span></p>
@@ -273,11 +276,11 @@
                                         <h4><a
                                                 href="{{asset('/product/'.$list_prod_new[$nameArr][$index]['prod_id'])}}">{{$list_prod_new[$nameArr][$index]['prod_name']}}</a>
                                         </h4>
-                                        @if ($list_prod_new[$nameArr][$index]['prom_percent'] != 0)
+                                        @if ($list_prod_new[$nameArr][$index]['promdt_percent'] != 0)
                                         <p><span class="price">{{number_format($list_prod_new[$nameArr][$index]['prod_price'],0,',','.')}}
-                                            VNĐ</span><del class="prev-price">{{number_format($list_prod_new[$nameArr][$index]['prom_promotion_price'],0,',','.')}}
+                                            VNĐ</span><del class="prev-price">{{number_format($list_prod_new[$nameArr][$index]['promdt_promotion_price'],0,',','.')}}
                                                 VNĐ</del></p>
-                                        <div class="label-product l_sale">{{$list_prod_new[$nameArr][$index]['prom_percent']}}<span class="symbol-percent">%</span></div>
+                                        <div class="label-product l_sale">{{$list_prod_new[$nameArr][$index]['promdt_percent']}}<span class="symbol-percent">%</span></div>
                                         @else
                                         <p><span class="price">{{number_format($list_prod_new[$nameArr][$index]['prod_price'],0,',','.')}}
                                             VNĐ</span></p>

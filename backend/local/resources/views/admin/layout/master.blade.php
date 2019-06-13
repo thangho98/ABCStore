@@ -258,7 +258,7 @@
                                 </div>
                                 <div class="block-content">
                                     <!-- Quick Settings Form -->
-                                    <form action="be_pages_dashboard.html" method="POST" onsubmit="return false;">
+                                    <form action="#" method="POST" onsubmit="return false;">
                                         <div class="form-group">
                                             <p class="font-w600 mb-2">
                                                 Trạng thái trực tuyến

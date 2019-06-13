@@ -1,3 +1,4 @@
+<!-- Grid & List Main Area End -->
 <div class="tab-content fix">
     @if (count($list_product)>0)
     <div id="grid-view" class="tab-pane fade show active">
@@ -8,9 +9,9 @@
                 <div class="single-product">
                     <!-- Product Image Start -->
                     <div class="pro-img">
-                        <a href="{{asset('/product/'.$prod->prod_id)}}">
+                        <a href="{{asset('/product/'.$prod['prod_id'])}}">
                             <img width="268px;" height="268px;" class="primary-img"
-                                src="{{asset('local/storage/app/images/product/'.$prod->prod_poster)}}"
+                                src="{{asset('local/storage/app/images/product/'.$prod['prod_poster'])}}"
                                 alt="single-product">
                         </a>
                     </div>
@@ -18,16 +19,26 @@
                     <!-- Product Content Start -->
                     <div class="pro-content">
                         <div class="pro-info">
-                            <h4><a href="{{asset('/product/'.$prod->prod_id)}}">{{$prod->prod_name}}</a>
+                            <h4><a
+                                    href="{{asset('/product/'.$prod['prod_id'])}}">{{$prod['prod_name']}}</a>
                             </h4>
-                            <p><span class="price">{{number_format($prod->prod_price,0,',','.')}}
-                                    VNĐ</span><del class="prev-price">$105.50</del></p>
-                            <div class="label-product l_sale">20<span class="symbol-percent">%</span></div>
+                            @if ($prod['promdt_percent'] != 0)
+                            <p><span class="price">{{number_format($prod['promdt_promotion_price'],0,',','.')}}
+                                VNĐ</span><del class="prev-price">{{number_format($prod['prod_price'],0,',','.')}}
+                                VNĐ</del></p>
+                            @else
+                            <p><span class="price">{{number_format($prod['prod_price'],0,',','.')}}
+                                VNĐ</span><del class="prev-price"></del></p>
+                            @endif
+                            @if ($prod['promdt_percent'] != 0)
+                            <div class="label-product l_sale">{{$prod['promdt_percent'] }}<span
+                                    class="symbol-percent">%</span></div>
+                            @endif
                         </div>
                     </div>
                     <!-- Product Content End -->
-                    @if ($prod->prod_new)
-                    <span class="sticker-new">new</span>
+                    @if ($prod['prod_new'])
+                    <span class="sticker-new">mới</span>
                     @endif
                 </div>
             </div>
@@ -45,23 +56,38 @@
                 <!-- Product Image Start -->
                 <div class="col-lg-4 col-md-5 col-sm-12">
                     <div class="pro-img">
-                        <a href="{{asset('/product/'.$prod->prod_id)}}">
+                        <a href="{{asset('/product/'.$prod['prod_id'])}}">
                             <img width="270px;" height="270px;" class="primary-img"
-                                src="{{asset('local/storage/app/images/product/'.$prod->prod_poster)}}"
+                                src="{{asset('local/storage/app/images/product/'.$prod['prod_poster'])}}"
                                 alt="single-product">
                         </a>
-                        <span class="sticker-new">new</span>
+                        @if ($prod['prod_new'])
+                        <span class="sticker-new">mới</span>
+                        @endif
+                        @if ($prod['promdt_percent'] != 0)
+                        <div class="label-product l_sale">{{$prod['promdt_percent']}}<span class="symbol-percent">%</span></div>
+                        @endif
                     </div>
                 </div>
                 <!-- Product Image End -->
                 <!-- Product Content Start -->
                 <div class="col-lg-8 col-md-7 col-sm-12">
                     <div class="pro-content hot-product2">
-                        <h4><a href="{{asset('/product/'.$prod->prod_id)}}">{{$prod->prod_name}}</a>
+                        <h4><a href="{{asset('/product/'.$prod['prod_id'])}}">{{$prod['prod_name']}}</a>
                         </h4>
-                        <p><span class="price">{{number_format($prod->prod_price,0,',','.')}}</span><del
-                                class="prev-price">$205.50</del>
-                            <p>{{$prod->prod_detail}}</p>
+                        @if ($prod['promdt_percent'] != 0)
+                        <p>
+                            <span class="price">{{number_format($prod['promdt_promotion_price'],0,',','.')}} VNĐ</span><del
+                                class="prev-price">{{number_format($prod['prod_price'],0,',','.')}} VNĐ</del>
+                        </p>
+                        @else
+                        <p>
+                            <span class="price">{{number_format($prod['prod_price'],0,',','.')}} VNĐ</span><del
+                                class="prev-price"></del>
+                        </p>
+                        @endif
+                        <p>Thời gian bảo hành: {{$prod['prod_warranty_period']}} tháng</p>
+                        <p>{{$prod['prod_detail']}}</p>
                     </div>
                 </div>
                 <!-- Product Content End -->
@@ -81,3 +107,4 @@
     </div>
     @endif
 </div>
+<!-- Grid & List Main Area End -->

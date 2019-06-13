@@ -81,11 +81,11 @@
                         <h3 class="footer-title">Thông tin hỗ trợ</h3>
                         <div class="footer-content">
                             <ul class="footer-list">
-                                <li><a href="about.html">Giới thiệu</a></li>
+                                <li><a href="#">Giới thiệu</a></li>
                                 <li><a href="#">Chính sách Bảo hành</a></li>
                                 <li><a href="#">Tìm hiểu về mua trả góp</a></li>
-                                <li><a href="contact.html">Mua hàng - thanh toán Online</a></li>
-                                <li><a href="login.html">Tuyển dụng</a></li>
+                                <li><a href="#">Mua hàng - thanh toán Online</a></li>
+                                <li><a href="#">Tuyển dụng</a></li>
                             </ul>
                         </div>
                     </div>
@@ -97,7 +97,7 @@
                         <h3 class="footer-title">Dịch vụ khách hàng</h3>
                         <div class="footer-content">
                             <ul class="footer-list">
-                                <li><a href="contact.html">Liên hệ</a></li>
+                                <li><a href="#">Liên hệ</a></li>
                                 <li><a href="#">Gửi góp ý, khiếu nại</a></li>
                                 <li><a href="#">Kiểm tra thông tin đơn hàng</a></li>
                                 <li><a href="#">Mua hàng từ xa</a></li>

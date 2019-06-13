@@ -154,7 +154,7 @@
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="inputIdentityCard">CMND <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="inputIdentityCard" name="identityCard"
+                    <input type="number" class="form-control" id="inputIdentityCard" name="identityCard"
                         placeholder="Nhập chứng minh thư" required>
                 </div>
                 <div class="form-group col-md-3 ml-4">
@@ -179,7 +179,7 @@
                 </div>
                 <div class="form-group col-md-6">
                     <label for="inputTel">SĐT <span class="text-danger">*</span></label>
-                    <input type="tel" class="form-control" id="inputTel" placeholder="Nhập số điện thoại" name="phone"
+                    <input type="number" class="form-control" id="inputTel" placeholder="Nhập số điện thoại" name="phone"
                         required>
                 </div>
             </div>

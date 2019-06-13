@@ -144,7 +144,11 @@
                                                             </div>
                                                         </td>
                                                         <td>{{number_format($item->attributes['propt_price'],0,',','.')}} VNĐ</td>
-                                                        <td>{{number_format($item->price,0,',','.')}} VNĐ</td>
+                                                        @if ($item->price == $item->attributes['propt_price'])
+                                                            <td></td>
+                                                        @else
+                                                            <td>{{number_format($item->price,0,',','.')}} VNĐ</td>
+                                                        @endif
                                                         <td class="text-center">
                                                             <div class="btn-group">
                                                                 <button type="button"
@@ -170,29 +174,36 @@
                                 <div class="form-row">
                                     <div class="form-group col-6">
                                         <label for="wizard-validation-name">Họ tên</label>
-                                        <input class="form-control" type="text" id="wizard-validation-name"
+                                        <input class="form-control" type="text" id="name"
                                             name="cus_name" required>
                                     </div>
                                     <div class="form-group col-6">
-                                        <label for="wizard-validation-phone">SĐT</label>
-                                        <input class="form-control" type="text" id="wizard-validation-phone"
-                                            name="cus_phone" required>
+                                        <label for="wizard-validation-identity-card">CMND</label>
+                                        <input class="form-control" type="number" id="identity-card"
+                                            name="cus_identity_card" required>
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-6">
-                                        <label for="wizard-validation-email">Email</label>
-                                        <input class="form-control" type="email" id="wizard-validation-email"
-                                            name="cus_email" required>
+                                        <label for="wizard-validation-phone">SĐT</label>
+                                        <input class="form-control" type="number" id="phone"
+                                            name="cus_phone" required>
                                     </div>
                                     <div class="form-group col-6">
-                                        <label for="wizard-validation-identity-card">CMND</label>
-                                        <input class="form-control" type="text" id="wizard-validation-identity-card"
-                                            name="cus_identity_card" required>
+                                        <label for="wizard-validation-email">Email</label>
+                                        <input class="form-control" type="email" id="email"
+                                            name="cus_email">
                                     </div>
                                 </div>
-
-
+                                <div class="form-row">
+                                    <div class="form-group col-6">
+                                        <div class="py-2 mb-2">
+                                            <button id="btnCheckCus" type="button" class="btn btn-primary">Kiểm tra CMND</button>
+                                            <button type="button" class="btn btn-primary" onclick="$('#cus_id').val('');checkCusID();;">Khách hàng mới</button>
+                                        </div>
+                                        <input hidden id="cus_id" name="cus_id" type="text">
+                                    </div>
+                                </div>
                             </div>
                             <!-- END Step 2 -->
 
@@ -310,6 +321,12 @@
 <script>
 $(document).ready(function() {
 
+    @if ($errors->any())
+        @foreach ($errors->all() as $error)
+            notifyDanger('Lỗi: ','{{ $error }}');
+        @endforeach
+    @endif
+
     var toltal_qty = {{$total_qty}};
     if(toltal_qty <= 0){
         $("#btnNext").attr("disabled", true);
@@ -394,7 +411,66 @@ $(document).ready(function() {
 			}
 		});
     });
+
+    $('#btnCheckCus').click(function(){
+
+        var identity_card = $('#identity-card').val();
+
+        console.log(identity_card);
+
+        if(!isNumber(identity_card)){
+            notifyDanger('Thông báo','Chứng minh nhân dân phải là số');
+            return;
+        }
+
+        // URL
+        var url = "{{asset('admin/orders/check/customer')}}";
+
+        // Data
+        var data = {
+            identity_card : identity_card,
+        };
+
+        // Success Function
+        var success = function(result) {
+            console.log(result);
+            if(result != null){
+                $('#name').val(result['cus_name']);
+                $('#phone').val(result['cus_phone']);
+                $('#email').val(result['cus_email']);
+                $('#cus_id').val(result['cus_id'])
+            }
+            else{
+                $('#cus_id').val('');
+            }
+            checkCusID();
+        };
+
+        // Result Type
+        var dataType = 'json';
+
+        // Send Ajax
+        $.get(url, data, success, dataType);
+    });
 });
+
+    function checkCusID(){
+        var val = $('#cus_id').val();
+        console.log(val);
+        if(val == ''){
+            $('#name').prop('readonly',false);
+            $('#identity-card').prop('readonly',false);
+
+            $('#name').val('');
+            $('#phone').val('');
+            $('#email').val('');
+            $('#identity-card').val('');
+        }
+        else{
+            $('#name').prop('readonly',true);
+            $('#identity-card').prop('readonly',true);
+        }
+    }
 
     function deleteCart(id) {
         if(id == null) return;
