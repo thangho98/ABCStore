@@ -63,11 +63,8 @@
                                             onclick="$('input[name*=\'selected\']').prop('checked', this.checked);">
                                     </th>
                                     <th class="text-center orderby">Tên KM</th>
-                                    <th class="orderby">Tên Phiên Bản</th>
                                     <th class="d-none d-sm-table-cell orderby">Ngày bắt đầu</th>
                                     <th class="d-none d-sm-table-cell orderby">Ngày kết thúc
-                                    </th>
-                                    <th class="d-none d-sm-table-cell orderby">Hệ số km
                                     </th>
                                     <th class="d-none d-sm-table-cell orderby">Trạng thái
                                     </th>
@@ -81,17 +78,11 @@
                                         <input @if ($item->prom_status != 0) disabled @else name="selected[]" @endif type="checkbox"  value="{{$item->prom_id}}">
                                     </td>
                                     <td class="font-w600 font-size-sm">{{$item->prom_name}}</td>
-                                    <td class="font-w600 font-size-sm">
-                                        {{$item->prod_name}} {{$item->propt_ram}} gb {{$item->propt_rom}} {{$item->propt_color}}
-                                    </td>
                                     <td class="text-center d-sm-table-cell">
                                         {{$item->prom_start_date}}
                                     </td>
                                     <td class="text-center d-sm-table-cell">
                                         {{$item->prom_end_date}}
-                                    </td>
-                                    <td class="text-center d-sm-table-cell">
-                                        {{$item->prom_percent}} %
                                     </td>
                                     <td class="d-none d-sm-table-cell">
                                         @if ($item->prom_status == 0)
@@ -108,10 +99,12 @@
                                                 data-toggle="tooltip" onclick="showDetail({{$item->prom_id}})">
                                                 <i class="fa fa-fw fa-eye"></i>
                                             </button>
-                                            {{-- <button type="button" class="btn btn-sm btn-warning" data-toggle="tooltip"
-                                                onclick="showEdit({{$item->prom_id}})" title="Sửa">
+                                            <a class="btn btn-sm btn-warning" data-toggle="tooltip"
+                                                @if ($item->prom_status == 0)
+                                                    href="{{asset('admin/promotion/edit/'.$item->prom_id)}}"
+                                                @endif title="Sửa">
                                                 <i class="fa fa-fw fa-pencil-alt"></i>
-                                            </button> --}}
+                                            </a>
                                         </div>
                                     </td>
                                 </tr>
@@ -165,7 +158,7 @@
         var table = $('#table-brand').DataTable({
             'columnDefs': [{
 
-                'targets': [0, 7], /* column index */
+                'targets': [0, 5], /* column index */
 
                 'orderable': false, /* true or false */
 
@@ -187,7 +180,7 @@
                 {
                     extend: 'copy',
                     exportOptions: {
-                        columns: [1, 2, 3, 4, 5, 6]
+                        columns: [1, 2, 3, 4]
                     },
                     text: 'Copy',
                     className: 'btn btn-sm btn-primary'
@@ -195,7 +188,7 @@
                 {
                     extend: 'csv',
                     exportOptions: {
-                        columns: [1, 2, 3, 4, 5, 6]
+                        columns: [1, 2, 3, 4]
                     },
                     text: 'Export to CSV',
                     className: 'btn btn-sm btn-primary',
@@ -211,7 +204,7 @@
                 {
                     extend: 'excel',
                     exportOptions: {
-                        columns: [1, 2, 3, 4, 5, 6]
+                        columns: [1, 2, 3, 4]
                     },
                     text: 'Export to xlsx',
                     className: 'btn btn-sm btn-primary',
@@ -227,7 +220,7 @@
                 {
                     extend: 'pdf',
                     exportOptions: {
-                        columns: [1, 2, 3, 4, 5, 6]
+                        columns: [1, 2, 3, 4]
                     },
                     text: 'Export to pdf',
                     className: 'btn btn-sm btn-primary',
@@ -243,7 +236,7 @@
                 {
                     extend: 'print',
                     exportOptions: {
-                        columns: [1, 2, 3, 4, 5, 6]
+                        columns: [1, 2, 3, 4]
                     },
                     text: 'Print',
                     className: 'btn btn-sm btn-primary',

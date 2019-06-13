@@ -7,23 +7,61 @@
             </button>
         </div>
         <div class="modal-body">
-            <b>Mã KM: </b>{{$prom->prom_id}}<br>
-            <b>Tên KM: </b>{{$prom->prom_name}}<br>
-            <b>Tên sản phẩm: </b>{{$prom->prod_name}}<br>
-            <b>Phiên bản: </b>{{$prom->propt_ram}} gb {{$prom->propt_rom}} {{$prom->propt_color}}<br>
-            <b>Ngày bắt đầu: </b>{{date_format(date_create($prom->prom_start_date),"d-m-Y")}}<br>
-            <b>Ngày kết thúc: </b>{{date_format(date_create($prom->prom_end_date),"d-m-Y")}}<br>
-            <b>Hệ số: </b>{{$prom->prom_percent}}%<br>
-            <b>Giá gốc: </b>{{number_format($prom->prom_unit_price,0,',','.')}} VNĐ<br>
-            <b>Giá Khuyến mãi: </b>{{number_format($prom->prom_promotion_price,0,',','.')}} VNĐ<br>
-            <b>Tình trạng: </b>
-            @if ($prom->prom_status == 0)
-            <span class="badge badge-primary">Chưa bắt đầu
-            @elseif($prom->prom_status == 1)
-            <span class="badge badge-secondary">Đang khuyến mãi
-            @else
-            <span class="badge badge-danger">Đã kết thúc
-            @endif</span><br>
+            <div class="row">
+                <div class="col-12">
+                    <b>Mã KM: </b>{{$prom->prom_id}}<br>
+                    <b>Tên KM: </b>{{$prom->prom_name}}<br>
+                    <b>Ngày bắt đầu: </b>{{date_format(date_create($prom->prom_start_date),"d-m-Y")}}<br>
+                    <b>Ngày kết thúc: </b>{{date_format(date_create($prom->prom_end_date),"d-m-Y")}}<br>
+                    <b>Tình trạng: </b>
+                    @if ($prom->prom_status == 0)
+                    <span class="badge badge-primary">Chưa bắt đầu
+                    @elseif($prom->prom_status == 1)
+                    <span class="badge badge-secondary">Đang khuyến mãi
+                    @else
+                    <span class="badge badge-danger">Đã kết thúc
+                    @endif</span><br>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <!-- Table Head Dark -->
+                <h3 class="block-title mb-3">Danh sách sản phẩm khuyến mãi</h3>
+                <div class="table-responsive">
+                    <table class="table table-sm table-vcenter table-bordered table-hover">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>STT</th>
+                                <th>Tên sản phẩm</th>
+                                <th>Hệ số</th>
+                                <th>Giá gốc</th>
+                                <th>Giá KM</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @php
+                                $i = 1;
+                            @endphp
+                            @foreach ($list_promotiondetail as $item)
+                            <tr>
+                                <td class="text-center">{{$i}}</td>
+                                <td class="font-w600 font-size-sm">
+                                    {{$item->prod_name}} {{$item->propt_ram}} gb {{$item->propt_rom}} {{$item->propt_color}}
+                                </td>
+                                <td class="d-none d-table-cell text-center">
+                                    {{$item->promdt_percent}} %
+                                </td>
+                                <td class="text-right">{{number_format($item->promdt_unit_price,0,',','.')}} VNĐ</td>
+                                <td class="text-right">{{number_format($item->promdt_promotion_price,0,',','.')}} VNĐ</td>
+                                @php
+                                    $i++;
+                                @endphp
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            <!-- END Table Head Dark -->
         </div>
     </div>
     <script>

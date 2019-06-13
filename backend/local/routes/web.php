@@ -129,6 +129,10 @@ Route::group(['namespace' => 'Admin'], function () {
             Route::get('/add','PromotionController@getAddProm');
             Route::post('/add','PromotionController@postAddProm');
 
+            Route::get('/edit/{id}','PromotionController@getEditProm');
+            Route::post('/edit/{id}','PromotionController@postEditProm');
+
+            Route::get('/options/{id}','PromotionController@getOptions');
             Route::get('/items/','PromotionController@getItems');
             Route::get('/item/add','PromotionController@getAddItem');
             Route::get('/item/delete','PromotionController@getDelItem');
@@ -136,12 +140,11 @@ Route::group(['namespace' => 'Admin'], function () {
 
             Route::get('/view/{id}','PromotionController@getViewProm');
 
-            // Route::get('/edit/{id}','PromotionController@getEditEmpl');
-            // Route::post('/edit/{id}','PromotionController@postEditEmpl');
             
             Route::get('/delete','PromotionController@getDeleteProm');
 
             Route::get('/cancel/','PromotionController@getCancelAddProm');
+
         });
 
         Route::group(['prefix' => 'cart','middleware' => 'CheckRoleSaleAndInvoice'], function () {
@@ -240,6 +243,7 @@ Route::group(['namespace' => 'Admin'], function () {
             Route::get('revenue/quarter','StatisticsController@getRevenueQuarter');
             Route::get('revenue/year','StatisticsController@getRevenueYear');
 
+            Route::get('product/options','StatisticsController@getStatisticsProductOptions');
             Route::get('product/','StatisticsController@getStatisticsProduct');
 
             Route::get('salary','CommissionController@getSalary');
