@@ -18,6 +18,16 @@ class CheckRoleGuarantee
     {
         $perm = Session::get('user')->perm_id;
         switch ($perm) {
+            case 1:
+                $uri = $request->getRequestUri();
+                switch ($uri) {
+                    case "/abcstore/backend/admin/guarantee/add":
+                        return redirect()->intended('admin/home');
+                }
+                if(strpos($uri,"/abcstore/backend/admin/guarantee/edit/") !== false){
+                    return redirect()->intended('admin/home');
+                }
+                break;
             case 2:
                 return redirect()->intended('admin/orders');
                 break;
