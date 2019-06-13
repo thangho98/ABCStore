@@ -1,6 +1,6 @@
 <div class="popup-form hidden" id="popup-form-edit">
     {{-- <base href="{{asset('public/admin')}}/">
-    <link rel="stylesheet" href="assets/js/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css"> --}}
+    <link rel="stylesheet" href="{{asset('public/admin')}}/assets/js/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css"> --}}
     <div class="content-popup">
         <div class="js-wizard-validation scrollbar content-form">
             <!-- Step Tabs -->
@@ -66,13 +66,30 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
+                                <label class="d-block">Sản phẩm mới <span class="text-danger">*</span></label>
+                                <div class="ml-5 custom-control custom-radio custom-control-inline">
+                                    <input @if ($prod->prod_status!=1)
+                                        disabled
+                                    @endif type="radio" class="custom-control-input" id="example-rd-custom-edit1" name="prod_new"
+                                        value="0" @if ($prod->prod_new == 0) checked @endif>
+                                    <label class="custom-control-label" for="example-rd-custom-edit1">Không</label>
+                                </div>
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input  @if ($prod->prod_status !=1)
+                                            disabled
+                                        @endif type="radio" class="custom-control-input" id="example-rd-custom-edit2" name="prod_new"
+                                        value="1" @if ($prod->prod_new == 1) checked @endif>
+                                    <label class="custom-control-label" for="example-rd-custom-edit2">Có</label>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
                                 <label for="selectStatus">Trạng thái <span class="text-danger">*</span></label>
                                 <select class="form-control" id="selectStatus" name="status" required>
-                                    <option value="0" @if ($prod->prod_status==0) selected @else disable @endif>Sắp ra
+                                    <option value="0" @if ($prod->prod_status==0) selected @else disabled @endif>Sắp ra
                                         mắt</option>
-                                    <option value="1" @if ($prod->prod_status==1) selected @endif>Đang kinh doanh
+                                    <option value="1" @if ($prod->prod_status==1) selected @elseif($prod->prod_status != 0) disabled @endif>Đang kinh doanh
                                     </option>
-                                    <option value="2" @if ($prod->prod_status==2) selected @endif>Ngừng kinh doanh
+                                    <option value="2" @if ($prod->prod_status==2) selected @elseif($prod->prod_status != 1) disabled @endif>Ngừng kinh doanh
                                     </option>
                                 </select>
                             </div>
@@ -189,7 +206,7 @@
                                     <td class="text-left">
                                         <img id="image-edit-poster" class="thumbnail"
                                             @if ($prod->prod_poster == '')
-                                            src="assets/media/img/new_seo-10-75.png"
+                                            src="{{asset('public/admin')}}/assets/media/img/new_seo-10-75.png"
                                             @else
                                                 src="{{asset('local/storage/app/images/product/'.$prod->prod_poster)}}"
                                             @endif
@@ -358,7 +375,7 @@
         <tr id="image-row${indexAdd}">
             <td class="text-left">
                 <img id="image-add${indexAdd}" class="thumbnail"
-                    src="assets/media/img/new_seo-10-75.png" onclick="chooseAddImg(${indexAdd});"
+                    src="{{asset('public/admin')}}/assets/media/img/new_seo-10-75.png" onclick="chooseAddImg(${indexAdd});"
                     height="75px;" width="75px;">
                 <input type="file" hidden name="product_add_image[${indexAdd}][image]" value=""
                     id="input-image-add${indexAdd}" onchange="changeAddImg(this, ${indexAdd});" accept="image/*">
@@ -376,10 +393,7 @@
                 $form = $('#edit-form');
                 // $form.submit();
                 if ($form.valid()) {
-                    
-
                     var datas = new FormData($form[0]);
-
                     $.ajax({
                         url: $form.attr('action'),
                         enctype: 'multipart/form-data',

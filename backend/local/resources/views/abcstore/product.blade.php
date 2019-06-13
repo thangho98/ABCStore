@@ -7,9 +7,9 @@
     <div class="container">
         <div class="breadcrumb">
             <ul class="d-flex align-items-center">
-                <li><a href="index.html">Trang chủ</a></li>
-                <li><a href="shop.html">Cửa hàng</a></li>
-                <li class="active"><a href="product.html">Sản phẩm</a></li>
+                <li><a href="{{asset('/')}}">Trang chủ</a></li>
+                <li><a href="{{asset('/shop')}}">Cửa hàng</a></li>
+                <li class="active"><a href="#">Sản phẩm</a></li>
             </ul>
         </div>
     </div>
@@ -48,7 +48,7 @@
                                 <a class="active" data-toggle="tab" href="#thumb{{$i}}"><img src="{{asset('local/storage/app/images/product/'.$list_image[$i]->pimg_name)}}"
                                 alt="product-thumbnail"></a>
                             @else
-                            <a data-toggle="tab" href="#thumb2"><img src="{{asset('local/storage/app/images/product/'.$list_image[$i]->pimg_name)}}"
+                            <a data-toggle="tab" href="#thumb{{$i}}"><img src="{{asset('local/storage/app/images/product/'.$list_image[$i]->pimg_name)}}"
                                 alt="product-thumbnail"></a>
                             @endif
                             @endfor
@@ -77,8 +77,14 @@
                             </div>
                         </div>
                         <div class="pro-price mtb-30">
-                            <p class="d-flex align-items-center"><span id="prev-price" class="prev-price"></span><span
-                                    id="price" class="price"></span><span  id="saving-price" class="saving-price">save 8%</span></p>
+                            <p class="d-flex align-items-center">
+                                <span id="prev-price" class="prev-price"></span>
+                                @if ($min_price->price == $max_price->price)
+                                <span id="price" class="price">{{number_format($max_price->price,0,',','.')}} VNĐ</span>
+                                @else
+                                <span id="price" class="price">{{number_format($min_price->price,0,',','.')}} VNĐ - {{number_format($max_price->price,0,',','.')}} VNĐ</span>
+                                @endif
+                                <span id="saving-price"></span></p>
                         </div>
                         <div class="product-size mb-20 clearfix">
                             <label>Bộ nhớ</label>
@@ -99,30 +105,12 @@
                                         </div>
                                     </div>
                                 @endfor
-                                
-                                {{-- <div id="item-checkbox-2" class="item-checkbox" onclick="chooseColor(2)">
-                                    <input id="input-checkbox-2" type="radio" data-id="2" onchange="getColor()" name="color_select" value="xanh">Xanh
-                                    <div id="triangle-check-2"  class="triangle-check">
-                                        <i class="fa fa-check mini-check"></i>
-                                    </div>
-                                </div> --}}
-
-                                {{-- <form action="" hidden>
-                                    @foreach ($list_color as $item)
-                                        <input type="radio" name="color_select" value="{{$item->propt_color}}">{{$item->propt_color}}<br>
-                                    @endforeach
-                                </form>
-                                @foreach ($list_color as $item)
-                                    <div class="item-checkbox" onclick="chooseColor()">
-                                        {{$item->propt_color}}
-                                    </div>
-                                @endforeach --}}
                             </div>
                         </div>
                         <div class="box-quantity d-flex hot-product2">
-                            <form action="#">
-                                <input class="quantity mr-15" type="number" min="1" value="1">
-                            </form>
+                            <div class="w-auto p-3" style="width: 200px;">
+                                <p id="quantity"></p>
+                            </div>
                             <div class="pro-actions">
                                 <div class="actions-primary">
                                     <a id="addCart" title="" data-original-title="Add to Cart"> + Thêm vào
@@ -130,9 +118,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="pro-ref mt-20">
-                            <p><span class="in-stock"><i class="ion-checkmark-round"></i> Còn hàng</span></p>
-                        </div>
+                        
+                        
                         <div class="socila-sharing mt-25">
                             <ul class="d-flex">
                                 <li>Chia sẻ</li>
@@ -267,32 +254,37 @@
             @foreach ($list_related as $item)
                 <!-- Single Product Start -->
             <div class="single-product">
-                    <!-- Product Image Start -->
-                    <div class="pro-img">
-                        <a href="product.html">
-                            <img class="primary-img" src="{{asset('local/storage/app/images/product/'.$item->prod_poster)}}" alt="single-product">
-                        </a>
-                    </div>
-                    <!-- Product Image End -->
-                    <!-- Product Content Start -->
-                    <div class="pro-content">
-                        <div class="pro-info">
-                            <h4><a href="product.html">{{$item->prod_name}}</a></h4>
-                            <p><span class="price">$160.45</span></p>
-                        </div>
-                        <div class="pro-actions">
-                            <div class="actions-primary">
-                                <a href="cart.html" title="Add to Cart"> + Thêm vào giỏ hàng</a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Product Content End -->
-                    @if ($item->prod_new)
-                        <span class="sticker-new">new</span>
-                    @endif
-                    
+                <!-- Product Image Start -->
+                <div class="pro-img">
+                    <a href="{{asset('/product/'.$item['prod_id'])}}">
+                        <img width="226px;" height="226px;" class="primary-img" src="{{asset('local/storage/app/images/product/'.$item['prod_poster'])}}" alt="single-product">
+                    </a>
                 </div>
-                <!-- Single Product End -->
+                <!-- Product Image End -->
+                <!-- Product Content Start -->
+                <div class="pro-content">
+                    <div class="pro-info">
+                        <h4><a href="{{asset('/product/'.$item['prod_id'])}}">{{$item['prod_name']}}</a></h4>
+                        @if ($item['promdt_percent'] != 0)
+                        <p><span class="price">{{number_format($item['promdt_promotion_price'],0,',','.')}}
+                            VNĐ</span><del class="prev-price">{{number_format($item['prod_price'],0,',','.')}}
+                            VNĐ</del></p>
+                        @else
+                        <p><span class="price">{{number_format($item['prod_price'],0,',','.')}}
+                            VNĐ</span><del class="prev-price"></del></p>
+                        @endif
+                        @if ($item['promdt_percent'] != 0)
+                        <div class="label-product l_sale">{{$item['promdt_percent'] }}<span
+                                class="symbol-percent">%</span></div>
+                        @endif
+                    </div>
+                </div>
+                <!-- Product Content End -->
+                @if ($item['prod_new'])
+                    <span class="sticker-new">mới</span>
+                @endif
+            </div>
+            <!-- Single Product End -->
             @endforeach
         </div>
         <!-- Hot Deal Product Active End -->
@@ -304,12 +296,13 @@
 @endsection
 @section('scriptjs')
 <script>
-
     function chooseColor(id) {
         $('#input-checkbox-'+id).prop("checked",true);
         $('#input-checkbox-'+id).change();
         $('.triangle-check').removeClass('show');
+        $('.item-checkbox').removeClass('checked');
         $('#triangle-check-'+id).addClass('show');
+        $('#item-checkbox-'+id).addClass('checked');
     }
 
     function formatNumber(num) {
@@ -317,6 +310,13 @@
     }
 
     function getColor() {
+        $('#saving-price').html('');
+        $('#prev-price').html('');
+        $('#price').html('');
+        $('#quantity').empty();
+
+        $('#saving-price').removeClass('saving-price');
+
         var color = $("input:radio[name ='color_select']:checked").val();
         //alert(color);
 
@@ -339,12 +339,33 @@
         var success = function(result) {
             console.log(result);
 
-            let urlCart = "{{asset('cart/add/')}}/";
-            console.log(urlCart);
+            var options = result['options'];
+            var promotion = result['promotion'];
 
-            $('#prev-price').html(formatNumber(result['propt_price'])+' VNĐ');
-            $('#price').html(formatNumber(result['propt_price'])+' VNĐ');
-            $("#addCart").attr("href", urlCart + result['propt_id']);
+            let urlCart = "{{asset('cart/add/')}}/";
+
+            $("#addCart").removeAttr("href");
+
+            
+            if(promotion == null){
+                $('#prev-price').html('');
+                $('#price').html(formatNumber(options['propt_price'])+' VNĐ');
+            }
+            else{
+                $('#prev-price').html(formatNumber(options['propt_price'])+' VNĐ');
+                $('#price').html(formatNumber(promotion['promdt_promotion_price'])+' VNĐ');
+                $('#saving-price').addClass('saving-price');
+                $('#saving-price').html(`Tiết kiệm ${promotion['promdt_percent']}%`);
+            }
+
+
+            if(options['propt_quantity'] != 0){
+                $("#addCart").attr("href", urlCart + options['propt_id']);
+                $('#quantity').append(`<span class="in-stock"><i class="ion-checkmark-round"></i> Còn ${options['propt_quantity']} sản phẩm trong kho`);
+            }
+            else{
+                $('#quantity').append('<span class="out-of-stock"><i class="fa fa-ban"></i>Hết hàng </span>');
+            }
         };
 
         // Result Type
@@ -369,9 +390,6 @@
     }
     
     $(document).ready(function () {
-
-        
-
         var windowHeight = $(window).height();
         var scrollTop = $(window).scrollTop();
         var mid = scrollTop + Math.floor(windowHeight / 2);
@@ -391,6 +409,13 @@
         });
         
         $('#selectMemory').change(function(){
+
+            $('#saving-price').html('');
+            $('#saving-price').removeClass('saving-price');
+            $('#prev-price').html('');
+            $('#price').html('');
+            $('#quantity').empty();
+
             let memory = $('#selectMemory').val();
             let res = memory.split("-");
             
@@ -416,7 +441,8 @@
                 $('#rdoColor').empty();
                 var html = ``;
                 var index = 0;
-                $.each(result, function(key, item) {
+                var list_color = result['list_color'];
+                $.each(list_color, function(key, item) {
                     html +=
                         `
                         <div id="item-checkbox-${index}" class="item-checkbox" onclick="chooseColor(${index})">
@@ -426,9 +452,20 @@
                             </div>
                         </div>
                         `;
+                    index++;
                 });
                 
                 $('#rdoColor').append(html);
+
+                var min_price = result['min_price']['price'];
+                var max_price = result['max_price']['price'];
+
+                if(min_price != max_price){
+                    $('#price').html(formatNumber(min_price)+' VNĐ - '+formatNumber(max_price)+' VNĐ');
+                }
+                else{
+                    $('#price').html(formatNumber(max_price)+' VNĐ');
+                }
             };
 
             // Result Type
@@ -437,34 +474,6 @@
             // Send Ajax
             $.get(url, data, success, dataType);
         });
-
-
     });
-
-// var mycheckbox = document.querySelectorAll('.mycheckbox .item-checkbox');
-// var myradiobutton = document.getElementsByName('color_select');
-// for (let i = 0; i < mycheckbox.length; i++) {
-// mycheckbox[i].addEventListener('click', function () {
-//     for (let j = 0; j < mycheckbox.length; j++) {
-//         if (mycheckbox[j].classList.contains('active')) {
-//             mycheckbox[j].classList.remove('active');
-//             document.getElementById("tri").outerHTML = "";
-//         }
-//     }
-//     myradiobutton[i].checked = true;
-//     this.classList.add('active');
-//     var triangle = document.createElement('div');
-//     triangle.classList.add('triangle-check');
-//     triangle.id = 'tri';
-//     var check = document.createElement('i');
-//     check.classList.add('fa', 'fa-check', 'mini-check');
-//     if (!triangle.contains(check)) {
-//         triangle.appendChild(check);
-//     }
-//     if (!this.contains(triangle)) {
-//         this.appendChild(triangle);
-//     }
-// });
-// }
 </script>
 @endsection

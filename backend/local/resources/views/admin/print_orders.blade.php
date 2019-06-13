@@ -33,35 +33,45 @@
                 <div class="block-content block-content-full">
                     <section class="invoice">
                         <div class="row mb-4 header-print">
-                            <div class="col-4">
-                                <h2 class="page-header"><i class="fa fa-store"></i> ABC Store</h2>
+                            <div class="col-md-3">
+                                <h2 class="page-header abcstore-title"><i class="fa fa-store"></i> ABC
+                                    Store</h2>
+                                <div class="abcstore-infor">
+                                    <b>CỬA HÀNG KINH DOANH TBDĐ ABC STORE</b> <br>
+                                    <address>
+                                        Linh Trung, Thủ Đức, Tp.HCM
+                                        <br>SĐT: 0123456789
+                                        <br>Email: abcstore@gmail.com</address>
+                                </div>
                             </div>
-                            <div class="col-4">
-                                <h1 class="text-center text-danger">Hóa Đơn Mua Hàng</h1>
+                            <div class="col-md-6 text-center">
+                                <h1 class="text-danger hoadon-title">HÓA ĐƠN MUA HÀNG</h1>
                             </div>
-                            <div class="col-4">
-                                <h5 class="text-right text-primary">Ngày: {{date("d/m/Y")}}</h5>
+                            <div class="col-md-2 offset-1">
+                                <h5 class="text-left text-primary hoadon-date">
+                                    <span>Mẫu số: #007612</span>
+                                    <br> Ngày mua: <span>{{ date("d/m/Y",strtotime($orders->order_date))}}</span>
+                                    <br>Số hóa đơn: <span>{{$orders->order_id}}</span> <br>
+                                </h5>
+
                             </div>
                         </div>
                         <div class="row invoice-info mb-3">
-                            <div class="col-4"><b>CỬA HÀNG KINH DOANH TBDĐ</b>
-                                <address><strong>ABC Store</strong>
-                                    <br>Linh Trung, Thủ Đức, Tp.HCM
-                                    <br>SĐT: 0123456789
-                                    <br>Email: hello@vali.com</address>
+
+                                <div class="col-2"><strong>
+                                        Họ tên khách hàng: <br>
+                                        Email: <br>
+                                        Số điện thoại: <br>
+                                        Hình thức thanh toán:
+                                    </strong>
+                                </div>
+                                <div class="col-10">
+                                    <span>{{$orders->cus_name}}</span>
+                                    <br><span>{{$orders->cus_email}}</span>
+                                    <br><span>{{$orders->cus_phone}}</span>
+                                    <br><span>Tiền mặt</span>
+                                </div>
                             </div>
-                            <div class="col-4"><b>Người mua hàng:</b>
-                                <strong>{{$orders->cus_name}}</strong><br>
-                                <address>CMND: {{$orders->cus_identity_card}}
-                                    <br>SĐT: {{$orders->cus_phone}}
-                                    <br>Email: {{$orders->cus_email}}</address>
-                            </div>
-                            <div class="col-3 offset-1">
-                                <b>Mẫu số: </b>#007612<br>
-                                <br><b>Số hóa đơn: </b><span class="text-danger">{{$orders->order_id}}</span>
-                                <br><b>Ngày mua: </b>{{ date("d/m/Y",strtotime($orders->order_date))}}
-                                <br><b>Hình thức thanh toán: </b>tiền mặt</div>
-                        </div>
                         <div class="row">
                             <div class="col-12 table-responsive">
                                 <table class="table table-striped">
@@ -105,7 +115,6 @@
                                         </tr>
                                         @endforeach
                                     </tbody>
-
                                 </table>
                             </div>
                         </div>

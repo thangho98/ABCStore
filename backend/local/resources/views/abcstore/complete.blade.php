@@ -7,8 +7,8 @@
     <div class="container">
         <div class="breadcrumb">
             <ul class="d-flex align-items-center">
-                <li><a href="index.html">Trang chủ</a></li>
-                <li class="active"><a href="complete.html">hoàn thành</a></li>
+                <li><a href="{{asset('/')}}">Trang chủ</a></li>
+                <li class="active"><a href="#">hoàn thành</a></li>
             </ul>
         </div>
     </div>

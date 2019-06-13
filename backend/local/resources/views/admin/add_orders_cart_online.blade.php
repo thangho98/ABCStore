@@ -2,12 +2,12 @@
 @section('title','Thanh toán đơn hàng')
 @section('add_css_and_script')
 <!-- Page JS Plugins CSS -->
-<link rel="stylesheet" href="assets/js/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css">
-<link rel="stylesheeta" href="assets/js/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css">
-<link rel="stylesheet" href="assets/js/plugins/select2/css/select2.min.css">
-<link rel="stylesheet" href="assets/js/plugins/ion-rangeslider/css/ion.rangeSlider.css">
+<link rel="stylesheet" href="{{asset('public/admin')}}/assets/js/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css">
+<link rel="stylesheeta" href="{{asset('public/admin')}}/assets/js/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css">
+<link rel="stylesheet" href="{{asset('public/admin')}}/assets/js/plugins/select2/css/select2.min.css">
+<link rel="stylesheet" href="{{asset('public/admin')}}/assets/js/plugins/ion-rangeslider/css/ion.rangeSlider.css">
 
-<link rel="stylesheet" href="assets/css/mystyle.css">
+<link rel="stylesheet" href="{{asset('public/admin')}}/assets/css/mystyle.css">
 @endsection
 
 @section('main')
@@ -139,10 +139,10 @@
                                                             <div class="form-group">
                                                                 <input id="input${product.id}"
                                                                     class="form-control text-center" type="number" onchange="updateCart(this.value,'{{$item->id}}')"
-                                                                    required min="1" value="{{$item->quantity}}">
+                                                                    required min="1" max="{{$item->attributes['propt_quantity']}}" value="{{$item->quantity}}">
                                                             </div>
                                                         </td>
-                                                        <td>{{number_format($item->price,0,',','.')}} VNĐ</td>
+                                                        <td>{{number_format($item->attributes['propt_price'],0,',','.')}} VNĐ</td>
                                                         <td>{{number_format($item->price,0,',','.')}} VNĐ</td>
                                                         <td class="text-center">
                                                             <div class="btn-group">
@@ -287,20 +287,19 @@
 </main>
 @endsection
 @section('scriptjs')
-<script src="assets/js/plugins/sweetalert.min.js"></script>
 
-<script src="assets/js/plugins/jquery-bootstrap-wizard/bs4/jquery.bootstrap.wizard.min.js"></script>
-<script src="assets/js/plugins/jquery-validation/jquery.validate.min.js"></script>
-<script src="assets/js/plugins/jquery-validation/additional-methods.js"></script>
+<script src="{{asset('public/admin')}}/assets/js/plugins/jquery-bootstrap-wizard/bs4/jquery.bootstrap.wizard.min.js"></script>
+<script src="{{asset('public/admin')}}/assets/js/plugins/jquery-validation/jquery.validate.min.js"></script>
+<script src="{{asset('public/admin')}}/assets/js/plugins/jquery-validation/additional-methods.js"></script>
 
 <!-- Page JS Code -->
-<script src="assets/js/pages/be_forms_wizard.min.js"></script>
+<script src="{{asset('public/admin')}}/assets/js/pages/be_forms_wizard.min.js"></script>
 
 <!-- Page JS Plugins -->
-<script src="assets/js/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
-<script src="assets/js/plugins/select2/js/select2.full.min.js"></script>
-<script src="assets/js/plugins/jquery.maskedinput/jquery.maskedinput.min.js"></script>
-<script src="assets/js/plugins/ion-rangeslider/js/ion.rangeSlider.min.js"></script>
+<script src="{{asset('public/admin')}}/assets/js/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
+<script src="{{asset('public/admin')}}/assets/js/plugins/select2/js/select2.full.min.js"></script>
+<script src="{{asset('public/admin')}}/assets/js/plugins/jquery.maskedinput/jquery.maskedinput.min.js"></script>
+<script src="{{asset('public/admin')}}/assets/js/plugins/ion-rangeslider/js/ion.rangeSlider.min.js"></script>
 
 <!-- Page JS Helpers (BS Datepicker + BS Colorpicker + BS Maxlength + Select2 + Masked Inputs + Ion Range Slider plugins) -->
 <script>
@@ -379,7 +378,7 @@ $(document).ready(function() {
 			title: "Bạn có muốn hủy?",
 			text: "Sau khi hủy, bạn sẽ không thể khôi phục đối tượng này!",
 			icon: "warning",
-			buttons: ["Không, hủy nó đi!", "Vâng, tôi chấp nhận!"],
+			buttons: ["Không, giữ nó lại!", "Vâng, tôi chấp nhận!"],
 			dangerMode: true,
 		})
 		.then((willDelete) => {

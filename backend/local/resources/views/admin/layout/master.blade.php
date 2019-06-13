@@ -2,7 +2,6 @@
 <html lang="vi">
 
 <head>
-    <base href="{{asset('public/admin')}}/">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 
@@ -24,9 +23,9 @@
 
     <!-- Icons -->
     <!-- The following icons can be replaced with your own, they are used by desktop and mobile browsers -->
-    <link rel="shortcut icon" href="assets/media/favicons/favicon.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="assets/media/favicons/favicon-192x192.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="assets/media/favicons/apple-touch-icon-180x180.png">
+    <link rel="shortcut icon" href="{{asset('public/admin')}}/assets/media/favicons/favicon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="{{asset('public/admin')}}/assets/media/favicons/favicon-192x192.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{asset('public/admin')}}/assets/media/favicons/apple-touch-icon-180x180.png">
     <!-- END Icons -->
 
     @yield('add_css_and_script')
@@ -35,12 +34,12 @@
     <!-- Fonts and OneUI framework -->
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400italic,600,700%7COpen+Sans:300,400,400italic,600,700">
-    <link rel="stylesheet" id="css-main" href="assets/css/oneui.min.css">
-    <link rel="stylesheet" href="assets/css/jquery-ui.min.css">
+    <link rel="stylesheet" id="css-main" href="{{asset('public/admin')}}/assets/css/oneui.min.css">
+    <link rel="stylesheet" href="{{asset('public/admin')}}/assets/css/jquery-ui.min.css">
     <!-- You can include a specific file from css/themes/ folder to alter the default color theme of the template. eg: -->
-    <!-- <link rel="stylesheet" id="css-theme" href="assets/css/themes/amethyst.min.css"> -->
+    <!-- <link rel="stylesheet" id="css-theme" href="{{asset('public/admin')}}/assets/css/themes/amethyst.min.css"> -->
     <!-- END Stylesheets -->
-    <link rel="stylesheet" href="assets/css/print.css">
+    <link rel="stylesheet" href="{{asset('public/admin')}}/assets/css/print.css">
     
 </head>
 
@@ -53,13 +52,17 @@
             <div class="content-header border-bottom">
                 <!-- User Avatar -->
                 <a class="img-link mr-1" href="javascript:void(0)">
-                    <img class="img-avatar img-avatar32" src="assets/media/avatars/avatar10.jpg" alt="">
+                    <img class="img-avatar img-avatar32"@if (Session::get('employees')->empl_avatar != '')
+                    src="{{asset('local/storage/app/images/employees/'.Session::get('employees')->empl_avatar)}}"
+                @else
+                    src="{{asset('public/admin')}}/assets/media/avatars/avatar10.jpg"
+                @endif alt="">
                 </a>
                 <!-- END User Avatar -->
 
                 <!-- User Info -->
                 <div class="ml-2">
-                    <a class="link-fx text-dark font-w600" href="javascript:void(0)">Thái Thăng</a>
+                    <a class="link-fx text-dark font-w600" href="javascript:void(0)">{{Session::get('employees')->empl_name}}</a>
                 </div>
                 <!-- END User Info -->
 
@@ -172,7 +175,7 @@
                                             <a class="media py-2" href="javascript:void(0)">
                                                 <div class="mr-3 ml-2 overlay-container overlay-bottom">
                                                     <img class="img-avatar img-avatar48"
-                                                        src="assets/media/avatars/avatar8.jpg" alt="">
+                                                        src="{{asset('public/admin')}}/assets/media/avatars/avatar8.jpg" alt="">
                                                     <span
                                                         class="overlay-item item item-tiny item-circle border border-2x border-white bg-success"></span>
                                                 </div>
@@ -186,7 +189,7 @@
                                             <a class="media py-2" href="javascript:void(0)">
                                                 <div class="mr-3 ml-2 overlay-container overlay-bottom">
                                                     <img class="img-avatar img-avatar48"
-                                                        src="assets/media/avatars/avatar11.jpg" alt="">
+                                                        src="{{asset('public/admin')}}/assets/media/avatars/avatar11.jpg" alt="">
                                                     <span
                                                         class="overlay-item item item-tiny item-circle border border-2x border-white bg-success"></span>
                                                 </div>
@@ -200,7 +203,7 @@
                                             <a class="media py-2" href="javascript:void(0)">
                                                 <div class="mr-3 ml-2 overlay-container overlay-bottom">
                                                     <img class="img-avatar img-avatar48"
-                                                        src="assets/media/avatars/avatar7.jpg" alt="">
+                                                        src="{{asset('public/admin')}}/assets/media/avatars/avatar7.jpg" alt="">
                                                     <span
                                                         class="overlay-item item item-tiny item-circle border border-2x border-white bg-success"></span>
                                                 </div>
@@ -214,7 +217,7 @@
                                             <a class="media py-2" href="javascript:void(0)">
                                                 <div class="mr-3 ml-2 overlay-container overlay-bottom">
                                                     <img class="img-avatar img-avatar48"
-                                                        src="assets/media/avatars/avatar5.jpg" alt="">
+                                                        src="{{asset('public/admin')}}/assets/media/avatars/avatar5.jpg" alt="">
                                                     <span
                                                         class="overlay-item item item-tiny item-circle border border-2x border-white bg-warning"></span>
                                                 </div>
@@ -228,7 +231,7 @@
                                             <a class="media py-2" href="javascript:void(0)">
                                                 <div class="mr-3 ml-2 overlay-container overlay-bottom">
                                                     <img class="img-avatar img-avatar48"
-                                                        src="assets/media/avatars/avatar12.jpg" alt="">
+                                                        src="{{asset('public/admin')}}/assets/media/avatars/avatar12.jpg" alt="">
                                                     <span
                                                         class="overlay-item item item-tiny item-circle border border-2x border-white bg-warning"></span>
                                                 </div>
@@ -255,7 +258,7 @@
                                 </div>
                                 <div class="block-content">
                                     <!-- Quick Settings Form -->
-                                    <form action="be_pages_dashboard.html" method="POST" onsubmit="return false;">
+                                    <form action="#" method="POST" onsubmit="return false;">
                                         <div class="form-group">
                                             <p class="font-w600 mb-2">
                                                 Trạng thái trực tuyến
@@ -526,7 +529,7 @@
             <!-- Side Header -->
             <div class="content-header bg-white-5">
                 <!-- Logo -->
-                <a class="font-w600 text-dual" href="index.html">
+                <a class="font-w600 text-dual" href="{{asset('admin/home')}}">
                     <i class="fa fa-circle-notch text-primary"></i>
                     <span class="smini-hide">
                         <span class="font-w700 font-size-h5">ABC</span> <span class="font-w400">Store</span>
@@ -552,27 +555,27 @@
                                 <i class="fa fa-circle text-default"></i>
                             </a>
                             <a class="dropdown-item d-flex align-items-center justify-content-between"
-                                data-toggle="theme" data-theme="assets/css/themes/amethyst.min.css" href="#">
+                                data-toggle="theme" data-theme="{{asset('public/admin')}}/assets/css/themes/amethyst.min.css" href="#">
                                 <span>Amethyst</span>
                                 <i class="fa fa-circle text-amethyst"></i>
                             </a>
                             <a class="dropdown-item d-flex align-items-center justify-content-between"
-                                data-toggle="theme" data-theme="assets/css/themes/city.min.css" href="#">
+                                data-toggle="theme" data-theme="{{asset('public/admin')}}/assets/css/themes/city.min.css" href="#">
                                 <span>City</span>
                                 <i class="fa fa-circle text-city"></i>
                             </a>
                             <a class="dropdown-item d-flex align-items-center justify-content-between"
-                                data-toggle="theme" data-theme="assets/css/themes/flat.min.css" href="#">
+                                data-toggle="theme" data-theme="{{asset('public/admin')}}/assets/css/themes/flat.min.css" href="#">
                                 <span>Flat</span>
                                 <i class="fa fa-circle text-flat"></i>
                             </a>
                             <a class="dropdown-item d-flex align-items-center justify-content-between"
-                                data-toggle="theme" data-theme="assets/css/themes/modern.min.css" href="#">
+                                data-toggle="theme" data-theme="{{asset('public/admin')}}/assets/css/themes/modern.min.css" href="#">
                                 <span>Modern</span>
                                 <i class="fa fa-circle text-modern"></i>
                             </a>
                             <a class="dropdown-item d-flex align-items-center justify-content-between"
-                                data-toggle="theme" data-theme="assets/css/themes/smooth.min.css" href="#">
+                                data-toggle="theme" data-theme="{{asset('public/admin')}}/assets/css/themes/smooth.min.css" href="#">
                                 <span>Smooth</span>
                                 <i class="fa fa-circle text-smooth"></i>
                             </a>
@@ -620,6 +623,7 @@
             <!-- Side Navigation -->
             <div class="content-side content-side-full">
                 <ul class="nav-main">
+                    @if (Session::get('user')->perm_id == 1)
                     <li class="nav-main-item">
                         <a class="nav-main-link active" href="{{asset('admin/home')}}">
                             <i class="nav-main-link-icon si si-speedometer"></i>
@@ -640,11 +644,12 @@
                                 </a>
                             </li>
                             <li class="nav-main-item">
-                                <a class="nav-main-link" href="{{asset('admin/product')}}">
-                                    <span class="nav-main-link-name">Sản phẩm</span>
+                                <a class="nav-main-link" href="{{asset('admin/brand')}}">
+                                    <span class="nav-main-link-name">Thương hiệu</span>
                                 </a>
                             </li>
                             <li class="nav-main-item">
+<<<<<<< HEAD
                                 <a class="nav-main-link" href="{{asset('admin/promotion')}}">
                                     <span class="nav-main-link-name">Khuyến mãi</span>
                                 </a>
@@ -652,6 +657,10 @@
                             <li class="nav-main-item">
                                 <a class="nav-main-link" href="{{asset('admin/brand')}}">
                                     <span class="nav-main-link-name">Thương hiệu</span>
+=======
+                                <a class="nav-main-link" href="{{asset('admin/product')}}">
+                                    <span class="nav-main-link-name">Sản phẩm</span>
+>>>>>>> thang
                                 </a>
                             </li>
                             <li class="nav-main-item">
@@ -674,6 +683,11 @@
                                     <span class="nav-main-link-name">Đánh giá</span>
                                 </a>
                             </li>
+                            <li class="nav-main-item">
+                                <a class="nav-main-link" href="{{asset('admin/promotion')}}">
+                                    <span class="nav-main-link-name">Khuyến mãi</span>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                     <li class="nav-main-item">
@@ -684,26 +698,21 @@
                         </a>
                         <ul class="nav-main-submenu">
                             <li class="nav-main-item">
-                                <a class="nav-main-link" href="be_pages_error_all.html">
+                                <a class="nav-main-link" href="{{asset('admin/statistics/revenue/all')}}">
                                     <span class="nav-main-link-name">Doanh thu</span>
                                 </a>
                             </li>
                             <li class="nav-main-item">
-                                <a class="nav-main-link" href="op_error_400.html">
+                                <a class="nav-main-link" href="{{asset('admin/statistics/product')}}">
                                     <span class="nav-main-link-name">Sản phẩm</span>
                                 </a>
                             </li>
                             <li class="nav-main-item">
-                                <a class="nav-main-link" href="op_error_401.html">
-                                    <span class="nav-main-link-name">Hoa hồng</span>
-                                </a>
-                            </li>
-                            <li class="nav-main-item">
-                                <a class="nav-main-link" href="op_error_403.html">
+                                <a class="nav-main-link" href="{{asset('admin/statistics/salary')}}">
                                     <span class="nav-main-link-name">Lương nhân viên</span>
                                 </a>
                             </li>
-                            <li class="nav-main-item">
+                            {{-- <li class="nav-main-item">
                                 <a class="nav-main-link" href="op_error_404.html">
                                     <span class="nav-main-link-name">Ai đang online</span>
                                 </a>
@@ -712,10 +721,14 @@
                                 <a class="nav-main-link" href="op_error_404.html">
                                     <span class="nav-main-link-name">Trạng thái</span>
                                 </a>
-                            </li>
+                            </li> --}}
                         </ul>
                     </li>
+                    @endif
+
                     <li class="nav-main-heading">Nhân viên</li>
+
+                    @if (Session::get('user')->perm_id == 1 || Session::get('user')->perm_id == 2)
                     <li class="nav-main-item">
                         <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
                             aria-expanded="false" href="#">
@@ -736,18 +749,24 @@
                         </ul>
                     </li>
                     <li class="nav-main-item">
-                        <a class="nav-main-link" href="{{asset('admin/guarantee')}}">
-                            <i class="nav-main-link-icon si si-grid"></i>
-                            <span class="nav-main-link-name">Bảo hành</span>
-                        </a>
-                    </li>
-                    <li class="nav-main-item">
                         <a class="nav-main-link" href="{{asset('admin/invoice')}}">
                             <i class="nav-main-link-icon si si-note"></i>
                             <span class="nav-main-link-name">Nhập hàng</span>
                         </a>
                     </li>
+                    @endif
+
+                    @if (Session::get('user')->perm_id == 1 || Session::get('user')->perm_id == 3)
                     <li class="nav-main-item">
+                        <a class="nav-main-link" href="{{asset('admin/guarantee')}}">
+                            <i class="nav-main-link-icon si si-grid"></i>
+                            <span class="nav-main-link-name">Bảo hành</span>
+                        </a>
+                    </li>
+                    @endif
+
+                    
+                    {{-- <li class="nav-main-item">
                         <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
                             aria-expanded="false" href="#">
                             <i class="nav-main-link-icon si si-layers"></i>
@@ -770,8 +789,9 @@
                                 </a>
                             </li>
                         </ul>
-                    </li>
-
+                    </li> --}}
+                    
+                    @if (Session::get('user')->perm_id == 1)
                     <li class="nav-main-heading">Hệ thống</li>
                     <li class="nav-main-item">
                         <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
@@ -811,24 +831,18 @@
                                 <ul class="nav-main-submenu">
                                     <li class="nav-main-item">
                                         <a class="nav-main-link" href="#">
-                                            <span class="nav-main-link-name">Thuế</span>
+                                            <span class="nav-main-link-name">Slide</span>
                                         </a>
                                     </li>
                                     <li class="nav-main-item">
                                         <a class="nav-main-link" href="#">
-                                            <span class="nav-main-link-name">Tình trạng kho</span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-main-item">
-                                        <a class="nav-main-link" href="#">
-                                            <span class="nav-main-link-name">Tình trạng đơn hàng</span>
+                                            <span class="nav-main-link-name">Banner quảng cáo</span>
                                         </a>
                                     </li>
                                 </ul>
                             </li>
                         </ul>
                     </li>
-
                     <li class="nav-main-item">
                         <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
                             aria-expanded="false" href="#">
@@ -837,22 +851,23 @@
                         </a>
                         <ul class="nav-main-submenu">
                             <li class="nav-main-item">
-                                <a class="nav-main-link" href="be_pages_auth_all.html">
+                                <a class="nav-main-link" href="#">
                                     <span class="nav-main-link-name">Sao lưu/phục hồi</span>
                                 </a>
                             </li>
                             <li class="nav-main-item">
-                                <a class="nav-main-link" href="op_auth_signin.html">
+                                <a class="nav-main-link" href="#">
                                     <span class="nav-main-link-name">Tải lên</span>
                                 </a>
                             </li>
                             <li class="nav-main-item">
-                                <a class="nav-main-link" href="op_auth_signin2.html">
+                                <a class="nav-main-link" href="#">
                                     <span class="nav-main-link-name">Nhật kí lỗi</span>
                                 </a>
                             </li>
                         </ul>
                     </li>
+                    @endif
                 </ul>
             </div>
             <!-- END Side Navigation -->
@@ -956,28 +971,31 @@
             OneUI JS Core
 
             Vital libraries and plugins used in all pages. You can choose to not include this file if you would like
-            to handle those dependencies through webpack. Please check out assets/_es6/main/bootstrap.js for more info.
+            to handle those dependencies through webpack. Please check out {{asset('public/admin')}}/assets/_es6/main/bootstrap.js for more info.
 
-            If you like, you could also include them separately directly from the assets/js/core folder in the following
+            If you like, you could also include them separately directly from the {{asset('public/admin')}}/assets/js/core folder in the following
             order. That can come in handy if you would like to include a few of them (eg jQuery) from a CDN.
 
-            assets/js/core/jquery.min.js
-            assets/js/core/bootstrap.bundle.min.js
-            assets/js/core/simplebar.min.js
-            assets/js/core/jquery-scrollLock.min.js
-            assets/js/core/jquery.appear.min.js
-            assets/js/core/js.cookie.min.js
+            {{asset('public/admin')}}/assets/js/core/jquery.min.js
+            {{asset('public/admin')}}/assets/js/core/bootstrap.bundle.min.js
+            {{asset('public/admin')}}/assets/js/core/simplebar.min.js
+            {{asset('public/admin')}}/assets/js/core/jquery-scrollLock.min.js
+            {{asset('public/admin')}}/assets/js/core/jquery.appear.min.js
+            {{asset('public/admin')}}/assets/js/core/js.cookie.min.js
         -->
-    <script src="assets/js/oneui.core.min.js"></script>
+    <script src="{{asset('public/admin')}}/assets/js/oneui.core.min.js"></script>
 
     <!--
             OneUI JS
 
             Custom functionality including Blocks/Layout API as well as other vital and optional helpers
-            webpack is putting everything together at assets/_es6/main/app.js
+            webpack is putting everything together at {{asset('public/admin')}}/assets/_es6/main/app.js
         -->
-    <script src="assets/js/oneui.app.min.js"></script>
-    <script src="assets/js/jquery-ui.min.js"></script>
+    <script src="{{asset('public/admin')}}/assets/js/oneui.app.min.js"></script>
+    <script src="{{asset('public/admin')}}/assets/js/jquery-ui.min.js"></script>
+    <script src="{{asset('public/admin')}}/assets/js/plugins/bootstrap-notify/bootstrap-notify.min.js"></script>
+    <script src="{{asset('public/admin')}}/assets/js/plugins/sweetalert.min.js"></script>
+    <script>jQuery(function(){ One.helpers('notify'); });</script>
     @yield('scriptjs')
 </body>
 

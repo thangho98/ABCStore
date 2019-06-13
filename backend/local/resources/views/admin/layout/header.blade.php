@@ -36,7 +36,7 @@
             <!-- END Open Search Section -->
 
             <!-- Search Form (visible on larger screens) -->
-            <form class="d-none d-sm-inline-block" action="be_pages_generic_search.html" method="POST">
+            <form class="d-none d-sm-inline-block" action="#" method="POST">
                 <div class="input-group input-group-sm">
                     <input type="text" class="form-control form-control-alt" placeholder="Bạn tìm gì..."
                         id="page-header-search-input2" name="page-header-search-input2">
@@ -57,21 +57,29 @@
             <div class="dropdown d-inline-block ml-2">
                 <button type="button" class="btn btn-sm btn-dual" id="page-header-user-dropdown"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img class="rounded" src="assets/media/avatars/avatar10.jpg" alt="Header Avatar"
+                    <img class="rounded" @if (Session::get('employees')->empl_avatar != '')
+                        src="{{asset('local/storage/app/images/employees/'.Session::get('employees')->empl_avatar)}}"
+                    @else
+                        src="{{asset('public/admin')}}/assets/media/avatars/avatar10.jpg"
+                    @endif  alt="Header Avatar"
                         style="width: 18px;">
-                    <span class="d-none d-sm-inline-block ml-1">Thăng</span>
+                    <span class="d-none d-sm-inline-block ml-1">{{Session::get('employees')->empl_name}}</span>
                     <i class="fa fa-fw fa-angle-down d-none d-sm-inline-block"></i>
                 </button>
                 <div class="dropdown-menu dropdown-menu-right p-0 border-0 font-size-sm"
                     aria-labelledby="page-header-user-dropdown">
                     <div class="p-3 text-center bg-primary">
                         <img class="img-avatar img-avatar48 img-avatar-thumb"
-                            src="assets/media/avatars/avatar10.jpg" alt="">
+                        @if (Session::get('employees')->empl_avatar != '')
+                        src="{{asset('local/storage/app/images/employees/'.Session::get('employees')->empl_avatar)}}"
+                    @else
+                        src="{{asset('public/admin')}}/assets/media/avatars/avatar10.jpg"
+                    @endif alt="">
                     </div>
                     <div class="p-2">
                         <h5 class="dropdown-header text-uppercase">Tùy chọn người dùng</h5>
                         <a class="dropdown-item d-flex align-items-center justify-content-between"
-                            href="be_pages_generic_inbox.html">
+                            href="#">
                             <span>Hộp thư đến</span>
                             <span>
                                 <span class="badge badge-pill badge-primary">3</span>
@@ -79,7 +87,7 @@
                             </span>
                         </a>
                         <a class="dropdown-item d-flex align-items-center justify-content-between"
-                            href="be_pages_generic_profile.html">
+                            href="#">
                             <span>Hồ sơ</span>
                             <span>
                                 <span class="badge badge-pill badge-success">1</span>
@@ -94,10 +102,15 @@
                         <div role="separator" class="dropdown-divider"></div>
                         <h5 class="dropdown-header text-uppercase">Hành động</h5>
                         <a class="dropdown-item d-flex align-items-center justify-content-between"
+                            href="{{asset('/admin/account/password')}}">
+                            <span>Đổi mật khẩu</span>
+                            <i class="si si-key ml-1"></i>
+                        </a>
+                        {{-- <a class="dropdown-item d-flex align-items-center justify-content-between"
                             href="op_auth_lock.html">
                             <span>Khóa tài khoản</span>
                             <i class="si si-lock ml-1"></i>
-                        </a>
+                        </a> --}}
                         <a class="dropdown-item d-flex align-items-center justify-content-between"
                             href="{{asset('/logout')}}">
                             <span>Đăng xuất</span>
@@ -212,7 +225,7 @@
     <!-- Header Search -->
     <div id="page-header-search" class="overlay-header bg-white">
         <div class="content-header">
-            <form class="w-100" action="be_pages_generic_search.html" method="POST">
+            <form class="w-100" action="#" method="POST">
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
                         <!-- Layout API, functionality initialized in Template._uiApiLayout() -->

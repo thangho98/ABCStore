@@ -9,6 +9,8 @@ use App\Models\Orders;
 use App\Models\OrdersDetail;
 use App\Models\Customer;
 use App\Models\Product;
+use App\Models\Promotion;
+use App\Models\PromotionDetail;
 use App\Models\ProductOptions;
 use App\Models\Carts;
 use App\Models\CartDetail;
@@ -46,7 +48,7 @@ class OrdersController extends Controller
 
     public function getAddOrders()
     {
-        $empl_id = Auth::user()->empl_id;
+        $empl_id = Session::get('user')->empl_id;
         //Cart::session($empl_id)->clear();
         $data['total_orders'] = Cart::session($empl_id)->getTotal();
         $data['total_qty'] = Cart::session($empl_id)->getTotalQuantity();
@@ -66,13 +68,7 @@ class OrdersController extends Controller
         $cus->cus_identity_card = $req->cus_identity_card;
         $cus->save();
 
-        $cus = Customer::where('cus_name',$req->cus_name)
-                        ->where('cus_phone',$req->cus_phone)
-                        ->where('cus_email',$req->cus_email)
-                        ->where('cus_identity_card',$req->cus_identity_card)
-                        ->first();
-
-        $empl_id = Auth::user()->empl_id;
+        $empl_id = Session::get('user')->empl_id;
         $total_qty_orders = Cart::session($empl_id)->getTotalQuantity();
         $total_orders = Cart::session($empl_id)->getTotal();
         
@@ -85,14 +81,6 @@ class OrdersController extends Controller
         $orders->order_remember_token = $req->_token;
         $orders->save();
 
-        $orders = Orders::where('order_date',date("Y-m-d"))
-                        ->where('order_empl', $empl_id)
-                        ->where('order_cus', $cus->cus_id)
-                        ->where('order_total_prod', $total_qty_orders)
-                        ->where('order_total_price', $total_orders)
-                        ->where('order_remember_token', $req->_token)
-                        ->first();
-
         $content = Cart::session($empl_id)->getContent();
 
         foreach ($content as $key => $value) {
@@ -101,7 +89,7 @@ class OrdersController extends Controller
             $ordersdetail->orddt_propt = $key;
             $ordersdetail->orddt_quantity = $value->quantity;
             $ordersdetail->orddt_unit_price = $value->attributes['propt_price'];
-            $ordersdetail->orddt_promotion_price = $value->attributes['propt_price'];
+            $ordersdetail->orddt_promotion_price = $value->price;
             $ordersdetail->orddt_total = $value->quantity*$value->price;
             $ordersdetail->save();
         }
@@ -112,8 +100,13 @@ class OrdersController extends Controller
     public function getAddOrdersFromCart($id)
     {
         $carts = Carts::find($id);
+
+        if($carts->cart_status != 1){
+            return redirect('admin/orders/');
+        }
+
         $data['cus'] = Customer::find($carts->cart_cus);
-        $empl_id = Auth::user()->empl_id;
+        $empl_id = Session::get('user')->empl_id;
 
         if(Session::get('userID') == null){
             $list_option = CartDetail::where('cartdt_cart',$id)->get();
@@ -123,7 +116,7 @@ class OrdersController extends Controller
                 Cart::session($empl_id)->add(array(
                     'id' => $value->cartdt_propt,
                     'name' => $product->prod_name,
-                    'price' => $options->propt_price,
+                    'price' => $value->cartdt_prod_promotion_price,
                     'quantity' => 1,
                     'attributes' => $options
                 ));
@@ -151,13 +144,7 @@ class OrdersController extends Controller
         $cus->cus_identity_card = $req->cus_identity_card;
         $cus->save();
 
-        $cus = Customer::where('cus_name',$req->cus_name)
-                        ->where('cus_phone',$req->cus_phone)
-                        ->where('cus_email',$req->cus_email)
-                        ->where('cus_identity_card',$req->cus_identity_card)
-                        ->first();
-
-        $empl_id = Auth::user()->empl_id;
+        $empl_id = Session::get('user')->empl_id;
         $total_qty_orders = Cart::session($empl_id)->getTotalQuantity();
         $total_orders = Cart::session($empl_id)->getTotal();
         
@@ -170,14 +157,6 @@ class OrdersController extends Controller
         $orders->order_remember_token = $req->_token;
         $orders->save();
 
-        $orders = Orders::where('order_date',date("Y-m-d"))
-                        ->where('order_empl', $empl_id)
-                        ->where('order_cus', $cus->cus_id)
-                        ->where('order_total_prod', $total_qty_orders)
-                        ->where('order_total_price', $total_orders)
-                        ->where('order_remember_token', $req->_token)
-                        ->first();
-
         $content = Cart::session($empl_id)->getContent();
 
         foreach ($content as $key => $value) {
@@ -186,7 +165,7 @@ class OrdersController extends Controller
             $ordersdetail->orddt_propt = $key;
             $ordersdetail->orddt_quantity = $value->quantity;
             $ordersdetail->orddt_unit_price = $value->attributes['propt_price'];
-            $ordersdetail->orddt_promotion_price = $value->attributes['propt_price'];
+            $ordersdetail->orddt_promotion_price = $value->price;
             $ordersdetail->orddt_total = $value->quantity*$value->price;
             $ordersdetail->save();
         }
@@ -202,13 +181,14 @@ class OrdersController extends Controller
     public function getOptions($id)
     {
         $list_options = ProductOptions::where('propt_prod',$id)
+                            ->where('propt_quantity','>',0)
                             ->get();
         return json_encode($list_options);
     }
 
     public function getAddItem(Request $req)
     {
-        $empl_id = Auth::user()->empl_id; // or any string represents user identifier
+        $empl_id = Session::get('user')->empl_id; // or any string represents user identifier
 
         $prod = Cart::session($empl_id)->get($req->id);
         if(!empty($prod)){
@@ -217,10 +197,22 @@ class OrdersController extends Controller
 
         $options = ProductOptions::find($req->id);
         $product = Product::find($options->propt_prod);
+
+        $promotion = DB::table('promotiondetail')
+                    ->join('promotion','promotion.prom_id','promotiondetail.promdt_prom')
+                    ->where('prom_status',1)
+                    ->where('promdt_propt',$options->propt_id)
+                    ->orderBy('prom_id','desc')
+                    ->first();
+
+        $price =  $options->propt_price;
+        if($promotion != null){
+            $price = $promotion->promdt_promotion_price;
+        }
         Cart::session($empl_id)->add(array(
             'id' => $req->id,
             'name' => $product->prod_name,
-            'price' => $options->propt_price,
+            'price' => $price,
             'quantity' => 1,
             'attributes' => $options
         ));
@@ -228,13 +220,13 @@ class OrdersController extends Controller
 
     public function getDelItem(Request $req)
     {
-        $empl_id = Auth::user()->empl_id; // or any string represents user identifier
+        $empl_id = Session::get('user')->empl_id; // or any string represents user identifier
         Cart::session($empl_id)->remove($req->id);
     }
 
     public function getUpdateItem(Request $req)
     {
-        $empl_id = Auth::user()->empl_id;
+        $empl_id = Session::get('user')->empl_id;
         Cart::session($empl_id)->update($req->id, array(
             'quantity' => array(
                 'relative' => false,
@@ -262,8 +254,9 @@ class OrdersController extends Controller
 
     public function getCancelOrders()
     {
-        $empl_id = Auth::user()->empl_id;
+        $empl_id = Session::get('user')->empl_id;
         Cart::session($empl_id)->clear();
+        Session::forget($empl_id);
         return redirect('admin/orders/');
     }
 }

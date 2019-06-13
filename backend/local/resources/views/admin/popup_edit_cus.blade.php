@@ -2,7 +2,7 @@
     <form action="{{asset('admin/customer/edit/'.$cus->cus_id)}}" id="edit-form" method="POST" novalidate>
             <div class="form-row">
                 <div class="form-group col-md-6">
-                    <label for="inputName">Tên nhân viên <span class="text-danger">*</span></label>
+                    <label for="inputName">Tên khách hàng <span class="text-danger">*</span></label>
                     <input disabled type="text" class="form-control" id="inputName" name="name" value="{{$cus->cus_name}}" required>
                 </div>
                 <div class="form-group col-md-6">
@@ -12,15 +12,17 @@
                 </div>
             </div>   
             <div class="form-group">
-                <label for="inputAddress">Địa chỉ <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="inputAddress" name="address" value="{{$cus->cus_address}}" required>
+                
             </div>
             <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="inputAddress">Email <span class="text-danger">*</span></label>
+                    <input type="email" class="form-control" id="inputAddress" name="email" value="{{$cus->cus_email}}" required>
+                </div>
                 <div class="form-group col-md-6">
                     <label for="inputTel">SĐT <span class="text-danger">*</span></label>
                     <input type="tel" class="form-control" id="inputTel" value="{{$cus->cus_phone}}" name="phone" required>
                 </div>
-    
             </div>
         <div class="tile-footer-2">
             <button class="btn btn-primary" type="button" id="submitEdit">Sửa</button>

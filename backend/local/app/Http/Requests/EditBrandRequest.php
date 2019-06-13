@@ -24,7 +24,7 @@ class EditBrandRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'unique:brand,brand_name,'.$this->segment(5).',brand_id'
+            'name' => 'unique:brand,brand_name,'.$this->segment(4).',brand_id'
         ];
     }
 

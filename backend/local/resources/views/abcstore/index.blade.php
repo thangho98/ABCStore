@@ -12,7 +12,7 @@
                         <ul class="vertical-menu-list">
                             @foreach ($list_cate as $item)
                             <li>
-                                <a href="shop.html">
+                                <a href="{{asset('/shop')}}">
                                     <span><img src="{{asset('local/storage/app/images/category/'.$item->cate_icon)}}"
                                             alt="menu-icon"></span>{{$item->cate_name}}</a>
                             </li>
@@ -28,7 +28,7 @@
                     <!-- Slider Background  Image Start-->
                     <div id="slider" class="nivoSlider">
                         @foreach ($list_slide as $item)
-                        <a href="shop.html"><img src="{{asset('local/storage/app/images/slide/'.$item->slide_img)}}"
+                        <a href="{{asset('/shop')}}"><img src="{{asset('local/storage/app/images/slide/'.$item->slide_img)}}"
                                 data-thumb="{{asset('local/storage/app/images/slide/'.$item->img)}}" alt=""
                                 title="{{$item->slide_caption}}" /></a>
                         @endforeach
@@ -44,6 +44,7 @@
 </div>
 <!-- Categorie Menu & Slider Area End Here -->
 <!-- Hot Deal Products Start Here -->
+@if (count($list_promotion) > 0)
 <div class="hot-deal-products off-white-bg pb-60 pb-sm-50">
     <div class="container">
         <!-- Product Title Start -->
@@ -53,146 +54,50 @@
         <!-- Product Title End -->
         <!-- Hot Deal Product Activation Start -->
         <div class="hot-deal-active owl-carousel">
-            <div class="single-product">
-                <!-- Product Image Start -->
-                <div class="pro-img">
-                    <a href="product.html">
-                        <img class="primary-img" src="{{asset('public/abcstore')}}/img/products/1.jpg" alt="single-product">
-                        <img class="secondary-img" src="{{asset('public/abcstore')}}/img/products/7.jpg" alt="single-product">
-                    </a>
-                    <div class="countdown" data-countdown="2020/03/01"></div>
-                </div>
-                <!-- Product Image End -->
-                <!-- Product Content Start -->
-                <div class="pro-content">
-                    <div class="pro-info">
-                        <h4><a href="product.html">Poly and Bark Vortex Side</a></h4>
-                        <p><span class="price">$84.45</span><del class="prev-price">$105.50</del></p>
-                        <div class="label-product l_sale">20<span class="symbol-percent">%</span></div>
-                    </div>
-                </div>
-                <!-- Product Content End -->
-            </div>
-            <!-- Single Product End -->
+            @foreach ($list_promotion as $item)
             <!-- Single Product Start -->
             <div class="single-product">
                 <!-- Product Image Start -->
                 <div class="pro-img">
-                    <a href="product.html">
-                        <img class="primary-img" src="{{asset('public/abcstore')}}/img/products/24.jpg" alt="single-product">
-                        <img class="secondary-img" src="{{asset('public/abcstore')}}/img/products/25.jpg" alt="single-product">
+                    <a href="{{asset('/product/'.$item->prod_id)}}">
+                        <img width="226px;" height="226px;" class="primary-img" src="{{asset('local/storage/app/images/product/'.$item->prod_poster)}}" alt="single-product">
                     </a>
-                    <div class="countdown" data-countdown="2020/03/01"></div>
+                <div class="countdown" data-countdown="{{date_format(date_create($item->prom_end_date),"Y/m/d")}}"></div>
                 </div>
                 <!-- Product Image End -->
                 <!-- Product Content Start -->
                 <div class="pro-content">
                     <div class="pro-info">
-                        <h4><a href="product.html">Light Inverted Pendant Quick</a></h4>
-                        <p><span class="price">$84.45</span><del class="prev-price">$105.50</del></p>
-                        <div class="label-product l_sale">20<span class="symbol-percent">%</span></div>
+                        <h4><a href="{{asset('/product/'.$item->prod_id)}}">{{$item->prod_name}} {{$item->propt_color}}, Ram:
+                            {{-- {{$item->propt_ram}} gb, Rom: {{$item->propt_rom}} --}}
+                        </a></h4>
+                        <p><span class="price">{{number_format($item->promdt_promotion_price,0,',','.')}}
+                                VNĐ</span>
+                            <del class="prev-price">{{number_format($item->promdt_unit_price,0,',','.')}}
+                                    VNĐ</del></p>
+                            <div class="label-product l_sale">{{$item->promdt_percent}}<span class="symbol-percent">%</span></div>
                     </div>
+                    {{-- <div class="pro-actions">
+                        <div class="actions-primary">
+                            <a href="cart.html" title="Add to Cart"> + Thêm vào giỏ hàng</a>
+                        </div>
+                    </div> --}}
                 </div>
                 <!-- Product Content End -->
+                @if ($item->prod_new == 1)
+                    <span class="sticker-new">mới</span>
+                @endif
             </div>
             <!-- Single Product End -->
-            <!-- Single Product Start -->
-            <div class="single-product">
-                <!-- Product Image Start -->
-                <div class="pro-img">
-                    <a href="product.html">
-                        <img class="primary-img" src="{{asset('public/abcstore')}}/img/products/42.jpg" alt="single-product">
-                        <img class="secondary-img" src="{{asset('public/abcstore')}}/img/products/43.jpg" alt="single-product">
-                    </a>
-                    <div class="countdown" data-countdown="2020/03/01"></div>
-                </div>
-                <!-- Product Image End -->
-                <!-- Product Content Start -->
-                <div class="pro-content">
-                    <div class="pro-info">
-                        <h4><a href="product.html">Terra Xpress HE Cooking </a></h4>
-                        <p><span class="price">$84.45</span><del class="prev-price">$105.50</del></p>
-                        <div class="label-product l_sale">15<span class="symbol-percent">%</span></div>
-                    </div>
-                </div>
-                <!-- Product Content End -->
-                <span class="sticker-new">new</span>
-            </div>
-            <!-- Single Product End -->
-            <!-- Single Product Start -->
-            <div class="single-product">
-                <!-- Product Image Start -->
-                <div class="pro-img">
-                    <a href="product.html">
-                        <img class="primary-img" src="{{asset('public/abcstore')}}/img/products/30.jpg" alt="single-product">
-                        <img class="secondary-img" src="{{asset('public/abcstore')}}/img/products/31.jpg" alt="single-product">
-                    </a>
-                    <div class="countdown" data-countdown="2020/03/01"></div>
-                </div>
-                <!-- Product Image End -->
-                <!-- Product Content Start -->
-                <div class="pro-content">
-                    <div class="pro-info">
-                        <h4><a href="product.html">Calandiva Wrapped 12cm</a></h4>
-                        <p><span class="price">$84.45</span><del class="prev-price">$105.50</del></p>
-                        <div class="label-product l_sale">20<span class="symbol-percent">%</span></div>
-                    </div>
-                </div>
-                <!-- Product Content End -->
-            </div>
-            <!-- Single Product End -->
-            <!-- Single Product Start -->
-            <div class="single-product">
-                <!-- Product Image Start -->
-                <div class="pro-img">
-                    <a href="product.html">
-                        <img class="primary-img" src="{{asset('public/abcstore')}}/img/products/8.jpg" alt="single-product">
-                        <img class="secondary-img" src="{{asset('public/abcstore')}}/img/products/9.jpg" alt="single-product">
-                    </a>
-                    <div class="countdown" data-countdown="2020/03/01"></div>
-                </div>
-                <!-- Product Image End -->
-                <!-- Product Content Start -->
-                <div class="pro-content">
-                    <div class="pro-info">
-                        <h4><a href="product.html">Gpoly and Bark Eames Styl...</a></h4>
-                        <p><span class="price">$84.45</span><del class="prev-price">$105.50</del></p>
-                        <div class="label-product l_sale">10<span class="symbol-percent">%</span></div>
-                    </div>
-                </div>
-                <!-- Product Content End -->
-                <span class="sticker-new">new</span>
-            </div>
-            <!-- Single Product End -->
-            <!-- Single Product Start -->
-            <div class="single-product">
-                <!-- Product Image Start -->
-                <div class="pro-img">
-                    <a href="product.html">
-                        <img class="primary-img" src="{{asset('public/abcstore')}}/img/products/10.jpg" alt="single-product">
-                        <img class="secondary-img" src="{{asset('public/abcstore')}}/img/products/11.jpg" alt="single-product">
-                    </a>
-                    <div class="countdown" data-countdown="2020/03/01"></div>
-                </div>
-                <!-- Product Image End -->
-                <!-- Product Content Start -->
-                <div class="pro-content">
-                    <div class="pro-info">
-                        <h4><a href="product.html">Poly and Bark Vortex Side</a></h4>
-                        <p><span class="price">$84.45</span><del class="prev-price">$105.50</del></p>
-                        <div class="label-product l_sale">37<span class="symbol-percent">%</span></div>
-                    </div>
-                </div>
-                <!-- Product Content End -->
-                <span class="sticker-new">new</span>
-            </div>
-            <!-- Single Product End -->
+            @endforeach
         </div>
         <!-- Hot Deal Product Active End -->
 
     </div>
     <!-- Container End -->
-</div>
+</div>  
+@endif
+
 <!-- Hot Deal Products End Here -->
 <!-- Arrivals Products Area Start Here -->
 <div class="arrivals-product pt-20 pb-85 pb-sm-45">
@@ -204,9 +109,11 @@
                 </div>
                 <!-- Nav tabs -->
                 <ul class="nav tabs-area" role="tablist">
-                    @for ($i = 0; $i < count($list_cate_new); $i++) @if ($i==0) <li class="nav-item">
-                        <a class="nav-link active" data-toggle="tab"
-                            href="#{{$list_cate_new[$i]->cate_slug}}">{{$list_cate_new[$i]->cate_name}}</a>
+                    @for ($i = 0; $i < count($list_cate_new); $i++) 
+                        @if ($i==0)
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab"
+                                href="#{{$list_cate_new[$i]->cate_slug}}">{{$list_cate_new[$i]->cate_name}}</a>
                         </li>
                         @else
                         <li class="nav-item">
@@ -214,14 +121,14 @@
                                 href="#{{$list_cate_new[$i]->cate_slug}}">{{$list_cate_new[$i]->cate_name}}</a>
                         </li>
                         @endif
-                        @endfor
+                    @endfor
                 </ul>
             </div>
-
             <!-- Tab Contetn Start -->
             <div class="tab-content">
-                @for ($i = 0; $i < count($list_cate_new); $i++) @if ($i==0) <div id="{{$list_cate_new[$i]->cate_slug}}"
-                    class="tab-pane fade show active">
+                @for ($i = 0; $i < count($list_cate_new); $i++)
+                @if ($i==0)
+                <div id="{{$list_cate_new[$i]->cate_slug}}" class="tab-pane fade show active">
                     <!-- Arrivals Product Activation Start Here -->
                     <div class="electronics-pro-active owl-carousel">
                         <!-- Double Product Start -->
@@ -229,14 +136,15 @@
                         $nameArr = 'by_cate_'.$list_cate_new[$i]->cate_id;
                         $index = 0;
                         @endphp
-                        @while ($index < count($list_prod_new[$nameArr])) <div class="double-product">
+                        @while ($index < count($list_prod_new[$nameArr]))
+                        <div class="double-product">
                             <!-- Single Product Start -->
                             <div class="single-product">
                                 <!-- Product Image Start -->
                                 <div class="pro-img">
-                                    <a href="{{asset('/product/'.$list_prod_new[$nameArr][$index]->prod_id)}}">
-                                        <img class="{{asset('/product/'.$list_prod_new[$nameArr][$index]->prod_id)}}"
-                                            src="{{asset('local/storage/app/images/product/'.$list_prod_new[$nameArr][$index]->prod_poster)}}"
+                                    <a href="{{asset('/product/'.$list_prod_new[$nameArr][$index]['prod_id'])}}">
+                                        <img class="{{asset('/product/'.$list_prod_new[$nameArr][$index]['prod_id'])}}"
+                                            src="{{asset('local/storage/app/images/product/'.$list_prod_new[$nameArr][$index]['prod_poster'])}}"
                                             alt="single-product">
                                     </a>
                                 </div>
@@ -244,26 +152,34 @@
                                 <!-- Product Content Start -->
                                 <div class="pro-content">
                                     <div class="pro-info">
-                                        <h4><a
-                                                href="{{asset('/product/'.$list_prod_new[$nameArr][$index]->prod_id)}}">{{$list_prod_new[$nameArr][$index]->prod_name}}</a>
+                                        <h4>
+                                            <a href="{{asset('/product/'.$list_prod_new[$nameArr][$index]['prod_id'])}}">{{$list_prod_new[$nameArr][$index]['prod_name']}}</a>
                                         </h4>
-                                        <p><span class="price">{{number_format($list_prod_new[$nameArr][$index]->prod_price,0,',','.')}} VNĐ</span><del class="prev-price">$400.50</del></p>
-                                        <div class="label-product l_sale">30<span class="symbol-percent">%</span></div>
+                                        @if ($list_prod_new[$nameArr][$index]['promdt_percent'] != 0)
+                                            <p><span class="price">{{number_format($list_prod_new[$nameArr][$index]['prod_price'],0,',','.')}}
+                                                VNĐ</span><del class="prev-price">{{number_format($list_prod_new[$nameArr][$index]['promdt_promotion_price'],0,',','.')}}
+                                                    VNĐ</del></p>
+                                            <div class="label-product l_sale">{{$list_prod_new[$nameArr][$index]['promdt_percent']}}<span class="symbol-percent">%</span></div>
+                                        @else
+                                        <p><span class="price">{{number_format($list_prod_new[$nameArr][$index]['prod_price'],0,',','.')}}
+                                            VNĐ</span></p>
+                                        @endif
                                     </div>
                                 </div>
                                 <!-- Product Content End -->
-                                <span class="sticker-new">new</span>
+                                <span class="sticker-new">mới</span>
                             </div>
                             <!-- Single Product End -->
                             @php
                             $index++;
                             @endphp
-                            @if ($index < count($list_prod_new[$nameArr])) <div class="single-product">
+                            @if ($index < count($list_prod_new[$nameArr]))
+                            <div class="single-product">
                                 <!-- Product Image Start -->
                                 <div class="pro-img">
-                                    <a href="{{asset('/product/'.$list_prod_new[$nameArr][$index]->prod_id)}}">
+                                    <a href="{{asset('/product/'.$list_prod_new[$nameArr][$index]['prod_id'])}}">
                                         <img class="primary-img"
-                                            src="{{asset('local/storage/app/images/product/'.$list_prod_new[$nameArr][$index]->prod_poster)}}"
+                                            src="{{asset('local/storage/app/images/product/'.$list_prod_new[$nameArr][$index]['prod_poster'])}}"
                                             alt="single-product">
                                     </a>
                                 </div>
@@ -272,103 +188,125 @@
                                 <div class="pro-content">
                                     <div class="pro-info">
                                         <h4><a
-                                                href="{{asset('/product/'.$list_prod_new[$nameArr][$index]->prod_id)}}">{{$list_prod_new[$nameArr][$index]->prod_name}}</a>
+                                                href="{{asset('/product/'.$list_prod_new[$nameArr][$index]['prod_id'])}}">{{$list_prod_new[$nameArr][$index]['prod_name']}}</a>
                                         </h4>
-                                        <p><span class="price">{{number_format($list_prod_new[$nameArr][$index]->prod_price,0,',','.')}}</span><del class="prev-price">$400.50</del></p>
-                                        <div class="label-product l_sale">30<span class="symbol-percent">%</span></div>
+                                        @if ($list_prod_new[$nameArr][$index]['promdt_percent'] != 0)
+                                        <p><span class="price">{{number_format($list_prod_new[$nameArr][$index]['prod_price'],0,',','.')}}
+                                            VNĐ</span><del class="prev-price">{{number_format($list_prod_new[$nameArr][$index]['promdt_promotion_price'],0,',','.')}}
+                                                VNĐ</del></p>
+                                        <div class="label-product l_sale">{{$list_prod_new[$nameArr][$index]['promdt_percent']}}<span class="symbol-percent">%</span></div>
+                                        @else
+                                        <p><span class="price">{{number_format($list_prod_new[$nameArr][$index]['prod_price'],0,',','.')}}
+                                            VNĐ</span></p>
+                                        @endif
                                     </div>
                                 </div>
                                 <!-- Product Content End -->
-                                <span class="sticker-new">new</span>
-                    </div>
-                    @endif
-                    @php
-                    $index++;
-                    @endphp
-            </div>
-            @endwhile
-        </div>
-        <!-- Arrivals Product Activation End Here -->
-    </div>
-    @else
-    <div id="{{$list_cate_new[$i]->cate_slug}}" class="tab-pane fade">
-        <!-- Arrivals Product Activation Start Here -->
-        <div class="electronics-pro-active owl-carousel">
-            <!-- Double Product Start -->
-            @php
-            $nameArr = 'by_cate_'.$list_cate_new[$i]->cate_id;
-            $index = 0;
-            @endphp
-            @while ($index < count($list_prod_new[$nameArr])) <div class="double-product">
-                <!-- Single Product Start -->
-                <div class="single-product">
-                    <!-- Product Image Start -->
-                    <div class="pro-img">
-                        <a href="{{asset('/product/'.$list_prod_new[$nameArr][$index]->prod_id)}}">
-                            <img class="primary-img"
-                                src="{{asset('local/storage/app/images/product/'.$list_prod_new[$nameArr][$index]->prod_poster)}}"
-                                alt="single-product">
-                        </a>
-                    </div>
-                    <!-- Product Image End -->
-                    <!-- Product Content Start -->
-                    <div class="pro-content">
-                        <div class="pro-info">
-                            <h4><a
-                                    href="{{asset('/product/'.$list_prod_new[$nameArr][$index]->prod_id)}}">{{$list_prod_new[$nameArr][$index]->prod_name}}</a>
-                            </h4>
-                            <p><span class="price">{{number_format($list_prod_new[$nameArr][$index]->prod_price,0,',','.')}}</span><del class="prev-price">$400.50</del></p>
-                            <div class="label-product l_sale">30<span class="symbol-percent">%</span></div>
+                                <span class="sticker-new">mới</span>
+                            </div>
+                            @endif
+                            @php
+                            $index++;
+                            @endphp
                         </div>
+                        @endwhile
                     </div>
-                    <!-- Product Content End -->
-                    <span class="sticker-new">new</span>
+                    <!-- Arrivals Product Activation End Here -->
                 </div>
-                <!-- Single Product End -->
-                @php
-                $index++;
-                @endphp
-
-                @if ($index < count($list_prod_new[$nameArr])) <div class="single-product">
-                    <!-- Product Image Start -->
-                    <div class="pro-img">
-                        <a href="{{asset('/product/'.$list_prod_new[$nameArr][$index]->prod_id)}}">
-                            <img class="primary-img"
-                                src="{{asset('local/storage/app/images/product/'.$list_prod_new[$nameArr][$index]->prod_poster)}}"
-                                alt="single-product">
-                        </a>
-                    </div>
-                    <!-- Product Image End -->
-                    <!-- Product Content Start -->
-                    <div class="pro-content">
-                        <div class="pro-info">
-                            <h4><a
-                                    href="{{asset('/product/'.$list_prod_new[$nameArr][$index]->prod_id)}}">{{$list_prod_new[$nameArr][$index]->prod_name}}</a>
-                            </h4>
-                            <p><span class="price">{{number_format($list_prod_new[$nameArr][$index]->prod_price,0,',','.')}}</span><del class="prev-price">$400.50</del></p>
-                            <div class="label-product l_sale">30<span class="symbol-percent">%</span></div>
+                @else
+                <div id="{{$list_cate_new[$i]->cate_slug}}" class="tab-pane fade">
+                    <!-- Arrivals Product Activation Start Here -->
+                    <div class="electronics-pro-active owl-carousel">
+                        <!-- Double Product Start -->
+                        @php
+                        $nameArr = 'by_cate_'.$list_cate_new[$i]->cate_id;
+                        $index = 0;
+                        @endphp
+                        @while ($index < count($list_prod_new[$nameArr]))
+                        <div class="double-product">
+                            <!-- Single Product Start -->
+                            <div class="single-product">
+                                <!-- Product Image Start -->
+                                <div class="pro-img">
+                                    <a href="{{asset('/product/'.$list_prod_new[$nameArr][$index]['prod_id'])}}">
+                                        <img class="{{asset('/product/'.$list_prod_new[$nameArr][$index]['prod_id'])}}"
+                                            src="{{asset('local/storage/app/images/product/'.$list_prod_new[$nameArr][$index]['prod_poster'])}}"
+                                            alt="single-product">
+                                    </a>
+                                </div>
+                                <!-- Product Image End -->
+                                <!-- Product Content Start -->
+                                <div class="pro-content">
+                                    <div class="pro-info">
+                                        <h4>
+                                            <a href="{{asset('/product/'.$list_prod_new[$nameArr][$index]['prod_id'])}}">{{$list_prod_new[$nameArr][$index]['prod_name']}}</a>
+                                        </h4>
+                                        @if ($list_prod_new[$nameArr][$index]['promdt_percent'] != 0)
+                                            <p><span class="price">{{number_format($list_prod_new[$nameArr][$index]['prod_price'],0,',','.')}}
+                                                VNĐ</span><del class="prev-price">{{number_format($list_prod_new[$nameArr][$index]['promdt_promotion_price'],0,',','.')}}
+                                                    VNĐ</del></p>
+                                            <div class="label-product l_sale">{{$list_prod_new[$nameArr][$index]['promdt_percent']}}<span class="symbol-percent">%</span></div>
+                                        @else
+                                        <p><span class="price">{{number_format($list_prod_new[$nameArr][$index]['prod_price'],0,',','.')}}
+                                            VNĐ</span></p>
+                                        @endif
+                                    </div>
+                                </div>
+                                <!-- Product Content End -->
+                                <span class="sticker-new">mới</span>
+                            </div>
+                            <!-- Single Product End -->
+                            @php
+                            $index++;
+                            @endphp
+                            @if ($index < count($list_prod_new[$nameArr]))
+                            <div class="single-product">
+                                <!-- Product Image Start -->
+                                <div class="pro-img">
+                                    <a href="{{asset('/product/'.$list_prod_new[$nameArr][$index]['prod_id'])}}">
+                                        <img class="primary-img"
+                                            src="{{asset('local/storage/app/images/product/'.$list_prod_new[$nameArr][$index]['prod_poster'])}}"
+                                            alt="single-product">
+                                    </a>
+                                </div>
+                                <!-- Product Image End -->
+                                <!-- Product Content Start -->
+                                <div class="pro-content">
+                                    <div class="pro-info">
+                                        <h4><a
+                                                href="{{asset('/product/'.$list_prod_new[$nameArr][$index]['prod_id'])}}">{{$list_prod_new[$nameArr][$index]['prod_name']}}</a>
+                                        </h4>
+                                        @if ($list_prod_new[$nameArr][$index]['promdt_percent'] != 0)
+                                        <p><span class="price">{{number_format($list_prod_new[$nameArr][$index]['prod_price'],0,',','.')}}
+                                            VNĐ</span><del class="prev-price">{{number_format($list_prod_new[$nameArr][$index]['promdt_promotion_price'],0,',','.')}}
+                                                VNĐ</del></p>
+                                        <div class="label-product l_sale">{{$list_prod_new[$nameArr][$index]['promdt_percent']}}<span class="symbol-percent">%</span></div>
+                                        @else
+                                        <p><span class="price">{{number_format($list_prod_new[$nameArr][$index]['prod_price'],0,',','.')}}
+                                            VNĐ</span></p>
+                                        @endif
+                                    </div>
+                                </div>
+                                <!-- Product Content End -->
+                                <span class="sticker-new">mới</span>
+                            </div>
+                            @endif
+                            @php
+                            $index++;
+                            @endphp
                         </div>
+                        @endwhile
                     </div>
-                    <!-- Product Content End -->
-                    <span class="sticker-new">new</span>
+                    <!-- Arrivals Product Activation End Here -->
+                </div>
+                @endif
+                @endfor
+            </div>
+            <!-- Tab Content End -->
         </div>
-        @endif
-        @php
-        $index++;
-        @endphp
+        <!-- main-product-tab-area-->
     </div>
-    @endwhile
-</div>
-<!-- Arrivals Product Activation End Here -->
-</div>
-@endif
-@endfor
-</div>
-<!-- Tab Content End -->
-</div>
-<!-- main-product-tab-area-->
-</div>
-<!-- Container End -->
+    <!-- Container End -->
 </div>
 <!-- Arrivals Products Area End Here -->
 <!-- Arrivals Products Area Start Here -->
@@ -376,113 +314,110 @@
 <div class="second-arrivals-product pb-45 pb-sm-5">
     <div class="container">
         <div class="main-product-tab-area">
+            @php
+                $nameCate = 'by_cate_'.$item->cate_id;
+                $brand_by_cate = $list_brand_featured[$nameCate];
+            @endphp
             <div class="tab-menu mb-25">
                 <div class="section-ttitle">
                     <h2>{{mb_strtoupper($item->cate_name,'UTF-8')}} NỔI BẬT NHẤT</h2>
                 </div>
                 <!-- Nav tabs -->
                 <ul class="nav tabs-area" role="tablist">
-                    @php
-                    $nameCate = 'by_cate_'.$item->cate_id;
-                    $brand_by_cate = $list_brand_featured[$nameCate];
-                    @endphp
-                    @for ($i = 0; $i < count($brand_by_cate); $i++) @if ($i==0) <li class="nav-item">
-                        <a class="nav-link active" data-toggle="tab"
-                            href="#{{$brand_by_cate[$i]->brand_name.''.$item->cate_id}}">{{$brand_by_cate[$i]->brand_name}}</a>
+                    @for ($i = 0; $i < count($brand_by_cate); $i++)
+                    @if ($i==0) 
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab"
+                                href="#{{$brand_by_cate[$i]->brand_name.''.$item->cate_id}}">{{$brand_by_cate[$i]->brand_name}}</a>
                         </li>
-                        @else
+                    @else
                         <li class="nav-item">
                             <a class="nav-link" data-toggle="tab"
                                 href="#{{$brand_by_cate[$i]->brand_name.''.$item->cate_id}}">{{$brand_by_cate[$i]->brand_name}}</a>
                         </li>
-                        @endif
-                        @endfor
+                    @endif
+                    @endfor
                 </ul>
             </div>
 
             <!-- Tab Contetn Start -->
             <div class="tab-content">
-                @php
-                $nameCate = 'by_cate_'.$item->cate_id;
-                $brand_by_cate = $list_brand_featured[$nameCate];
-                @endphp
-                @for ($i = 0; $i < count($brand_by_cate); $i++) @if ($i==0) <div
-                    id="{{$brand_by_cate[$i]->brand_name.''.$item->cate_id}}" class="tab-pane fade show active">
-                    <!-- Arrivals Product Activation Start Here -->
-                    <div class="best-seller-pro-active owl-carousel">
-                        <!-- Single Product Start -->
-                        @php
-                        $nameBrand = $nameCate.'_by_brand_'.$brand_by_cate[$i]->brand_id;
-                        $product_by_brand = $list_prod_featured[$nameBrand];
-                        @endphp
-                        @foreach ($product_by_brand as $prod)
-                        <div class="single-product">
-                            <!-- Product Image Start -->
-                            <div class="pro-img">
-                                <a href="{{asset('/product/'.$prod->prod_id)}}">
-                                    <img class="primary-img"
-                                        src="{{asset('local/storage/app/images/product/'.$prod->prod_poster)}}"
-                                        alt="single-product">
-                                </a>
-                            </div>
-                            <!-- Product Image End -->
-                            <!-- Product Content Start -->
-                            <div class="pro-content">
-                                <div class="pro-info">
-                                    <h4><a href="{{asset('/product/'.$prod->prod_id)}}">{{$prod->prod_name}}</a></h4>
-                                    <p><span class="price">$320.45</span></p>
-                                </div>
-                            </div>
-                            <!-- Product Content End -->
-                        </div>
-                        @endforeach
-                        <!-- Single Product End -->
-                    </div>
-                    <!-- Arrivals Product Activation End Here -->
+                @for ($i = 0; $i < count($brand_by_cate); $i++)
+                @if ($i==0) 
+                <div id="{{$brand_by_cate[$i]->brand_name.''.$item->cate_id}}" class="tab-pane fade show active">
+					<!-- Arrivals Product Activation Start Here -->
+					<div class="best-seller-pro-active owl-carousel">
+						<!-- Single Product Start -->
+						@php
+						$nameBrand = $nameCate.'_by_brand_'.$brand_by_cate[$i]->brand_id;
+						$product_by_brand = $list_prod_featured[$nameBrand];
+						@endphp
+						@foreach ($product_by_brand as $prod)
+						<div class="single-product">
+							<!-- Product Image Start -->
+							<div class="pro-img">
+								<a href="{{asset('/product/'.$prod->prod_id)}}">
+									<img class="primary-img"
+										src="{{asset('local/storage/app/images/product/'.$prod->prod_poster)}}"
+										alt="single-product">
+								</a>
+							</div>
+							<!-- Product Image End -->
+							<!-- Product Content Start -->
+							<div class="pro-content">
+								<div class="pro-info">
+									<h4><a href="{{asset('/product/'.$prod->prod_id)}}">{{$prod->prod_name}}</a></h4>
+									<p><span class="price">{{number_format($prod->prod_price,0,',','.')}} VNĐ</span></p>
+								</div>
+							</div>
+							<!-- Product Content End -->
+						</div>
+						@endforeach
+						<!-- Single Product End -->
+					</div>
+					<!-- Arrivals Product Activation End Here -->
+				</div>    
+                @else
+                <div id="{{$brand_by_cate[$i]->brand_name.''.$item->cate_id}}" class="tab-pane fade">
+					<!-- Arrivals Product Activation Start Here -->
+					<div class="best-seller-pro-active owl-carousel">
+						<!-- Single Product Start -->
+						@php
+						$nameBrand = $nameCate.'_by_brand_'.$brand_by_cate[$i]->brand_id;
+						$product_by_brand = $list_prod_featured[$nameBrand];
+						@endphp
+						@foreach ($product_by_brand as $prod)
+						<div class="single-product">
+							<!-- Product Image Start -->
+							<div class="pro-img">
+								<a href="{{asset('/product/'.$prod->prod_id)}}">
+									<img class="primary-img"
+										src="{{asset('local/storage/app/images/product/'.$prod->prod_poster)}}"
+										alt="single-product">
+								</a>
+							</div>
+							<!-- Product Image End -->
+							<!-- Product Content Start -->
+							<div class="pro-content">
+								<div class="pro-info">
+									<h4><a href="{{asset('/product/'.$prod->prod_id)}}">{{$prod->prod_name}}</a></h4>
+									<p><span class="price">{{number_format($prod->prod_price,0,',','.')}} VNĐ</span></p>
+								</div>
+							</div>
+							<!-- Product Content End -->
+						</div>
+						@endforeach
+						<!-- Single Product End -->
+					</div>
+					<!-- Arrivals Product Activation End Here -->
+				</div>
+                @endif
+                @endfor
             </div>
-            @else
-            <div id="{{$brand_by_cate[$i]->brand_name.''.$item->cate_id}}" class="tab-pane fade show active">
-                <!-- Arrivals Product Activation Start Here -->
-                <div class="best-seller-pro-active owl-carousel">
-                    <!-- Single Product Start -->
-                    @php
-                    $nameBrand = $nameCate.'_by_brand_'.$brand_by_cate[$i]->brand_id;
-                    $product_by_brand = $list_prod_featured[$nameBrand];
-                    @endphp
-                    @foreach ($product_by_brand as $prod)
-                    <div class="single-product">
-                        <!-- Product Image Start -->
-                        <div class="pro-img">
-                            <a href="{{asset('/product/'.$prod->prod_id)}}">
-                                <img class="primary-img"
-                                    src="{{asset('local/storage/app/images/product/'.$prod->prod_poster)}}"
-                                    alt="single-product">
-                            </a>
-                        </div>
-                        <!-- Product Image End -->
-                        <!-- Product Content Start -->
-                        <div class="pro-content">
-                            <div class="pro-info">
-                                <h4><a href="{{asset('/product/'.$prod->prod_id)}}">{{$prod->prod_name}}</a></h4>
-                                <p><span class="price">$320.45</span></p>
-                            </div>
-                        </div>
-                        <!-- Product Content End -->
-                    </div>
-                    @endforeach
-                    <!-- Single Product End -->
-                </div>
-                <!-- Arrivals Product Activation End Here -->
-            </div>
-            @endif
-            @endfor
-
+            <!-- Tab Content End -->
         </div>
-        <!-- Tab Content End -->
+        <!-- main-product-tab-area-->
     </div>
-    <!-- main-product-tab-area-->
-</div>
-<!-- Container End -->
 </div>
 @endforeach
 <!-- Arrivals Products Area End Here -->
@@ -493,59 +428,11 @@
             <h2>Thương hiệu nổi tiếng</h2>
         </div>
         <div class="row no-gutters">
-            <div class="col-lg-3">
+            <div class="col-lg-12">
                 <div class="col-img">
-                    <img src="{{asset('public/abcstore')}}/img/banner/h1-band1.jpg" alt="">
+                    <img src="{{asset('public/abcstore')}}/img/banner/Brand.jpg" alt="">
                 </div>
-            </div>
-            <div class="col-lg-6">
-                <!-- Brand Banner Start -->
-                <div class="brand-banner owl-carousel">
-                    <div class="single-brand">
-                        <a href="#"><img class="img" src="{{asset('public/abcstore')}}/img/brand/1.jpg" alt="brand-image"></a>
-                        <a href="#"><img src="{{asset('public/abcstore')}}/img/brand/2.jpg" alt="brand-image"></a>
-                        <a href="#"><img src="{{asset('public/abcstore')}}/img/brand/3.jpg" alt="brand-image"></a>
-                    </div>
-                    <div class="single-brand">
-                        <a href="#"><img class="img" src="{{asset('public/abcstore')}}/img/brand/1.jpg" alt="brand-image"></a>
-                        <a href="#"><img src="{{asset('public/abcstore')}}/img/brand/2.jpg" alt="brand-image"></a>
-                        <a href="#"><img src="{{asset('public/abcstore')}}/img/brand/3.jpg" alt="brand-image"></a>
-                    </div>
-                    <div class="single-brand">
-                        <a href="#"><img src="{{asset('public/abcstore')}}/img/brand/1.jpg" alt="brand-image"></a>
-                        <a href="#"><img src="{{asset('public/abcstore')}}/img/brand/2.jpg" alt="brand-image"></a>
-                        <a href="#"><img src="{{asset('public/abcstore')}}/img/brand/3.jpg" alt="brand-image"></a>
-
-                    </div>
-                    <div class="single-brand">
-                        <a href="#"><img src="{{asset('public/abcstore')}}/img/brand/2.jpg" alt="brand-image"></a>
-                        <a href="#"><img src="{{asset('public/abcstore')}}/img/brand/3.jpg" alt="brand-image"></a>
-                        <a href="#"><img src="{{asset('public/abcstore')}}/img/brand/4.jpg" alt="brand-image"></a>
-                    </div>
-                    <div class="single-brand">
-                        <a href="#"><img src="{{asset('public/abcstore')}}/img/brand/2.jpg" alt="brand-image"></a>
-                        <a href="#"><img src="{{asset('public/abcstore')}}/img/brand/3.jpg" alt="brand-image"></a>
-                        <a href="#"><img src="{{asset('public/abcstore')}}/img/brand/4.jpg" alt="brand-image"></a>
-                    </div>
-                    <div class="single-brand">
-                        <a href="#"><img src="{{asset('public/abcstore')}}/img/brand/2.jpg" alt="brand-image"></a>
-                        <a href="#"><img src="{{asset('public/abcstore')}}/img/brand/3.jpg" alt="brand-image"></a>
-                        <a href="#"><img src="{{asset('public/abcstore')}}/img/brand/4.jpg" alt="brand-image"></a>
-                    </div>
-                    <div class="single-brand">
-                        <a href="#"><img src="{{asset('public/abcstore')}}/img/brand/2.jpg" alt="brand-image"></a>
-                        <a href="#"><img src="{{asset('public/abcstore')}}/img/brand/3.jpg" alt="brand-image"></a>
-                        <a href="#"><img src="{{asset('public/abcstore')}}/img/brand/4.jpg" alt="brand-image"></a>
-                    </div>
-                </div>
-                <!-- Brand Banner End -->
-
-            </div>
-            <div class="col-lg-3">
-                <div class="col-img">
-                    <img src="{{asset('public/abcstore')}}/img/banner/h1-band2.jpg" alt="">
-                </div>
-            </div>
+            </div>       
         </div>
     </div>
     <!-- Container End -->

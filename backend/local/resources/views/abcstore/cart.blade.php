@@ -7,8 +7,8 @@
     <div class="container">
         <div class="breadcrumb">
             <ul class="d-flex align-items-center">
-                <li><a href="index.html">Trang Chủ</a></li>
-                <li class="active"><a href="{{asset('cart/show')}}">Giỏ hàng</a></li>
+                <li><a href="{{asset('/')}}">Trang Chủ</a></li>
+                <li class="active"><a href="#">Giỏ hàng</a></li>
             </ul>
         </div>
     </div>
@@ -47,7 +47,7 @@
                                             Màu: {{$item->attributes['propt_color']}}</a>
                                         </td>
                                         <td class="product-price"><span class="amount">{{number_format($item->price,0,',','.')}} VNĐ</span></td>
-                                        <td class="product-quantity"><input type="number" min="1" value="{{$item->quantity}}" onchange="updateCart(this.value,'{{$item->id}}')" /></td>
+                                        <td class="product-quantity"><input type="number" min="1" value="{{$item->quantity}}" max="{{$item['attributes']->propt_quantity}}" onchange="updateCart(this.value,'{{$item->id}}')" /></td>
                                         <td class="product-subtotal">{{number_format($item->price*$item->quantity,0,',','.')}} VNĐ</td>
                                         <td class="product-remove"> 
                                             <a href="{{asset('cart/delete/'.$item->id)}}"><i class="fa fa-times"
@@ -93,7 +93,11 @@
                                     </tbody>
                                 </table>
                                 <div class="wc-proceed-to-checkout">
-                                    <a href="{{asset('cart/checkout')}}">Tiến hành thanh Toán</a>
+                                    <a @if (count($content)>0)
+                                        href="{{asset('cart/checkout')}}"
+                                    @else
+                                        href="#"
+                                    @endif >Tiến hành thanh Toán</a>
                                 </div>
                             </div>
                         </div>

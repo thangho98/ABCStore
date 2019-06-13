@@ -1,5 +1,5 @@
 <div class="popup-form hidden" id="popup-form-edit">
-    <form action="{{asset('admin/category/edit/'.$cate->cate_id)}}" id="edit-form" method="POST" novalidate>
+    <form action="{{asset('admin/category/edit/'.$cate->cate_id)}}" id="edit-form" method="POST" enctype="multipart/form-data" novalidate>
         <div class="form-row">
             <div class="form-group col-8">
                 <label for="inputEditName">Tên danh mục <span class="text-danger">*</span></label>
@@ -7,16 +7,16 @@
                     required>
             </div>
             <div class="form-group ml-3 col-1">
-                <label for="input-image-edit-icon">icon <span class="text-danger">*</span></label>
-                <input type="file" hidden name="icon" value="" id="input-image-edit-icon" onchange="changeEditImg(this, 'icon');" accept="image/*">
+                <label>icon <span class="text-danger">*</span></label>
+            <input hidden type="file" name="icon" id="input-image-edit-{{$cate->cate_id}}" onchange="changeEditImg(this, '{{$cate->cate_id}}');" accept="image/*">
             </div>
             <div class="form-group mt-4 col-1">
-                <img id="image-edit-icon" class="thumbnail" 
+                <img id="image-edit-{{$cate->cate_id}}" class="thumbnail"
                 @if ($cate->cate_icon == '')
-                    src="assets/media/img/new_seo-10-75.png"
+                    src="{{asset('public/admin')}}/assets/media/img/new_seo-10-75.png"
                 @else
                     src="{{asset('local/storage/app/images/category/'.$cate->cate_icon)}}"
-                @endif  onclick="chooseEditImg('icon');" height="50px;" width="50px;">
+                @endif  onclick="chooseEditImg('{{$cate->cate_id}}');" height="50px;" width="50px;">
             </div>
         </div>
         <div class="tile-footer-2">
@@ -28,12 +28,20 @@
     <script>
         $(document).ready(function () {
             $('#submitEdit').on('click', function () {
+                console.log("hello");
+                
                 $form = $('#edit-form');
+                
                 if ($form.valid()) {
+                    var datas = new FormData($form[0]);
                     $.ajax({
                         url: $form.attr('action'),
+                        enctype: 'multipart/form-data',
+                        processData: false,
+                        contentType: false,
+                        cache: false,
                         type: $form.attr('method'),
-                        data: $form.serialize(),
+                        data: datas,
                         success: function (data) {
                             swal("Đã sửa!", "Đối tượng đã được sửa.", "success")
                                 .then((value) => {

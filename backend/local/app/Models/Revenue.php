@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Stock extends Model
+class Revenue extends Model
 {
-    protected $table = 'stock';
-    protected $primaryKey = 'stock_id';
+    protected $table = 'revenue';
+    protected $primaryKey = 'reve_id';
     protected $guarded = [];
 }

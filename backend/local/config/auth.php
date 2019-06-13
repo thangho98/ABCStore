@@ -1,4 +1,4 @@
-<?php
+    <?php
 
 return [
 
@@ -73,7 +73,7 @@ return [
 
         // 'users' => [
         //     'driver' => 'database',
-        //     'table' => 'users',
+        //     'table' => 'user',
         // ],
     ],
 

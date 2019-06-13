@@ -67,12 +67,6 @@ class ProductController extends Controller
         $product->prod_status = 0;
         $product->save();
 
-        $product = Product::where('prod_name',$req->name)
-                            ->where('prod_brand',$req->brand)
-                            ->where('prod_cate',$req->cate)
-                            ->first();
-
-
         $dataImg = $req->file('product_image');
         if(!empty($dataImg)){
             foreach ($dataImg as $key => $value) {
@@ -132,6 +126,7 @@ class ProductController extends Controller
         $product->prod_brand = $req->brand;
         $product->prod_warranty_period = $req->warranty_period;
         $product->prod_detail = $req->detail;
+        $product->prod_new = $req->prod_new;
         if(!empty($dataPoster)){
             $posterName = $dataPoster->getClientOriginalName();
             $product->prod_poster = $posterName;

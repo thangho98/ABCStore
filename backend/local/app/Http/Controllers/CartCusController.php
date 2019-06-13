@@ -23,10 +23,22 @@ class CartCusController extends Controller
             $product = Product::find($options->propt_prod);
             $options['prod_img'] = $product->prod_poster;
 
+            $promotion = DB::table('promotiondetail')
+                    ->join('promotion','promotion.prom_id','promotiondetail.promdt_prom')
+                    ->where('prom_status',1)
+                    ->where('promdt_propt',$options->propt_id)
+                    ->orderBy('prom_id','desc')
+                    ->first();
+            
+            $price =  $options->propt_price;
+            if($promotion != null){
+                $price = $promotion->promdt_promotion_price;
+            }
+
             Cart::add(array(
                 'id' => $id,
                 'name' => $product->prod_name,
-                'price' => $options->propt_price,
+                'price' => $price,
                 'quantity' => 1,
                 'attributes' => $options
             ));
@@ -73,7 +85,12 @@ class CartCusController extends Controller
         $data['totalquantity'] = Cart::getTotalQuantity();
         $data['totalprice'] = Cart::getTotal();
         $data['content'] = Cart::getContent();
-        return view('abcstore.checkout', $data);
+        if(count($data['content'])>0){
+            return view('abcstore.checkout', $data);
+        }
+        else{
+            return redirect('cart/show');
+        }
     }
 
     public function postCheckout(Request $req)
@@ -84,12 +101,6 @@ class CartCusController extends Controller
         $cus->cus_email = $req->cus_email;
         $cus->cus_identity_card = $req->cus_identity_card;
         $cus->save();
-
-        $cus = Customer::where('cus_name',$req->cus_name)
-                        ->where('cus_phone',$req->cus_phone)
-                        ->where('cus_email',$req->cus_email)
-                        ->where('cus_identity_card',$req->cus_identity_card)
-                        ->first();
         
         $carts = new Carts;
         $carts->cart_date = date("Y-m-d");
@@ -97,20 +108,13 @@ class CartCusController extends Controller
         $carts->cart_total_prod = Cart::getTotalQuantity();;
         $carts->cart_total_price = Cart::getTotal();
         $carts->cart_remember_token = $req->_token;
+        $carts->cart_status = 0;
         $carts->save();
 
         
         $data['content'] = Cart::getContent();
         $data['total_carts'] = Cart::getTotal();
         $data['total_qty_carts'] = Cart::getTotalQuantity();
-        
-
-        $carts = Carts::where('cart_date',date("Y-m-d"))
-                        ->where('cart_cus', $cus->cus_id)
-                        ->where('cart_total_prod', $data['total_qty_carts'])
-                        ->where('cart_total_price', $data['total_carts'])
-                        ->where('cart_remember_token', $req->_token)
-                        ->first();
 
         foreach ($data['content'] as $key => $value) {
             $cartdetail = new CartDetail;

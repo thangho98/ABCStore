@@ -2744,6 +2744,19 @@ li.megamenu-img a {
     color: #4CBB76;
 }
 
+.out-of-stock {
+    color: #f50909;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+
+.out-of-stock i {
+    font-size: 16px;
+    margin-right: 5px;
+    color: rgb(241, 14, 26);
+}
+
 .socila-sharing li {
     color: #666;
     line-height: 1;
@@ -4782,18 +4795,27 @@ a.shipping-calculator-button:hover {
 }
 
 .mycheckbox .item-checkbox {
-    border: 1px solid gray;
+    border: 1px solid rgba(0, 0, 0, .09);
     display: inline-block;
     padding: 5px 20px;
     border-radius: 3px;
     cursor: pointer;
     position: relative;
     transition: all 0.1s ease-in-out;
+    color: rgba(0, 0, 0, .8);
+    background: #fff;
 }
 
-.mycheckbox .item-checkbox {
-    border: 1px solid #ee4d2d;
+.mycheckbox .checked {
     color: #ee4d2d;
+    border: 1px solid #ee4d2d;
+    background: #fff;
+    display: inline-block;
+    padding: 5px 20px;
+    border-radius: 3px;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.1s ease-in-out;
 }
 
 .mycheckbox .item-checkbox .triangle-check {
