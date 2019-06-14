@@ -178,7 +178,7 @@
                                     </div>
                                     <div class="form-group col-6">
                                         <label for="wizard-validation-identity-card">CMND</label>
-                                        <input class="form-control" type="text" id="identity-card"
+                                        <input class="form-control" type="text" id="identity-card" maxlength="12" minlength="12"
                                             name="cus_identity_card" required>
                                     </div>
                                 </div>
@@ -198,7 +198,7 @@
                                     <div class="form-group col-6">
                                         <div class="py-2 mb-2">
                                             <button id="btnCheckCus" type="button" class="btn btn-primary">Kiểm tra CMND</button>
-                                            <button type="button" class="btn btn-primary" onclick="$('#cus_id').val('');checkCusID();;">Khách hàng mới</button>
+                                            <button type="button" class="btn btn-primary" onclick="$('#cus_id').val('');$('#identity-card').val('');checkCusID();;">Khách hàng mới</button>
                                         </div>
                                         <input hidden id="cus_id" name="cus_id" type="text">
                                     </div>
@@ -463,7 +463,6 @@ $(document).ready(function() {
             $('#name').val('');
             $('#phone').val('');
             $('#email').val('');
-            $('#identity-card').val('');
         }
         else{
             $('#name').prop('readonly',true);
