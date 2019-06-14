@@ -131,15 +131,15 @@ class CartCusController extends Controller
         $data['carts'] = $carts;
         $data['info'] = $req->all();
         
-        // Mail::send('abcstore.email', $data, function ($message) use($email) {
-        //     $message->from('thanglong2098@gmail.com', 'ABCStore');
+        Mail::send('abcstore.email', $data, function ($message) use($email) {
+            $message->from('thanglong2098@gmail.com', 'ABCStore');
 
-        //     $message->to($email, $email);
+            $message->to($email, $email);
 
-        //     $message->cc('16521484@gm.uit.edu.vn', 'ABCStore');
+            $message->cc('16521484@gm.uit.edu.vn', 'ABCStore');
 
-        //     $message->subject('Xác nhận hóa đơn mua hàng ABCStore');
-        // });
+            $message->subject('Xác nhận hóa đơn mua hàng ABCStore');
+        });
 
 
         Cart::clear();

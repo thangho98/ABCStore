@@ -393,10 +393,7 @@
                 $form = $('#edit-form');
                 // $form.submit();
                 if ($form.valid()) {
-                    
-
                     var datas = new FormData($form[0]);
-
                     $.ajax({
                         url: $form.attr('action'),
                         enctype: 'multipart/form-data',
