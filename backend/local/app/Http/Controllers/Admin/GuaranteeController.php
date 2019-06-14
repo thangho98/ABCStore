@@ -95,6 +95,13 @@ class GuaranteeController extends Controller
         return json_encode($data);
     }
 
+    public function getOptions($id)
+    {
+        $list_options = ProductOptions::where('propt_prod',$id)
+                            ->get();
+        return json_encode($list_options);
+    }
+
     public function postAddGuarantee(Request $req)
     {
         $guarantee = new Guarantee;
