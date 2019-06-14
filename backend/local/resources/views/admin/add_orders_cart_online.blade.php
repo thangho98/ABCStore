@@ -173,25 +173,34 @@
                                 <div class="form-row">
                                     <div class="form-group col-6">
                                         <label for="wizard-validation-name">Họ tên</label>
-                                        <input class="form-control" type="text" id="wizard-validation-name"
-                                            name="cus_name" value="{{$cus->cus_name}}" required>
+                                        <input class="form-control" type="text" id="name"
+                                            name="cus_name" value="{{$carts->cart_cus_name}}" required>
                                     </div>
                                     <div class="form-group col-6">
                                         <label for="wizard-validation-identity-card">CMND</label>
-                                        <input readonly class="form-control" type="text" id="wizard-validation-identity-card"
-                                            name="cus_identity_card" value="{{$cus->cus_identity_card}}" required>
+                                        <input class="form-control" type="text" id="identity-card"
+                                            name="cus_identity_card" required>
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-6">
                                         <label for="wizard-validation-email">Email</label>
-                                        <input class="form-control" type="email" id="wizard-validation-email"
-                                            name="cus_email" value="{{$cus->cus_email}}" required>
+                                        <input class="form-control" type="email" id="email"
+                                            name="cus_email" value="{{$carts->cart_cus_phone}}">
                                     </div>
                                     <div class="form-group col-6">
                                         <label for="wizard-validation-phone">SĐT</label>
-                                        <input class="form-control" type="text" id="wizard-validation-phone"
-                                            name="cus_phone" value="{{$cus->cus_phone}}" required>
+                                        <input class="form-control" type="text" id="phone"
+                                            name="cus_phone" value="{{$carts->cart_cus_email}}" required>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-6">
+                                        <div class="py-2 mb-2">
+                                            <button id="btnCheckCus" type="button" class="btn btn-primary">Kiểm tra CMND</button>
+                                            <button type="button" class="btn btn-primary" onclick="$('#cus_id').val('');checkCusID();;">Khách hàng mới</button>
+                                        </div>
+                                        <input hidden id="cus_id" name="cus_id" type="text">
                                     </div>
                                 </div>
                             </div>
@@ -315,6 +324,12 @@ jQuery(function() {
 <script>
 $(document).ready(function() {
 
+    @if ($errors->any())
+        @foreach ($errors->all() as $error)
+            notifyDanger('Lỗi: ','{{ $error }}');
+        @endforeach
+    @endif
+
     var toltal_qty = {{$total_qty}};
     if(toltal_qty <= 0){
         $("#btnNext").attr("disabled", true);
@@ -397,7 +412,64 @@ $(document).ready(function() {
 			}
 		});
     });
+    $('#btnCheckCus').click(function(){
+        var identity_card = $('#identity-card').val();
+
+        console.log(identity_card);
+
+        if(!isNumber(identity_card)){
+            notifyDanger('Thông báo','Chứng minh nhân dân phải là số');
+            return;
+        }
+
+        // URL
+        var url = "{{asset('admin/orders/check/customer')}}";
+
+        // Data
+        var data = {
+            identity_card : identity_card,
+        };
+
+        // Success Function
+        var success = function(result) {
+            console.log(result);
+            if(result != null){
+                $('#name').val(result['cus_name']);
+                $('#phone').val(result['cus_phone']);
+                $('#email').val(result['cus_email']);
+                $('#cus_id').val(result['cus_id'])
+            }
+            else{
+                notifyDanger('Thông báo','Không tìm thấy khách hàng theo số chứng minh nhân dân');
+                $('#cus_id').val('');
+            }
+            checkCusID();
+        };
+
+        // Result Type
+        var dataType = 'json';
+
+        // Send Ajax
+        $.get(url, data, success, dataType);
+    });
 });
+    function checkCusID(){
+        var val = $('#cus_id').val();
+        console.log(val);
+        if(val == ''){
+            $('#name').prop('readonly',false);
+            $('#identity-card').prop('readonly',false);
+
+            $('#name').val('');
+            $('#phone').val('');
+            $('#email').val('');
+            $('#identity-card').val('');
+        }
+        else{
+            $('#name').prop('readonly',true);
+            $('#identity-card').prop('readonly',true);
+        }
+    }
     function deleteCart(id) {
         if(id == null) return;
         var url = "{{asset('admin/orders/item/delete')}}";
@@ -429,4 +501,5 @@ $(document).ready(function() {
 		);
 	}
 </script>
+<script src="{{asset('public/admin')}}/assets/js/myscript.js"></script>
 @endsection

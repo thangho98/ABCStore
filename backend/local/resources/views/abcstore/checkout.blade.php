@@ -27,25 +27,19 @@
                         <div class="col-md-12">
                             <div class="checkout-form-list mb-30">
                                 <label>Họ Tên<span class="required">*</span></label>
-                                <input name="cus_name" type="text" placeholder="Nhập họ tên" required />
+                                <input name="cus_name" class="form-control" type="text" placeholder="Nhập họ tên" required />
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="checkout-form-list mb-30">
                                 <label>Email <span class="required">*</span></label>
-                                <input name="cus_email" type="email" placeholder="Nhập email" required/>
+                                <input name="cus_email" class="form-control" type="email" placeholder="Nhập email" required/>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="checkout-form-list mb-30">
                                 <label>SĐT <span class="required">*</span></label>
-                                <input name="cus_phone" type="text" placeholder="Nhập số điện thoại" required/>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="checkout-form-list mb-30">
-                                <label>CMND <span class="required">*</span></label>
-                                <input name="cus_identity_card" type="number" placeholder="Nhập số chứng minh nhân dân" required/>
+                                <input name="cus_phone" class="form-control" type="number" placeholder="Nhập số điện thoại" required/>
                             </div>
                         </div>
                         <!-- <div class="col-md-12">

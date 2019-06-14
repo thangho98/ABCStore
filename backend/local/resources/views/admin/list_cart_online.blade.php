@@ -68,13 +68,13 @@
                             <tr>
                                 <td class="text-center font-size-sm">{{$item->cart_id}}</td>
                                 <td class="font-w600 font-size-sm">
-                                    {{$item->cus_name}}
+                                    {{$item->cart_cus_name}}
                                 </td>
                                 <td class="d-none d-sm-table-cell">
-                                    {{$item->cus_email}}
+                                    {{$item->cart_cus_phone}}
                                 </td>
                                 <td class="text-center d-sm-table-cell">
-                                    {{$item->cus_identity_card}}
+                                    {{$item->cart_cus_email}}
                                 </td>
                                 <td class="text-center d-sm-table-cell">
                                     {{$item->cart_total_prod}}

@@ -61,14 +61,15 @@ class OrdersController extends Controller
 
     public function postAddOrders(Request $req)
     {
-        $req->validate([
-                'cus_identity_card' => 'unique:customer,cus_identity_card',
-            ],
-            [
-                'cus_identity_card.unique' => 'Chứng minh nhân dân không được trùng'
-            ]
-        );
         if($req->cus_id == null){
+            $req->validate(
+                [
+                    'cus_identity_card' => 'unique:customer,cus_identity_card',
+                ],
+                [
+                    'cus_identity_card.unique' => 'Chứng minh nhân dân không được trùng'
+                ]
+            );
             $cus = new Customer;
             $cus->cus_name = $req->cus_name;
             $cus->cus_phone = $req->cus_phone;
@@ -111,15 +112,15 @@ class OrdersController extends Controller
         Cart::session($empl_id)->clear();
         return redirect('admin/orders/print/'.$orders->order_id);
     }
+
     public function getAddOrdersFromCart($id)
     {
-        $carts = Carts::find($id);
+        $data['carts'] = Carts::find($id);
 
-        if($carts->cart_status != 1){
+        if($data['carts']->cart_status != 1){
             return redirect('admin/orders/');
         }
 
-        $data['cus'] = Customer::find($carts->cart_cus);
         $empl_id = Session::get('user')->empl_id;
 
         if(Session::get('userID') == null){
@@ -151,10 +152,26 @@ class OrdersController extends Controller
     {
         $carts = Carts::find($id);
         
-        $cus = Customer::find($carts->cart_cus);
-        $cus->cus_name = $req->cus_name;
-        $cus->cus_phone = $req->cus_phone;
-        $cus->cus_email = $req->cus_email;
+        if($req->cus_id == null){
+            $req->validate(
+                [
+                    'cus_identity_card' => 'unique:customer,cus_identity_card',
+                ],
+                [
+                    'cus_identity_card.unique' => 'Chứng minh nhân dân không được trùng'
+                ]
+            );
+            $cus = new Customer;
+            $cus->cus_name = $req->cus_name;
+            $cus->cus_phone = $req->cus_phone;
+            $cus->cus_email = $req->cus_email;
+            $cus->cus_identity_card = $req->cus_identity_card;
+        }
+        else{
+            $cus = Customer::find($req->cus_id);
+            $cus->cus_email = $req->cus_email;
+            $cus->cus_phone = $req->cus_phone;
+        }
         $cus->save();
 
         $empl_id = Session::get('user')->empl_id;
