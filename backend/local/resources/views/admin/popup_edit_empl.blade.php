@@ -15,7 +15,7 @@
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="inputIdentityCard">CMND <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="inputIdentityCard" name="identityCard" placeholder="Nhập chứng minh thư" value="{{$empl->empl_identity_card}}"
+                <input type="number" class="form-control" id="inputIdentityCard" name="identityCard" placeholder="Nhập chứng minh thư" value="{{$empl->empl_identity_card}}"
                     required>
             </div>
             <div class="form-group col-md-3 ml-4">
@@ -40,7 +40,7 @@
             </div>
             <div class="form-group col-md-6">
                 <label for="inputTel">SĐT <span class="text-danger">*</span></label>
-                <input type="tel" class="form-control" id="inputTel" value="{{$empl->empl_phone}}" name="phone" placeholder="Nhập số điện thoại" required>
+                <input type="number" class="form-control" id="inputTel" value="{{$empl->empl_phone}}" name="phone" placeholder="Nhập số điện thoại" required>
             </div>
 
         </div>

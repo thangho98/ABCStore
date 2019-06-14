@@ -61,11 +61,25 @@ class OrdersController extends Controller
 
     public function postAddOrders(Request $req)
     {
-        $cus = new Customer;
-        $cus->cus_name = $req->cus_name;
-        $cus->cus_phone = $req->cus_phone;
-        $cus->cus_email = $req->cus_email;
-        $cus->cus_identity_card = $req->cus_identity_card;
+        $req->validate([
+                'cus_identity_card' => 'unique:customer,cus_identity_card',
+            ],
+            [
+                'cus_identity_card.unique' => 'Chứng minh nhân dân không được trùng'
+            ]
+        );
+        if($req->cus_id == null){
+            $cus = new Customer;
+            $cus->cus_name = $req->cus_name;
+            $cus->cus_phone = $req->cus_phone;
+            $cus->cus_email = $req->cus_email;
+            $cus->cus_identity_card = $req->cus_identity_card;
+        }
+        else{
+            $cus = Customer::find($req->cus_id);
+            $cus->cus_email = $req->cus_email;
+            $cus->cus_phone = $req->cus_phone;
+        }
         $cus->save();
 
         $empl_id = Session::get('user')->empl_id;
@@ -141,7 +155,6 @@ class OrdersController extends Controller
         $cus->cus_name = $req->cus_name;
         $cus->cus_phone = $req->cus_phone;
         $cus->cus_email = $req->cus_email;
-        $cus->cus_identity_card = $req->cus_identity_card;
         $cus->save();
 
         $empl_id = Session::get('user')->empl_id;
@@ -258,5 +271,12 @@ class OrdersController extends Controller
         Cart::session($empl_id)->clear();
         Session::forget($empl_id);
         return redirect('admin/orders/');
+    }
+
+    public function getCheckCus(Request $req)
+    {
+        $cus = Customer::where('cus_identity_card',$req->identity_card)
+                ->first();
+        return json_encode($cus);
     }
 }

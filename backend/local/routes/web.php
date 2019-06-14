@@ -176,6 +176,8 @@ Route::group(['namespace' => 'Admin'], function () {
             Route::get('/print/{id}','OrdersController@getPrintOrders');
 
             Route::get('/cancel/','OrdersController@getCancelOrders');
+
+            Route::get('/check/customer/','OrdersController@getCheckCus');
         });
 
         Route::group(['prefix' => 'guarantee','middleware' => 'CheckRoleGuarantee'], function() {

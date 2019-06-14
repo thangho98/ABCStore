@@ -45,7 +45,7 @@
                         <div class="col-md-12">
                             <div class="checkout-form-list mb-30">
                                 <label>CMND <span class="required">*</span></label>
-                                <input name="cus_identity_card" type="text" placeholder="Nhập số chứng minh nhân dân" required/>
+                                <input name="cus_identity_card" type="number" placeholder="Nhập số chứng minh nhân dân" required/>
                             </div>
                         </div>
                         <!-- <div class="col-md-12">
