@@ -480,7 +480,7 @@ class FrontendController extends Controller
     {
         $queryListProduct = DB::table('product')->where('prod_status','1')
                                         ->join('product_options','product.prod_id','product_options.propt_prod')
-                                        ->select(DB::raw('prod_id, prod_name, prod_new, prod_detail, prod_poster, min(propt_price) as prod_price'))
+                                        ->select(DB::raw('prod_id, prod_name, prod_new, prod_detail, prod_warranty_period, prod_poster, min(propt_price) as prod_price'))
                                         ->groupBy('prod_id');
         
         if($req->search){
@@ -568,6 +568,8 @@ class FrontendController extends Controller
                 $data['list_product'][$index]['promdt_percent'] = 0;
             }
         }
+
+        //dd($data);
 
         return view('abcstore.list_product',$data);
     }
