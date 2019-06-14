@@ -153,7 +153,7 @@
                     <!-- Product Top End -->
                     <!-- Single Banner Start -->
                     <div class="col-img">
-                        <a href="{{asset('/shop')}}"><img src="{{asset('public/abcstore')}}/img/banner/banner-sidebar.jpg" alt="slider-banner"></a>
+                        <a href="{{asset('/shop')}}"><img src="{{asset('public/abcstore')}}/img/banner/samsung-poster.jpg" alt="slider-banner"></a>
                     </div>
                     <!-- Single Banner End -->
                 </div>

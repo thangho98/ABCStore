@@ -343,7 +343,7 @@
             var id = $('#select-product').val();
 
             // URL
-            var url = "{{asset('admin/orders/options')}}/" + id;
+            var url = "{{asset('admin/guarantee/options')}}/" + id;
 
             // Data
             var data = {};

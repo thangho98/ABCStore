@@ -428,59 +428,11 @@
             <h2>Thương hiệu nổi tiếng</h2>
         </div>
         <div class="row no-gutters">
-            <div class="col-lg-3">
+            <div class="col-lg-12">
                 <div class="col-img">
-                    <img src="{{asset('public/abcstore')}}/img/banner/h1-band1.jpg" alt="">
+                    <img src="{{asset('public/abcstore')}}/img/banner/Brand.jpg" alt="">
                 </div>
-            </div>
-            <div class="col-lg-6">
-                <!-- Brand Banner Start -->
-                <div class="brand-banner owl-carousel">
-                    <div class="single-brand">
-                        <a href="#"><img class="img" src="{{asset('public/abcstore')}}/img/brand/1.jpg" alt="brand-image"></a>
-                        <a href="#"><img src="{{asset('public/abcstore')}}/img/brand/2.jpg" alt="brand-image"></a>
-                        <a href="#"><img src="{{asset('public/abcstore')}}/img/brand/3.jpg" alt="brand-image"></a>
-                    </div>
-                    <div class="single-brand">
-                        <a href="#"><img class="img" src="{{asset('public/abcstore')}}/img/brand/1.jpg" alt="brand-image"></a>
-                        <a href="#"><img src="{{asset('public/abcstore')}}/img/brand/2.jpg" alt="brand-image"></a>
-                        <a href="#"><img src="{{asset('public/abcstore')}}/img/brand/3.jpg" alt="brand-image"></a>
-                    </div>
-                    <div class="single-brand">
-                        <a href="#"><img src="{{asset('public/abcstore')}}/img/brand/1.jpg" alt="brand-image"></a>
-                        <a href="#"><img src="{{asset('public/abcstore')}}/img/brand/2.jpg" alt="brand-image"></a>
-                        <a href="#"><img src="{{asset('public/abcstore')}}/img/brand/3.jpg" alt="brand-image"></a>
-
-                    </div>
-                    <div class="single-brand">
-                        <a href="#"><img src="{{asset('public/abcstore')}}/img/brand/2.jpg" alt="brand-image"></a>
-                        <a href="#"><img src="{{asset('public/abcstore')}}/img/brand/3.jpg" alt="brand-image"></a>
-                        <a href="#"><img src="{{asset('public/abcstore')}}/img/brand/4.jpg" alt="brand-image"></a>
-                    </div>
-                    <div class="single-brand">
-                        <a href="#"><img src="{{asset('public/abcstore')}}/img/brand/2.jpg" alt="brand-image"></a>
-                        <a href="#"><img src="{{asset('public/abcstore')}}/img/brand/3.jpg" alt="brand-image"></a>
-                        <a href="#"><img src="{{asset('public/abcstore')}}/img/brand/4.jpg" alt="brand-image"></a>
-                    </div>
-                    <div class="single-brand">
-                        <a href="#"><img src="{{asset('public/abcstore')}}/img/brand/2.jpg" alt="brand-image"></a>
-                        <a href="#"><img src="{{asset('public/abcstore')}}/img/brand/3.jpg" alt="brand-image"></a>
-                        <a href="#"><img src="{{asset('public/abcstore')}}/img/brand/4.jpg" alt="brand-image"></a>
-                    </div>
-                    <div class="single-brand">
-                        <a href="#"><img src="{{asset('public/abcstore')}}/img/brand/2.jpg" alt="brand-image"></a>
-                        <a href="#"><img src="{{asset('public/abcstore')}}/img/brand/3.jpg" alt="brand-image"></a>
-                        <a href="#"><img src="{{asset('public/abcstore')}}/img/brand/4.jpg" alt="brand-image"></a>
-                    </div>
-                </div>
-                <!-- Brand Banner End -->
-
-            </div>
-            <div class="col-lg-3">
-                <div class="col-img">
-                    <img src="{{asset('public/abcstore')}}/img/banner/h1-band2.jpg" alt="">
-                </div>
-            </div>
+            </div>       
         </div>
     </div>
     <!-- Container End -->
