@@ -7,8 +7,8 @@
     <div class="container">
         <div class="breadcrumb">
             <ul class="d-flex align-items-center">
-                <li><a href="index.html">Trang Chủ</a></li>
-                <li class="active"><a href="{{asset('cart/show')}}">Giỏ hàng</a></li>
+                <li><a href="{{asset('/')}}">Trang Chủ</a></li>
+                <li class="active"><a href="#">Giỏ hàng</a></li>
             </ul>
         </div>
     </div>

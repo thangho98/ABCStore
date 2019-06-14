@@ -23,10 +23,22 @@ class CartCusController extends Controller
             $product = Product::find($options->propt_prod);
             $options['prod_img'] = $product->prod_poster;
 
+            $promotion = DB::table('promotiondetail')
+                    ->join('promotion','promotion.prom_id','promotiondetail.promdt_prom')
+                    ->where('prom_status',1)
+                    ->where('promdt_propt',$options->propt_id)
+                    ->orderBy('prom_id','desc')
+                    ->first();
+            
+            $price =  $options->propt_price;
+            if($promotion != null){
+                $price = $promotion->promdt_promotion_price;
+            }
+
             Cart::add(array(
                 'id' => $id,
                 'name' => $product->prod_name,
-                'price' => $options->propt_price,
+                'price' => $price,
                 'quantity' => 1,
                 'attributes' => $options
             ));

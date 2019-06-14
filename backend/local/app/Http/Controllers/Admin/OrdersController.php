@@ -10,6 +10,7 @@ use App\Models\OrdersDetail;
 use App\Models\Customer;
 use App\Models\Product;
 use App\Models\Promotion;
+use App\Models\PromotionDetail;
 use App\Models\ProductOptions;
 use App\Models\Carts;
 use App\Models\CartDetail;
@@ -196,12 +197,17 @@ class OrdersController extends Controller
 
         $options = ProductOptions::find($req->id);
         $product = Product::find($options->propt_prod);
-        $promotion = Promotion::where('prom_status',1)
-                ->where('prom_propt',$options->propt_id)
-                ->first();
+
+        $promotion = DB::table('promotiondetail')
+                    ->join('promotion','promotion.prom_id','promotiondetail.promdt_prom')
+                    ->where('prom_status',1)
+                    ->where('promdt_propt',$options->propt_id)
+                    ->orderBy('prom_id','desc')
+                    ->first();
+
         $price =  $options->propt_price;
         if($promotion != null){
-            $price = $promotion->prom_promotion_price;
+            $price = $promotion->promdt_promotion_price;
         }
         Cart::session($empl_id)->add(array(
             'id' => $req->id,

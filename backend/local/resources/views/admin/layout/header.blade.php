@@ -36,7 +36,7 @@
             <!-- END Open Search Section -->
 
             <!-- Search Form (visible on larger screens) -->
-            <form class="d-none d-sm-inline-block" action="be_pages_generic_search.html" method="POST">
+            <form class="d-none d-sm-inline-block" action="#" method="POST">
                 <div class="input-group input-group-sm">
                     <input type="text" class="form-control form-control-alt" placeholder="Bạn tìm gì..."
                         id="page-header-search-input2" name="page-header-search-input2">
@@ -79,7 +79,7 @@
                     <div class="p-2">
                         <h5 class="dropdown-header text-uppercase">Tùy chọn người dùng</h5>
                         <a class="dropdown-item d-flex align-items-center justify-content-between"
-                            href="be_pages_generic_inbox.html">
+                            href="#">
                             <span>Hộp thư đến</span>
                             <span>
                                 <span class="badge badge-pill badge-primary">3</span>
@@ -87,7 +87,7 @@
                             </span>
                         </a>
                         <a class="dropdown-item d-flex align-items-center justify-content-between"
-                            href="be_pages_generic_profile.html">
+                            href="#">
                             <span>Hồ sơ</span>
                             <span>
                                 <span class="badge badge-pill badge-success">1</span>
@@ -225,7 +225,7 @@
     <!-- Header Search -->
     <div id="page-header-search" class="overlay-header bg-white">
         <div class="content-header">
-            <form class="w-100" action="be_pages_generic_search.html" method="POST">
+            <form class="w-100" action="#" method="POST">
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
                         <!-- Layout API, functionality initialized in Template._uiApiLayout() -->

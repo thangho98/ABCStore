@@ -9,7 +9,7 @@
                         <ul class="vertical-menu-list">
                             @foreach ($catelist as $item)
                             <li>
-                                <a href="shop.html"><span><img src="{{asset('local/storage/app/images/category/'.$item->cate_icon)}}"
+                                <a href="{{asset('/shop')}}"><span><img src="{{asset('local/storage/app/images/category/'.$item->cate_icon)}}"
                                             alt="menu-icon"></span>{{$item->cate_name}}</a>
                             </li>
                             @endforeach
