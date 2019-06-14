@@ -441,6 +441,7 @@ $(document).ready(function() {
                 $('#cus_id').val(result['cus_id'])
             }
             else{
+                notifyDanger('Thông báo','Không tìm thấy khách hàng theo số chứng minh nhân dân');
                 $('#cus_id').val('');
             }
             checkCusID();

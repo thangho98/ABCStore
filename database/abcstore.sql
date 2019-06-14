@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th6 13, 2019 lúc 12:24 PM
+-- Thời gian đã tạo: Th6 14, 2019 lúc 09:08 PM
 -- Phiên bản máy phục vụ: 10.3.15-MariaDB
 -- Phiên bản PHP: 7.3.6
 
@@ -106,7 +106,9 @@ INSERT INTO `brand` (`brand_id`, `brand_name`, `brand_slug`, `brand_desc`, `bran
 
 CREATE TABLE `cart` (
   `cart_id` int(11) NOT NULL,
-  `cart_cus` int(11) NOT NULL,
+  `cart_cus_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `cart_cus_phone` varchar(11) COLLATE utf8_unicode_ci NOT NULL,
+  `cart_cus_email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `cart_total_prod` int(11) NOT NULL,
   `cart_total_price` double NOT NULL,
   `cart_date` date NOT NULL,
@@ -115,6 +117,15 @@ CREATE TABLE `cart` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `cart`
+--
+
+INSERT INTO `cart` (`cart_id`, `cart_cus_name`, `cart_cus_phone`, `cart_cus_email`, `cart_total_prod`, `cart_total_price`, `cart_date`, `cart_remember_token`, `cart_status`, `created_at`, `updated_at`) VALUES
+(11, '31', '', '', 5, 119960000, '2019-06-14', 'IqrMX3KDJchcglD6tDotUOZTsOONewi6dXzcUj1o', 0, '2019-06-14 11:02:05', '2019-06-14 11:02:05'),
+(12, 'Nguyễn Phi Yến', '0328119182', 'thanglong2098@gmail.com', 1, 23992000, '2019-06-15', 'qYzmc19L3zSvYPPL8RrW3rEeZY6DJU2QRJY0nYkF', 0, '2019-06-14 18:59:14', '2019-06-14 18:59:14'),
+(13, 'Nguyễn Phi Yến', '0328119182', 'thanglong2098@gmail.com', 1, 23992000, '2019-06-15', 'qYzmc19L3zSvYPPL8RrW3rEeZY6DJU2QRJY0nYkF', 2, '2019-06-14 19:00:21', '2019-06-14 19:08:14');
 
 --
 -- Bẫy `cart`
@@ -163,6 +174,15 @@ CREATE TABLE `cartdetail` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
+-- Đang đổ dữ liệu cho bảng `cartdetail`
+--
+
+INSERT INTO `cartdetail` (`cartdt_id`, `cartdt_cart`, `cartdt_propt`, `cartdt_prod_quantity`, `cartdt_prod_unit_price`, `cartdt_prod_promotion_price`, `cartdt_total`, `created_at`, `updated_at`) VALUES
+(13, 11, 2, 5, 29990000, 29990000, 119960000, '2019-06-14 11:02:05', '2019-06-14 11:02:05'),
+(14, 12, 2, 1, 29990000, 29990000, 23992000, '2019-06-14 18:59:14', '2019-06-14 18:59:14'),
+(15, 13, 2, 1, 29990000, 29990000, 23992000, '2019-06-14 19:00:21', '2019-06-14 19:00:21');
+
+--
 -- Bẫy `cartdetail`
 --
 DELIMITER $$
@@ -192,7 +212,7 @@ CREATE TABLE `category` (
 INSERT INTO `category` (`cate_id`, `cate_name`, `cate_slug`, `cate_icon`, `created_at`, `updated_at`) VALUES
 (1, 'Điện thoại', 'dien-thoai', '4.png', '2019-05-20 03:59:50', '2019-05-13 08:01:07'),
 (2, 'Máy tính bảng', 'may-tinh-bang', '8.png', '2019-05-20 04:00:11', '2019-05-13 08:29:55'),
-(3, 'Laptop', 'laptop', '9.png', '2019-05-20 04:00:21', '2019-05-13 08:30:09');
+(3, 'Laptop', 'laptop', '9.png', '2019-05-20 04:00:21', '2019-06-14 15:04:04');
 
 -- --------------------------------------------------------
 
@@ -233,6 +253,16 @@ CREATE TABLE `commission` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `commission`
+--
+
+INSERT INTO `commission` (`cms_id`, `cms_month`, `cms_year`, `cms_empl`, `cms_total`, `created_at`, `updated_at`) VALUES
+(5, 6, 2019, 8, 0, '2019-06-14 10:54:00', '2019-06-14 10:54:00'),
+(6, 6, 2019, 10, 3316726.5, '2019-06-14 10:54:00', '2019-06-14 19:08:13'),
+(7, 6, 2019, 11, 0, '2019-06-14 10:54:00', '2019-06-14 10:54:00'),
+(8, 6, 2019, 12, 0, '2019-06-14 10:54:00', '2019-06-14 10:54:00');
 
 --
 -- Bẫy `commission`
@@ -286,11 +316,19 @@ CREATE TABLE `customer` (
   `cus_id` int(11) NOT NULL,
   `cus_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `cus_phone` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `cus_identity_card` int(11) NOT NULL,
+  `cus_identity_card` varchar(12) COLLATE utf8_unicode_ci DEFAULT NULL,
   `cus_email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `customer`
+--
+
+INSERT INTO `customer` (`cus_id`, `cus_name`, `cus_phone`, `cus_identity_card`, `cus_email`, `created_at`, `updated_at`) VALUES
+(31, 'Hồ Thái Thăng', '0328119182', '2147483647', 'thanglong2098@gmail.com', '2019-06-14 11:02:05', '2019-06-14 17:52:29'),
+(32, 'Nguyễn Phi Yến', '328119182', '13214564987', 'thanglong2098@gmail.com', '2019-06-14 18:12:41', '2019-06-14 18:12:41');
 
 -- --------------------------------------------------------
 
@@ -500,6 +538,15 @@ CREATE TABLE `orders` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
+-- Đang đổ dữ liệu cho bảng `orders`
+--
+
+INSERT INTO `orders` (`order_id`, `order_date`, `order_empl`, `order_cus`, `order_total_prod`, `order_total_price`, `order_remember_token`, `created_at`, `updated_at`) VALUES
+(10, '2019-06-15', 10, 31, 5, 65276050, 'y68J0lfZDgvSOLyB2JNOxCWvjSp4L84ZKVTfNYvK', '2019-06-14 17:52:30', '2019-06-14 17:52:30'),
+(11, '2019-06-15', 10, 32, 1, 15291500, 'y68J0lfZDgvSOLyB2JNOxCWvjSp4L84ZKVTfNYvK', '2019-06-14 18:12:41', '2019-06-14 18:12:41'),
+(12, '2019-06-15', 10, 31, 1, 29990000, 'y68J0lfZDgvSOLyB2JNOxCWvjSp4L84ZKVTfNYvK', '2019-06-14 19:08:13', '2019-06-14 19:08:13');
+
+--
 -- Bẫy `orders`
 --
 DELIMITER $$
@@ -573,6 +620,19 @@ CREATE TABLE `ordersdetail` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `ordersdetail`
+--
+
+INSERT INTO `ordersdetail` (`orddt_id`, `orddt_order`, `orddt_propt`, `orddt_quantity`, `orddt_unit_price`, `orddt_promotion_price`, `orddt_total`, `created_at`, `updated_at`) VALUES
+(11, 10, 2, 1, 29990000, 23992000, 23992000, '2019-06-14 17:52:30', '2019-06-14 17:52:30'),
+(12, 10, 6, 1, 3000, 2550, 2550, '2019-06-14 17:52:30', '2019-06-14 17:52:30'),
+(13, 10, 4, 1, 17990000, 15291500, 15291500, '2019-06-14 17:52:30', '2019-06-14 17:52:30'),
+(14, 10, 5, 1, 18000000, 18000000, 18000000, '2019-06-14 17:52:30', '2019-06-14 17:52:30'),
+(15, 10, 22, 1, 7990000, 7990000, 7990000, '2019-06-14 17:52:30', '2019-06-14 17:52:30'),
+(16, 11, 4, 1, 17990000, 15291500, 15291500, '2019-06-14 18:12:42', '2019-06-14 18:12:42'),
+(17, 12, 2, 1, 29990000, 29990000, 29990000, '2019-06-14 19:08:13', '2019-06-14 19:08:13');
 
 -- --------------------------------------------------------
 
@@ -713,9 +773,9 @@ CREATE TABLE `product_options` (
 
 INSERT INTO `product_options` (`propt_id`, `propt_prod`, `propt_color`, `propt_ram`, `propt_rom`, `propt_price`, `propt_quantity`, `created_at`, `updated_at`) VALUES
 (1, 23, 'Xám', 4, '64 gb', 29990000, 0, '2019-05-21 11:33:18', '2019-06-12 09:33:22'),
-(2, 23, 'Bạc', 4, '128 gb', 29990000, 20, '2019-05-21 11:33:18', '2019-06-12 18:25:26'),
-(4, 27, 'Đen', 8, '128 gb', 17990000, 0, '2019-05-22 04:31:41', '2019-06-12 09:33:22'),
-(5, 27, 'Trắng', 8, '128 gb', 18000000, 0, '2019-05-22 04:31:41', '2019-06-12 09:33:22'),
+(2, 23, 'Bạc', 4, '128 gb', 29990000, 13, '2019-05-21 11:33:18', '2019-06-14 19:00:21'),
+(4, 27, 'Đen', 8, '128 gb', 17990000, 10, '2019-05-22 04:31:41', '2019-06-14 15:21:22'),
+(5, 27, 'Trắng', 8, '128 gb', 18000000, 10, '2019-05-22 04:31:41', '2019-06-14 15:21:18'),
 (6, 23, 'Gold', 4, '512 gb', 3000, 10, '2019-05-22 11:21:28', '2019-06-12 18:25:26'),
 (8, 28, 'Đen', 2, '32 gb', 10240000, 0, '2019-05-29 10:13:39', '2019-05-29 10:13:39'),
 (9, 29, 'Vàng Đồng', 2, '32 gb', 9990000, 0, '2019-05-29 10:26:30', '2019-05-29 10:26:30'),
@@ -730,8 +790,8 @@ INSERT INTO `product_options` (`propt_id`, `propt_prod`, `propt_color`, `propt_r
 (18, 35, 'Đen', 6, '64 gb', 11990000, 0, '2019-05-29 10:40:45', '2019-05-29 10:40:45'),
 (19, 36, 'Đen', 6, '128 gb', 7490000, 0, '2019-05-29 10:43:17', '2019-05-29 10:43:17'),
 (20, 36, 'Xanh Dương', 6, '128 gb', 7490000, 0, '2019-05-29 10:43:17', '2019-05-29 10:43:17'),
-(21, 37, 'Xanh Dương', 6, '64 gb', 7990000, 0, '2019-05-29 10:46:04', '2019-05-29 10:46:04'),
-(22, 37, 'Đen', 6, '64 gb', 7990000, 0, '2019-05-29 10:46:04', '2019-05-29 10:46:04'),
+(21, 37, 'Xanh Dương', 6, '64 gb', 7990000, 10, '2019-05-29 10:46:04', '2019-06-14 15:22:09'),
+(22, 37, 'Đen', 6, '64 gb', 7990000, 10, '2019-05-29 10:46:04', '2019-06-14 15:22:12'),
 (23, 38, 'Đỏ', 6, '128 gb', 7990000, 0, '2019-05-29 11:05:22', '2019-06-12 09:33:22'),
 (24, 38, 'Xanh Dương', 6, '128 gb', 7990000, 0, '2019-05-29 11:05:22', '2019-06-06 14:27:34'),
 (25, 39, 'Tím', 4, '128 gb', 5990000, 0, '2019-05-29 11:16:33', '2019-05-29 11:16:33'),
@@ -770,7 +830,7 @@ CREATE TABLE `promotion` (
 --
 
 INSERT INTO `promotion` (`prom_id`, `prom_name`, `prom_start_date`, `prom_end_date`, `prom_status`, `created_at`, `updated_at`) VALUES
-(10, 'Back to school 2019', '2019-06-14', '2019-06-16', 0, '2019-06-13 07:39:50', '2019-06-13 08:50:19');
+(10, 'Back to school 2019', '2019-06-14', '2019-06-16', 1, '2019-06-13 07:39:50', '2019-06-14 10:53:50');
 
 -- --------------------------------------------------------
 
@@ -855,7 +915,7 @@ CREATE TABLE `revenue` (
 --
 
 INSERT INTO `revenue` (`reve_id`, `reve_month`, `reve_year`, `reve_quarter`, `reve_sale`, `reve_buy`, `reve_salary`, `reve_income`, `created_at`, `updated_at`) VALUES
-(5, 6, 2019, 2, 0, 250000000, 28000000, -278000000, '2019-06-12 18:25:26', '2019-06-12 18:25:26');
+(5, 6, 2019, 2, 110557550, 250000000, 31316726.5, -170759176.5, '2019-06-12 18:25:26', '2019-06-14 19:08:13');
 
 --
 -- Bẫy `revenue`
@@ -938,7 +998,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`username`, `password`, `empl_id`, `perm_id`, `status`, `remember_token`, `created_at`, `updated_at`) VALUES
-('admin', '$2y$10$Tri2ztrGuT8meagw5HFEZOoQHFY5G1BfVQdVVCL3QJHqflLHhEJrW', 8, 1, 0, 'WtraUvbeNbrwRASz5fxfKuZ3tibGY0p6m12Jn8Dz5blsMPJeZgjHyb7c7ecc', NULL, '2019-06-12 13:46:35'),
+('admin', '$2y$10$Tri2ztrGuT8meagw5HFEZOoQHFY5G1BfVQdVVCL3QJHqflLHhEJrW', 8, 1, 0, 'EWbXaWKme97wmcbtL1snsz7ZXBmNN5Bex6ooPtqcmxaBpEnSN7Kb8zqwWRE6', NULL, '2019-06-12 13:46:35'),
 ('nv10', '$2y$10$fp6FM2ZFO/sd9ZCBISDwmODnta4ILoWKJC8izJZKUdpTjwWLtyIw2', 10, 2, 0, '6EvC0M046TGobcmm9ocxbuzrA30xp2mxKTsUx03H', '2019-05-28 09:24:45', '2019-05-28 11:05:14'),
 ('nv11', '$2y$10$FTdJq5JRhwRJgWV4APBsQ.N/dUhnKaCOX3sed4tQ4AT3Y3ek/Y1DK', 11, 2, 0, '6EvC0M046TGobcmm9ocxbuzrA30xp2mxKTsUx03Hj', '2019-05-28 10:42:29', '2019-05-28 10:42:29'),
 ('nv12', '$2y$10$hXc8G3sBlfscMsaZsDrrS.2JI0N3fU7BZz5w7mO6XXJF0fVTxQuMu', 12, 3, 0, '1xaEYEDxcUKWJupAZsLYDlNvn7iCxOhGlluepml0', '2019-06-12 14:45:34', '2019-06-12 14:45:34');
@@ -957,8 +1017,7 @@ ALTER TABLE `brand`
 -- Chỉ mục cho bảng `cart`
 --
 ALTER TABLE `cart`
-  ADD PRIMARY KEY (`cart_id`),
-  ADD KEY `cart_cus` (`cart_cus`);
+  ADD PRIMARY KEY (`cart_id`);
 
 --
 -- Chỉ mục cho bảng `cartdetail`
@@ -992,7 +1051,8 @@ ALTER TABLE `commission`
 -- Chỉ mục cho bảng `customer`
 --
 ALTER TABLE `customer`
-  ADD PRIMARY KEY (`cus_id`);
+  ADD PRIMARY KEY (`cus_id`),
+  ADD UNIQUE KEY `cus_identity_card` (`cus_identity_card`);
 
 --
 -- Chỉ mục cho bảng `employees`
@@ -1141,13 +1201,13 @@ ALTER TABLE `brand`
 -- AUTO_INCREMENT cho bảng `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT cho bảng `cartdetail`
 --
 ALTER TABLE `cartdetail`
-  MODIFY `cartdt_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `cartdt_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT cho bảng `category`
@@ -1165,13 +1225,13 @@ ALTER TABLE `comment`
 -- AUTO_INCREMENT cho bảng `commission`
 --
 ALTER TABLE `commission`
-  MODIFY `cms_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `cms_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT cho bảng `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `cus_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `cus_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT cho bảng `employees`
@@ -1207,13 +1267,13 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT cho bảng `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT cho bảng `ordersdetail`
 --
 ALTER TABLE `ordersdetail`
-  MODIFY `orddt_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `orddt_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT cho bảng `permission`
@@ -1272,12 +1332,6 @@ ALTER TABLE `slide`
 --
 -- Các ràng buộc cho các bảng đã đổ
 --
-
---
--- Các ràng buộc cho bảng `cart`
---
-ALTER TABLE `cart`
-  ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`cart_cus`) REFERENCES `customer` (`cus_id`);
 
 --
 -- Các ràng buộc cho bảng `cartdetail`
@@ -1391,9 +1445,9 @@ END$$
 
 CREATE DEFINER=`root`@`localhost` EVENT `UpdateStatusEndPromotion` ON SCHEDULE EVERY 1 SECOND STARTS '2019-06-01 00:00:00' ON COMPLETION NOT PRESERVE ENABLE DO UPDATE promotion
 SET promotion.prom_status = 2
-WHERE now() > promotion.prom_end_date AND promotion.prom_status = 1$$
+WHERE date(now()) > promotion.prom_end_date AND promotion.prom_status = 1$$
 
-CREATE DEFINER=`root`@`localhost` EVENT `UpdateStatusStartPromotion` ON SCHEDULE EVERY 1 SECOND STARTS '2019-06-01 00:00:00' ON COMPLETION NOT PRESERVE ENABLE DO UPDATE promotion SET promotion.prom_status = 1 WHERE promotion.prom_status = 0 AND promotion.prom_start_date <= now()$$
+CREATE DEFINER=`root`@`localhost` EVENT `UpdateStatusStartPromotion` ON SCHEDULE EVERY 1 SECOND STARTS '2019-06-01 00:00:00' ON COMPLETION NOT PRESERVE ENABLE DO UPDATE promotion SET promotion.prom_status = 1 WHERE promotion.prom_status = 0 AND promotion.prom_start_date <= date(now())$$
 
 DELIMITER ;
 COMMIT;

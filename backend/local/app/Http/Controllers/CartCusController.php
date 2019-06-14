@@ -95,22 +95,16 @@ class CartCusController extends Controller
 
     public function postCheckout(Request $req)
     {
-        $cus = new Customer;
-        $cus->cus_name = $req->cus_name;
-        $cus->cus_phone = $req->cus_phone;
-        $cus->cus_email = $req->cus_email;
-        $cus->cus_identity_card = $req->cus_identity_card;
-        $cus->save();
-        
         $carts = new Carts;
         $carts->cart_date = date("Y-m-d");
-        $carts->cart_cus = $cus->cus_id;
+        $carts->cart_cus_name = $req->cus_name;
+        $carts->cart_cus_phone = $req->cus_phone;
+        $carts->cart_cus_email = $req->cus_email;
         $carts->cart_total_prod = Cart::getTotalQuantity();;
         $carts->cart_total_price = Cart::getTotal();
         $carts->cart_remember_token = $req->_token;
         $carts->cart_status = 0;
         $carts->save();
-
         
         $data['content'] = Cart::getContent();
         $data['total_carts'] = Cart::getTotal();

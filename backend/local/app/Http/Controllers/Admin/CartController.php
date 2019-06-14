@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Cart;
+use App\Models\Carts;
 use App\Models\CartDetail;
 use App\Models\Customer;
 
@@ -14,17 +14,13 @@ class CartController extends Controller
 {
     public function getCartOnline()
     { 
-        $data['list_cart'] = DB::table('cart')
-                            ->join('customer','cart.cart_cus','customer.cus_id')
-                            ->get();
+        $data['list_cart'] =  Carts::all();
         return view('admin.list_cart_online',$data);
     }
 
     public function getViewDetailCartOnline($id)
     {
-        $data['carts'] = DB::table('cart')
-                            ->join('customer','cart.cart_cus','customer.cus_id')
-                            ->first();
+        $data['carts'] = Carts::find($id);
                             
         $data['list_cartdetail'] = DB::table('cartdetail')
                                 ->where('cartdt_cart',$id)

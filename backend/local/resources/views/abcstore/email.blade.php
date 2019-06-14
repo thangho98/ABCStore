@@ -22,10 +22,6 @@
 			{{$info['cus_phone']}}
 		</p>
 		<p>
-			<strong class="info">CMND: </strong>
-			{{$info['cus_identity_card']}}
-		</p>
-		<p>
 			<strong class="info">Được đặt lúc: </strong>
 			{{$carts->created_at}}
 		</p>
@@ -35,11 +31,11 @@
 		<table border="1" cellspacing="0">
 			<tr>
 				<td width="30%"><strong>Tên sản phẩm</strong></td>
-				<td width="30%"><strong>Màu</strong></td>
-				<td width="30%"><strong>Bộ nhớ</strong></td>
+				<td width="5%"><strong>Màu</strong></td>
+				<td width="15%"><strong>Bộ nhớ</strong></td>
 				<td width="25%"><strong>Giá</strong></td>
-				<td width="20%"><strong>Số lượng</strong></td>
-				<td width="15%"><strong>Thành tiền</strong></td>
+				<td width="15%"><strong>Số lượng</strong></td>
+				<td width="25%"><strong>Thành tiền</strong></td>
 			</tr>
 			@foreach ($content as $item)
 			<tr>

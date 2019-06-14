@@ -9,11 +9,9 @@
         <div class="modal-body">
             <div class="row">
                 <div class="col-sm-6">
-                    <b>Mã khách hàng: </b>{{$carts->cus_id}}<br>
-                    <b>Tên khách hàng: </b>{{$carts->cus_name}}<br>
-                    <b>SĐT: </b>{{$carts->cus_phone}}<br>
-                    <b>Email: </b>{{$carts->cus_email}}<br>
-                    <b>CMND: </b>{{$carts->cus_identity_card}}<br>
+                    <b>Tên khách hàng: </b>{{$carts->cart_cus_name}}<br>
+                    <b>SĐT: </b>{{$carts->cart_cus_phone}}<br>
+                    <b>Email: </b>{{$carts->cart_cus_email}}<br>
                 </div>
                 <div class="col-sm-6">
                     <b>Tổng số lượng: </b>{{$carts->cart_total_prod}}<br>
